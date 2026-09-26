@@ -1,0 +1,10802 @@
+[
+{
+"id": "AL011958",
+"name": "Alma",
+"peak_kt": 55,
+"peak_time": "1958-06-15T00:00:00",
+"category": 0,
+"ace": 1.22,
+"landfall": true,
+"min_pressure_mb": null
+},
+{
+"id": "AL021958",
+"name": "Becky",
+"peak_kt": 60,
+"peak_time": "1958-08-17T12:00:00",
+"category": 0,
+"ace": 6.56,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL031958",
+"name": "Cleo",
+"peak_kt": 120,
+"peak_time": "1958-08-15T18:00:00",
+"category": 4,
+"ace": 25.21,
+"landfall": false,
+"min_pressure_mb": 947
+},
+{
+"id": "AL041958",
+"name": "Daisy",
+"peak_kt": 115,
+"peak_time": "1958-08-27T18:00:00",
+"category": 4,
+"ace": 14.81,
+"landfall": false,
+"min_pressure_mb": 948
+},
+{
+"id": "AL051958",
+"name": "Ella",
+"peak_kt": 95,
+"peak_time": "1958-09-01T12:00:00",
+"category": 2,
+"ace": 9.7,
+"landfall": true,
+"min_pressure_mb": 983
+},
+{
+"id": "AL061958",
+"name": "Fifi",
+"peak_kt": 75,
+"peak_time": "1958-09-06T12:00:00",
+"category": 1,
+"ace": 5.89,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL071958",
+"name": "Gerda",
+"peak_kt": 50,
+"peak_time": "1958-09-14T18:00:00",
+"category": 0,
+"ace": 1.34,
+"landfall": true,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL081958",
+"name": "Helene",
+"peak_kt": 130,
+"peak_time": "1958-09-27T09:00:00",
+"category": 4,
+"ace": 18.25,
+"landfall": false,
+"min_pressure_mb": 930
+},
+{
+"id": "AL091958",
+"name": "Ilsa",
+"peak_kt": 95,
+"peak_time": "1958-09-26T12:00:00",
+"category": 2,
+"ace": 12.33,
+"landfall": false,
+"min_pressure_mb": 956
+},
+{
+"id": "AL101958",
+"name": "Janice",
+"peak_kt": 85,
+"peak_time": "1958-10-10T06:00:00",
+"category": 2,
+"ace": 12.36,
+"landfall": true,
+"min_pressure_mb": 968
+},
+{
+"id": "AL111958",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "1958-05-28T06:00:00",
+"category": 0,
+"ace": 1.23,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL121958",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1958-10-18T00:00:00",
+"category": 0,
+"ace": 0.81,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL011959",
+"name": "Arlene",
+"peak_kt": 55,
+"peak_time": "1959-05-30T18:00:00",
+"category": 0,
+"ace": 2.11,
+"landfall": true,
+"min_pressure_mb": 993
+},
+{
+"id": "AL021959",
+"name": "Beulah",
+"peak_kt": 60,
+"peak_time": "1959-06-16T18:00:00",
+"category": 0,
+"ace": 3.02,
+"landfall": false,
+"min_pressure_mb": 985
+},
+{
+"id": "AL031959",
+"name": "Unnamed",
+"peak_kt": 75,
+"peak_time": "1959-06-19T12:00:00",
+"category": 1,
+"ace": 1.93,
+"landfall": true,
+"min_pressure_mb": 974
+},
+{
+"id": "AL041959",
+"name": "Cindy",
+"peak_kt": 65,
+"peak_time": "1959-07-08T12:00:00",
+"category": 1,
+"ace": 4.18,
+"landfall": true,
+"min_pressure_mb": 995
+},
+{
+"id": "AL051959",
+"name": "Debra",
+"peak_kt": 75,
+"peak_time": "1959-07-25T05:00:00",
+"category": 1,
+"ace": 2.98,
+"landfall": true,
+"min_pressure_mb": 980
+},
+{
+"id": "AL061959",
+"name": "Edith",
+"peak_kt": 50,
+"peak_time": "1959-08-18T10:00:00",
+"category": 0,
+"ace": 0.81,
+"landfall": true,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL071959",
+"name": "Flora",
+"peak_kt": 65,
+"peak_time": "1959-09-11T12:00:00",
+"category": 1,
+"ace": 2.37,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL081959",
+"name": "Gracie",
+"peak_kt": 115,
+"peak_time": "1959-09-29T06:00:00",
+"category": 4,
+"ace": 16.59,
+"landfall": true,
+"min_pressure_mb": 951
+},
+{
+"id": "AL091959",
+"name": "Hannah",
+"peak_kt": 105,
+"peak_time": "1959-09-30T18:00:00",
+"category": 3,
+"ace": 26.98,
+"landfall": false,
+"min_pressure_mb": 959
+},
+{
+"id": "AL101959",
+"name": "Irene",
+"peak_kt": 40,
+"peak_time": "1959-10-08T06:00:00",
+"category": 0,
+"ace": 0.69,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL111959",
+"name": "Judith",
+"peak_kt": 75,
+"peak_time": "1959-10-19T12:00:00",
+"category": 1,
+"ace": 6.84,
+"landfall": true,
+"min_pressure_mb": 988
+},
+{
+"id": "AL121959",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1959-08-02T12:00:00",
+"category": 0,
+"ace": 2.09,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL131959",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1959-09-04T00:00:00",
+"category": 0,
+"ace": 5.85,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL141959",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "1959-09-12T12:00:00",
+"category": 0,
+"ace": 0.65,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL011960",
+"name": "Unnamed",
+"peak_kt": 50,
+"peak_time": "1960-06-24T00:00:00",
+"category": 0,
+"ace": 1.06,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL021960",
+"name": "Abby",
+"peak_kt": 70,
+"peak_time": "1960-07-15T06:00:00",
+"category": 1,
+"ace": 7.21,
+"landfall": true,
+"min_pressure_mb": 995
+},
+{
+"id": "AL031960",
+"name": "Brenda",
+"peak_kt": 60,
+"peak_time": "1960-07-29T18:00:00",
+"category": 0,
+"ace": 2.37,
+"landfall": true,
+"min_pressure_mb": 976
+},
+{
+"id": "AL041960",
+"name": "Cleo",
+"peak_kt": 75,
+"peak_time": "1960-08-19T06:00:00",
+"category": 1,
+"ace": 4.83,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL051960",
+"name": "Donna",
+"peak_kt": 125,
+"peak_time": "1960-09-07T00:00:00",
+"category": 4,
+"ace": 49.24,
+"landfall": true,
+"min_pressure_mb": 930
+},
+{
+"id": "AL061960",
+"name": "Ethel",
+"peak_kt": 100,
+"peak_time": "1960-09-14T18:00:00",
+"category": 3,
+"ace": 5.64,
+"landfall": true,
+"min_pressure_mb": 974
+},
+{
+"id": "AL071960",
+"name": "Florence",
+"peak_kt": 50,
+"peak_time": "1960-09-24T06:00:00",
+"category": 0,
+"ace": 1.87,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL081960",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "1960-09-01T12:00:00",
+"category": 0,
+"ace": 0.69,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL011961",
+"name": "Anna",
+"peak_kt": 90,
+"peak_time": "1961-07-22T12:00:00",
+"category": 2,
+"ace": 11.24,
+"landfall": true,
+"min_pressure_mb": 976
+},
+{
+"id": "AL021961",
+"name": "Betsy",
+"peak_kt": 115,
+"peak_time": "1961-09-06T00:00:00",
+"category": 4,
+"ace": 27.23,
+"landfall": false,
+"min_pressure_mb": 945
+},
+{
+"id": "AL031961",
+"name": "Carla",
+"peak_kt": 125,
+"peak_time": "1961-09-11T06:00:00",
+"category": 4,
+"ace": 27.26,
+"landfall": true,
+"min_pressure_mb": 927
+},
+{
+"id": "AL041961",
+"name": "Debbie",
+"peak_kt": 80,
+"peak_time": "1961-09-11T12:00:00",
+"category": 1,
+"ace": 17.33,
+"landfall": true,
+"min_pressure_mb": 961
+},
+{
+"id": "AL051961",
+"name": "Esther",
+"peak_kt": 140,
+"peak_time": "1961-09-17T06:00:00",
+"category": 5,
+"ace": 48.71,
+"landfall": true,
+"min_pressure_mb": 919
+},
+{
+"id": "AL061961",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1961-09-15T12:00:00",
+"category": 0,
+"ace": 1.32,
+"landfall": true,
+"min_pressure_mb": 995
+},
+{
+"id": "AL071961",
+"name": "Frances",
+"peak_kt": 115,
+"peak_time": "1961-10-07T00:00:00",
+"category": 4,
+"ace": 19.72,
+"landfall": true,
+"min_pressure_mb": 948
+},
+{
+"id": "AL081961",
+"name": "Gerda",
+"peak_kt": 65,
+"peak_time": "1961-10-21T00:00:00",
+"category": 1,
+"ace": 2.2,
+"landfall": false,
+"min_pressure_mb": 988
+},
+{
+"id": "AL091961",
+"name": "Hattie",
+"peak_kt": 145,
+"peak_time": "1961-10-31T00:00:00",
+"category": 5,
+"ace": 20.36,
+"landfall": true,
+"min_pressure_mb": 914
+},
+{
+"id": "AL101961",
+"name": "Jenny",
+"peak_kt": 70,
+"peak_time": "1961-11-06T18:00:00",
+"category": 1,
+"ace": 6.25,
+"landfall": false,
+"min_pressure_mb": 974
+},
+{
+"id": "AL111961",
+"name": "Inga",
+"peak_kt": 60,
+"peak_time": "1961-11-04T12:00:00",
+"category": 0,
+"ace": 6.08,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL121961",
+"name": "Unnamed",
+"peak_kt": 50,
+"peak_time": "1961-11-20T18:00:00",
+"category": 0,
+"ace": 1.22,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL011962",
+"name": "Alma",
+"peak_kt": 75,
+"peak_time": "1962-08-28T18:00:00",
+"category": 1,
+"ace": 4.88,
+"landfall": false,
+"min_pressure_mb": 984
+},
+{
+"id": "AL021962",
+"name": "Becky",
+"peak_kt": 50,
+"peak_time": "1962-08-29T12:00:00",
+"category": 0,
+"ace": 3.6,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL031962",
+"name": "Celia",
+"peak_kt": 60,
+"peak_time": "1962-09-13T00:00:00",
+"category": 0,
+"ace": 5.41,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL041962",
+"name": "Daisy",
+"peak_kt": 90,
+"peak_time": "1962-10-06T06:00:00",
+"category": 2,
+"ace": 10.84,
+"landfall": false,
+"min_pressure_mb": 950
+},
+{
+"id": "AL051962",
+"name": "Ella",
+"peak_kt": 95,
+"peak_time": "1962-10-20T00:00:00",
+"category": 2,
+"ace": 13.58,
+"landfall": false,
+"min_pressure_mb": 958
+},
+{
+"id": "AL061962",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "1962-06-30T12:00:00",
+"category": 0,
+"ace": 1.83,
+"landfall": true,
+"min_pressure_mb": 998
+},
+{
+"id": "AL071962",
+"name": "Unnamed",
+"peak_kt": 80,
+"peak_time": "1962-12-01T18:00:00",
+"category": 1,
+"ace": 10.33,
+"landfall": false,
+"min_pressure_mb": 991
+},
+{
+"id": "AL011963",
+"name": "Arlene",
+"peak_kt": 100,
+"peak_time": "1963-08-09T18:00:00",
+"category": 3,
+"ace": 10.71,
+"landfall": true,
+"min_pressure_mb": 969
+},
+{
+"id": "AL021963",
+"name": "Beulah",
+"peak_kt": 105,
+"peak_time": "1963-08-24T06:00:00",
+"category": 3,
+"ace": 15.04,
+"landfall": false,
+"min_pressure_mb": 958
+},
+{
+"id": "AL031963",
+"name": "Unnamed",
+"peak_kt": 70,
+"peak_time": "1963-09-12T06:00:00",
+"category": 1,
+"ace": 4.75,
+"landfall": false,
+"min_pressure_mb": 990
+},
+{
+"id": "AL041963",
+"name": "Cindy",
+"peak_kt": 55,
+"peak_time": "1963-09-17T00:00:00",
+"category": 0,
+"ace": 1.85,
+"landfall": true,
+"min_pressure_mb": 996
+},
+{
+"id": "AL051963",
+"name": "Debra",
+"peak_kt": 65,
+"peak_time": "1963-09-21T18:00:00",
+"category": 1,
+"ace": 5.28,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL061963",
+"name": "Edith",
+"peak_kt": 85,
+"peak_time": "1963-09-25T00:00:00",
+"category": 2,
+"ace": 7.12,
+"landfall": true,
+"min_pressure_mb": 990
+},
+{
+"id": "AL071963",
+"name": "Flora",
+"peak_kt": 130,
+"peak_time": "1963-10-03T18:00:00",
+"category": 4,
+"ace": 40.09,
+"landfall": true,
+"min_pressure_mb": 933
+},
+{
+"id": "AL081963",
+"name": "Ginny",
+"peak_kt": 95,
+"peak_time": "1963-10-28T18:00:00",
+"category": 2,
+"ace": 23.81,
+"landfall": true,
+"min_pressure_mb": 948
+},
+{
+"id": "AL091963",
+"name": "Helena",
+"peak_kt": 45,
+"peak_time": "1963-10-27T18:00:00",
+"category": 0,
+"ace": 2.02,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL101963",
+"name": "Unnamed",
+"peak_kt": 50,
+"peak_time": "1963-06-03T06:00:00",
+"category": 0,
+"ace": 1.43,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL011964",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1964-06-09T18:00:00",
+"category": 0,
+"ace": 4.36,
+"landfall": false,
+"min_pressure_mb": 992
+},
+{
+"id": "AL021964",
+"name": "Unnamed",
+"peak_kt": 75,
+"peak_time": "1964-08-01T18:00:00",
+"category": 1,
+"ace": 4.74,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL031964",
+"name": "Abby",
+"peak_kt": 60,
+"peak_time": "1964-08-07T20:30:00",
+"category": 0,
+"ace": 0.83,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL041964",
+"name": "Brenda",
+"peak_kt": 45,
+"peak_time": "1964-08-08T12:00:00",
+"category": 0,
+"ace": 1.7,
+"landfall": true,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL051964",
+"name": "Cleo",
+"peak_kt": 130,
+"peak_time": "1964-08-23T12:00:00",
+"category": 4,
+"ace": 32.92,
+"landfall": true,
+"min_pressure_mb": 938
+},
+{
+"id": "AL061964",
+"name": "Dora",
+"peak_kt": 115,
+"peak_time": "1964-09-06T06:00:00",
+"category": 4,
+"ace": 30.0,
+"landfall": true,
+"min_pressure_mb": 942
+},
+{
+"id": "AL071964",
+"name": "Ethel",
+"peak_kt": 90,
+"peak_time": "1964-09-13T12:00:00",
+"category": 2,
+"ace": 16.98,
+"landfall": false,
+"min_pressure_mb": 969
+},
+{
+"id": "AL081964",
+"name": "Florence",
+"peak_kt": 40,
+"peak_time": "1964-09-08T00:00:00",
+"category": 0,
+"ace": 1.7,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL091964",
+"name": "Gladys",
+"peak_kt": 115,
+"peak_time": "1964-09-17T18:00:00",
+"category": 4,
+"ace": 30.3,
+"landfall": false,
+"min_pressure_mb": 945
+},
+{
+"id": "AL101964",
+"name": "Hilda",
+"peak_kt": 120,
+"peak_time": "1964-10-01T18:00:00",
+"category": 4,
+"ace": 17.02,
+"landfall": true,
+"min_pressure_mb": 941
+},
+{
+"id": "AL111964",
+"name": "Isbell",
+"peak_kt": 100,
+"peak_time": "1964-10-14T12:00:00",
+"category": 3,
+"ace": 9.69,
+"landfall": true,
+"min_pressure_mb": 964
+},
+{
+"id": "AL121964",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1964-11-07T06:00:00",
+"category": 0,
+"ace": 1.63,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL131964",
+"name": "Unnamed",
+"peak_kt": 50,
+"peak_time": "1964-07-26T06:00:00",
+"category": 0,
+"ace": 1.18,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL011965",
+"name": "Unnamed",
+"peak_kt": 50,
+"peak_time": "1965-06-15T06:00:00",
+"category": 0,
+"ace": 1.51,
+"landfall": true,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL021965",
+"name": "Anna",
+"peak_kt": 90,
+"peak_time": "1965-08-24T06:00:00",
+"category": 2,
+"ace": 7.85,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL031965",
+"name": "Betsy",
+"peak_kt": 120,
+"peak_time": "1965-09-02T12:00:00",
+"category": 4,
+"ace": 40.49,
+"landfall": true,
+"min_pressure_mb": 942
+},
+{
+"id": "AL041965",
+"name": "Carol",
+"peak_kt": 80,
+"peak_time": "1965-09-21T06:00:00",
+"category": 1,
+"ace": 19.67,
+"landfall": false,
+"min_pressure_mb": 974
+},
+{
+"id": "AL051965",
+"name": "Debbie",
+"peak_kt": 50,
+"peak_time": "1965-09-28T06:00:00",
+"category": 0,
+"ace": 1.73,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL061965",
+"name": "Elena",
+"peak_kt": 95,
+"peak_time": "1965-10-18T12:00:00",
+"category": 2,
+"ace": 9.11,
+"landfall": false,
+"min_pressure_mb": 977
+},
+{
+"id": "AL071965",
+"name": "Unnamed",
+"peak_kt": 50,
+"peak_time": "1965-09-07T18:00:00",
+"category": 0,
+"ace": 2.14,
+"landfall": false,
+"min_pressure_mb": 991
+},
+{
+"id": "AL081965",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1965-09-29T18:00:00",
+"category": 0,
+"ace": 1.0,
+"landfall": false,
+"min_pressure_mb": 993
+},
+{
+"id": "AL091965",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "1965-10-18T06:00:00",
+"category": 0,
+"ace": 2.0,
+"landfall": true,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL101965",
+"name": "Unnamed",
+"peak_kt": 45,
+"peak_time": "1965-11-27T18:00:00",
+"category": 0,
+"ace": 1.25,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL011966",
+"name": "Alma",
+"peak_kt": 100,
+"peak_time": "1966-06-08T18:00:00",
+"category": 3,
+"ace": 13.27,
+"landfall": true,
+"min_pressure_mb": 970
+},
+{
+"id": "AL021966",
+"name": "Becky",
+"peak_kt": 75,
+"peak_time": "1966-07-02T18:00:00",
+"category": 1,
+"ace": 2.39,
+"landfall": false,
+"min_pressure_mb": 984
+},
+{
+"id": "AL031966",
+"name": "Celia",
+"peak_kt": 65,
+"peak_time": "1966-07-20T18:00:00",
+"category": 1,
+"ace": 2.38,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL041966",
+"name": "Dorothy",
+"peak_kt": 75,
+"peak_time": "1966-07-26T12:00:00",
+"category": 1,
+"ace": 11.66,
+"landfall": false,
+"min_pressure_mb": 989
+},
+{
+"id": "AL051966",
+"name": "Ella",
+"peak_kt": 40,
+"peak_time": "1966-07-26T00:00:00",
+"category": 0,
+"ace": 2.23,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL061966",
+"name": "Faith",
+"peak_kt": 105,
+"peak_time": "1966-09-03T06:00:00",
+"category": 3,
+"ace": 33.36,
+"landfall": false,
+"min_pressure_mb": 950
+},
+{
+"id": "AL071966",
+"name": "Greta",
+"peak_kt": 45,
+"peak_time": "1966-09-04T18:00:00",
+"category": 0,
+"ace": 1.25,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL081966",
+"name": "Hallie",
+"peak_kt": 50,
+"peak_time": "1966-09-21T00:00:00",
+"category": 0,
+"ace": 0.91,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL091966",
+"name": "Inez",
+"peak_kt": 140,
+"peak_time": "1966-09-28T18:00:00",
+"category": 5,
+"ace": 51.48,
+"landfall": true,
+"min_pressure_mb": 927
+},
+{
+"id": "AL101966",
+"name": "Judith",
+"peak_kt": 40,
+"peak_time": "1966-09-29T12:00:00",
+"category": 0,
+"ace": 0.93,
+"landfall": true,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL111966",
+"name": "Lois",
+"peak_kt": 75,
+"peak_time": "1966-11-08T18:00:00",
+"category": 1,
+"ace": 7.72,
+"landfall": false,
+"min_pressure_mb": 983
+},
+{
+"id": "AL121966",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "1966-06-29T18:00:00",
+"category": 0,
+"ace": 1.81,
+"landfall": true,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL131966",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1966-07-26T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL141966",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1966-09-27T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL151966",
+"name": "Kendra",
+"peak_kt": 35,
+"peak_time": "1966-10-07T06:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL161966",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "1966-11-15T18:00:00",
+"category": 0,
+"ace": 3.77,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL171966",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "1966-11-24T12:00:00",
+"category": 0,
+"ace": 3.32,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL011967",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1967-06-10T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL031967",
+"name": "Unnamed",
+"peak_kt": 45,
+"peak_time": "1967-06-20T12:00:00",
+"category": 0,
+"ace": 0.86,
+"landfall": true,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL111967",
+"name": "Arlene",
+"peak_kt": 80,
+"peak_time": "1967-09-03T18:00:00",
+"category": 1,
+"ace": 6.95,
+"landfall": false,
+"min_pressure_mb": 982
+},
+{
+"id": "AL121967",
+"name": "Chloe",
+"peak_kt": 95,
+"peak_time": "1967-09-13T00:00:00",
+"category": 2,
+"ace": 31.39,
+"landfall": false,
+"min_pressure_mb": 958
+},
+{
+"id": "AL131967",
+"name": "Beulah",
+"peak_kt": 140,
+"peak_time": "1967-09-20T00:00:00",
+"category": 5,
+"ace": 40.14,
+"landfall": true,
+"min_pressure_mb": 923
+},
+{
+"id": "AL141967",
+"name": "Doria",
+"peak_kt": 85,
+"peak_time": "1967-09-14T18:00:00",
+"category": 2,
+"ace": 15.3,
+"landfall": true,
+"min_pressure_mb": 973
+},
+{
+"id": "AL151967",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1967-09-25T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1012
+},
+{
+"id": "AL161967",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "1967-09-28T00:00:00",
+"category": 0,
+"ace": 1.62,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL171967",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1967-09-27T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL181967",
+"name": "Edith",
+"peak_kt": 45,
+"peak_time": "1967-09-28T18:00:00",
+"category": 0,
+"ace": 1.38,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL191967",
+"name": "Fern",
+"peak_kt": 65,
+"peak_time": "1967-10-02T12:00:00",
+"category": 1,
+"ace": 3.08,
+"landfall": true,
+"min_pressure_mb": 987
+},
+{
+"id": "AL211967",
+"name": "Ginger",
+"peak_kt": 45,
+"peak_time": "1967-10-06T06:00:00",
+"category": 0,
+"ace": 1.17,
+"landfall": false,
+"min_pressure_mb": 1011
+},
+{
+"id": "AL231967",
+"name": "Unnamed",
+"peak_kt": 50,
+"peak_time": "1967-10-18T00:00:00",
+"category": 0,
+"ace": 2.96,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL241967",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1967-10-16T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL251967",
+"name": "Heidi",
+"peak_kt": 75,
+"peak_time": "1967-10-25T12:00:00",
+"category": 1,
+"ace": 19.12,
+"landfall": false,
+"min_pressure_mb": 981
+},
+{
+"id": "AL271967",
+"name": "Unnamed",
+"peak_kt": 45,
+"peak_time": "1967-06-21T18:00:00",
+"category": 0,
+"ace": 0.97,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL281967",
+"name": "Unnamed",
+"peak_kt": 35,
+"peak_time": "1967-09-03T12:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL011968",
+"name": "Abby",
+"peak_kt": 65,
+"peak_time": "1968-06-05T18:00:00",
+"category": 1,
+"ace": 5.32,
+"landfall": true,
+"min_pressure_mb": 992
+},
+{
+"id": "AL021968",
+"name": "Brenda",
+"peak_kt": 70,
+"peak_time": "1968-06-24T00:00:00",
+"category": 1,
+"ace": 7.16,
+"landfall": false,
+"min_pressure_mb": 990
+},
+{
+"id": "AL031968",
+"name": "Candy",
+"peak_kt": 60,
+"peak_time": "1968-06-23T22:30:00",
+"category": 0,
+"ace": 1.05,
+"landfall": true,
+"min_pressure_mb": 995
+},
+{
+"id": "AL051968",
+"name": "Dolly",
+"peak_kt": 75,
+"peak_time": "1968-08-12T18:00:00",
+"category": 1,
+"ace": 8.26,
+"landfall": false,
+"min_pressure_mb": 985
+},
+{
+"id": "AL061968",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1968-08-26T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL081968",
+"name": "Edna",
+"peak_kt": 60,
+"peak_time": "1968-09-15T00:00:00",
+"category": 0,
+"ace": 3.05,
+"landfall": false,
+"min_pressure_mb": 1012
+},
+{
+"id": "AL091968",
+"name": "Unnamed",
+"peak_kt": 75,
+"peak_time": "1968-09-20T12:00:00",
+"category": 1,
+"ace": 8.62,
+"landfall": false,
+"min_pressure_mb": 976
+},
+{
+"id": "AL101968",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1968-09-18T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL121968",
+"name": "Frances",
+"peak_kt": 50,
+"peak_time": "1968-09-27T12:00:00",
+"category": 0,
+"ace": 2.32,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL131968",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1968-09-26T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL141968",
+"name": "Gladys",
+"peak_kt": 85,
+"peak_time": "1968-10-19T00:00:00",
+"category": 2,
+"ace": 10.19,
+"landfall": true,
+"min_pressure_mb": 977
+},
+{
+"id": "AL151968",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1968-11-24T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL161968",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "1968-09-11T10:00:00",
+"category": 0,
+"ace": 0.63,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL031969",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1969-06-08T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL051969",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1969-07-26T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL061969",
+"name": "Anna",
+"peak_kt": 60,
+"peak_time": "1969-08-03T18:00:00",
+"category": 0,
+"ace": 5.99,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL071969",
+"name": "Blanche",
+"peak_kt": 75,
+"peak_time": "1969-08-12T00:00:00",
+"category": 1,
+"ace": 2.15,
+"landfall": false,
+"min_pressure_mb": 996
+},
+{
+"id": "AL081969",
+"name": "Debbie",
+"peak_kt": 110,
+"peak_time": "1969-08-20T00:00:00",
+"category": 3,
+"ace": 24.85,
+"landfall": false,
+"min_pressure_mb": 950
+},
+{
+"id": "AL091969",
+"name": "Camille",
+"peak_kt": 150,
+"peak_time": "1969-08-16T18:00:00",
+"category": 5,
+"ace": 23.2,
+"landfall": true,
+"min_pressure_mb": 900
+},
+{
+"id": "AL121969",
+"name": "Eve",
+"peak_kt": 45,
+"peak_time": "1969-08-26T06:00:00",
+"category": 0,
+"ace": 1.33,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL131969",
+"name": "Francelia",
+"peak_kt": 85,
+"peak_time": "1969-09-02T18:00:00",
+"category": 2,
+"ace": 8.69,
+"landfall": true,
+"min_pressure_mb": 973
+},
+{
+"id": "AL151969",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1969-09-07T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL161969",
+"name": "Gerda",
+"peak_kt": 105,
+"peak_time": "1969-09-09T18:00:00",
+"category": 3,
+"ace": 4.5,
+"landfall": true,
+"min_pressure_mb": 977
+},
+{
+"id": "AL171969",
+"name": "Holly",
+"peak_kt": 70,
+"peak_time": "1969-09-16T18:00:00",
+"category": 1,
+"ace": 4.63,
+"landfall": false,
+"min_pressure_mb": 984
+},
+{
+"id": "AL191969",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1969-09-19T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL201969",
+"name": "Inga",
+"peak_kt": 95,
+"peak_time": "1969-10-05T06:00:00",
+"category": 2,
+"ace": 24.89,
+"landfall": false,
+"min_pressure_mb": 964
+},
+{
+"id": "AL211969",
+"name": "Unnamed",
+"peak_kt": 70,
+"peak_time": "1969-09-28T12:00:00",
+"category": 1,
+"ace": 5.66,
+"landfall": false,
+"min_pressure_mb": 987
+},
+{
+"id": "AL221969",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1969-09-27T06:00:00",
+"category": 0,
+"ace": 6.05,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL231969",
+"name": "Unnamed",
+"peak_kt": 50,
+"peak_time": "1969-09-30T18:00:00",
+"category": 0,
+"ace": 1.72,
+"landfall": true,
+"min_pressure_mb": 995
+},
+{
+"id": "AL241969",
+"name": "Jenny",
+"peak_kt": 40,
+"peak_time": "1969-10-02T12:00:00",
+"category": 0,
+"ace": 0.44,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL251969",
+"name": "Kara",
+"peak_kt": 80,
+"peak_time": "1969-10-17T18:00:00",
+"category": 1,
+"ace": 9.38,
+"landfall": false,
+"min_pressure_mb": 978
+},
+{
+"id": "AL261969",
+"name": "Laurie",
+"peak_kt": 80,
+"peak_time": "1969-10-21T00:00:00",
+"category": 1,
+"ace": 7.93,
+"landfall": false,
+"min_pressure_mb": 973
+},
+{
+"id": "AL271969",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1969-10-30T06:00:00",
+"category": 0,
+"ace": 2.75,
+"landfall": false,
+"min_pressure_mb": 990
+},
+{
+"id": "AL281969",
+"name": "Unnamed",
+"peak_kt": 80,
+"peak_time": "1969-11-05T12:00:00",
+"category": 1,
+"ace": 8.75,
+"landfall": false,
+"min_pressure_mb": 988
+},
+{
+"id": "AL291969",
+"name": "Martha",
+"peak_kt": 80,
+"peak_time": "1969-11-22T06:00:00",
+"category": 1,
+"ace": 5.42,
+"landfall": true,
+"min_pressure_mb": 979
+},
+{
+"id": "AL301969",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1969-08-07T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL011970",
+"name": "Alma",
+"peak_kt": 65,
+"peak_time": "1970-05-20T18:00:00",
+"category": 1,
+"ace": 3.4,
+"landfall": false,
+"min_pressure_mb": 993
+},
+{
+"id": "AL021970",
+"name": "Becky",
+"peak_kt": 55,
+"peak_time": "1970-07-21T06:00:00",
+"category": 0,
+"ace": 2.38,
+"landfall": true,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL031970",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1970-07-29T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL041970",
+"name": "Celia",
+"peak_kt": 120,
+"peak_time": "1970-08-03T21:00:00",
+"category": 4,
+"ace": 8.34,
+"landfall": true,
+"min_pressure_mb": 944
+},
+{
+"id": "AL051970",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1970-08-03T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL071970",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1970-08-12T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL081970",
+"name": "Unnamed",
+"peak_kt": 70,
+"peak_time": "1970-08-18T12:00:00",
+"category": 1,
+"ace": 5.52,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL091970",
+"name": "Dorothy",
+"peak_kt": 60,
+"peak_time": "1970-08-20T06:00:00",
+"category": 0,
+"ace": 3.31,
+"landfall": true,
+"min_pressure_mb": 996
+},
+{
+"id": "AL101970",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "1970-09-05T06:00:00",
+"category": 0,
+"ace": 1.09,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL111970",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1970-09-05T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL121970",
+"name": "Ella",
+"peak_kt": 110,
+"peak_time": "1970-09-12T10:00:00",
+"category": 3,
+"ace": 5.34,
+"landfall": true,
+"min_pressure_mb": 962
+},
+{
+"id": "AL131970",
+"name": "Felice",
+"peak_kt": 60,
+"peak_time": "1970-09-15T18:00:00",
+"category": 0,
+"ace": 1.76,
+"landfall": true,
+"min_pressure_mb": 990
+},
+{
+"id": "AL141970",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1970-09-22T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL151970",
+"name": "Unnamed",
+"peak_kt": 75,
+"peak_time": "1970-10-18T12:00:00",
+"category": 1,
+"ace": 12.41,
+"landfall": false,
+"min_pressure_mb": 989
+},
+{
+"id": "AL161970",
+"name": "Greta",
+"peak_kt": 40,
+"peak_time": "1970-09-26T18:00:00",
+"category": 0,
+"ace": 0.89,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL181970",
+"name": "Unnamed",
+"peak_kt": 85,
+"peak_time": "1970-10-17T06:00:00",
+"category": 2,
+"ace": 6.94,
+"landfall": false,
+"min_pressure_mb": 974
+},
+{
+"id": "AL191970",
+"name": "Unnamed",
+"peak_kt": 85,
+"peak_time": "1970-10-26T06:00:00",
+"category": 2,
+"ace": 10.6,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL201970",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1970-09-01T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL211970",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "1970-09-21T00:00:00",
+"category": 0,
+"ace": 0.85,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL221970",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1970-11-13T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL231970",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1970-11-26T00:00:00",
+"category": 0,
+"ace": 3.82,
+"landfall": false,
+"min_pressure_mb": 987
+},
+{
+"id": "AL011971",
+"name": "Arlene",
+"peak_kt": 50,
+"peak_time": "1971-07-06T18:00:00",
+"category": 0,
+"ace": 2.44,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL031971",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1971-07-10T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1010
+},
+{
+"id": "AL041971",
+"name": "Unnamed",
+"peak_kt": 75,
+"peak_time": "1971-08-06T12:00:00",
+"category": 1,
+"ace": 1.38,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL061971",
+"name": "Beth",
+"peak_kt": 75,
+"peak_time": "1971-08-15T12:00:00",
+"category": 1,
+"ace": 4.83,
+"landfall": true,
+"min_pressure_mb": 977
+},
+{
+"id": "AL071971",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "1971-08-16T12:00:00",
+"category": 0,
+"ace": 0.4,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL081971",
+"name": "Chloe",
+"peak_kt": 50,
+"peak_time": "1971-08-20T12:00:00",
+"category": 0,
+"ace": 1.59,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL091971",
+"name": "Doria",
+"peak_kt": 60,
+"peak_time": "1971-08-27T18:00:00",
+"category": 0,
+"ace": 2.56,
+"landfall": true,
+"min_pressure_mb": 987
+},
+{
+"id": "AL111971",
+"name": "Fern",
+"peak_kt": 75,
+"peak_time": "1971-09-10T12:00:00",
+"category": 1,
+"ace": 5.98,
+"landfall": true,
+"min_pressure_mb": 978
+},
+{
+"id": "AL121971",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1971-09-05T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL131971",
+"name": "Edith",
+"peak_kt": 130,
+"peak_time": "1971-09-09T18:00:00",
+"category": 4,
+"ace": 16.85,
+"landfall": true,
+"min_pressure_mb": 943
+},
+{
+"id": "AL141971",
+"name": "Ginger",
+"peak_kt": 100,
+"peak_time": "1971-09-13T18:00:00",
+"category": 3,
+"ace": 37.41,
+"landfall": true,
+"min_pressure_mb": 959
+},
+{
+"id": "AL171971",
+"name": "Heidi",
+"peak_kt": 50,
+"peak_time": "1971-09-13T18:00:00",
+"category": 0,
+"ace": 2.49,
+"landfall": true,
+"min_pressure_mb": 995
+},
+{
+"id": "AL181971",
+"name": "Irene",
+"peak_kt": 110,
+"peak_time": "1971-09-26T06:00:00",
+"category": 3,
+"ace": 26.02,
+"landfall": true,
+"min_pressure_mb": 948
+},
+{
+"id": "AL191971",
+"name": "Janice",
+"peak_kt": 45,
+"peak_time": "1971-09-22T18:00:00",
+"category": 0,
+"ace": 1.5,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL201971",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1971-10-09T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL211971",
+"name": "Kristy",
+"peak_kt": 60,
+"peak_time": "1971-10-20T12:00:00",
+"category": 0,
+"ace": 1.51,
+"landfall": false,
+"min_pressure_mb": 992
+},
+{
+"id": "AL221971",
+"name": "Laura",
+"peak_kt": 60,
+"peak_time": "1971-11-15T18:00:00",
+"category": 0,
+"ace": 7.88,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL011972",
+"name": "Alpha",
+"peak_kt": 60,
+"peak_time": "1972-05-26T18:00:00",
+"category": 0,
+"ace": 3.0,
+"landfall": false,
+"min_pressure_mb": 988
+},
+{
+"id": "AL021972",
+"name": "Agnes",
+"peak_kt": 70,
+"peak_time": "1972-06-19T06:00:00",
+"category": 1,
+"ace": 6.22,
+"landfall": true,
+"min_pressure_mb": 977
+},
+{
+"id": "AL031972",
+"name": "Unnamed",
+"peak_kt": 45,
+"peak_time": "1972-06-20T12:00:00",
+"category": 0,
+"ace": 1.98,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL041972",
+"name": "Unnamed",
+"peak_kt": 35,
+"peak_time": "1972-07-11T12:00:00",
+"category": 0,
+"ace": 0.61,
+"landfall": true,
+"min_pressure_mb": 1014
+},
+{
+"id": "AL051972",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "1972-07-21T18:00:00",
+"category": 0,
+"ace": 1.18,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL061972",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1972-08-03T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL091972",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1972-08-17T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL101972",
+"name": "Betty",
+"peak_kt": 80,
+"peak_time": "1972-08-27T18:00:00",
+"category": 1,
+"ace": 12.0,
+"landfall": false,
+"min_pressure_mb": 976
+},
+{
+"id": "AL111972",
+"name": "Carrie",
+"peak_kt": 55,
+"peak_time": "1972-09-03T12:00:00",
+"category": 0,
+"ace": 2.48,
+"landfall": false,
+"min_pressure_mb": 992
+},
+{
+"id": "AL121972",
+"name": "Unnamed",
+"peak_kt": 45,
+"peak_time": "1972-09-04T06:00:00",
+"category": 0,
+"ace": 0.85,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL131972",
+"name": "Dawn",
+"peak_kt": 55,
+"peak_time": "1972-09-07T18:00:00",
+"category": 0,
+"ace": 5.05,
+"landfall": false,
+"min_pressure_mb": 996
+},
+{
+"id": "AL141972",
+"name": "Charlie",
+"peak_kt": 80,
+"peak_time": "1972-09-21T18:00:00",
+"category": 1,
+"ace": 0.88,
+"landfall": false,
+"min_pressure_mb": 944
+},
+{
+"id": "AL151972",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1972-09-20T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1009
+},
+{
+"id": "AL161972",
+"name": "Unnamed",
+"peak_kt": 35,
+"peak_time": "1972-09-29T18:00:00",
+"category": 0,
+"ace": 1.1,
+"landfall": false,
+"min_pressure_mb": 1012
+},
+{
+"id": "AL171972",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1972-10-05T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL181972",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1972-10-18T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL191972",
+"name": "Delta",
+"peak_kt": 40,
+"peak_time": "1972-11-02T12:00:00",
+"category": 0,
+"ace": 1.65,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL041973",
+"name": "Alice",
+"peak_kt": 75,
+"peak_time": "1973-07-04T06:00:00",
+"category": 1,
+"ace": 6.32,
+"landfall": true,
+"min_pressure_mb": 984
+},
+{
+"id": "AL061973",
+"name": "Alfa",
+"peak_kt": 40,
+"peak_time": "1973-07-31T12:00:00",
+"category": 0,
+"ace": 0.97,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL081973",
+"name": "Brenda",
+"peak_kt": 80,
+"peak_time": "1973-08-21T00:00:00",
+"category": 1,
+"ace": 4.72,
+"landfall": true,
+"min_pressure_mb": 977
+},
+{
+"id": "AL091973",
+"name": "Christine",
+"peak_kt": 50,
+"peak_time": "1973-08-31T12:00:00",
+"category": 0,
+"ace": 5.05,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL101973",
+"name": "Delia",
+"peak_kt": 75,
+"peak_time": "1973-09-04T18:00:00",
+"category": 1,
+"ace": 4.84,
+"landfall": true,
+"min_pressure_mb": 986
+},
+{
+"id": "AL111973",
+"name": "Unnamed",
+"peak_kt": 35,
+"peak_time": "1973-09-12T12:00:00",
+"category": 0,
+"ace": 0.37,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL121973",
+"name": "Ellen",
+"peak_kt": 100,
+"peak_time": "1973-09-21T18:00:00",
+"category": 3,
+"ace": 14.54,
+"landfall": false,
+"min_pressure_mb": 962
+},
+{
+"id": "AL131973",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1973-09-25T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1009
+},
+{
+"id": "AL141973",
+"name": "Fran",
+"peak_kt": 75,
+"peak_time": "1973-10-11T12:00:00",
+"category": 1,
+"ace": 5.91,
+"landfall": false,
+"min_pressure_mb": 974
+},
+{
+"id": "AL161973",
+"name": "Gilda",
+"peak_kt": 60,
+"peak_time": "1973-10-18T18:00:00",
+"category": 0,
+"ace": 6.78,
+"landfall": true,
+"min_pressure_mb": 968
+},
+{
+"id": "AL171973",
+"name": "Unnamed",
+"peak_kt": 35,
+"peak_time": "1973-11-18T00:00:00",
+"category": 0,
+"ace": 0.61,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL181973",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1973-04-25T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL191973",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "1973-07-23T18:00:00",
+"category": 0,
+"ace": 0.44,
+"landfall": true,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL201973",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "1973-10-08T12:00:00",
+"category": 0,
+"ace": 2.38,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL011974",
+"name": "Unnamed",
+"peak_kt": 45,
+"peak_time": "1974-06-25T20:30:00",
+"category": 0,
+"ace": 1.66,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL041974",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1974-07-16T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1013
+},
+{
+"id": "AL051974",
+"name": "Unnamed",
+"peak_kt": 50,
+"peak_time": "1974-07-18T12:00:00",
+"category": 0,
+"ace": 2.29,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL061974",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "1974-08-14T12:00:00",
+"category": 0,
+"ace": 2.27,
+"landfall": false,
+"min_pressure_mb": 996
+},
+{
+"id": "AL071974",
+"name": "Alma",
+"peak_kt": 50,
+"peak_time": "1974-08-13T18:00:00",
+"category": 0,
+"ace": 1.6,
+"landfall": true,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL081974",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1974-08-25T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1010
+},
+{
+"id": "AL091974",
+"name": "Becky",
+"peak_kt": 115,
+"peak_time": "1974-08-31T12:00:00",
+"category": 4,
+"ace": 14.49,
+"landfall": false,
+"min_pressure_mb": 977
+},
+{
+"id": "AL101974",
+"name": "Carmen",
+"peak_kt": 135,
+"peak_time": "1974-09-02T06:00:00",
+"category": 4,
+"ace": 25.35,
+"landfall": true,
+"min_pressure_mb": 928
+},
+{
+"id": "AL111974",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1974-09-09T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1011
+},
+{
+"id": "AL121974",
+"name": "Dolly",
+"peak_kt": 60,
+"peak_time": "1974-09-05T00:00:00",
+"category": 0,
+"ace": 1.1,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL131974",
+"name": "Elaine",
+"peak_kt": 55,
+"peak_time": "1974-09-10T12:00:00",
+"category": 0,
+"ace": 3.88,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL141974",
+"name": "Fifi",
+"peak_kt": 85,
+"peak_time": "1974-09-18T12:00:00",
+"category": 2,
+"ace": 8.25,
+"landfall": true,
+"min_pressure_mb": 970
+},
+{
+"id": "AL161974",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1974-09-26T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL171974",
+"name": "Gertrude",
+"peak_kt": 85,
+"peak_time": "1974-09-29T00:00:00",
+"category": 2,
+"ace": 5.91,
+"landfall": false,
+"min_pressure_mb": 992
+},
+{
+"id": "AL181974",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "1974-10-06T00:00:00",
+"category": 0,
+"ace": 2.41,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL211974",
+"name": "Unnamed",
+"peak_kt": 50,
+"peak_time": "1974-10-20T12:00:00",
+"category": 0,
+"ace": 1.59,
+"landfall": false,
+"min_pressure_mb": 1012
+},
+{
+"id": "AL021975",
+"name": "Amy",
+"peak_kt": 70,
+"peak_time": "1975-07-02T06:00:00",
+"category": 1,
+"ace": 8.15,
+"landfall": false,
+"min_pressure_mb": 981
+},
+{
+"id": "AL031975",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1975-07-05T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1012
+},
+{
+"id": "AL041975",
+"name": "Blanche",
+"peak_kt": 70,
+"peak_time": "1975-07-27T18:00:00",
+"category": 1,
+"ace": 4.54,
+"landfall": true,
+"min_pressure_mb": 981
+},
+{
+"id": "AL051975",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "1975-07-26T12:00:00",
+"category": 0,
+"ace": 0.56,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL061975",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1975-07-29T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1009
+},
+{
+"id": "AL071975",
+"name": "Caroline",
+"peak_kt": 100,
+"peak_time": "1975-08-31T06:00:00",
+"category": 3,
+"ace": 5.54,
+"landfall": true,
+"min_pressure_mb": 961
+},
+{
+"id": "AL081975",
+"name": "Doris",
+"peak_kt": 100,
+"peak_time": "1975-09-02T12:00:00",
+"category": 3,
+"ace": 14.33,
+"landfall": false,
+"min_pressure_mb": 945
+},
+{
+"id": "AL091975",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1975-09-04T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL101975",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1975-09-04T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL111975",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1975-09-06T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL131975",
+"name": "Eloise",
+"peak_kt": 110,
+"peak_time": "1975-09-23T12:00:00",
+"category": 3,
+"ace": 8.87,
+"landfall": true,
+"min_pressure_mb": 950
+},
+{
+"id": "AL141975",
+"name": "Faye",
+"peak_kt": 80,
+"peak_time": "1975-09-27T00:00:00",
+"category": 1,
+"ace": 10.43,
+"landfall": false,
+"min_pressure_mb": 977
+},
+{
+"id": "AL151975",
+"name": "Gladys",
+"peak_kt": 130,
+"peak_time": "1975-10-02T12:00:00",
+"category": 4,
+"ace": 22.77,
+"landfall": false,
+"min_pressure_mb": 939
+},
+{
+"id": "AL161975",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1975-09-26T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1010
+},
+{
+"id": "AL181975",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1975-10-15T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL191975",
+"name": "Hallie",
+"peak_kt": 45,
+"peak_time": "1975-10-27T00:00:00",
+"category": 0,
+"ace": 0.89,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL201975",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1975-10-28T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL211975",
+"name": "Unnamed",
+"peak_kt": 35,
+"peak_time": "1975-11-10T00:00:00",
+"category": 0,
+"ace": 0.61,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL221975",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1975-11-29T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL231975",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1975-12-10T12:00:00",
+"category": 0,
+"ace": 3.27,
+"landfall": false,
+"min_pressure_mb": 985
+},
+{
+"id": "AL241975",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "1975-01-06T00:00:00",
+"category": 0,
+"ace": 2.76,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL011976",
+"name": "Unnamed",
+"peak_kt": 45,
+"peak_time": "1976-05-24T12:00:00",
+"category": 0,
+"ace": 2.02,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL021976",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1976-06-07T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL031976",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1976-06-12T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL041976",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1976-07-20T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL051976",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1976-07-23T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL061976",
+"name": "Anna",
+"peak_kt": 45,
+"peak_time": "1976-08-02T12:00:00",
+"category": 0,
+"ace": 1.33,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL071976",
+"name": "Belle",
+"peak_kt": 105,
+"peak_time": "1976-08-09T00:00:00",
+"category": 3,
+"ace": 9.55,
+"landfall": false,
+"min_pressure_mb": 957
+},
+{
+"id": "AL081976",
+"name": "Dottie",
+"peak_kt": 45,
+"peak_time": "1976-08-20T06:00:00",
+"category": 0,
+"ace": 1.01,
+"landfall": false,
+"min_pressure_mb": 996
+},
+{
+"id": "AL091976",
+"name": "Candice",
+"peak_kt": 80,
+"peak_time": "1976-08-22T18:00:00",
+"category": 1,
+"ace": 8.8,
+"landfall": false,
+"min_pressure_mb": 964
+},
+{
+"id": "AL101976",
+"name": "Emmy",
+"peak_kt": 90,
+"peak_time": "1976-08-29T12:00:00",
+"category": 2,
+"ace": 30.04,
+"landfall": false,
+"min_pressure_mb": 974
+},
+{
+"id": "AL111976",
+"name": "Frances",
+"peak_kt": 100,
+"peak_time": "1976-09-01T06:00:00",
+"category": 3,
+"ace": 14.74,
+"landfall": false,
+"min_pressure_mb": 963
+},
+{
+"id": "AL121976",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1976-09-04T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL131976",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1976-09-05T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL141976",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "1976-09-15T00:00:00",
+"category": 0,
+"ace": 0.65,
+"landfall": false,
+"min_pressure_mb": 1011
+},
+{
+"id": "AL151976",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1976-09-21T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL161976",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1976-09-22T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL171976",
+"name": "Gloria",
+"peak_kt": 90,
+"peak_time": "1976-09-30T12:00:00",
+"category": 2,
+"ace": 11.53,
+"landfall": false,
+"min_pressure_mb": 970
+},
+{
+"id": "AL181976",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1976-09-27T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL191976",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1976-10-04T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL201976",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1976-10-14T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL211976",
+"name": "Holly",
+"peak_kt": 65,
+"peak_time": "1976-10-24T12:00:00",
+"category": 1,
+"ace": 4.5,
+"landfall": false,
+"min_pressure_mb": 990
+},
+{
+"id": "AL011977",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1977-06-13T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL021977",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1977-07-18T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL031977",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1977-07-25T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL041977",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1977-08-02T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL051977",
+"name": "Anita",
+"peak_kt": 150,
+"peak_time": "1977-09-02T06:00:00",
+"category": 5,
+"ace": 12.77,
+"landfall": false,
+"min_pressure_mb": 926
+},
+{
+"id": "AL061977",
+"name": "Babe",
+"peak_kt": 65,
+"peak_time": "1977-09-05T06:00:00",
+"category": 1,
+"ace": 2.31,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL071977",
+"name": "Clara",
+"peak_kt": 65,
+"peak_time": "1977-09-08T12:00:00",
+"category": 1,
+"ace": 3.68,
+"landfall": false,
+"min_pressure_mb": 993
+},
+{
+"id": "AL081977",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1977-09-17T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL091977",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1977-09-22T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL101977",
+"name": "Dorothy",
+"peak_kt": 75,
+"peak_time": "1977-09-29T00:00:00",
+"category": 1,
+"ace": 3.36,
+"landfall": false,
+"min_pressure_mb": 980
+},
+{
+"id": "AL111977",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1977-10-02T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL121977",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1977-10-04T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL131977",
+"name": "Evelyn",
+"peak_kt": 70,
+"peak_time": "1977-10-15T06:00:00",
+"category": 1,
+"ace": 2.42,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL141977",
+"name": "Frieda",
+"peak_kt": 50,
+"peak_time": "1977-10-18T00:00:00",
+"category": 0,
+"ace": 0.77,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL151977",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1977-10-25T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL011978",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "1978-01-20T12:00:00",
+"category": 0,
+"ace": 1.7,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL021978",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1978-06-21T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL031978",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1978-07-11T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL041978",
+"name": "Amelia",
+"peak_kt": 45,
+"peak_time": "1978-07-31T00:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL051978",
+"name": "Bess",
+"peak_kt": 45,
+"peak_time": "1978-08-07T18:00:00",
+"category": 0,
+"ace": 1.17,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL061978",
+"name": "Cora",
+"peak_kt": 80,
+"peak_time": "1978-08-09T00:00:00",
+"category": 1,
+"ace": 4.4,
+"landfall": false,
+"min_pressure_mb": 980
+},
+{
+"id": "AL071978",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1978-08-08T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL081978",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1978-08-09T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL091978",
+"name": "Debra",
+"peak_kt": 50,
+"peak_time": "1978-08-29T00:00:00",
+"category": 0,
+"ace": 0.41,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL101978",
+"name": "Ella",
+"peak_kt": 120,
+"peak_time": "1978-09-04T12:00:00",
+"category": 4,
+"ace": 19.24,
+"landfall": false,
+"min_pressure_mb": 956
+},
+{
+"id": "AL111978",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1978-08-31T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL121978",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1978-09-04T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL131978",
+"name": "Flossie",
+"peak_kt": 85,
+"peak_time": "1978-09-13T00:00:00",
+"category": 2,
+"ace": 11.74,
+"landfall": false,
+"min_pressure_mb": 976
+},
+{
+"id": "AL141978",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1978-09-09T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL151978",
+"name": "Hope",
+"peak_kt": 55,
+"peak_time": "1978-09-18T18:00:00",
+"category": 0,
+"ace": 5.39,
+"landfall": false,
+"min_pressure_mb": 987
+},
+{
+"id": "AL161978",
+"name": "Greta",
+"peak_kt": 115,
+"peak_time": "1978-09-18T06:00:00",
+"category": 4,
+"ace": 11.59,
+"landfall": false,
+"min_pressure_mb": 947
+},
+{
+"id": "AL171978",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1978-09-19T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL181978",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1978-09-22T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL191978",
+"name": "Irma",
+"peak_kt": 45,
+"peak_time": "1978-10-04T18:00:00",
+"category": 0,
+"ace": 0.89,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL201978",
+"name": "Juliet",
+"peak_kt": 45,
+"peak_time": "1978-10-09T00:00:00",
+"category": 0,
+"ace": 2.39,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL211978",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1978-10-15T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL221978",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1978-10-27T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL231978",
+"name": "Kendra",
+"peak_kt": 70,
+"peak_time": "1978-10-30T12:00:00",
+"category": 1,
+"ace": 3.82,
+"landfall": false,
+"min_pressure_mb": 990
+},
+{
+"id": "AL241978",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1978-11-03T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL011979",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1979-06-12T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL021979",
+"name": "Ana",
+"peak_kt": 50,
+"peak_time": "1979-06-22T12:00:00",
+"category": 0,
+"ace": 0.81,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL031979",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1979-07-08T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL041979",
+"name": "Bob",
+"peak_kt": 65,
+"peak_time": "1979-07-11T00:00:00",
+"category": 1,
+"ace": 2.1,
+"landfall": false,
+"min_pressure_mb": 986
+},
+{
+"id": "AL051979",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1979-07-11T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL061979",
+"name": "Claudette",
+"peak_kt": 45,
+"peak_time": "1979-07-24T12:00:00",
+"category": 0,
+"ace": 1.62,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL071979",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1979-07-24T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL081979",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1979-08-01T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL091979",
+"name": "David",
+"peak_kt": 150,
+"peak_time": "1979-08-30T18:00:00",
+"category": 5,
+"ace": 43.99,
+"landfall": false,
+"min_pressure_mb": 924
+},
+{
+"id": "AL101979",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1979-08-26T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL111979",
+"name": "Frederic",
+"peak_kt": 115,
+"peak_time": "1979-09-12T12:00:00",
+"category": 4,
+"ace": 20.69,
+"landfall": false,
+"min_pressure_mb": 943
+},
+{
+"id": "AL121979",
+"name": "Elena",
+"peak_kt": 35,
+"peak_time": "1979-08-30T18:00:00",
+"category": 0,
+"ace": 0.98,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL131979",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1979-09-02T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL141979",
+"name": "Gloria",
+"peak_kt": 85,
+"peak_time": "1979-09-12T18:00:00",
+"category": 2,
+"ace": 17.37,
+"landfall": false,
+"min_pressure_mb": 975
+},
+{
+"id": "AL151979",
+"name": "Henri",
+"peak_kt": 75,
+"peak_time": "1979-09-17T12:00:00",
+"category": 1,
+"ace": 3.7,
+"landfall": false,
+"min_pressure_mb": 983
+},
+{
+"id": "AL161979",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1979-09-18T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL171979",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1979-10-13T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL181979",
+"name": "Unnamed",
+"peak_kt": 65,
+"peak_time": "1979-10-24T18:00:00",
+"category": 1,
+"ace": 1.65,
+"landfall": false,
+"min_pressure_mb": 980
+},
+{
+"id": "AL191979",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1979-10-25T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL201979",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1979-11-08T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL011980",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1980-07-17T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL021980",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1980-07-18T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL031980",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1980-07-22T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL041980",
+"name": "Allen",
+"peak_kt": 165,
+"peak_time": "1980-08-07T18:00:00",
+"category": 5,
+"ace": 52.28,
+"landfall": false,
+"min_pressure_mb": 899
+},
+{
+"id": "AL051980",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1980-08-13T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL061980",
+"name": "Bonnie",
+"peak_kt": 85,
+"peak_time": "1980-08-16T06:00:00",
+"category": 2,
+"ace": 8.75,
+"landfall": false,
+"min_pressure_mb": 975
+},
+{
+"id": "AL071980",
+"name": "Charley",
+"peak_kt": 70,
+"peak_time": "1980-08-23T06:00:00",
+"category": 1,
+"ace": 5.07,
+"landfall": false,
+"min_pressure_mb": 989
+},
+{
+"id": "AL081980",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1980-08-26T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL091980",
+"name": "Georges",
+"peak_kt": 70,
+"peak_time": "1980-09-08T00:00:00",
+"category": 1,
+"ace": 2.81,
+"landfall": false,
+"min_pressure_mb": 993
+},
+{
+"id": "AL101980",
+"name": "Earl",
+"peak_kt": 65,
+"peak_time": "1980-09-08T06:00:00",
+"category": 1,
+"ace": 6.65,
+"landfall": false,
+"min_pressure_mb": 985
+},
+{
+"id": "AL111980",
+"name": "Danielle",
+"peak_kt": 50,
+"peak_time": "1980-09-05T18:00:00",
+"category": 0,
+"ace": 0.53,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL121980",
+"name": "Frances",
+"peak_kt": 100,
+"peak_time": "1980-09-09T00:00:00",
+"category": 3,
+"ace": 37.23,
+"landfall": false,
+"min_pressure_mb": 958
+},
+{
+"id": "AL131980",
+"name": "Hermine",
+"peak_kt": 60,
+"peak_time": "1980-09-22T12:00:00",
+"category": 0,
+"ace": 4.46,
+"landfall": false,
+"min_pressure_mb": 993
+},
+{
+"id": "AL141980",
+"name": "Ivan",
+"peak_kt": 90,
+"peak_time": "1980-10-06T18:00:00",
+"category": 2,
+"ace": 18.64,
+"landfall": false,
+"min_pressure_mb": 970
+},
+{
+"id": "AL151980",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1980-10-16T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL161980",
+"name": "Jeanne",
+"peak_kt": 85,
+"peak_time": "1980-11-12T00:00:00",
+"category": 2,
+"ace": 7.36,
+"landfall": false,
+"min_pressure_mb": 986
+},
+{
+"id": "AL171980",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1980-11-13T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL181980",
+"name": "Karl",
+"peak_kt": 75,
+"peak_time": "1980-11-26T06:00:00",
+"category": 1,
+"ace": 5.16,
+"landfall": false,
+"min_pressure_mb": 985
+},
+{
+"id": "AL011981",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1981-04-06T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL021981",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1981-04-19T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL031981",
+"name": "Arlene",
+"peak_kt": 50,
+"peak_time": "1981-05-08T18:00:00",
+"category": 0,
+"ace": 0.73,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL041981",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1981-06-04T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL051981",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1981-06-18T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL061981",
+"name": "Bret",
+"peak_kt": 60,
+"peak_time": "1981-06-30T06:00:00",
+"category": 0,
+"ace": 1.96,
+"landfall": false,
+"min_pressure_mb": 996
+},
+{
+"id": "AL071981",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1981-07-03T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL081981",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1981-07-26T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL091981",
+"name": "Cindy",
+"peak_kt": 50,
+"peak_time": "1981-08-04T00:00:00",
+"category": 0,
+"ace": 1.52,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL101981",
+"name": "Dennis",
+"peak_kt": 70,
+"peak_time": "1981-08-21T00:00:00",
+"category": 1,
+"ace": 6.38,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL111981",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1981-08-18T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL121981",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1981-08-27T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL131981",
+"name": "Emily",
+"peak_kt": 80,
+"peak_time": "1981-09-05T18:00:00",
+"category": 1,
+"ace": 15.21,
+"landfall": false,
+"min_pressure_mb": 966
+},
+{
+"id": "AL141981",
+"name": "Floyd",
+"peak_kt": 100,
+"peak_time": "1981-09-07T00:00:00",
+"category": 3,
+"ace": 13.83,
+"landfall": false,
+"min_pressure_mb": 975
+},
+{
+"id": "AL151981",
+"name": "Gert",
+"peak_kt": 90,
+"peak_time": "1981-09-11T12:00:00",
+"category": 2,
+"ace": 10.1,
+"landfall": false,
+"min_pressure_mb": 988
+},
+{
+"id": "AL161981",
+"name": "Harvey",
+"peak_kt": 115,
+"peak_time": "1981-09-15T00:00:00",
+"category": 4,
+"ace": 16.38,
+"landfall": false,
+"min_pressure_mb": 946
+},
+{
+"id": "AL171981",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1981-09-12T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL181981",
+"name": "Irene",
+"peak_kt": 105,
+"peak_time": "1981-09-28T06:00:00",
+"category": 3,
+"ace": 22.24,
+"landfall": false,
+"min_pressure_mb": 959
+},
+{
+"id": "AL191981",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1981-09-27T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL201981",
+"name": "Jose",
+"peak_kt": 45,
+"peak_time": "1981-10-31T12:00:00",
+"category": 0,
+"ace": 1.62,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL211981",
+"name": "Katrina",
+"peak_kt": 75,
+"peak_time": "1981-11-05T12:00:00",
+"category": 1,
+"ace": 4.18,
+"landfall": false,
+"min_pressure_mb": 980
+},
+{
+"id": "AL221981",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1981-11-14T00:00:00",
+"category": 0,
+"ace": 6.16,
+"landfall": false,
+"min_pressure_mb": 978
+},
+{
+"id": "AL011982",
+"name": "Alberto",
+"peak_kt": 75,
+"peak_time": "1982-06-03T18:00:00",
+"category": 1,
+"ace": 2.06,
+"landfall": false,
+"min_pressure_mb": 985
+},
+{
+"id": "AL021982",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "1982-06-18T18:00:00",
+"category": 0,
+"ace": 3.04,
+"landfall": false,
+"min_pressure_mb": 984
+},
+{
+"id": "AL031982",
+"name": "Beryl",
+"peak_kt": 60,
+"peak_time": "1982-08-31T06:00:00",
+"category": 0,
+"ace": 5.31,
+"landfall": false,
+"min_pressure_mb": 989
+},
+{
+"id": "AL041982",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1982-09-06T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL051982",
+"name": "Chris",
+"peak_kt": 55,
+"peak_time": "1982-09-11T12:00:00",
+"category": 0,
+"ace": 1.29,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL061982",
+"name": "Debby",
+"peak_kt": 115,
+"peak_time": "1982-09-18T00:00:00",
+"category": 4,
+"ace": 18.15,
+"landfall": false,
+"min_pressure_mb": 950
+},
+{
+"id": "AL071982",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1982-09-24T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL081982",
+"name": "Ernesto",
+"peak_kt": 60,
+"peak_time": "1982-10-02T00:00:00",
+"category": 0,
+"ace": 1.65,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL011983",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1983-07-24T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL021983",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1983-07-28T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL031983",
+"name": "Alicia",
+"peak_kt": 100,
+"peak_time": "1983-08-18T06:00:00",
+"category": 3,
+"ace": 6.38,
+"landfall": true,
+"min_pressure_mb": 962
+},
+{
+"id": "AL041983",
+"name": "Barry",
+"peak_kt": 70,
+"peak_time": "1983-08-28T17:25:00",
+"category": 1,
+"ace": 3.14,
+"landfall": true,
+"min_pressure_mb": 986
+},
+{
+"id": "AL051983",
+"name": "Chantal",
+"peak_kt": 65,
+"peak_time": "1983-09-11T18:00:00",
+"category": 1,
+"ace": 4.27,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL061983",
+"name": "Dean",
+"peak_kt": 55,
+"peak_time": "1983-09-29T00:00:00",
+"category": 0,
+"ace": 3.61,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL011984",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1984-06-12T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL021984",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1984-06-19T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL031984",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1984-07-25T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL041984",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1984-08-07T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL051984",
+"name": "Unnamed",
+"peak_kt": 50,
+"peak_time": "1984-08-20T12:00:00",
+"category": 0,
+"ace": 1.47,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL061984",
+"name": "Arthur",
+"peak_kt": 45,
+"peak_time": "1984-08-29T18:00:00",
+"category": 0,
+"ace": 1.3,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL071984",
+"name": "Bertha",
+"peak_kt": 35,
+"peak_time": "1984-08-31T12:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL081984",
+"name": "Cesar",
+"peak_kt": 50,
+"peak_time": "1984-09-02T12:00:00",
+"category": 0,
+"ace": 1.54,
+"landfall": false,
+"min_pressure_mb": 989
+},
+{
+"id": "AL091984",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1984-09-07T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL101984",
+"name": "Diana",
+"peak_kt": 115,
+"peak_time": "1984-09-12T00:00:00",
+"category": 4,
+"ace": 15.18,
+"landfall": true,
+"min_pressure_mb": 949
+},
+{
+"id": "AL111984",
+"name": "Edouard",
+"peak_kt": 55,
+"peak_time": "1984-09-15T00:00:00",
+"category": 0,
+"ace": 0.79,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL121984",
+"name": "Fran",
+"peak_kt": 55,
+"peak_time": "1984-09-17T18:00:00",
+"category": 0,
+"ace": 3.27,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL131984",
+"name": "Gustav",
+"peak_kt": 45,
+"peak_time": "1984-09-18T18:00:00",
+"category": 0,
+"ace": 0.61,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL141984",
+"name": "Hortense",
+"peak_kt": 65,
+"peak_time": "1984-09-25T18:00:00",
+"category": 1,
+"ace": 7.45,
+"landfall": false,
+"min_pressure_mb": 993
+},
+{
+"id": "AL151984",
+"name": "Isidore",
+"peak_kt": 50,
+"peak_time": "1984-09-27T06:00:00",
+"category": 0,
+"ace": 3.62,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL161984",
+"name": "Josephine",
+"peak_kt": 90,
+"peak_time": "1984-10-12T00:00:00",
+"category": 2,
+"ace": 19.48,
+"landfall": false,
+"min_pressure_mb": 965
+},
+{
+"id": "AL171984",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1984-10-26T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL181984",
+"name": "Klaus",
+"peak_kt": 80,
+"peak_time": "1984-11-08T18:00:00",
+"category": 1,
+"ace": 12.86,
+"landfall": false,
+"min_pressure_mb": 971
+},
+{
+"id": "AL191984",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1984-11-24T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL201984",
+"name": "Lili",
+"peak_kt": 70,
+"peak_time": "1984-12-20T12:00:00",
+"category": 1,
+"ace": 16.24,
+"landfall": false,
+"min_pressure_mb": 980
+},
+{
+"id": "AL011985",
+"name": "Ana",
+"peak_kt": 60,
+"peak_time": "1985-07-19T00:00:00",
+"category": 0,
+"ace": 2.08,
+"landfall": false,
+"min_pressure_mb": 996
+},
+{
+"id": "AL021985",
+"name": "Bob",
+"peak_kt": 65,
+"peak_time": "1985-07-24T18:00:00",
+"category": 1,
+"ace": 2.85,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL031985",
+"name": "Claudette",
+"peak_kt": 75,
+"peak_time": "1985-08-15T12:00:00",
+"category": 1,
+"ace": 7.17,
+"landfall": false,
+"min_pressure_mb": 980
+},
+{
+"id": "AL041985",
+"name": "Danny",
+"peak_kt": 80,
+"peak_time": "1985-08-15T12:00:00",
+"category": 1,
+"ace": 3.53,
+"landfall": true,
+"min_pressure_mb": 987
+},
+{
+"id": "AL051985",
+"name": "Elena",
+"peak_kt": 110,
+"peak_time": "1985-09-01T18:00:00",
+"category": 3,
+"ace": 15.82,
+"landfall": true,
+"min_pressure_mb": 953
+},
+{
+"id": "AL061985",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1985-09-09T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL071985",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1985-09-11T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL081985",
+"name": "Fabian",
+"peak_kt": 55,
+"peak_time": "1985-09-17T12:00:00",
+"category": 0,
+"ace": 3.34,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL091985",
+"name": "Gloria",
+"peak_kt": 125,
+"peak_time": "1985-09-25T06:00:00",
+"category": 4,
+"ace": 21.15,
+"landfall": true,
+"min_pressure_mb": 920
+},
+{
+"id": "AL101985",
+"name": "Henri",
+"peak_kt": 50,
+"peak_time": "1985-09-23T12:00:00",
+"category": 0,
+"ace": 1.1,
+"landfall": true,
+"min_pressure_mb": 996
+},
+{
+"id": "AL111985",
+"name": "Isabel",
+"peak_kt": 60,
+"peak_time": "1985-10-08T18:00:00",
+"category": 0,
+"ace": 3.79,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL121985",
+"name": "Juan",
+"peak_kt": 75,
+"peak_time": "1985-10-28T12:00:00",
+"category": 1,
+"ace": 8.09,
+"landfall": true,
+"min_pressure_mb": 971
+},
+{
+"id": "AL131985",
+"name": "Kate",
+"peak_kt": 105,
+"peak_time": "1985-11-20T12:00:00",
+"category": 3,
+"ace": 19.07,
+"landfall": true,
+"min_pressure_mb": 954
+},
+{
+"id": "AL141985",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1985-12-08T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL011986",
+"name": "Andrew",
+"peak_kt": 45,
+"peak_time": "1986-06-06T12:00:00",
+"category": 0,
+"ace": 2.19,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL021986",
+"name": "Bonnie",
+"peak_kt": 75,
+"peak_time": "1986-06-26T06:00:00",
+"category": 1,
+"ace": 2.93,
+"landfall": true,
+"min_pressure_mb": 990
+},
+{
+"id": "AL031986",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1986-07-25T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL041986",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1986-08-04T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL051986",
+"name": "Charley",
+"peak_kt": 70,
+"peak_time": "1986-08-18T00:00:00",
+"category": 1,
+"ace": 5.63,
+"landfall": true,
+"min_pressure_mb": 980
+},
+{
+"id": "AL061986",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1986-08-31T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL071986",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1986-09-03T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL081986",
+"name": "Danielle",
+"peak_kt": 50,
+"peak_time": "1986-09-08T06:00:00",
+"category": 0,
+"ace": 1.56,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL091986",
+"name": "Earl",
+"peak_kt": 90,
+"peak_time": "1986-09-12T18:00:00",
+"category": 2,
+"ace": 19.68,
+"landfall": false,
+"min_pressure_mb": 979
+},
+{
+"id": "AL101986",
+"name": "Frances",
+"peak_kt": 75,
+"peak_time": "1986-11-20T12:00:00",
+"category": 1,
+"ace": 3.8,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL011987",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1987-05-25T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL031987",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "1987-08-10T00:00:00",
+"category": 0,
+"ace": 0.6,
+"landfall": true,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL021987",
+"name": "Arlene",
+"peak_kt": 65,
+"peak_time": "1987-08-22T06:00:00",
+"category": 1,
+"ace": 11.91,
+"landfall": false,
+"min_pressure_mb": 987
+},
+{
+"id": "AL041987",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1987-08-13T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL051987",
+"name": "Bret",
+"peak_kt": 45,
+"peak_time": "1987-08-20T06:00:00",
+"category": 0,
+"ace": 2.35,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL061987",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1987-08-31T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL071987",
+"name": "Cindy",
+"peak_kt": 45,
+"peak_time": "1987-09-08T00:00:00",
+"category": 0,
+"ace": 1.91,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL081987",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1987-09-06T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL091987",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1987-09-07T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL101987",
+"name": "Dennis",
+"peak_kt": 45,
+"peak_time": "1987-09-11T12:00:00",
+"category": 0,
+"ace": 4.07,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL111987",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1987-09-14T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL121987",
+"name": "Emily",
+"peak_kt": 110,
+"peak_time": "1987-09-22T18:00:00",
+"category": 3,
+"ace": 10.19,
+"landfall": true,
+"min_pressure_mb": 958
+},
+{
+"id": "AL131987",
+"name": "Floyd",
+"peak_kt": 65,
+"peak_time": "1987-10-12T12:00:00",
+"category": 1,
+"ace": 3.34,
+"landfall": true,
+"min_pressure_mb": 993
+},
+{
+"id": "AL141987",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1987-10-31T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL011988",
+"name": "Alberto",
+"peak_kt": 35,
+"peak_time": "1988-08-07T12:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL021988",
+"name": "Beryl",
+"peak_kt": 45,
+"peak_time": "1988-08-09T00:00:00",
+"category": 0,
+"ace": 1.05,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL031988",
+"name": "Chris",
+"peak_kt": 45,
+"peak_time": "1988-08-28T12:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": true,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL041988",
+"name": "Debby",
+"peak_kt": 65,
+"peak_time": "1988-09-02T18:00:00",
+"category": 1,
+"ace": 1.63,
+"landfall": true,
+"min_pressure_mb": 987
+},
+{
+"id": "AL051988",
+"name": "Ernesto",
+"peak_kt": 55,
+"peak_time": "1988-09-05T00:00:00",
+"category": 0,
+"ace": 1.29,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL061988",
+"name": "Unnamed",
+"peak_kt": 50,
+"peak_time": "1988-09-08T12:00:00",
+"category": 0,
+"ace": 1.69,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL071988",
+"name": "Florence",
+"peak_kt": 70,
+"peak_time": "1988-09-09T23:00:00",
+"category": 1,
+"ace": 3.05,
+"landfall": true,
+"min_pressure_mb": 982
+},
+{
+"id": "AL081988",
+"name": "Gilbert",
+"peak_kt": 160,
+"peak_time": "1988-09-14T00:00:00",
+"category": 5,
+"ace": 32.76,
+"landfall": true,
+"min_pressure_mb": 888
+},
+{
+"id": "AL091988",
+"name": "Helene",
+"peak_kt": 125,
+"peak_time": "1988-09-23T18:00:00",
+"category": 4,
+"ace": 31.45,
+"landfall": false,
+"min_pressure_mb": 938
+},
+{
+"id": "AL101988",
+"name": "Isaac",
+"peak_kt": 40,
+"peak_time": "1988-10-01T00:00:00",
+"category": 0,
+"ace": 0.4,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL111988",
+"name": "Joan",
+"peak_kt": 125,
+"peak_time": "1988-10-22T06:00:00",
+"category": 4,
+"ace": 23.72,
+"landfall": true,
+"min_pressure_mb": 932
+},
+{
+"id": "AL121988",
+"name": "Keith",
+"peak_kt": 65,
+"peak_time": "1988-11-26T00:00:00",
+"category": 1,
+"ace": 4.99,
+"landfall": true,
+"min_pressure_mb": 945
+},
+{
+"id": "AL131988",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1988-05-31T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL141988",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1988-08-13T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL151988",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1988-08-21T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL161988",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1988-08-21T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL171988",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1988-09-04T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL181988",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1988-09-27T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL191988",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1988-10-20T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL011989",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1989-06-15T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL021989",
+"name": "Allison",
+"peak_kt": 45,
+"peak_time": "1989-06-26T18:00:00",
+"category": 0,
+"ace": 0.93,
+"landfall": true,
+"min_pressure_mb": 999
+},
+{
+"id": "AL031989",
+"name": "Barry",
+"peak_kt": 45,
+"peak_time": "1989-07-12T00:00:00",
+"category": 0,
+"ace": 1.77,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL041989",
+"name": "Chantal",
+"peak_kt": 70,
+"peak_time": "1989-08-01T06:00:00",
+"category": 1,
+"ace": 2.45,
+"landfall": true,
+"min_pressure_mb": 984
+},
+{
+"id": "AL051989",
+"name": "Dean",
+"peak_kt": 90,
+"peak_time": "1989-08-07T00:00:00",
+"category": 2,
+"ace": 15.65,
+"landfall": true,
+"min_pressure_mb": 968
+},
+{
+"id": "AL061989",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1989-08-16T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL071989",
+"name": "Erin",
+"peak_kt": 90,
+"peak_time": "1989-08-24T12:00:00",
+"category": 2,
+"ace": 14.18,
+"landfall": false,
+"min_pressure_mb": 968
+},
+{
+"id": "AL081989",
+"name": "Felix",
+"peak_kt": 75,
+"peak_time": "1989-09-05T18:00:00",
+"category": 1,
+"ace": 9.73,
+"landfall": false,
+"min_pressure_mb": 979
+},
+{
+"id": "AL091989",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1989-08-27T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL101989",
+"name": "Gabrielle",
+"peak_kt": 125,
+"peak_time": "1989-09-05T00:00:00",
+"category": 4,
+"ace": 38.24,
+"landfall": false,
+"min_pressure_mb": 935
+},
+{
+"id": "AL111989",
+"name": "Hugo",
+"peak_kt": 140,
+"peak_time": "1989-09-15T18:00:00",
+"category": 5,
+"ace": 42.69,
+"landfall": true,
+"min_pressure_mb": 918
+},
+{
+"id": "AL121989",
+"name": "Iris",
+"peak_kt": 60,
+"peak_time": "1989-09-19T12:00:00",
+"category": 0,
+"ace": 2.54,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL131989",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1989-10-03T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL141989",
+"name": "Jerry",
+"peak_kt": 75,
+"peak_time": "1989-10-16T00:00:00",
+"category": 1,
+"ace": 4.02,
+"landfall": true,
+"min_pressure_mb": 982
+},
+{
+"id": "AL151989",
+"name": "Karen",
+"peak_kt": 50,
+"peak_time": "1989-11-30T12:00:00",
+"category": 0,
+"ace": 2.65,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL011990",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1990-05-24T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL021990",
+"name": "Arthur",
+"peak_kt": 60,
+"peak_time": "1990-07-25T18:00:00",
+"category": 0,
+"ace": 2.31,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL031990",
+"name": "Bertha",
+"peak_kt": 70,
+"peak_time": "1990-07-31T00:00:00",
+"category": 1,
+"ace": 7.92,
+"landfall": false,
+"min_pressure_mb": 973
+},
+{
+"id": "AL041990",
+"name": "Cesar",
+"peak_kt": 45,
+"peak_time": "1990-08-02T06:00:00",
+"category": 0,
+"ace": 3.4,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL061990",
+"name": "Edouard",
+"peak_kt": 40,
+"peak_time": "1990-08-03T18:00:00",
+"category": 0,
+"ace": 1.58,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL051990",
+"name": "Diana",
+"peak_kt": 85,
+"peak_time": "1990-08-07T18:00:00",
+"category": 2,
+"ace": 4.26,
+"landfall": true,
+"min_pressure_mb": 980
+},
+{
+"id": "AL071990",
+"name": "Fran",
+"peak_kt": 35,
+"peak_time": "1990-08-13T18:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL081990",
+"name": "Gustav",
+"peak_kt": 105,
+"peak_time": "1990-08-31T06:00:00",
+"category": 3,
+"ace": 22.95,
+"landfall": false,
+"min_pressure_mb": 956
+},
+{
+"id": "AL091990",
+"name": "Hortense",
+"peak_kt": 55,
+"peak_time": "1990-08-28T06:00:00",
+"category": 0,
+"ace": 3.26,
+"landfall": false,
+"min_pressure_mb": 993
+},
+{
+"id": "AL101990",
+"name": "Isidore",
+"peak_kt": 85,
+"peak_time": "1990-09-07T12:00:00",
+"category": 2,
+"ace": 19.53,
+"landfall": false,
+"min_pressure_mb": 978
+},
+{
+"id": "AL111990",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1990-09-18T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL121990",
+"name": "Josephine",
+"peak_kt": 75,
+"peak_time": "1990-10-05T18:00:00",
+"category": 1,
+"ace": 6.62,
+"landfall": false,
+"min_pressure_mb": 980
+},
+{
+"id": "AL131990",
+"name": "Klaus",
+"peak_kt": 70,
+"peak_time": "1990-10-05T12:00:00",
+"category": 1,
+"ace": 6.12,
+"landfall": false,
+"min_pressure_mb": 985
+},
+{
+"id": "AL141990",
+"name": "Lili",
+"peak_kt": 65,
+"peak_time": "1990-10-11T00:00:00",
+"category": 1,
+"ace": 10.74,
+"landfall": false,
+"min_pressure_mb": 987
+},
+{
+"id": "AL151990",
+"name": "Marco",
+"peak_kt": 55,
+"peak_time": "1990-10-11T06:00:00",
+"category": 0,
+"ace": 1.45,
+"landfall": false,
+"min_pressure_mb": 989
+},
+{
+"id": "AL161990",
+"name": "Nana",
+"peak_kt": 75,
+"peak_time": "1990-10-18T06:00:00",
+"category": 1,
+"ace": 6.17,
+"landfall": false,
+"min_pressure_mb": 989
+},
+{
+"id": "AL011991",
+"name": "Ana",
+"peak_kt": 45,
+"peak_time": "1991-07-04T06:00:00",
+"category": 0,
+"ace": 1.25,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL021991",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1991-07-06T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL031991",
+"name": "Bob",
+"peak_kt": 100,
+"peak_time": "1991-08-19T06:00:00",
+"category": 3,
+"ace": 7.97,
+"landfall": true,
+"min_pressure_mb": 950
+},
+{
+"id": "AL041991",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1991-08-24T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1009
+},
+{
+"id": "AL051991",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1991-08-28T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": null
+},
+{
+"id": "AL061991",
+"name": "Claudette",
+"peak_kt": 115,
+"peak_time": "1991-09-07T10:00:00",
+"category": 4,
+"ace": 14.01,
+"landfall": false,
+"min_pressure_mb": 944
+},
+{
+"id": "AL071991",
+"name": "Danny",
+"peak_kt": 45,
+"peak_time": "1991-09-09T06:00:00",
+"category": 0,
+"ace": 2.06,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL081991",
+"name": "Erika",
+"peak_kt": 50,
+"peak_time": "1991-09-10T12:00:00",
+"category": 0,
+"ace": 1.97,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL091991",
+"name": "Fabian",
+"peak_kt": 40,
+"peak_time": "1991-10-15T18:00:00",
+"category": 0,
+"ace": 0.76,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL101991",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "1991-10-24T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1009
+},
+{
+"id": "AL111991",
+"name": "Grace",
+"peak_kt": 90,
+"peak_time": "1991-10-29T14:00:00",
+"category": 2,
+"ace": 4.98,
+"landfall": false,
+"min_pressure_mb": 980
+},
+{
+"id": "AL121991",
+"name": "Unnamed",
+"peak_kt": 65,
+"peak_time": "1991-11-01T18:00:00",
+"category": 1,
+"ace": 2.53,
+"landfall": true,
+"min_pressure_mb": 972
+},
+{
+"id": "AL011992",
+"name": "Unnamed",
+"peak_kt": 45,
+"peak_time": "1992-04-22T06:00:00",
+"category": 0,
+"ace": 1.09,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL021992",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1992-06-25T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL031992",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1992-07-25T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1015
+},
+{
+"id": "AL041992",
+"name": "Andrew",
+"peak_kt": 150,
+"peak_time": "1992-08-23T18:00:00",
+"category": 5,
+"ace": 28.45,
+"landfall": true,
+"min_pressure_mb": 922
+},
+{
+"id": "AL051992",
+"name": "Bonnie",
+"peak_kt": 95,
+"peak_time": "1992-09-21T18:00:00",
+"category": 2,
+"ace": 23.11,
+"landfall": false,
+"min_pressure_mb": 965
+},
+{
+"id": "AL061992",
+"name": "Charley",
+"peak_kt": 95,
+"peak_time": "1992-09-24T18:00:00",
+"category": 2,
+"ace": 10.94,
+"landfall": false,
+"min_pressure_mb": 965
+},
+{
+"id": "AL071992",
+"name": "Danielle",
+"peak_kt": 55,
+"peak_time": "1992-09-25T12:00:00",
+"category": 0,
+"ace": 2.86,
+"landfall": true,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL081992",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1992-09-25T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL091992",
+"name": "Earl",
+"peak_kt": 55,
+"peak_time": "1992-10-01T18:00:00",
+"category": 0,
+"ace": 3.27,
+"landfall": false,
+"min_pressure_mb": 990
+},
+{
+"id": "AL101992",
+"name": "Frances",
+"peak_kt": 75,
+"peak_time": "1992-10-24T12:00:00",
+"category": 1,
+"ace": 6.5,
+"landfall": false,
+"min_pressure_mb": 976
+},
+{
+"id": "AL011993",
+"name": "Unnamed",
+"peak_kt": 35,
+"peak_time": "1993-06-02T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL021993",
+"name": "Arlene",
+"peak_kt": 35,
+"peak_time": "1993-06-19T12:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL031993",
+"name": "Bret",
+"peak_kt": 50,
+"peak_time": "1993-08-06T06:00:00",
+"category": 0,
+"ace": 3.92,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL041993",
+"name": "Cindy",
+"peak_kt": 40,
+"peak_time": "1993-08-16T12:00:00",
+"category": 0,
+"ace": 1.14,
+"landfall": true,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL051993",
+"name": "Emily",
+"peak_kt": 100,
+"peak_time": "1993-08-31T18:00:00",
+"category": 3,
+"ace": 22.1,
+"landfall": false,
+"min_pressure_mb": 960
+},
+{
+"id": "AL061993",
+"name": "Dennis",
+"peak_kt": 45,
+"peak_time": "1993-08-25T00:00:00",
+"category": 0,
+"ace": 2.14,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL071993",
+"name": "Floyd",
+"peak_kt": 70,
+"peak_time": "1993-09-12T12:00:00",
+"category": 1,
+"ace": 3.14,
+"landfall": false,
+"min_pressure_mb": 966
+},
+{
+"id": "AL081993",
+"name": "Gert",
+"peak_kt": 85,
+"peak_time": "1993-09-20T18:00:00",
+"category": 2,
+"ace": 3.77,
+"landfall": true,
+"min_pressure_mb": 970
+},
+{
+"id": "AL091993",
+"name": "Harvey",
+"peak_kt": 65,
+"peak_time": "1993-09-20T18:00:00",
+"category": 1,
+"ace": 1.71,
+"landfall": false,
+"min_pressure_mb": 990
+},
+{
+"id": "AL101993",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1993-09-29T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL011994",
+"name": "Alberto",
+"peak_kt": 55,
+"peak_time": "1994-07-03T12:00:00",
+"category": 0,
+"ace": 1.56,
+"landfall": true,
+"min_pressure_mb": 993
+},
+{
+"id": "AL021994",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1994-07-20T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1015
+},
+{
+"id": "AL031994",
+"name": "Beryl",
+"peak_kt": 50,
+"peak_time": "1994-08-16T00:00:00",
+"category": 0,
+"ace": 0.82,
+"landfall": true,
+"min_pressure_mb": 999
+},
+{
+"id": "AL041994",
+"name": "Chris",
+"peak_kt": 70,
+"peak_time": "1994-08-19T00:00:00",
+"category": 1,
+"ace": 7.49,
+"landfall": false,
+"min_pressure_mb": 979
+},
+{
+"id": "AL051994",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1994-08-29T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL061994",
+"name": "Debby",
+"peak_kt": 60,
+"peak_time": "1994-09-10T06:00:00",
+"category": 0,
+"ace": 1.36,
+"landfall": true,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL071994",
+"name": "Ernesto",
+"peak_kt": 50,
+"peak_time": "1994-09-23T00:00:00",
+"category": 0,
+"ace": 1.51,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL081994",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1994-09-24T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL091994",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1994-09-27T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL101994",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1994-09-29T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL111994",
+"name": "Florence",
+"peak_kt": 95,
+"peak_time": "1994-11-08T00:00:00",
+"category": 2,
+"ace": 10.9,
+"landfall": false,
+"min_pressure_mb": 972
+},
+{
+"id": "AL121994",
+"name": "Gordon",
+"peak_kt": 75,
+"peak_time": "1994-11-18T00:00:00",
+"category": 1,
+"ace": 8.35,
+"landfall": true,
+"min_pressure_mb": 980
+},
+{
+"id": "AL011995",
+"name": "Allison",
+"peak_kt": 65,
+"peak_time": "1995-06-04T12:00:00",
+"category": 1,
+"ace": 3.08,
+"landfall": true,
+"min_pressure_mb": 982
+},
+{
+"id": "AL021995",
+"name": "Barry",
+"peak_kt": 60,
+"peak_time": "1995-07-07T18:00:00",
+"category": 0,
+"ace": 3.17,
+"landfall": true,
+"min_pressure_mb": 989
+},
+{
+"id": "AL031995",
+"name": "Chantal",
+"peak_kt": 60,
+"peak_time": "1995-07-17T00:00:00",
+"category": 0,
+"ace": 6.54,
+"landfall": false,
+"min_pressure_mb": 991
+},
+{
+"id": "AL041995",
+"name": "Dean",
+"peak_kt": 40,
+"peak_time": "1995-07-31T00:00:00",
+"category": 0,
+"ace": 0.28,
+"landfall": true,
+"min_pressure_mb": 999
+},
+{
+"id": "AL051995",
+"name": "Erin",
+"peak_kt": 85,
+"peak_time": "1995-08-03T13:30:00",
+"category": 2,
+"ace": 7.33,
+"landfall": true,
+"min_pressure_mb": 973
+},
+{
+"id": "AL061995",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1995-08-06T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL071995",
+"name": "Felix",
+"peak_kt": 120,
+"peak_time": "1995-08-12T18:00:00",
+"category": 4,
+"ace": 29.36,
+"landfall": false,
+"min_pressure_mb": 929
+},
+{
+"id": "AL081995",
+"name": "Gabrielle",
+"peak_kt": 60,
+"peak_time": "1995-08-11T18:00:00",
+"category": 0,
+"ace": 1.4,
+"landfall": true,
+"min_pressure_mb": 988
+},
+{
+"id": "AL091995",
+"name": "Humberto",
+"peak_kt": 95,
+"peak_time": "1995-08-24T18:00:00",
+"category": 2,
+"ace": 22.51,
+"landfall": false,
+"min_pressure_mb": 968
+},
+{
+"id": "AL101995",
+"name": "Iris",
+"peak_kt": 95,
+"peak_time": "1995-09-01T06:00:00",
+"category": 2,
+"ace": 22.68,
+"landfall": true,
+"min_pressure_mb": 957
+},
+{
+"id": "AL111995",
+"name": "Jerry",
+"peak_kt": 35,
+"peak_time": "1995-08-23T12:00:00",
+"category": 0,
+"ace": 0.61,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL121995",
+"name": "Karen",
+"peak_kt": 45,
+"peak_time": "1995-08-28T18:00:00",
+"category": 0,
+"ace": 3.43,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL131995",
+"name": "Luis",
+"peak_kt": 130,
+"peak_time": "1995-09-04T06:00:00",
+"category": 4,
+"ace": 53.73,
+"landfall": false,
+"min_pressure_mb": 935
+},
+{
+"id": "AL141995",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1995-09-11T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL151995",
+"name": "Marilyn",
+"peak_kt": 100,
+"peak_time": "1995-09-16T18:00:00",
+"category": 3,
+"ace": 21.57,
+"landfall": true,
+"min_pressure_mb": 949
+},
+{
+"id": "AL161995",
+"name": "Noel",
+"peak_kt": 65,
+"peak_time": "1995-09-28T18:00:00",
+"category": 1,
+"ace": 11.09,
+"landfall": false,
+"min_pressure_mb": 987
+},
+{
+"id": "AL171995",
+"name": "Opal",
+"peak_kt": 130,
+"peak_time": "1995-10-04T10:00:00",
+"category": 4,
+"ace": 11.06,
+"landfall": true,
+"min_pressure_mb": 916
+},
+{
+"id": "AL181995",
+"name": "Pablo",
+"peak_kt": 50,
+"peak_time": "1995-10-06T00:00:00",
+"category": 0,
+"ace": 2.45,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL191995",
+"name": "Roxanne",
+"peak_kt": 100,
+"peak_time": "1995-10-10T21:52:00",
+"category": 3,
+"ace": 16.24,
+"landfall": true,
+"min_pressure_mb": 956
+},
+{
+"id": "AL201995",
+"name": "Sebastien",
+"peak_kt": 55,
+"peak_time": "1995-10-22T18:00:00",
+"category": 0,
+"ace": 2.13,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL211995",
+"name": "Tanya",
+"peak_kt": 75,
+"peak_time": "1995-10-30T18:00:00",
+"category": 1,
+"ace": 8.73,
+"landfall": false,
+"min_pressure_mb": 970
+},
+{
+"id": "AL011996",
+"name": "Arthur",
+"peak_kt": 45,
+"peak_time": "1996-06-21T18:00:00",
+"category": 0,
+"ace": 0.81,
+"landfall": true,
+"min_pressure_mb": 992
+},
+{
+"id": "AL021996",
+"name": "Bertha",
+"peak_kt": 100,
+"peak_time": "1996-07-09T06:00:00",
+"category": 3,
+"ace": 17.38,
+"landfall": true,
+"min_pressure_mb": 960
+},
+{
+"id": "AL031996",
+"name": "Cesar",
+"peak_kt": 75,
+"peak_time": "1996-07-28T04:00:00",
+"category": 1,
+"ace": 3.97,
+"landfall": true,
+"min_pressure_mb": 985
+},
+{
+"id": "AL041996",
+"name": "Dolly",
+"peak_kt": 70,
+"peak_time": "1996-08-23T12:00:00",
+"category": 1,
+"ace": 3.9,
+"landfall": true,
+"min_pressure_mb": 989
+},
+{
+"id": "AL051996",
+"name": "Edouard",
+"peak_kt": 125,
+"peak_time": "1996-08-25T06:00:00",
+"category": 4,
+"ace": 49.32,
+"landfall": false,
+"min_pressure_mb": 933
+},
+{
+"id": "AL061996",
+"name": "Fran",
+"peak_kt": 105,
+"peak_time": "1996-09-04T12:00:00",
+"category": 3,
+"ace": 22.89,
+"landfall": true,
+"min_pressure_mb": 946
+},
+{
+"id": "AL071996",
+"name": "Gustav",
+"peak_kt": 40,
+"peak_time": "1996-08-29T00:00:00",
+"category": 0,
+"ace": 2.36,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL081996",
+"name": "Hortense",
+"peak_kt": 120,
+"peak_time": "1996-09-13T00:00:00",
+"category": 4,
+"ace": 21.82,
+"landfall": true,
+"min_pressure_mb": 935
+},
+{
+"id": "AL091996",
+"name": "Isidore",
+"peak_kt": 100,
+"peak_time": "1996-09-28T00:00:00",
+"category": 3,
+"ace": 12.88,
+"landfall": false,
+"min_pressure_mb": 960
+},
+{
+"id": "AL101996",
+"name": "Josephine",
+"peak_kt": 60,
+"peak_time": "1996-10-07T12:00:00",
+"category": 0,
+"ace": 1.61,
+"landfall": true,
+"min_pressure_mb": 970
+},
+{
+"id": "AL111996",
+"name": "Kyle",
+"peak_kt": 45,
+"peak_time": "1996-10-11T18:00:00",
+"category": 0,
+"ace": 0.53,
+"landfall": true,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL121996",
+"name": "Lili",
+"peak_kt": 100,
+"peak_time": "1996-10-19T12:00:00",
+"category": 3,
+"ace": 22.63,
+"landfall": true,
+"min_pressure_mb": 960
+},
+{
+"id": "AL131996",
+"name": "Marco",
+"peak_kt": 65,
+"peak_time": "1996-11-20T06:00:00",
+"category": 1,
+"ace": 6.09,
+"landfall": false,
+"min_pressure_mb": 983
+},
+{
+"id": "AL011997",
+"name": "Unnamed",
+"peak_kt": 45,
+"peak_time": "1997-06-01T18:00:00",
+"category": 0,
+"ace": 0.81,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL021997",
+"name": "Ana",
+"peak_kt": 40,
+"peak_time": "1997-07-01T12:00:00",
+"category": 0,
+"ace": 1.34,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL031997",
+"name": "Bill",
+"peak_kt": 65,
+"peak_time": "1997-07-12T12:00:00",
+"category": 1,
+"ace": 2.34,
+"landfall": false,
+"min_pressure_mb": 986
+},
+{
+"id": "AL041997",
+"name": "Claudette",
+"peak_kt": 40,
+"peak_time": "1997-07-13T18:00:00",
+"category": 0,
+"ace": 1.57,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL051997",
+"name": "Danny",
+"peak_kt": 70,
+"peak_time": "1997-07-18T12:00:00",
+"category": 1,
+"ace": 5.99,
+"landfall": true,
+"min_pressure_mb": 984
+},
+{
+"id": "AL061997",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1997-07-17T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL071997",
+"name": "Erika",
+"peak_kt": 110,
+"peak_time": "1997-09-08T18:00:00",
+"category": 3,
+"ace": 26.64,
+"landfall": false,
+"min_pressure_mb": 946
+},
+{
+"id": "AL081997",
+"name": "Fabian",
+"peak_kt": 40,
+"peak_time": "1997-10-08T18:00:00",
+"category": 0,
+"ace": 1.35,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL091997",
+"name": "Grace",
+"peak_kt": 40,
+"peak_time": "1997-10-15T12:00:00",
+"category": 0,
+"ace": 0.9,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL011998",
+"name": "Alex",
+"peak_kt": 45,
+"peak_time": "1998-07-30T18:00:00",
+"category": 0,
+"ace": 2.84,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL021998",
+"name": "Bonnie",
+"peak_kt": 100,
+"peak_time": "1998-08-23T12:00:00",
+"category": 3,
+"ace": 24.8,
+"landfall": true,
+"min_pressure_mb": 954
+},
+{
+"id": "AL031998",
+"name": "Charley",
+"peak_kt": 60,
+"peak_time": "1998-08-22T06:00:00",
+"category": 0,
+"ace": 0.84,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL041998",
+"name": "Danielle",
+"peak_kt": 90,
+"peak_time": "1998-08-26T06:00:00",
+"category": 2,
+"ace": 23.14,
+"landfall": false,
+"min_pressure_mb": 960
+},
+{
+"id": "AL051998",
+"name": "Earl",
+"peak_kt": 85,
+"peak_time": "1998-09-02T18:00:00",
+"category": 2,
+"ace": 3.9,
+"landfall": true,
+"min_pressure_mb": 964
+},
+{
+"id": "AL061998",
+"name": "Frances",
+"peak_kt": 55,
+"peak_time": "1998-09-11T00:00:00",
+"category": 0,
+"ace": 1.64,
+"landfall": true,
+"min_pressure_mb": 990
+},
+{
+"id": "AL071998",
+"name": "Georges",
+"peak_kt": 135,
+"peak_time": "1998-09-20T06:00:00",
+"category": 4,
+"ace": 39.37,
+"landfall": true,
+"min_pressure_mb": 937
+},
+{
+"id": "AL081998",
+"name": "Hermine",
+"peak_kt": 40,
+"peak_time": "1998-09-19T18:00:00",
+"category": 0,
+"ace": 0.56,
+"landfall": true,
+"min_pressure_mb": 999
+},
+{
+"id": "AL091998",
+"name": "Ivan",
+"peak_kt": 80,
+"peak_time": "1998-09-26T06:00:00",
+"category": 1,
+"ace": 9.31,
+"landfall": false,
+"min_pressure_mb": 975
+},
+{
+"id": "AL101998",
+"name": "Jeanne",
+"peak_kt": 90,
+"peak_time": "1998-09-24T06:00:00",
+"category": 2,
+"ace": 18.8,
+"landfall": false,
+"min_pressure_mb": 969
+},
+{
+"id": "AL111998",
+"name": "Karl",
+"peak_kt": 90,
+"peak_time": "1998-09-27T00:00:00",
+"category": 2,
+"ace": 7.45,
+"landfall": false,
+"min_pressure_mb": 970
+},
+{
+"id": "AL121998",
+"name": "Lisa",
+"peak_kt": 65,
+"peak_time": "1998-10-09T12:00:00",
+"category": 1,
+"ace": 5.01,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL131998",
+"name": "Mitch",
+"peak_kt": 155,
+"peak_time": "1998-10-26T18:00:00",
+"category": 5,
+"ace": 35.85,
+"landfall": true,
+"min_pressure_mb": 905
+},
+{
+"id": "AL141998",
+"name": "Nicole",
+"peak_kt": 75,
+"peak_time": "1998-12-01T00:00:00",
+"category": 1,
+"ace": 7.64,
+"landfall": false,
+"min_pressure_mb": 979
+},
+{
+"id": "AL011999",
+"name": "Arlene",
+"peak_kt": 50,
+"peak_time": "1999-06-13T00:00:00",
+"category": 0,
+"ace": 3.42,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL021999",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1999-07-02T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL031999",
+"name": "Bret",
+"peak_kt": 125,
+"peak_time": "1999-08-22T06:00:00",
+"category": 4,
+"ace": 11.6,
+"landfall": true,
+"min_pressure_mb": 944
+},
+{
+"id": "AL041999",
+"name": "Cindy",
+"peak_kt": 120,
+"peak_time": "1999-08-28T12:00:00",
+"category": 4,
+"ace": 24.62,
+"landfall": false,
+"min_pressure_mb": 942
+},
+{
+"id": "AL051999",
+"name": "Dennis",
+"peak_kt": 90,
+"peak_time": "1999-08-28T18:00:00",
+"category": 2,
+"ace": 20.18,
+"landfall": true,
+"min_pressure_mb": 962
+},
+{
+"id": "AL061999",
+"name": "Emily",
+"peak_kt": 45,
+"peak_time": "1999-08-24T18:00:00",
+"category": 0,
+"ace": 2.42,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL071999",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1999-09-06T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL081999",
+"name": "Floyd",
+"peak_kt": 135,
+"peak_time": "1999-09-13T06:00:00",
+"category": 4,
+"ace": 29.42,
+"landfall": true,
+"min_pressure_mb": 921
+},
+{
+"id": "AL091999",
+"name": "Gert",
+"peak_kt": 130,
+"peak_time": "1999-09-16T00:00:00",
+"category": 4,
+"ace": 42.31,
+"landfall": false,
+"min_pressure_mb": 930
+},
+{
+"id": "AL101999",
+"name": "Harvey",
+"peak_kt": 50,
+"peak_time": "1999-09-20T18:00:00",
+"category": 0,
+"ace": 1.89,
+"landfall": true,
+"min_pressure_mb": 994
+},
+{
+"id": "AL111999",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1999-10-04T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL121999",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "1999-10-06T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL131999",
+"name": "Irene",
+"peak_kt": 95,
+"peak_time": "1999-10-18T06:00:00",
+"category": 2,
+"ace": 10.42,
+"landfall": true,
+"min_pressure_mb": 958
+},
+{
+"id": "AL141999",
+"name": "Jose",
+"peak_kt": 85,
+"peak_time": "1999-10-20T12:00:00",
+"category": 2,
+"ace": 10.14,
+"landfall": true,
+"min_pressure_mb": 979
+},
+{
+"id": "AL151999",
+"name": "Katrina",
+"peak_kt": 35,
+"peak_time": "1999-10-29T18:00:00",
+"category": 0,
+"ace": 0.24,
+"landfall": true,
+"min_pressure_mb": 999
+},
+{
+"id": "AL161999",
+"name": "Lenny",
+"peak_kt": 135,
+"peak_time": "1999-11-17T18:00:00",
+"category": 4,
+"ace": 19.87,
+"landfall": true,
+"min_pressure_mb": 933
+},
+{
+"id": "AL012000",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "2000-06-07T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL022000",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "2000-06-23T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL032000",
+"name": "Alberto",
+"peak_kt": 110,
+"peak_time": "2000-08-12T12:00:00",
+"category": 3,
+"ace": 36.86,
+"landfall": false,
+"min_pressure_mb": 950
+},
+{
+"id": "AL042000",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "2000-08-08T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1009
+},
+{
+"id": "AL052000",
+"name": "Beryl",
+"peak_kt": 45,
+"peak_time": "2000-08-14T18:00:00",
+"category": 0,
+"ace": 0.89,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL062000",
+"name": "Chris",
+"peak_kt": 35,
+"peak_time": "2000-08-18T12:00:00",
+"category": 0,
+"ace": 0.12,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL072000",
+"name": "Debby",
+"peak_kt": 75,
+"peak_time": "2000-08-21T12:00:00",
+"category": 1,
+"ace": 5.83,
+"landfall": true,
+"min_pressure_mb": 991
+},
+{
+"id": "AL082000",
+"name": "Ernesto",
+"peak_kt": 35,
+"peak_time": "2000-09-02T06:00:00",
+"category": 0,
+"ace": 0.74,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL092000",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "2000-09-08T21:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL102000",
+"name": "Florence",
+"peak_kt": 70,
+"peak_time": "2000-09-16T18:00:00",
+"category": 1,
+"ace": 8.49,
+"landfall": false,
+"min_pressure_mb": 985
+},
+{
+"id": "AL112000",
+"name": "Gordon",
+"peak_kt": 70,
+"peak_time": "2000-09-17T06:00:00",
+"category": 1,
+"ace": 3.35,
+"landfall": true,
+"min_pressure_mb": 981
+},
+{
+"id": "AL122000",
+"name": "Helene",
+"peak_kt": 60,
+"peak_time": "2000-09-21T18:00:00",
+"category": 0,
+"ace": 3.48,
+"landfall": true,
+"min_pressure_mb": 986
+},
+{
+"id": "AL132000",
+"name": "Isaac",
+"peak_kt": 120,
+"peak_time": "2000-09-28T18:00:00",
+"category": 4,
+"ace": 28.41,
+"landfall": false,
+"min_pressure_mb": 943
+},
+{
+"id": "AL142000",
+"name": "Joyce",
+"peak_kt": 80,
+"peak_time": "2000-09-28T06:00:00",
+"category": 1,
+"ace": 7.55,
+"landfall": false,
+"min_pressure_mb": 975
+},
+{
+"id": "AL152000",
+"name": "Keith",
+"peak_kt": 120,
+"peak_time": "2000-10-01T06:00:00",
+"category": 4,
+"ace": 12.21,
+"landfall": true,
+"min_pressure_mb": 939
+},
+{
+"id": "AL162000",
+"name": "Leslie",
+"peak_kt": 60,
+"peak_time": "2000-10-10T18:00:00",
+"category": 0,
+"ace": 1.33,
+"landfall": false,
+"min_pressure_mb": 973
+},
+{
+"id": "AL172000",
+"name": "Michael",
+"peak_kt": 85,
+"peak_time": "2000-10-19T18:00:00",
+"category": 2,
+"ace": 5.57,
+"landfall": false,
+"min_pressure_mb": 965
+},
+{
+"id": "AL182000",
+"name": "Nadine",
+"peak_kt": 50,
+"peak_time": "2000-10-21T00:00:00",
+"category": 0,
+"ace": 1.23,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL192000",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "2000-10-28T18:00:00",
+"category": 0,
+"ace": 3.08,
+"landfall": false,
+"min_pressure_mb": 976
+},
+{
+"id": "AL012001",
+"name": "Allison",
+"peak_kt": 50,
+"peak_time": "2001-06-05T18:00:00",
+"category": 0,
+"ace": 1.3,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL022001",
+"name": "Unnamed",
+"peak_kt": 25,
+"peak_time": "2001-07-11T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1010
+},
+{
+"id": "AL032001",
+"name": "Barry",
+"peak_kt": 60,
+"peak_time": "2001-08-05T18:00:00",
+"category": 0,
+"ace": 2.46,
+"landfall": true,
+"min_pressure_mb": 990
+},
+{
+"id": "AL042001",
+"name": "Chantal",
+"peak_kt": 60,
+"peak_time": "2001-08-19T06:00:00",
+"category": 0,
+"ace": 4.61,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL052001",
+"name": "Dean",
+"peak_kt": 60,
+"peak_time": "2001-08-27T18:00:00",
+"category": 0,
+"ace": 2.94,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL062001",
+"name": "Erin",
+"peak_kt": 105,
+"peak_time": "2001-09-09T18:00:00",
+"category": 3,
+"ace": 20.12,
+"landfall": false,
+"min_pressure_mb": 968
+},
+{
+"id": "AL072001",
+"name": "Felix",
+"peak_kt": 100,
+"peak_time": "2001-09-14T00:00:00",
+"category": 3,
+"ace": 15.22,
+"landfall": false,
+"min_pressure_mb": 962
+},
+{
+"id": "AL082001",
+"name": "Gabrielle",
+"peak_kt": 70,
+"peak_time": "2001-09-17T12:00:00",
+"category": 1,
+"ace": 6.6,
+"landfall": true,
+"min_pressure_mb": 975
+},
+{
+"id": "AL092001",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "2001-09-19T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL102001",
+"name": "Humberto",
+"peak_kt": 90,
+"peak_time": "2001-09-26T12:00:00",
+"category": 2,
+"ace": 9.94,
+"landfall": false,
+"min_pressure_mb": 970
+},
+{
+"id": "AL112001",
+"name": "Iris",
+"peak_kt": 125,
+"peak_time": "2001-10-09T00:00:00",
+"category": 4,
+"ace": 9.99,
+"landfall": true,
+"min_pressure_mb": 948
+},
+{
+"id": "AL122001",
+"name": "Jerry",
+"peak_kt": 45,
+"peak_time": "2001-10-07T12:00:00",
+"category": 0,
+"ace": 1.22,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL132001",
+"name": "Karen",
+"peak_kt": 70,
+"peak_time": "2001-10-14T06:00:00",
+"category": 1,
+"ace": 5.13,
+"landfall": true,
+"min_pressure_mb": 982
+},
+{
+"id": "AL142001",
+"name": "Lorenzo",
+"peak_kt": 35,
+"peak_time": "2001-10-30T00:00:00",
+"category": 0,
+"ace": 0.74,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL152001",
+"name": "Michelle",
+"peak_kt": 120,
+"peak_time": "2001-11-04T06:00:00",
+"category": 4,
+"ace": 15.65,
+"landfall": true,
+"min_pressure_mb": 933
+},
+{
+"id": "AL162001",
+"name": "Noel",
+"peak_kt": 65,
+"peak_time": "2001-11-05T12:00:00",
+"category": 1,
+"ace": 3.03,
+"landfall": false,
+"min_pressure_mb": 986
+},
+{
+"id": "AL172001",
+"name": "Olga",
+"peak_kt": 80,
+"peak_time": "2001-11-27T06:00:00",
+"category": 1,
+"ace": 11.14,
+"landfall": false,
+"min_pressure_mb": 973
+},
+{
+"id": "AL012002",
+"name": "Arthur",
+"peak_kt": 50,
+"peak_time": "2002-07-16T00:00:00",
+"category": 0,
+"ace": 1.53,
+"landfall": false,
+"min_pressure_mb": 992
+},
+{
+"id": "AL022002",
+"name": "Bertha",
+"peak_kt": 35,
+"peak_time": "2002-08-05T00:00:00",
+"category": 0,
+"ace": 0.24,
+"landfall": true,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL032002",
+"name": "Cristobal",
+"peak_kt": 45,
+"peak_time": "2002-08-08T00:00:00",
+"category": 0,
+"ace": 1.57,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL042002",
+"name": "Dolly",
+"peak_kt": 50,
+"peak_time": "2002-08-30T12:00:00",
+"category": 0,
+"ace": 3.94,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL052002",
+"name": "Edouard",
+"peak_kt": 55,
+"peak_time": "2002-09-03T12:00:00",
+"category": 0,
+"ace": 1.77,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL062002",
+"name": "Fay",
+"peak_kt": 50,
+"peak_time": "2002-09-06T12:00:00",
+"category": 0,
+"ace": 1.32,
+"landfall": true,
+"min_pressure_mb": 998
+},
+{
+"id": "AL072002",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "2002-09-07T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1013
+},
+{
+"id": "AL082002",
+"name": "Gustav",
+"peak_kt": 85,
+"peak_time": "2002-09-11T18:00:00",
+"category": 2,
+"ace": 4.84,
+"landfall": true,
+"min_pressure_mb": 960
+},
+{
+"id": "AL092002",
+"name": "Hanna",
+"peak_kt": 50,
+"peak_time": "2002-09-14T00:00:00",
+"category": 0,
+"ace": 1.81,
+"landfall": true,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL102002",
+"name": "Isidore",
+"peak_kt": 110,
+"peak_time": "2002-09-21T18:00:00",
+"category": 3,
+"ace": 17.8,
+"landfall": true,
+"min_pressure_mb": 934
+},
+{
+"id": "AL112002",
+"name": "Josephine",
+"peak_kt": 50,
+"peak_time": "2002-09-19T12:00:00",
+"category": 0,
+"ace": 0.61,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL122002",
+"name": "Kyle",
+"peak_kt": 75,
+"peak_time": "2002-09-26T12:00:00",
+"category": 1,
+"ace": 15.52,
+"landfall": true,
+"min_pressure_mb": 980
+},
+{
+"id": "AL132002",
+"name": "Lili",
+"peak_kt": 125,
+"peak_time": "2002-10-02T20:13:00",
+"category": 4,
+"ace": 16.46,
+"landfall": true,
+"min_pressure_mb": 938
+},
+{
+"id": "AL142002",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "2002-10-14T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL012003",
+"name": "Ana",
+"peak_kt": 50,
+"peak_time": "2003-04-21T00:00:00",
+"category": 0,
+"ace": 3.2,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL022003",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "2003-06-11T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL032003",
+"name": "Bill",
+"peak_kt": 50,
+"peak_time": "2003-06-30T12:00:00",
+"category": 0,
+"ace": 1.39,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL042003",
+"name": "Claudette",
+"peak_kt": 80,
+"peak_time": "2003-07-15T15:30:00",
+"category": 1,
+"ace": 9.24,
+"landfall": true,
+"min_pressure_mb": 979
+},
+{
+"id": "AL052003",
+"name": "Danny",
+"peak_kt": 65,
+"peak_time": "2003-07-18T18:00:00",
+"category": 1,
+"ace": 4.56,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL062003",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "2003-07-19T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1010
+},
+{
+"id": "AL072003",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "2003-07-26T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1016
+},
+{
+"id": "AL082003",
+"name": "Erika",
+"peak_kt": 65,
+"peak_time": "2003-08-16T10:30:00",
+"category": 1,
+"ace": 2.1,
+"landfall": true,
+"min_pressure_mb": 986
+},
+{
+"id": "AL092003",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "2003-08-21T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL102003",
+"name": "Fabian",
+"peak_kt": 125,
+"peak_time": "2003-09-01T18:00:00",
+"category": 4,
+"ace": 43.16,
+"landfall": false,
+"min_pressure_mb": 939
+},
+{
+"id": "AL112003",
+"name": "Grace",
+"peak_kt": 35,
+"peak_time": "2003-08-30T18:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": true,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL122003",
+"name": "Henri",
+"peak_kt": 50,
+"peak_time": "2003-09-05T18:00:00",
+"category": 0,
+"ace": 0.53,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL132003",
+"name": "Isabel",
+"peak_kt": 145,
+"peak_time": "2003-09-11T18:00:00",
+"category": 5,
+"ace": 63.28,
+"landfall": true,
+"min_pressure_mb": 915
+},
+{
+"id": "AL142003",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "2003-09-09T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL152003",
+"name": "Juan",
+"peak_kt": 90,
+"peak_time": "2003-09-27T18:00:00",
+"category": 2,
+"ace": 9.4,
+"landfall": true,
+"min_pressure_mb": 969
+},
+{
+"id": "AL162003",
+"name": "Kate",
+"peak_kt": 110,
+"peak_time": "2003-10-04T18:00:00",
+"category": 3,
+"ace": 21.88,
+"landfall": false,
+"min_pressure_mb": 952
+},
+{
+"id": "AL172003",
+"name": "Larry",
+"peak_kt": 55,
+"peak_time": "2003-10-03T00:00:00",
+"category": 0,
+"ace": 4.14,
+"landfall": true,
+"min_pressure_mb": 993
+},
+{
+"id": "AL182003",
+"name": "Mindy",
+"peak_kt": 40,
+"peak_time": "2003-10-10T18:00:00",
+"category": 0,
+"ace": 0.85,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL192003",
+"name": "Nicholas",
+"peak_kt": 60,
+"peak_time": "2003-10-17T12:00:00",
+"category": 0,
+"ace": 7.25,
+"landfall": false,
+"min_pressure_mb": 990
+},
+{
+"id": "AL202003",
+"name": "Odette",
+"peak_kt": 55,
+"peak_time": "2003-12-06T06:00:00",
+"category": 0,
+"ace": 2.76,
+"landfall": true,
+"min_pressure_mb": 993
+},
+{
+"id": "AL212003",
+"name": "Peter",
+"peak_kt": 60,
+"peak_time": "2003-12-09T18:00:00",
+"category": 0,
+"ace": 2.06,
+"landfall": false,
+"min_pressure_mb": 990
+},
+{
+"id": "AL012004",
+"name": "Alex",
+"peak_kt": 105,
+"peak_time": "2004-08-05T00:00:00",
+"category": 3,
+"ace": 11.36,
+"landfall": false,
+"min_pressure_mb": 957
+},
+{
+"id": "AL022004",
+"name": "Bonnie",
+"peak_kt": 55,
+"peak_time": "2004-08-11T18:00:00",
+"category": 0,
+"ace": 2.62,
+"landfall": true,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL032004",
+"name": "Charley",
+"peak_kt": 130,
+"peak_time": "2004-08-13T19:45:00",
+"category": 4,
+"ace": 10.59,
+"landfall": true,
+"min_pressure_mb": 941
+},
+{
+"id": "AL042004",
+"name": "Danielle",
+"peak_kt": 95,
+"peak_time": "2004-08-16T18:00:00",
+"category": 2,
+"ace": 12.14,
+"landfall": false,
+"min_pressure_mb": 964
+},
+{
+"id": "AL052004",
+"name": "Earl",
+"peak_kt": 45,
+"peak_time": "2004-08-15T06:00:00",
+"category": 0,
+"ace": 0.77,
+"landfall": false,
+"min_pressure_mb": 1009
+},
+{
+"id": "AL062004",
+"name": "Frances",
+"peak_kt": 125,
+"peak_time": "2004-08-31T18:00:00",
+"category": 4,
+"ace": 45.92,
+"landfall": true,
+"min_pressure_mb": 935
+},
+{
+"id": "AL072004",
+"name": "Gaston",
+"peak_kt": 65,
+"peak_time": "2004-08-29T12:00:00",
+"category": 1,
+"ace": 2.72,
+"landfall": true,
+"min_pressure_mb": 985
+},
+{
+"id": "AL082004",
+"name": "Hermine",
+"peak_kt": 50,
+"peak_time": "2004-08-30T06:00:00",
+"category": 0,
+"ace": 1.34,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL092004",
+"name": "Ivan",
+"peak_kt": 145,
+"peak_time": "2004-09-11T18:00:00",
+"category": 5,
+"ace": 70.38,
+"landfall": true,
+"min_pressure_mb": 910
+},
+{
+"id": "AL102004",
+"name": "Unnamed",
+"peak_kt": 30,
+"peak_time": "2004-09-09T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1009
+},
+{
+"id": "AL112004",
+"name": "Jeanne",
+"peak_kt": 105,
+"peak_time": "2004-09-25T18:00:00",
+"category": 3,
+"ace": 24.23,
+"landfall": true,
+"min_pressure_mb": 950
+},
+{
+"id": "AL122004",
+"name": "Karl",
+"peak_kt": 125,
+"peak_time": "2004-09-21T06:00:00",
+"category": 4,
+"ace": 28.44,
+"landfall": false,
+"min_pressure_mb": 938
+},
+{
+"id": "AL132004",
+"name": "Lisa",
+"peak_kt": 65,
+"peak_time": "2004-10-02T06:00:00",
+"category": 1,
+"ace": 12.23,
+"landfall": false,
+"min_pressure_mb": 987
+},
+{
+"id": "AL142004",
+"name": "Matthew",
+"peak_kt": 40,
+"peak_time": "2004-10-09T00:00:00",
+"category": 0,
+"ace": 1.01,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL152004",
+"name": "Nicole",
+"peak_kt": 45,
+"peak_time": "2004-10-11T12:00:00",
+"category": 0,
+"ace": 1.21,
+"landfall": false,
+"min_pressure_mb": 986
+},
+{
+"id": "AL162004",
+"name": "Otto",
+"peak_kt": 45,
+"peak_time": "2004-11-29T18:00:00",
+"category": 0,
+"ace": 1.94,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL012005",
+"name": "Arlene",
+"peak_kt": 60,
+"peak_time": "2005-06-11T00:00:00",
+"category": 0,
+"ace": 2.55,
+"landfall": true,
+"min_pressure_mb": 989
+},
+{
+"id": "AL022005",
+"name": "Bret",
+"peak_kt": 35,
+"peak_time": "2005-06-28T22:35:00",
+"category": 0,
+"ace": 0.37,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL032005",
+"name": "Cindy",
+"peak_kt": 65,
+"peak_time": "2005-07-06T00:00:00",
+"category": 1,
+"ace": 1.52,
+"landfall": true,
+"min_pressure_mb": 991
+},
+{
+"id": "AL042005",
+"name": "Dennis",
+"peak_kt": 130,
+"peak_time": "2005-07-08T12:00:00",
+"category": 4,
+"ace": 18.76,
+"landfall": true,
+"min_pressure_mb": 930
+},
+{
+"id": "AL052005",
+"name": "Emily",
+"peak_kt": 140,
+"peak_time": "2005-07-17T00:00:00",
+"category": 5,
+"ace": 32.87,
+"landfall": true,
+"min_pressure_mb": 929
+},
+{
+"id": "AL062005",
+"name": "Franklin",
+"peak_kt": 60,
+"peak_time": "2005-07-23T12:00:00",
+"category": 0,
+"ace": 6.72,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL072005",
+"name": "Gert",
+"peak_kt": 40,
+"peak_time": "2005-07-25T00:00:00",
+"category": 0,
+"ace": 0.53,
+"landfall": true,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL082005",
+"name": "Harvey",
+"peak_kt": 55,
+"peak_time": "2005-08-04T18:00:00",
+"category": 0,
+"ace": 5.39,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL092005",
+"name": "Irene",
+"peak_kt": 90,
+"peak_time": "2005-08-16T18:00:00",
+"category": 2,
+"ace": 13.14,
+"landfall": false,
+"min_pressure_mb": 970
+},
+{
+"id": "AL102005",
+"name": "Ten",
+"peak_kt": 30,
+"peak_time": "2005-08-13T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL112005",
+"name": "Jose",
+"peak_kt": 50,
+"peak_time": "2005-08-23T03:30:00",
+"category": 0,
+"ace": 0.45,
+"landfall": true,
+"min_pressure_mb": 998
+},
+{
+"id": "AL122005",
+"name": "Katrina",
+"peak_kt": 150,
+"peak_time": "2005-08-28T18:00:00",
+"category": 5,
+"ace": 20.01,
+"landfall": true,
+"min_pressure_mb": 902
+},
+{
+"id": "AL132005",
+"name": "Lee",
+"peak_kt": 35,
+"peak_time": "2005-08-31T12:00:00",
+"category": 0,
+"ace": 0.24,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL142005",
+"name": "Maria",
+"peak_kt": 100,
+"peak_time": "2005-09-06T00:00:00",
+"category": 3,
+"ace": 14.26,
+"landfall": false,
+"min_pressure_mb": 962
+},
+{
+"id": "AL152005",
+"name": "Nate",
+"peak_kt": 80,
+"peak_time": "2005-09-09T00:00:00",
+"category": 1,
+"ace": 7.17,
+"landfall": false,
+"min_pressure_mb": 979
+},
+{
+"id": "AL162005",
+"name": "Ophelia",
+"peak_kt": 75,
+"peak_time": "2005-09-11T06:00:00",
+"category": 1,
+"ace": 15.67,
+"landfall": true,
+"min_pressure_mb": 976
+},
+{
+"id": "AL172005",
+"name": "Philippe",
+"peak_kt": 70,
+"peak_time": "2005-09-20T00:00:00",
+"category": 1,
+"ace": 5.95,
+"landfall": false,
+"min_pressure_mb": 985
+},
+{
+"id": "AL182005",
+"name": "Rita",
+"peak_kt": 155,
+"peak_time": "2005-09-22T03:00:00",
+"category": 5,
+"ace": 25.15,
+"landfall": true,
+"min_pressure_mb": 895
+},
+{
+"id": "AL192005",
+"name": "Nineteen",
+"peak_kt": 30,
+"peak_time": "2005-09-30T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL202005",
+"name": "Stan",
+"peak_kt": 70,
+"peak_time": "2005-10-04T12:00:00",
+"category": 1,
+"ace": 2.35,
+"landfall": true,
+"min_pressure_mb": 977
+},
+{
+"id": "AL212005",
+"name": "Unnamed",
+"peak_kt": 45,
+"peak_time": "2005-10-04T18:00:00",
+"category": 0,
+"ace": 0.53,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL222005",
+"name": "Tammy",
+"peak_kt": 45,
+"peak_time": "2005-10-05T18:00:00",
+"category": 0,
+"ace": 0.81,
+"landfall": true,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL232005",
+"name": "Twenty-Two",
+"peak_kt": 40,
+"peak_time": "2005-10-12T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL242005",
+"name": "Vince",
+"peak_kt": 65,
+"peak_time": "2005-10-09T18:00:00",
+"category": 1,
+"ace": 2.68,
+"landfall": true,
+"min_pressure_mb": 988
+},
+{
+"id": "AL252005",
+"name": "Wilma",
+"peak_kt": 160,
+"peak_time": "2005-10-19T12:00:00",
+"category": 5,
+"ace": 38.92,
+"landfall": true,
+"min_pressure_mb": 882
+},
+{
+"id": "AL262005",
+"name": "Alpha",
+"peak_kt": 45,
+"peak_time": "2005-10-23T00:00:00",
+"category": 0,
+"ace": 0.65,
+"landfall": true,
+"min_pressure_mb": 998
+},
+{
+"id": "AL272005",
+"name": "Beta",
+"peak_kt": 100,
+"peak_time": "2005-10-30T06:00:00",
+"category": 3,
+"ace": 6.47,
+"landfall": true,
+"min_pressure_mb": 962
+},
+{
+"id": "AL282005",
+"name": "Gamma",
+"peak_kt": 45,
+"peak_time": "2005-11-19T12:00:00",
+"category": 0,
+"ace": 1.33,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL292005",
+"name": "Delta",
+"peak_kt": 60,
+"peak_time": "2005-11-24T12:00:00",
+"category": 0,
+"ace": 6.02,
+"landfall": false,
+"min_pressure_mb": 980
+},
+{
+"id": "AL302005",
+"name": "Epsilon",
+"peak_kt": 75,
+"peak_time": "2005-12-05T06:00:00",
+"category": 1,
+"ace": 13.36,
+"landfall": false,
+"min_pressure_mb": 981
+},
+{
+"id": "AL312005",
+"name": "Zeta",
+"peak_kt": 55,
+"peak_time": "2006-01-01T18:00:00",
+"category": 0,
+"ace": 6.26,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL012006",
+"name": "Alberto",
+"peak_kt": 60,
+"peak_time": "2006-06-12T12:00:00",
+"category": 0,
+"ace": 2.76,
+"landfall": true,
+"min_pressure_mb": 969
+},
+{
+"id": "AL022006",
+"name": "Unnamed",
+"peak_kt": 45,
+"peak_time": "2006-07-17T18:00:00",
+"category": 0,
+"ace": 0.65,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL032006",
+"name": "Beryl",
+"peak_kt": 50,
+"peak_time": "2006-07-19T18:00:00",
+"category": 0,
+"ace": 2.3,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL042006",
+"name": "Chris",
+"peak_kt": 55,
+"peak_time": "2006-08-02T06:00:00",
+"category": 0,
+"ace": 2.17,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL052006",
+"name": "Debby",
+"peak_kt": 45,
+"peak_time": "2006-08-23T12:00:00",
+"category": 0,
+"ace": 2.31,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL062006",
+"name": "Ernesto",
+"peak_kt": 65,
+"peak_time": "2006-08-27T06:00:00",
+"category": 1,
+"ace": 5.72,
+"landfall": true,
+"min_pressure_mb": 985
+},
+{
+"id": "AL072006",
+"name": "Florence",
+"peak_kt": 80,
+"peak_time": "2006-09-10T18:00:00",
+"category": 1,
+"ace": 9.6,
+"landfall": false,
+"min_pressure_mb": 963
+},
+{
+"id": "AL082006",
+"name": "Gordon",
+"peak_kt": 105,
+"peak_time": "2006-09-14T00:00:00",
+"category": 3,
+"ace": 22.23,
+"landfall": false,
+"min_pressure_mb": 955
+},
+{
+"id": "AL092006",
+"name": "Helene",
+"peak_kt": 105,
+"peak_time": "2006-09-18T06:00:00",
+"category": 3,
+"ace": 24.34,
+"landfall": false,
+"min_pressure_mb": 955
+},
+{
+"id": "AL102006",
+"name": "Isaac",
+"peak_kt": 75,
+"peak_time": "2006-10-01T00:00:00",
+"category": 1,
+"ace": 6.46,
+"landfall": false,
+"min_pressure_mb": 985
+},
+{
+"id": "AL012007",
+"name": "Andrea",
+"peak_kt": 65,
+"peak_time": "2007-05-07T06:00:00",
+"category": 1,
+"ace": 0.9,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL022007",
+"name": "Barry",
+"peak_kt": 50,
+"peak_time": "2007-06-02T00:00:00",
+"category": 0,
+"ace": 0.77,
+"landfall": true,
+"min_pressure_mb": 990
+},
+{
+"id": "AL032007",
+"name": "Chantal",
+"peak_kt": 60,
+"peak_time": "2007-08-01T18:00:00",
+"category": 0,
+"ace": 0.73,
+"landfall": false,
+"min_pressure_mb": 964
+},
+{
+"id": "AL042007",
+"name": "Dean",
+"peak_kt": 150,
+"peak_time": "2007-08-21T06:00:00",
+"category": 5,
+"ace": 35.23,
+"landfall": true,
+"min_pressure_mb": 905
+},
+{
+"id": "AL052007",
+"name": "Erin",
+"peak_kt": 50,
+"peak_time": "2007-08-19T06:00:00",
+"category": 0,
+"ace": 0.37,
+"landfall": true,
+"min_pressure_mb": 995
+},
+{
+"id": "AL062007",
+"name": "Felix",
+"peak_kt": 150,
+"peak_time": "2007-09-03T00:00:00",
+"category": 5,
+"ace": 18.03,
+"landfall": true,
+"min_pressure_mb": 929
+},
+{
+"id": "AL072007",
+"name": "Gabrielle",
+"peak_kt": 50,
+"peak_time": "2007-09-09T12:00:00",
+"category": 0,
+"ace": 1.54,
+"landfall": true,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL082007",
+"name": "Ingrid",
+"peak_kt": 40,
+"peak_time": "2007-09-14T12:00:00",
+"category": 0,
+"ace": 1.3,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL092007",
+"name": "Humberto",
+"peak_kt": 80,
+"peak_time": "2007-09-13T06:00:00",
+"category": 1,
+"ace": 1.81,
+"landfall": true,
+"min_pressure_mb": 985
+},
+{
+"id": "AL102007",
+"name": "Ten",
+"peak_kt": 30,
+"peak_time": "2007-09-21T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL112007",
+"name": "Jerry",
+"peak_kt": 35,
+"peak_time": "2007-09-23T06:00:00",
+"category": 0,
+"ace": 0.74,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL122007",
+"name": "Karen",
+"peak_kt": 65,
+"peak_time": "2007-09-26T12:00:00",
+"category": 1,
+"ace": 3.62,
+"landfall": false,
+"min_pressure_mb": 988
+},
+{
+"id": "AL132007",
+"name": "Lorenzo",
+"peak_kt": 70,
+"peak_time": "2007-09-28T00:00:00",
+"category": 1,
+"ace": 1.48,
+"landfall": true,
+"min_pressure_mb": 990
+},
+{
+"id": "AL142007",
+"name": "Melissa",
+"peak_kt": 35,
+"peak_time": "2007-09-29T06:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL152007",
+"name": "Fifteen",
+"peak_kt": 45,
+"peak_time": "2007-10-17T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 996
+},
+{
+"id": "AL162007",
+"name": "Noel",
+"peak_kt": 75,
+"peak_time": "2007-11-03T12:00:00",
+"category": 1,
+"ace": 5.62,
+"landfall": true,
+"min_pressure_mb": 965
+},
+{
+"id": "AL172007",
+"name": "Olga",
+"peak_kt": 50,
+"peak_time": "2007-12-11T18:00:00",
+"category": 0,
+"ace": 1.27,
+"landfall": true,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL012008",
+"name": "Arthur",
+"peak_kt": 40,
+"peak_time": "2008-05-31T06:00:00",
+"category": 0,
+"ace": 0.77,
+"landfall": true,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL022008",
+"name": "Bertha",
+"peak_kt": 110,
+"peak_time": "2008-07-07T21:00:00",
+"category": 3,
+"ace": 28.4,
+"landfall": false,
+"min_pressure_mb": 952
+},
+{
+"id": "AL032008",
+"name": "Cristobal",
+"peak_kt": 55,
+"peak_time": "2008-07-21T12:00:00",
+"category": 0,
+"ace": 3.71,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL042008",
+"name": "Dolly",
+"peak_kt": 85,
+"peak_time": "2008-07-23T12:00:00",
+"category": 2,
+"ace": 5.45,
+"landfall": true,
+"min_pressure_mb": 963
+},
+{
+"id": "AL052008",
+"name": "Edouard",
+"peak_kt": 55,
+"peak_time": "2008-08-05T06:00:00",
+"category": 0,
+"ace": 1.7,
+"landfall": true,
+"min_pressure_mb": 996
+},
+{
+"id": "AL062008",
+"name": "Fay",
+"peak_kt": 60,
+"peak_time": "2008-08-19T18:00:00",
+"category": 0,
+"ace": 7.29,
+"landfall": true,
+"min_pressure_mb": 986
+},
+{
+"id": "AL072008",
+"name": "Gustav",
+"peak_kt": 135,
+"peak_time": "2008-08-30T22:00:00",
+"category": 4,
+"ace": 18.15,
+"landfall": true,
+"min_pressure_mb": 941
+},
+{
+"id": "AL082008",
+"name": "Hanna",
+"peak_kt": 75,
+"peak_time": "2008-09-02T00:00:00",
+"category": 1,
+"ace": 10.41,
+"landfall": true,
+"min_pressure_mb": 977
+},
+{
+"id": "AL092008",
+"name": "Ike",
+"peak_kt": 125,
+"peak_time": "2008-09-04T06:00:00",
+"category": 4,
+"ace": 39.19,
+"landfall": true,
+"min_pressure_mb": 935
+},
+{
+"id": "AL102008",
+"name": "Josephine",
+"peak_kt": 55,
+"peak_time": "2008-09-03T06:00:00",
+"category": 0,
+"ace": 3.07,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL112008",
+"name": "Kyle",
+"peak_kt": 75,
+"peak_time": "2008-09-28T12:00:00",
+"category": 1,
+"ace": 5.43,
+"landfall": true,
+"min_pressure_mb": 984
+},
+{
+"id": "AL122008",
+"name": "Laura",
+"peak_kt": 70,
+"peak_time": "2008-09-27T12:00:00",
+"category": 1,
+"ace": 2.16,
+"landfall": false,
+"min_pressure_mb": 990
+},
+{
+"id": "AL132008",
+"name": "Marco",
+"peak_kt": 55,
+"peak_time": "2008-10-07T00:00:00",
+"category": 0,
+"ace": 1.32,
+"landfall": true,
+"min_pressure_mb": 998
+},
+{
+"id": "AL142008",
+"name": "Nana",
+"peak_kt": 35,
+"peak_time": "2008-10-12T12:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL152008",
+"name": "Omar",
+"peak_kt": 115,
+"peak_time": "2008-10-16T06:00:00",
+"category": 4,
+"ace": 8.98,
+"landfall": false,
+"min_pressure_mb": 958
+},
+{
+"id": "AL162008",
+"name": "Sixteen",
+"peak_kt": 25,
+"peak_time": "2008-10-14T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL172008",
+"name": "Paloma",
+"peak_kt": 125,
+"peak_time": "2008-11-08T12:00:00",
+"category": 4,
+"ace": 9.2,
+"landfall": true,
+"min_pressure_mb": 944
+},
+{
+"id": "AL012009",
+"name": "One",
+"peak_kt": 30,
+"peak_time": "2009-05-28T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL022009",
+"name": "Ana",
+"peak_kt": 35,
+"peak_time": "2009-08-12T12:00:00",
+"category": 0,
+"ace": 0.86,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL032009",
+"name": "Bill",
+"peak_kt": 115,
+"peak_time": "2009-08-19T06:00:00",
+"category": 4,
+"ace": 26.5,
+"landfall": true,
+"min_pressure_mb": 943
+},
+{
+"id": "AL042009",
+"name": "Claudette",
+"peak_kt": 50,
+"peak_time": "2009-08-16T18:00:00",
+"category": 0,
+"ace": 0.73,
+"landfall": true,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL052009",
+"name": "Danny",
+"peak_kt": 50,
+"peak_time": "2009-08-27T00:00:00",
+"category": 0,
+"ace": 1.97,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL062009",
+"name": "Erika",
+"peak_kt": 45,
+"peak_time": "2009-09-01T18:00:00",
+"category": 0,
+"ace": 1.29,
+"landfall": true,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL072009",
+"name": "Fred",
+"peak_kt": 105,
+"peak_time": "2009-09-09T12:00:00",
+"category": 3,
+"ace": 9.93,
+"landfall": false,
+"min_pressure_mb": 958
+},
+{
+"id": "AL082009",
+"name": "Eight",
+"peak_kt": 30,
+"peak_time": "2009-09-25T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL092009",
+"name": "Grace",
+"peak_kt": 55,
+"peak_time": "2009-09-27T18:00:00",
+"category": 0,
+"ace": 1.97,
+"landfall": false,
+"min_pressure_mb": 986
+},
+{
+"id": "AL102009",
+"name": "Henri",
+"peak_kt": 45,
+"peak_time": "2009-10-07T06:00:00",
+"category": 0,
+"ace": 1.22,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL112009",
+"name": "Ida",
+"peak_kt": 90,
+"peak_time": "2009-11-09T00:00:00",
+"category": 2,
+"ace": 8.12,
+"landfall": true,
+"min_pressure_mb": 975
+},
+{
+"id": "AL012010",
+"name": "Alex",
+"peak_kt": 95,
+"peak_time": "2010-07-01T02:00:00",
+"category": 2,
+"ace": 7.71,
+"landfall": true,
+"min_pressure_mb": 946
+},
+{
+"id": "AL022010",
+"name": "Two",
+"peak_kt": 30,
+"peak_time": "2010-07-07T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL032010",
+"name": "Bonnie",
+"peak_kt": 40,
+"peak_time": "2010-07-23T05:15:00",
+"category": 0,
+"ace": 0.4,
+"landfall": true,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL042010",
+"name": "Colin",
+"peak_kt": 50,
+"peak_time": "2010-08-05T21:00:00",
+"category": 0,
+"ace": 1.86,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL052010",
+"name": "Five",
+"peak_kt": 30,
+"peak_time": "2010-08-10T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL062010",
+"name": "Danielle",
+"peak_kt": 115,
+"peak_time": "2010-08-27T18:00:00",
+"category": 4,
+"ace": 21.13,
+"landfall": false,
+"min_pressure_mb": 942
+},
+{
+"id": "AL072010",
+"name": "Earl",
+"peak_kt": 125,
+"peak_time": "2010-09-02T06:00:00",
+"category": 4,
+"ace": 27.69,
+"landfall": true,
+"min_pressure_mb": 927
+},
+{
+"id": "AL082010",
+"name": "Fiona",
+"peak_kt": 55,
+"peak_time": "2010-09-01T18:00:00",
+"category": 0,
+"ace": 3.08,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL092010",
+"name": "Gaston",
+"peak_kt": 35,
+"peak_time": "2010-09-01T12:00:00",
+"category": 0,
+"ace": 0.24,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL102010",
+"name": "Hermine",
+"peak_kt": 60,
+"peak_time": "2010-09-07T02:00:00",
+"category": 0,
+"ace": 1.58,
+"landfall": true,
+"min_pressure_mb": 989
+},
+{
+"id": "AL112010",
+"name": "Igor",
+"peak_kt": 135,
+"peak_time": "2010-09-15T00:00:00",
+"category": 4,
+"ace": 41.91,
+"landfall": true,
+"min_pressure_mb": 924
+},
+{
+"id": "AL122010",
+"name": "Julia",
+"peak_kt": 120,
+"peak_time": "2010-09-15T12:00:00",
+"category": 4,
+"ace": 15.51,
+"landfall": false,
+"min_pressure_mb": 948
+},
+{
+"id": "AL132010",
+"name": "Karl",
+"peak_kt": 110,
+"peak_time": "2010-09-17T12:00:00",
+"category": 3,
+"ace": 6.25,
+"landfall": true,
+"min_pressure_mb": 956
+},
+{
+"id": "AL142010",
+"name": "Lisa",
+"peak_kt": 75,
+"peak_time": "2010-09-25T00:00:00",
+"category": 1,
+"ace": 4.05,
+"landfall": false,
+"min_pressure_mb": 982
+},
+{
+"id": "AL152010",
+"name": "Matthew",
+"peak_kt": 50,
+"peak_time": "2010-09-24T18:00:00",
+"category": 0,
+"ace": 1.51,
+"landfall": true,
+"min_pressure_mb": 998
+},
+{
+"id": "AL162010",
+"name": "Nicole",
+"peak_kt": 40,
+"peak_time": "2010-09-28T18:00:00",
+"category": 0,
+"ace": 0.69,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL172010",
+"name": "Otto",
+"peak_kt": 75,
+"peak_time": "2010-10-09T00:00:00",
+"category": 1,
+"ace": 5.39,
+"landfall": false,
+"min_pressure_mb": 976
+},
+{
+"id": "AL182010",
+"name": "Paula",
+"peak_kt": 90,
+"peak_time": "2010-10-12T18:00:00",
+"category": 2,
+"ace": 7.54,
+"landfall": true,
+"min_pressure_mb": 981
+},
+{
+"id": "AL192010",
+"name": "Richard",
+"peak_kt": 85,
+"peak_time": "2010-10-25T00:00:00",
+"category": 2,
+"ace": 4.98,
+"landfall": true,
+"min_pressure_mb": 977
+},
+{
+"id": "AL202010",
+"name": "Shary",
+"peak_kt": 65,
+"peak_time": "2010-10-30T00:00:00",
+"category": 1,
+"ace": 2.1,
+"landfall": false,
+"min_pressure_mb": 989
+},
+{
+"id": "AL212010",
+"name": "Tomas",
+"peak_kt": 85,
+"peak_time": "2010-10-30T20:00:00",
+"category": 2,
+"ace": 11.85,
+"landfall": true,
+"min_pressure_mb": 982
+},
+{
+"id": "AL012011",
+"name": "Arlene",
+"peak_kt": 55,
+"peak_time": "2011-06-30T06:00:00",
+"category": 0,
+"ace": 1.88,
+"landfall": true,
+"min_pressure_mb": 993
+},
+{
+"id": "AL022011",
+"name": "Bret",
+"peak_kt": 60,
+"peak_time": "2011-07-18T18:00:00",
+"category": 0,
+"ace": 3.28,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL032011",
+"name": "Cindy",
+"peak_kt": 60,
+"peak_time": "2011-07-21T18:00:00",
+"category": 0,
+"ace": 2.31,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL042011",
+"name": "Don",
+"peak_kt": 45,
+"peak_time": "2011-07-29T00:00:00",
+"category": 0,
+"ace": 1.62,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL052011",
+"name": "Emily",
+"peak_kt": 45,
+"peak_time": "2011-08-03T00:00:00",
+"category": 0,
+"ace": 2.3,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL062011",
+"name": "Franklin",
+"peak_kt": 40,
+"peak_time": "2011-08-13T12:00:00",
+"category": 0,
+"ace": 0.28,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL072011",
+"name": "Gert",
+"peak_kt": 55,
+"peak_time": "2011-08-15T12:00:00",
+"category": 0,
+"ace": 1.85,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL082011",
+"name": "Harvey",
+"peak_kt": 55,
+"peak_time": "2011-08-20T17:30:00",
+"category": 0,
+"ace": 1.53,
+"landfall": true,
+"min_pressure_mb": 994
+},
+{
+"id": "AL092011",
+"name": "Irene",
+"peak_kt": 105,
+"peak_time": "2011-08-24T12:00:00",
+"category": 3,
+"ace": 18.81,
+"landfall": true,
+"min_pressure_mb": 942
+},
+{
+"id": "AL102011",
+"name": "Ten",
+"peak_kt": 30,
+"peak_time": "2011-08-25T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL112011",
+"name": "Jose",
+"peak_kt": 40,
+"peak_time": "2011-08-28T06:00:00",
+"category": 0,
+"ace": 0.85,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL122011",
+"name": "Katia",
+"peak_kt": 120,
+"peak_time": "2011-09-06T00:00:00",
+"category": 4,
+"ace": 27.03,
+"landfall": false,
+"min_pressure_mb": 942
+},
+{
+"id": "AL202011",
+"name": "Unnamed",
+"peak_kt": 40,
+"peak_time": "2011-09-01T12:00:00",
+"category": 0,
+"ace": 0.85,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL132011",
+"name": "Lee",
+"peak_kt": 50,
+"peak_time": "2011-09-03T12:00:00",
+"category": 0,
+"ace": 1.79,
+"landfall": true,
+"min_pressure_mb": 986
+},
+{
+"id": "AL142011",
+"name": "Maria",
+"peak_kt": 70,
+"peak_time": "2011-09-16T00:00:00",
+"category": 1,
+"ace": 9.17,
+"landfall": true,
+"min_pressure_mb": 983
+},
+{
+"id": "AL152011",
+"name": "Nate",
+"peak_kt": 65,
+"peak_time": "2011-09-08T18:00:00",
+"category": 1,
+"ace": 4.31,
+"landfall": true,
+"min_pressure_mb": 994
+},
+{
+"id": "AL162011",
+"name": "Ophelia",
+"peak_kt": 120,
+"peak_time": "2011-10-02T00:00:00",
+"category": 4,
+"ace": 18.68,
+"landfall": false,
+"min_pressure_mb": 940
+},
+{
+"id": "AL172011",
+"name": "Philippe",
+"peak_kt": 80,
+"peak_time": "2011-10-06T18:00:00",
+"category": 1,
+"ace": 15.93,
+"landfall": false,
+"min_pressure_mb": 976
+},
+{
+"id": "AL182011",
+"name": "Rina",
+"peak_kt": 100,
+"peak_time": "2011-10-25T18:00:00",
+"category": 3,
+"ace": 10.09,
+"landfall": true,
+"min_pressure_mb": 966
+},
+{
+"id": "AL192011",
+"name": "Sean",
+"peak_kt": 55,
+"peak_time": "2011-11-09T12:00:00",
+"category": 0,
+"ace": 3.75,
+"landfall": false,
+"min_pressure_mb": 982
+},
+{
+"id": "AL012012",
+"name": "Alberto",
+"peak_kt": 50,
+"peak_time": "2012-05-20T00:00:00",
+"category": 0,
+"ace": 1.87,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL022012",
+"name": "Beryl",
+"peak_kt": 60,
+"peak_time": "2012-05-27T23:00:00",
+"category": 0,
+"ace": 2.49,
+"landfall": true,
+"min_pressure_mb": 992
+},
+{
+"id": "AL032012",
+"name": "Chris",
+"peak_kt": 75,
+"peak_time": "2012-06-21T12:00:00",
+"category": 1,
+"ace": 4.09,
+"landfall": false,
+"min_pressure_mb": 974
+},
+{
+"id": "AL042012",
+"name": "Debby",
+"peak_kt": 55,
+"peak_time": "2012-06-24T12:00:00",
+"category": 0,
+"ace": 2.76,
+"landfall": true,
+"min_pressure_mb": 990
+},
+{
+"id": "AL052012",
+"name": "Ernesto",
+"peak_kt": 85,
+"peak_time": "2012-08-08T03:15:00",
+"category": 2,
+"ace": 8.5,
+"landfall": true,
+"min_pressure_mb": 973
+},
+{
+"id": "AL062012",
+"name": "Florence",
+"peak_kt": 50,
+"peak_time": "2012-08-05T00:00:00",
+"category": 0,
+"ace": 1.51,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL072012",
+"name": "Helene",
+"peak_kt": 40,
+"peak_time": "2012-08-17T18:00:00",
+"category": 0,
+"ace": 0.28,
+"landfall": true,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL082012",
+"name": "Gordon",
+"peak_kt": 95,
+"peak_time": "2012-08-19T00:00:00",
+"category": 2,
+"ace": 8.64,
+"landfall": true,
+"min_pressure_mb": 965
+},
+{
+"id": "AL092012",
+"name": "Isaac",
+"peak_kt": 70,
+"peak_time": "2012-08-28T18:00:00",
+"category": 1,
+"ace": 10.36,
+"landfall": true,
+"min_pressure_mb": 965
+},
+{
+"id": "AL102012",
+"name": "Joyce",
+"peak_kt": 35,
+"peak_time": "2012-08-23T12:00:00",
+"category": 0,
+"ace": 0.24,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL112012",
+"name": "Kirk",
+"peak_kt": 90,
+"peak_time": "2012-08-31T06:00:00",
+"category": 2,
+"ace": 7.74,
+"landfall": false,
+"min_pressure_mb": 970
+},
+{
+"id": "AL122012",
+"name": "Leslie",
+"peak_kt": 70,
+"peak_time": "2012-09-05T12:00:00",
+"category": 1,
+"ace": 16.28,
+"landfall": false,
+"min_pressure_mb": 968
+},
+{
+"id": "AL132012",
+"name": "Michael",
+"peak_kt": 100,
+"peak_time": "2012-09-06T12:00:00",
+"category": 3,
+"ace": 16.7,
+"landfall": false,
+"min_pressure_mb": 964
+},
+{
+"id": "AL142012",
+"name": "Nadine",
+"peak_kt": 80,
+"peak_time": "2012-09-30T12:00:00",
+"category": 1,
+"ace": 26.34,
+"landfall": false,
+"min_pressure_mb": 978
+},
+{
+"id": "AL152012",
+"name": "Oscar",
+"peak_kt": 45,
+"peak_time": "2012-10-04T12:00:00",
+"category": 0,
+"ace": 1.46,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL162012",
+"name": "Patty",
+"peak_kt": 40,
+"peak_time": "2012-10-12T00:00:00",
+"category": 0,
+"ace": 1.09,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL172012",
+"name": "Rafael",
+"peak_kt": 80,
+"peak_time": "2012-10-16T00:00:00",
+"category": 1,
+"ace": 7.4,
+"landfall": false,
+"min_pressure_mb": 966
+},
+{
+"id": "AL182012",
+"name": "Sandy",
+"peak_kt": 100,
+"peak_time": "2012-10-25T05:25:00",
+"category": 3,
+"ace": 13.67,
+"landfall": true,
+"min_pressure_mb": 940
+},
+{
+"id": "AL192012",
+"name": "Tony",
+"peak_kt": 45,
+"peak_time": "2012-10-24T12:00:00",
+"category": 0,
+"ace": 1.22,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL012013",
+"name": "Andrea",
+"peak_kt": 55,
+"peak_time": "2013-06-06T12:00:00",
+"category": 0,
+"ace": 1.62,
+"landfall": true,
+"min_pressure_mb": 992
+},
+{
+"id": "AL022013",
+"name": "Barry",
+"peak_kt": 40,
+"peak_time": "2013-06-19T18:00:00",
+"category": 0,
+"ace": 0.76,
+"landfall": true,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL032013",
+"name": "Chantal",
+"peak_kt": 55,
+"peak_time": "2013-07-09T12:00:00",
+"category": 0,
+"ace": 2.48,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL042013",
+"name": "Dorian",
+"peak_kt": 50,
+"peak_time": "2013-07-25T06:00:00",
+"category": 0,
+"ace": 2.57,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL052013",
+"name": "Erin",
+"peak_kt": 40,
+"peak_time": "2013-08-17T00:00:00",
+"category": 0,
+"ace": 1.55,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL062013",
+"name": "Fernand",
+"peak_kt": 50,
+"peak_time": "2013-08-26T00:00:00",
+"category": 0,
+"ace": 0.66,
+"landfall": true,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL072013",
+"name": "Gabrielle",
+"peak_kt": 55,
+"peak_time": "2013-09-10T12:00:00",
+"category": 0,
+"ace": 1.82,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL082013",
+"name": "Eight",
+"peak_kt": 30,
+"peak_time": "2013-09-06T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL092013",
+"name": "Humberto",
+"peak_kt": 80,
+"peak_time": "2013-09-11T18:00:00",
+"category": 1,
+"ace": 8.94,
+"landfall": false,
+"min_pressure_mb": 979
+},
+{
+"id": "AL102013",
+"name": "Ingrid",
+"peak_kt": 75,
+"peak_time": "2013-09-15T00:00:00",
+"category": 1,
+"ace": 4.9,
+"landfall": true,
+"min_pressure_mb": 983
+},
+{
+"id": "AL112013",
+"name": "Jerry",
+"peak_kt": 45,
+"peak_time": "2013-10-01T00:00:00",
+"category": 0,
+"ace": 1.95,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL122013",
+"name": "Karen",
+"peak_kt": 55,
+"peak_time": "2013-10-03T12:00:00",
+"category": 0,
+"ace": 2.27,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL132013",
+"name": "Lorenzo",
+"peak_kt": 45,
+"peak_time": "2013-10-22T12:00:00",
+"category": 0,
+"ace": 1.62,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL142013",
+"name": "Melissa",
+"peak_kt": 55,
+"peak_time": "2013-11-19T06:00:00",
+"category": 0,
+"ace": 3.47,
+"landfall": false,
+"min_pressure_mb": 980
+},
+{
+"id": "AL152013",
+"name": "Unnamed",
+"peak_kt": 55,
+"peak_time": "2013-12-04T00:00:00",
+"category": 0,
+"ace": 1.53,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL012014",
+"name": "Arthur",
+"peak_kt": 85,
+"peak_time": "2014-07-04T00:00:00",
+"category": 2,
+"ace": 6.95,
+"landfall": true,
+"min_pressure_mb": 973
+},
+{
+"id": "AL022014",
+"name": "Two",
+"peak_kt": 30,
+"peak_time": "2014-07-21T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1012
+},
+{
+"id": "AL032014",
+"name": "Bertha",
+"peak_kt": 70,
+"peak_time": "2014-08-04T12:00:00",
+"category": 1,
+"ace": 5.52,
+"landfall": true,
+"min_pressure_mb": 996
+},
+{
+"id": "AL042014",
+"name": "Cristobal",
+"peak_kt": 75,
+"peak_time": "2014-08-28T18:00:00",
+"category": 1,
+"ace": 7.92,
+"landfall": false,
+"min_pressure_mb": 963
+},
+{
+"id": "AL052014",
+"name": "Dolly",
+"peak_kt": 45,
+"peak_time": "2014-09-02T12:00:00",
+"category": 0,
+"ace": 0.93,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL062014",
+"name": "Edouard",
+"peak_kt": 105,
+"peak_time": "2014-09-16T12:00:00",
+"category": 3,
+"ace": 15.63,
+"landfall": false,
+"min_pressure_mb": 955
+},
+{
+"id": "AL072014",
+"name": "Fay",
+"peak_kt": 70,
+"peak_time": "2014-10-12T08:10:00",
+"category": 1,
+"ace": 3.56,
+"landfall": true,
+"min_pressure_mb": 983
+},
+{
+"id": "AL082014",
+"name": "Gonzalo",
+"peak_kt": 125,
+"peak_time": "2014-10-16T12:00:00",
+"category": 4,
+"ace": 25.97,
+"landfall": true,
+"min_pressure_mb": 940
+},
+{
+"id": "AL092014",
+"name": "Hanna",
+"peak_kt": 35,
+"peak_time": "2014-10-27T06:00:00",
+"category": 0,
+"ace": 0.24,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL012015",
+"name": "Ana",
+"peak_kt": 50,
+"peak_time": "2015-05-09T00:00:00",
+"category": 0,
+"ace": 2.12,
+"landfall": true,
+"min_pressure_mb": 998
+},
+{
+"id": "AL022015",
+"name": "Bill",
+"peak_kt": 50,
+"peak_time": "2015-06-16T12:00:00",
+"category": 0,
+"ace": 1.06,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL032015",
+"name": "Claudette",
+"peak_kt": 45,
+"peak_time": "2015-07-13T18:00:00",
+"category": 0,
+"ace": 1.13,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL042015",
+"name": "Danny",
+"peak_kt": 110,
+"peak_time": "2015-08-21T12:00:00",
+"category": 3,
+"ace": 10.53,
+"landfall": false,
+"min_pressure_mb": 960
+},
+{
+"id": "AL052015",
+"name": "Erika",
+"peak_kt": 45,
+"peak_time": "2015-08-27T06:00:00",
+"category": 0,
+"ace": 2.7,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL062015",
+"name": "Fred",
+"peak_kt": 75,
+"peak_time": "2015-08-31T12:00:00",
+"category": 1,
+"ace": 5.53,
+"landfall": false,
+"min_pressure_mb": 986
+},
+{
+"id": "AL072015",
+"name": "Grace",
+"peak_kt": 50,
+"peak_time": "2015-09-06T12:00:00",
+"category": 0,
+"ace": 1.91,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL082015",
+"name": "Henri",
+"peak_kt": 45,
+"peak_time": "2015-09-09T18:00:00",
+"category": 0,
+"ace": 1.65,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL092015",
+"name": "Nine",
+"peak_kt": 30,
+"peak_time": "2015-09-17T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL102015",
+"name": "Ida",
+"peak_kt": 45,
+"peak_time": "2015-09-21T06:00:00",
+"category": 0,
+"ace": 3.15,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL112015",
+"name": "Joaquin",
+"peak_kt": 135,
+"peak_time": "2015-10-03T12:00:00",
+"category": 4,
+"ace": 29.24,
+"landfall": true,
+"min_pressure_mb": 931
+},
+{
+"id": "AL122015",
+"name": "Kate",
+"peak_kt": 75,
+"peak_time": "2015-11-11T12:00:00",
+"category": 1,
+"ace": 3.65,
+"landfall": false,
+"min_pressure_mb": 980
+},
+{
+"id": "AL012016",
+"name": "Alex",
+"peak_kt": 75,
+"peak_time": "2016-01-14T12:00:00",
+"category": 1,
+"ace": 4.17,
+"landfall": true,
+"min_pressure_mb": 978
+},
+{
+"id": "AL022016",
+"name": "Bonnie",
+"peak_kt": 40,
+"peak_time": "2016-05-28T18:00:00",
+"category": 0,
+"ace": 1.06,
+"landfall": true,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL032016",
+"name": "Colin",
+"peak_kt": 50,
+"peak_time": "2016-06-07T18:00:00",
+"category": 0,
+"ace": 1.22,
+"landfall": true,
+"min_pressure_mb": 987
+},
+{
+"id": "AL042016",
+"name": "Danielle",
+"peak_kt": 40,
+"peak_time": "2016-06-20T12:00:00",
+"category": 0,
+"ace": 0.4,
+"landfall": true,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL052016",
+"name": "Earl",
+"peak_kt": 75,
+"peak_time": "2016-08-04T04:00:00",
+"category": 1,
+"ace": 4.59,
+"landfall": true,
+"min_pressure_mb": 979
+},
+{
+"id": "AL062016",
+"name": "Fiona",
+"peak_kt": 45,
+"peak_time": "2016-08-19T00:00:00",
+"category": 0,
+"ace": 3.03,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL072016",
+"name": "Gaston",
+"peak_kt": 105,
+"peak_time": "2016-08-29T00:00:00",
+"category": 3,
+"ace": 24.71,
+"landfall": false,
+"min_pressure_mb": 955
+},
+{
+"id": "AL082016",
+"name": "Eight",
+"peak_kt": 30,
+"peak_time": "2016-08-28T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1010
+},
+{
+"id": "AL092016",
+"name": "Hermine",
+"peak_kt": 70,
+"peak_time": "2016-09-02T00:00:00",
+"category": 1,
+"ace": 3.78,
+"landfall": true,
+"min_pressure_mb": 981
+},
+{
+"id": "AL102016",
+"name": "Ian",
+"peak_kt": 55,
+"peak_time": "2016-09-16T12:00:00",
+"category": 0,
+"ace": 3.13,
+"landfall": false,
+"min_pressure_mb": 984
+},
+{
+"id": "AL112016",
+"name": "Julia",
+"peak_kt": 45,
+"peak_time": "2016-09-13T18:00:00",
+"category": 0,
+"ace": 2.29,
+"landfall": true,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL122016",
+"name": "Karl",
+"peak_kt": 60,
+"peak_time": "2016-09-25T06:00:00",
+"category": 0,
+"ace": 6.2,
+"landfall": false,
+"min_pressure_mb": 980
+},
+{
+"id": "AL132016",
+"name": "Lisa",
+"peak_kt": 45,
+"peak_time": "2016-09-21T06:00:00",
+"category": 0,
+"ace": 2.83,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL142016",
+"name": "Matthew",
+"peak_kt": 145,
+"peak_time": "2016-10-01T00:00:00",
+"category": 5,
+"ace": 50.94,
+"landfall": true,
+"min_pressure_mb": 934
+},
+{
+"id": "AL152016",
+"name": "Nicole",
+"peak_kt": 120,
+"peak_time": "2016-10-13T06:00:00",
+"category": 4,
+"ace": 25.87,
+"landfall": false,
+"min_pressure_mb": 950
+},
+{
+"id": "AL162016",
+"name": "Otto",
+"peak_kt": 100,
+"peak_time": "2016-11-24T12:00:00",
+"category": 3,
+"ace": 8.31,
+"landfall": true,
+"min_pressure_mb": 975
+},
+{
+"id": "AL012017",
+"name": "Arlene",
+"peak_kt": 55,
+"peak_time": "2017-04-16T06:00:00",
+"category": 0,
+"ace": 0.81,
+"landfall": false,
+"min_pressure_mb": 986
+},
+{
+"id": "AL022017",
+"name": "Bret",
+"peak_kt": 45,
+"peak_time": "2017-06-20T02:00:00",
+"category": 0,
+"ace": 0.52,
+"landfall": true,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL032017",
+"name": "Cindy",
+"peak_kt": 50,
+"peak_time": "2017-06-21T00:00:00",
+"category": 0,
+"ace": 1.84,
+"landfall": true,
+"min_pressure_mb": 991
+},
+{
+"id": "AL042017",
+"name": "Four",
+"peak_kt": 25,
+"peak_time": "2017-07-05T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1009
+},
+{
+"id": "AL052017",
+"name": "Don",
+"peak_kt": 45,
+"peak_time": "2017-07-18T00:00:00",
+"category": 0,
+"ace": 0.77,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL062017",
+"name": "Emily",
+"peak_kt": 50,
+"peak_time": "2017-07-31T14:45:00",
+"category": 0,
+"ace": 0.61,
+"landfall": true,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL072017",
+"name": "Franklin",
+"peak_kt": 75,
+"peak_time": "2017-08-10T00:00:00",
+"category": 1,
+"ace": 3.68,
+"landfall": true,
+"min_pressure_mb": 981
+},
+{
+"id": "AL082017",
+"name": "Gert",
+"peak_kt": 95,
+"peak_time": "2017-08-16T18:00:00",
+"category": 2,
+"ace": 7.8,
+"landfall": false,
+"min_pressure_mb": 962
+},
+{
+"id": "AL092017",
+"name": "Harvey",
+"peak_kt": 115,
+"peak_time": "2017-08-26T00:00:00",
+"category": 4,
+"ace": 11.44,
+"landfall": true,
+"min_pressure_mb": 937
+},
+{
+"id": "AL112017",
+"name": "Irma",
+"peak_kt": 155,
+"peak_time": "2017-09-05T18:00:00",
+"category": 5,
+"ace": 64.89,
+"landfall": true,
+"min_pressure_mb": 914
+},
+{
+"id": "AL122017",
+"name": "Jose",
+"peak_kt": 135,
+"peak_time": "2017-09-08T18:00:00",
+"category": 4,
+"ace": 43.28,
+"landfall": false,
+"min_pressure_mb": 938
+},
+{
+"id": "AL132017",
+"name": "Katia",
+"peak_kt": 90,
+"peak_time": "2017-09-08T18:00:00",
+"category": 2,
+"ace": 6.06,
+"landfall": true,
+"min_pressure_mb": 972
+},
+{
+"id": "AL142017",
+"name": "Lee",
+"peak_kt": 100,
+"peak_time": "2017-09-27T12:00:00",
+"category": 3,
+"ace": 17.92,
+"landfall": false,
+"min_pressure_mb": 962
+},
+{
+"id": "AL152017",
+"name": "Maria",
+"peak_kt": 150,
+"peak_time": "2017-09-20T00:00:00",
+"category": 5,
+"ace": 44.81,
+"landfall": true,
+"min_pressure_mb": 908
+},
+{
+"id": "AL162017",
+"name": "Nate",
+"peak_kt": 80,
+"peak_time": "2017-10-07T12:00:00",
+"category": 1,
+"ace": 4.13,
+"landfall": true,
+"min_pressure_mb": 981
+},
+{
+"id": "AL172017",
+"name": "Ophelia",
+"peak_kt": 100,
+"peak_time": "2017-10-14T12:00:00",
+"category": 3,
+"ace": 14.52,
+"landfall": true,
+"min_pressure_mb": 957
+},
+{
+"id": "AL182017",
+"name": "Philippe",
+"peak_kt": 35,
+"peak_time": "2017-10-28T18:00:00",
+"category": 0,
+"ace": 0.12,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL192017",
+"name": "Rina",
+"peak_kt": 50,
+"peak_time": "2017-11-08T06:00:00",
+"category": 0,
+"ace": 1.66,
+"landfall": false,
+"min_pressure_mb": 991
+},
+{
+"id": "AL012018",
+"name": "Alberto",
+"peak_kt": 55,
+"peak_time": "2018-05-28T00:00:00",
+"category": 0,
+"ace": 1.79,
+"landfall": true,
+"min_pressure_mb": 990
+},
+{
+"id": "AL022018",
+"name": "Beryl",
+"peak_kt": 70,
+"peak_time": "2018-07-06T06:00:00",
+"category": 1,
+"ace": 4.8,
+"landfall": false,
+"min_pressure_mb": 991
+},
+{
+"id": "AL032018",
+"name": "Chris",
+"peak_kt": 90,
+"peak_time": "2018-07-11T00:00:00",
+"category": 2,
+"ace": 7.4,
+"landfall": false,
+"min_pressure_mb": 969
+},
+{
+"id": "AL042018",
+"name": "Debby",
+"peak_kt": 45,
+"peak_time": "2018-08-09T00:00:00",
+"category": 0,
+"ace": 1.49,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL052018",
+"name": "Ernesto",
+"peak_kt": 40,
+"peak_time": "2018-08-16T12:00:00",
+"category": 0,
+"ace": 1.45,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL062018",
+"name": "Florence",
+"peak_kt": 130,
+"peak_time": "2018-09-11T18:00:00",
+"category": 4,
+"ace": 39.73,
+"landfall": true,
+"min_pressure_mb": 937
+},
+{
+"id": "AL072018",
+"name": "Gordon",
+"peak_kt": 60,
+"peak_time": "2018-09-04T18:00:00",
+"category": 0,
+"ace": 2.28,
+"landfall": true,
+"min_pressure_mb": 996
+},
+{
+"id": "AL082018",
+"name": "Helene",
+"peak_kt": 95,
+"peak_time": "2018-09-11T00:00:00",
+"category": 2,
+"ace": 15.69,
+"landfall": false,
+"min_pressure_mb": 967
+},
+{
+"id": "AL092018",
+"name": "Isaac",
+"peak_kt": 65,
+"peak_time": "2018-09-10T00:00:00",
+"category": 1,
+"ace": 6.82,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL102018",
+"name": "Joyce",
+"peak_kt": 45,
+"peak_time": "2018-09-12T00:00:00",
+"category": 0,
+"ace": 2.38,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL112018",
+"name": "Eleven",
+"peak_kt": 30,
+"peak_time": "2018-09-21T18:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL122018",
+"name": "Kirk",
+"peak_kt": 55,
+"peak_time": "2018-09-26T12:00:00",
+"category": 0,
+"ace": 3.24,
+"landfall": true,
+"min_pressure_mb": 998
+},
+{
+"id": "AL132018",
+"name": "Leslie",
+"peak_kt": 80,
+"peak_time": "2018-10-12T00:00:00",
+"category": 1,
+"ace": 21.29,
+"landfall": false,
+"min_pressure_mb": 968
+},
+{
+"id": "AL142018",
+"name": "Michael",
+"peak_kt": 140,
+"peak_time": "2018-10-10T17:30:00",
+"category": 5,
+"ace": 12.51,
+"landfall": true,
+"min_pressure_mb": 919
+},
+{
+"id": "AL152018",
+"name": "Nadine",
+"peak_kt": 55,
+"peak_time": "2018-10-10T06:00:00",
+"category": 0,
+"ace": 2.69,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL162018",
+"name": "Oscar",
+"peak_kt": 95,
+"peak_time": "2018-10-30T00:00:00",
+"category": 2,
+"ace": 9.04,
+"landfall": false,
+"min_pressure_mb": 952
+},
+{
+"id": "AL012019",
+"name": "Andrea",
+"peak_kt": 35,
+"peak_time": "2019-05-20T18:00:00",
+"category": 0,
+"ace": 0.37,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL022019",
+"name": "Barry",
+"peak_kt": 65,
+"peak_time": "2019-07-13T12:00:00",
+"category": 1,
+"ace": 3.52,
+"landfall": true,
+"min_pressure_mb": 993
+},
+{
+"id": "AL032019",
+"name": "Three",
+"peak_kt": 30,
+"peak_time": "2019-07-23T06:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1013
+},
+{
+"id": "AL042019",
+"name": "Chantal",
+"peak_kt": 35,
+"peak_time": "2019-08-21T00:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL052019",
+"name": "Dorian",
+"peak_kt": 160,
+"peak_time": "2019-09-01T16:40:00",
+"category": 5,
+"ace": 48.94,
+"landfall": true,
+"min_pressure_mb": 910
+},
+{
+"id": "AL062019",
+"name": "Erin",
+"peak_kt": 35,
+"peak_time": "2019-08-27T18:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": false,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL072019",
+"name": "Fernand",
+"peak_kt": 45,
+"peak_time": "2019-09-04T00:00:00",
+"category": 0,
+"ace": 0.85,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL082019",
+"name": "Gabrielle",
+"peak_kt": 55,
+"peak_time": "2019-09-08T18:00:00",
+"category": 0,
+"ace": 5.38,
+"landfall": false,
+"min_pressure_mb": 995
+},
+{
+"id": "AL092019",
+"name": "Humberto",
+"peak_kt": 110,
+"peak_time": "2019-09-18T18:00:00",
+"category": 3,
+"ace": 15.15,
+"landfall": false,
+"min_pressure_mb": 950
+},
+{
+"id": "AL102019",
+"name": "Jerry",
+"peak_kt": 90,
+"peak_time": "2019-09-20T00:00:00",
+"category": 2,
+"ace": 9.33,
+"landfall": false,
+"min_pressure_mb": 976
+},
+{
+"id": "AL112019",
+"name": "Imelda",
+"peak_kt": 40,
+"peak_time": "2019-09-17T17:45:00",
+"category": 0,
+"ace": 0.16,
+"landfall": true,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL122019",
+"name": "Karen",
+"peak_kt": 40,
+"peak_time": "2019-09-24T18:00:00",
+"category": 0,
+"ace": 2.27,
+"landfall": true,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL132019",
+"name": "Lorenzo",
+"peak_kt": 140,
+"peak_time": "2019-09-29T03:00:00",
+"category": 5,
+"ace": 31.03,
+"landfall": false,
+"min_pressure_mb": 925
+},
+{
+"id": "AL142019",
+"name": "Melissa",
+"peak_kt": 55,
+"peak_time": "2019-10-10T00:00:00",
+"category": 0,
+"ace": 2.55,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL152019",
+"name": "Fifteen",
+"peak_kt": 30,
+"peak_time": "2019-10-14T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL162019",
+"name": "Nestor",
+"peak_kt": 50,
+"peak_time": "2019-10-18T12:00:00",
+"category": 0,
+"ace": 0.75,
+"landfall": false,
+"min_pressure_mb": 996
+},
+{
+"id": "AL172019",
+"name": "Olga",
+"peak_kt": 45,
+"peak_time": "2019-10-26T00:00:00",
+"category": 0,
+"ace": 0.28,
+"landfall": false,
+"min_pressure_mb": 992
+},
+{
+"id": "AL182019",
+"name": "Pablo",
+"peak_kt": 70,
+"peak_time": "2019-10-27T18:00:00",
+"category": 1,
+"ace": 3.63,
+"landfall": false,
+"min_pressure_mb": 977
+},
+{
+"id": "AL192019",
+"name": "Rebekah",
+"peak_kt": 70,
+"peak_time": "2019-10-28T00:00:00",
+"category": 1,
+"ace": 1.21,
+"landfall": false,
+"min_pressure_mb": 965
+},
+{
+"id": "AL202019",
+"name": "Sebastien",
+"peak_kt": 60,
+"peak_time": "2019-11-23T00:00:00",
+"category": 0,
+"ace": 5.8,
+"landfall": false,
+"min_pressure_mb": 970
+},
+{
+"id": "AL012020",
+"name": "Arthur",
+"peak_kt": 55,
+"peak_time": "2020-05-19T12:00:00",
+"category": 0,
+"ace": 1.75,
+"landfall": false,
+"min_pressure_mb": 989
+},
+{
+"id": "AL022020",
+"name": "Bertha",
+"peak_kt": 45,
+"peak_time": "2020-05-27T12:00:00",
+"category": 0,
+"ace": 0.36,
+"landfall": true,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL032020",
+"name": "Cristobal",
+"peak_kt": 50,
+"peak_time": "2020-06-03T06:00:00",
+"category": 0,
+"ace": 4.0,
+"landfall": true,
+"min_pressure_mb": 982
+},
+{
+"id": "AL042020",
+"name": "Dolly",
+"peak_kt": 40,
+"peak_time": "2020-06-23T12:00:00",
+"category": 0,
+"ace": 0.56,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL052020",
+"name": "Edouard",
+"peak_kt": 40,
+"peak_time": "2020-07-06T12:00:00",
+"category": 0,
+"ace": 0.57,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL062020",
+"name": "Fay",
+"peak_kt": 50,
+"peak_time": "2020-07-10T12:00:00",
+"category": 0,
+"ace": 1.15,
+"landfall": true,
+"min_pressure_mb": 998
+},
+{
+"id": "AL072020",
+"name": "Gonzalo",
+"peak_kt": 55,
+"peak_time": "2020-07-23T06:00:00",
+"category": 0,
+"ace": 2.78,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL082020",
+"name": "Hanna",
+"peak_kt": 80,
+"peak_time": "2020-07-25T18:00:00",
+"category": 1,
+"ace": 3.55,
+"landfall": true,
+"min_pressure_mb": 973
+},
+{
+"id": "AL092020",
+"name": "Isaias",
+"peak_kt": 80,
+"peak_time": "2020-08-04T00:00:00",
+"category": 1,
+"ace": 9.41,
+"landfall": true,
+"min_pressure_mb": 986
+},
+{
+"id": "AL102020",
+"name": "Ten",
+"peak_kt": 30,
+"peak_time": "2020-07-30T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL112020",
+"name": "Josephine",
+"peak_kt": 40,
+"peak_time": "2020-08-13T12:00:00",
+"category": 0,
+"ace": 1.54,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL122020",
+"name": "Kyle",
+"peak_kt": 45,
+"peak_time": "2020-08-15T06:00:00",
+"category": 0,
+"ace": 0.97,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL132020",
+"name": "Laura",
+"peak_kt": 130,
+"peak_time": "2020-08-27T00:00:00",
+"category": 4,
+"ace": 12.92,
+"landfall": true,
+"min_pressure_mb": 937
+},
+{
+"id": "AL142020",
+"name": "Marco",
+"peak_kt": 65,
+"peak_time": "2020-08-23T12:00:00",
+"category": 1,
+"ace": 3.43,
+"landfall": false,
+"min_pressure_mb": 991
+},
+{
+"id": "AL152020",
+"name": "Omar",
+"peak_kt": 35,
+"peak_time": "2020-09-01T12:00:00",
+"category": 0,
+"ace": 0.74,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL162020",
+"name": "Nana",
+"peak_kt": 65,
+"peak_time": "2020-09-03T03:00:00",
+"category": 1,
+"ace": 2.52,
+"landfall": true,
+"min_pressure_mb": 994
+},
+{
+"id": "AL172020",
+"name": "Paulette",
+"peak_kt": 90,
+"peak_time": "2020-09-14T18:00:00",
+"category": 2,
+"ace": 15.91,
+"landfall": true,
+"min_pressure_mb": 965
+},
+{
+"id": "AL182020",
+"name": "Rene",
+"peak_kt": 40,
+"peak_time": "2020-09-10T12:00:00",
+"category": 0,
+"ace": 2.04,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL192020",
+"name": "Sally",
+"peak_kt": 95,
+"peak_time": "2020-09-16T06:00:00",
+"category": 2,
+"ace": 7.31,
+"landfall": true,
+"min_pressure_mb": 965
+},
+{
+"id": "AL202020",
+"name": "Teddy",
+"peak_kt": 120,
+"peak_time": "2020-09-18T00:00:00",
+"category": 4,
+"ace": 26.16,
+"landfall": false,
+"min_pressure_mb": 945
+},
+{
+"id": "AL212020",
+"name": "Vicky",
+"peak_kt": 45,
+"peak_time": "2020-09-14T18:00:00",
+"category": 0,
+"ace": 2.15,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL222020",
+"name": "Beta",
+"peak_kt": 55,
+"peak_time": "2020-09-20T18:00:00",
+"category": 0,
+"ace": 3.51,
+"landfall": true,
+"min_pressure_mb": 993
+},
+{
+"id": "AL232020",
+"name": "Wilfred",
+"peak_kt": 35,
+"peak_time": "2020-09-17T18:00:00",
+"category": 0,
+"ace": 1.35,
+"landfall": false,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL242020",
+"name": "Alpha",
+"peak_kt": 60,
+"peak_time": "2020-09-15T00:00:00",
+"category": 0,
+"ace": 1.22,
+"landfall": true,
+"min_pressure_mb": 992
+},
+{
+"id": "AL252020",
+"name": "Gamma",
+"peak_kt": 65,
+"peak_time": "2020-10-03T16:45:00",
+"category": 1,
+"ace": 2.77,
+"landfall": true,
+"min_pressure_mb": 978
+},
+{
+"id": "AL262020",
+"name": "Delta",
+"peak_kt": 120,
+"peak_time": "2020-10-06T18:00:00",
+"category": 4,
+"ace": 15.11,
+"landfall": true,
+"min_pressure_mb": 953
+},
+{
+"id": "AL272020",
+"name": "Epsilon",
+"peak_kt": 100,
+"peak_time": "2020-10-21T18:00:00",
+"category": 3,
+"ace": 13.33,
+"landfall": false,
+"min_pressure_mb": 952
+},
+{
+"id": "AL282020",
+"name": "Zeta",
+"peak_kt": 100,
+"peak_time": "2020-10-28T21:00:00",
+"category": 3,
+"ace": 7.5,
+"landfall": true,
+"min_pressure_mb": 970
+},
+{
+"id": "AL292020",
+"name": "Eta",
+"peak_kt": 130,
+"peak_time": "2020-11-03T00:00:00",
+"category": 4,
+"ace": 18.17,
+"landfall": true,
+"min_pressure_mb": 922
+},
+{
+"id": "AL302020",
+"name": "Theta",
+"peak_kt": 60,
+"peak_time": "2020-11-10T12:00:00",
+"category": 0,
+"ace": 5.3,
+"landfall": false,
+"min_pressure_mb": 987
+},
+{
+"id": "AL312020",
+"name": "Iota",
+"peak_kt": 135,
+"peak_time": "2020-11-16T12:00:00",
+"category": 4,
+"ace": 12.32,
+"landfall": true,
+"min_pressure_mb": 917
+},
+{
+"id": "AL012021",
+"name": "Ana",
+"peak_kt": 50,
+"peak_time": "2021-05-21T00:00:00",
+"category": 0,
+"ace": 0.81,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL022021",
+"name": "Bill",
+"peak_kt": 55,
+"peak_time": "2021-06-15T12:00:00",
+"category": 0,
+"ace": 1.04,
+"landfall": false,
+"min_pressure_mb": 992
+},
+{
+"id": "AL032021",
+"name": "Claudette",
+"peak_kt": 40,
+"peak_time": "2021-06-18T18:00:00",
+"category": 0,
+"ace": 1.08,
+"landfall": true,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL042021",
+"name": "Danny",
+"peak_kt": 40,
+"peak_time": "2021-06-28T18:00:00",
+"category": 0,
+"ace": 0.41,
+"landfall": true,
+"min_pressure_mb": 1009
+},
+{
+"id": "AL052021",
+"name": "Elsa",
+"peak_kt": 75,
+"peak_time": "2021-07-02T18:00:00",
+"category": 1,
+"ace": 9.91,
+"landfall": true,
+"min_pressure_mb": 991
+},
+{
+"id": "AL062021",
+"name": "Fred",
+"peak_kt": 55,
+"peak_time": "2021-08-16T18:00:00",
+"category": 0,
+"ace": 2.43,
+"landfall": true,
+"min_pressure_mb": 991
+},
+{
+"id": "AL072021",
+"name": "Grace",
+"peak_kt": 105,
+"peak_time": "2021-08-21T00:00:00",
+"category": 3,
+"ace": 8.64,
+"landfall": true,
+"min_pressure_mb": 967
+},
+{
+"id": "AL082021",
+"name": "Henri",
+"peak_kt": 65,
+"peak_time": "2021-08-21T12:00:00",
+"category": 1,
+"ace": 7.78,
+"landfall": true,
+"min_pressure_mb": 986
+},
+{
+"id": "AL092021",
+"name": "Ida",
+"peak_kt": 130,
+"peak_time": "2021-08-29T12:00:00",
+"category": 4,
+"ace": 10.58,
+"landfall": true,
+"min_pressure_mb": 929
+},
+{
+"id": "AL102021",
+"name": "Kate",
+"peak_kt": 40,
+"peak_time": "2021-08-30T12:00:00",
+"category": 0,
+"ace": 0.65,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL112021",
+"name": "Julian",
+"peak_kt": 50,
+"peak_time": "2021-08-29T18:00:00",
+"category": 0,
+"ace": 1.07,
+"landfall": false,
+"min_pressure_mb": 993
+},
+{
+"id": "AL122021",
+"name": "Larry",
+"peak_kt": 110,
+"peak_time": "2021-09-04T06:00:00",
+"category": 3,
+"ace": 31.94,
+"landfall": true,
+"min_pressure_mb": 953
+},
+{
+"id": "AL132021",
+"name": "Mindy",
+"peak_kt": 50,
+"peak_time": "2021-09-09T01:15:00",
+"category": 0,
+"ace": 0.45,
+"landfall": true,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL142021",
+"name": "Nicholas",
+"peak_kt": 65,
+"peak_time": "2021-09-14T00:00:00",
+"category": 1,
+"ace": 2.42,
+"landfall": true,
+"min_pressure_mb": 988
+},
+{
+"id": "AL152021",
+"name": "Odette",
+"peak_kt": 55,
+"peak_time": "2021-09-20T00:00:00",
+"category": 0,
+"ace": 0.44,
+"landfall": false,
+"min_pressure_mb": 989
+},
+{
+"id": "AL162021",
+"name": "Peter",
+"peak_kt": 45,
+"peak_time": "2021-09-19T18:00:00",
+"category": 0,
+"ace": 1.78,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL172021",
+"name": "Rose",
+"peak_kt": 50,
+"peak_time": "2021-09-21T00:00:00",
+"category": 0,
+"ace": 1.43,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL182021",
+"name": "Sam",
+"peak_kt": 135,
+"peak_time": "2021-09-26T18:00:00",
+"category": 4,
+"ace": 54.01,
+"landfall": false,
+"min_pressure_mb": 927
+},
+{
+"id": "AL192021",
+"name": "Teresa",
+"peak_kt": 40,
+"peak_time": "2021-09-24T18:00:00",
+"category": 0,
+"ace": 0.56,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL202021",
+"name": "Victor",
+"peak_kt": 55,
+"peak_time": "2021-10-01T12:00:00",
+"category": 0,
+"ace": 2.45,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL212021",
+"name": "Wanda",
+"peak_kt": 60,
+"peak_time": "2021-10-27T00:00:00",
+"category": 0,
+"ace": 5.67,
+"landfall": false,
+"min_pressure_mb": 973
+},
+{
+"id": "AL012022",
+"name": "Alex",
+"peak_kt": 60,
+"peak_time": "2022-06-05T18:00:00",
+"category": 0,
+"ace": 1.64,
+"landfall": false,
+"min_pressure_mb": 984
+},
+{
+"id": "AL022022",
+"name": "Bonnie",
+"peak_kt": 100,
+"peak_time": "2022-07-05T12:00:00",
+"category": 3,
+"ace": 16.36,
+"landfall": true,
+"min_pressure_mb": 964
+},
+{
+"id": "AL032022",
+"name": "Colin",
+"peak_kt": 35,
+"peak_time": "2022-07-01T23:30:00",
+"category": 0,
+"ace": 0.37,
+"landfall": true,
+"min_pressure_mb": 1011
+},
+{
+"id": "AL052022",
+"name": "Danielle",
+"peak_kt": 75,
+"peak_time": "2022-09-04T18:00:00",
+"category": 1,
+"ace": 11.98,
+"landfall": false,
+"min_pressure_mb": 972
+},
+{
+"id": "AL062022",
+"name": "Earl",
+"peak_kt": 95,
+"peak_time": "2022-09-10T00:00:00",
+"category": 2,
+"ace": 14.67,
+"landfall": false,
+"min_pressure_mb": 948
+},
+{
+"id": "AL072022",
+"name": "Fiona",
+"peak_kt": 120,
+"peak_time": "2022-09-21T06:00:00",
+"category": 4,
+"ace": 26.58,
+"landfall": true,
+"min_pressure_mb": 931
+},
+{
+"id": "AL082022",
+"name": "Gaston",
+"peak_kt": 55,
+"peak_time": "2022-09-21T06:00:00",
+"category": 0,
+"ace": 5.13,
+"landfall": false,
+"min_pressure_mb": 994
+},
+{
+"id": "AL092022",
+"name": "Ian",
+"peak_kt": 140,
+"peak_time": "2022-09-28T12:00:00",
+"category": 5,
+"ace": 17.47,
+"landfall": true,
+"min_pressure_mb": 937
+},
+{
+"id": "AL102022",
+"name": "Hermine",
+"peak_kt": 35,
+"peak_time": "2022-09-23T18:00:00",
+"category": 0,
+"ace": 0.37,
+"landfall": false,
+"min_pressure_mb": 1003
+},
+{
+"id": "AL112022",
+"name": "Eleven",
+"peak_kt": 30,
+"peak_time": "2022-09-28T00:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1008
+},
+{
+"id": "AL122022",
+"name": "Twelve",
+"peak_kt": 30,
+"peak_time": "2022-10-04T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": false,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL132022",
+"name": "Julia",
+"peak_kt": 75,
+"peak_time": "2022-10-09T06:00:00",
+"category": 1,
+"ace": 3.29,
+"landfall": true,
+"min_pressure_mb": 982
+},
+{
+"id": "AL142022",
+"name": "Karl",
+"peak_kt": 50,
+"peak_time": "2022-10-12T18:00:00",
+"category": 0,
+"ace": 2.12,
+"landfall": false,
+"min_pressure_mb": 997
+},
+{
+"id": "AL152022",
+"name": "Lisa",
+"peak_kt": 80,
+"peak_time": "2022-11-02T21:30:00",
+"category": 1,
+"ace": 3.4,
+"landfall": true,
+"min_pressure_mb": 985
+},
+{
+"id": "AL162022",
+"name": "Martin",
+"peak_kt": 75,
+"peak_time": "2022-11-02T18:00:00",
+"category": 1,
+"ace": 3.02,
+"landfall": false,
+"min_pressure_mb": 932
+},
+{
+"id": "AL172022",
+"name": "Nicole",
+"peak_kt": 65,
+"peak_time": "2022-11-09T23:00:00",
+"category": 1,
+"ace": 4.06,
+"landfall": true,
+"min_pressure_mb": 980
+},
+{
+"id": "AL012023",
+"name": "Unnamed",
+"peak_kt": 60,
+"peak_time": "2023-01-17T00:00:00",
+"category": 0,
+"ace": 1.42,
+"landfall": true,
+"min_pressure_mb": 976
+},
+{
+"id": "AL022023",
+"name": "Arlene",
+"peak_kt": 35,
+"peak_time": "2023-06-02T06:00:00",
+"category": 0,
+"ace": 0.49,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL032023",
+"name": "Bret",
+"peak_kt": 60,
+"peak_time": "2023-06-22T06:00:00",
+"category": 0,
+"ace": 4.51,
+"landfall": true,
+"min_pressure_mb": 996
+},
+{
+"id": "AL042023",
+"name": "Cindy",
+"peak_kt": 50,
+"peak_time": "2023-06-24T06:00:00",
+"category": 0,
+"ace": 2.49,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL052023",
+"name": "Don",
+"peak_kt": 65,
+"peak_time": "2023-07-22T18:00:00",
+"category": 1,
+"ace": 6.71,
+"landfall": false,
+"min_pressure_mb": 986
+},
+{
+"id": "AL062023",
+"name": "Gert",
+"peak_kt": 50,
+"peak_time": "2023-09-03T00:00:00",
+"category": 0,
+"ace": 2.66,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL072023",
+"name": "Emily",
+"peak_kt": 45,
+"peak_time": "2023-08-20T12:00:00",
+"category": 0,
+"ace": 0.85,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL082023",
+"name": "Franklin",
+"peak_kt": 130,
+"peak_time": "2023-08-29T00:00:00",
+"category": 4,
+"ace": 26.43,
+"landfall": true,
+"min_pressure_mb": 926
+},
+{
+"id": "AL092023",
+"name": "Harold",
+"peak_kt": 50,
+"peak_time": "2023-08-22T12:00:00",
+"category": 0,
+"ace": 0.57,
+"landfall": true,
+"min_pressure_mb": 995
+},
+{
+"id": "AL102023",
+"name": "Idalia",
+"peak_kt": 115,
+"peak_time": "2023-08-30T09:00:00",
+"category": 4,
+"ace": 7.13,
+"landfall": true,
+"min_pressure_mb": 942
+},
+{
+"id": "AL112023",
+"name": "Jose",
+"peak_kt": 55,
+"peak_time": "2023-09-01T00:00:00",
+"category": 0,
+"ace": 1.84,
+"landfall": false,
+"min_pressure_mb": 996
+},
+{
+"id": "AL122023",
+"name": "Katia",
+"peak_kt": 50,
+"peak_time": "2023-09-02T18:00:00",
+"category": 0,
+"ace": 1.34,
+"landfall": false,
+"min_pressure_mb": 998
+},
+{
+"id": "AL132023",
+"name": "Lee",
+"peak_kt": 145,
+"peak_time": "2023-09-08T06:00:00",
+"category": 5,
+"ace": 36.71,
+"landfall": true,
+"min_pressure_mb": 926
+},
+{
+"id": "AL142023",
+"name": "Margot",
+"peak_kt": 80,
+"peak_time": "2023-09-13T06:00:00",
+"category": 1,
+"ace": 12.52,
+"landfall": false,
+"min_pressure_mb": 969
+},
+{
+"id": "AL152023",
+"name": "Nigel",
+"peak_kt": 85,
+"peak_time": "2023-09-19T18:00:00",
+"category": 2,
+"ace": 10.46,
+"landfall": false,
+"min_pressure_mb": 958
+},
+{
+"id": "AL162023",
+"name": "Ophelia",
+"peak_kt": 60,
+"peak_time": "2023-09-22T18:00:00",
+"category": 0,
+"ace": 1.49,
+"landfall": true,
+"min_pressure_mb": 981
+},
+{
+"id": "AL172023",
+"name": "Philippe",
+"peak_kt": 50,
+"peak_time": "2023-09-25T06:00:00",
+"category": 0,
+"ace": 9.6,
+"landfall": true,
+"min_pressure_mb": 998
+},
+{
+"id": "AL182023",
+"name": "Rina",
+"peak_kt": 45,
+"peak_time": "2023-09-29T06:00:00",
+"category": 0,
+"ace": 2.23,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL192023",
+"name": "Sean",
+"peak_kt": 40,
+"peak_time": "2023-10-12T18:00:00",
+"category": 0,
+"ace": 1.34,
+"landfall": false,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL202023",
+"name": "Tammy",
+"peak_kt": 95,
+"peak_time": "2023-10-25T12:00:00",
+"category": 2,
+"ace": 17.42,
+"landfall": true,
+"min_pressure_mb": 965
+},
+{
+"id": "AL212023",
+"name": "Twenty-One",
+"peak_kt": 25,
+"peak_time": "2023-10-23T12:00:00",
+"category": 0,
+"ace": 0.0,
+"landfall": true,
+"min_pressure_mb": 1007
+},
+{
+"id": "AL012024",
+"name": "Alberto",
+"peak_kt": 45,
+"peak_time": "2024-06-20T00:00:00",
+"category": 0,
+"ace": 0.81,
+"landfall": true,
+"min_pressure_mb": 992
+},
+{
+"id": "AL022024",
+"name": "Beryl",
+"peak_kt": 145,
+"peak_time": "2024-07-02T06:00:00",
+"category": 5,
+"ace": 34.46,
+"landfall": true,
+"min_pressure_mb": 932
+},
+{
+"id": "AL032024",
+"name": "Chris",
+"peak_kt": 40,
+"peak_time": "2024-07-01T03:00:00",
+"category": 0,
+"ace": 0.12,
+"landfall": true,
+"min_pressure_mb": 1005
+},
+{
+"id": "AL042024",
+"name": "Debby",
+"peak_kt": 70,
+"peak_time": "2024-08-05T00:00:00",
+"category": 1,
+"ace": 4.94,
+"landfall": true,
+"min_pressure_mb": 979
+},
+{
+"id": "AL052024",
+"name": "Ernesto",
+"peak_kt": 85,
+"peak_time": "2024-08-16T00:00:00",
+"category": 2,
+"ace": 14.45,
+"landfall": true,
+"min_pressure_mb": 967
+},
+{
+"id": "AL062024",
+"name": "Francine",
+"peak_kt": 90,
+"peak_time": "2024-09-11T22:00:00",
+"category": 2,
+"ace": 4.78,
+"landfall": true,
+"min_pressure_mb": 972
+},
+{
+"id": "AL072024",
+"name": "Gordon",
+"peak_kt": 40,
+"peak_time": "2024-09-14T00:00:00",
+"category": 0,
+"ace": 1.25,
+"landfall": false,
+"min_pressure_mb": 1004
+},
+{
+"id": "AL092024",
+"name": "Helene",
+"peak_kt": 120,
+"peak_time": "2024-09-27T00:00:00",
+"category": 4,
+"ace": 6.99,
+"landfall": true,
+"min_pressure_mb": 939
+},
+{
+"id": "AL102024",
+"name": "Isaac",
+"peak_kt": 90,
+"peak_time": "2024-09-28T06:00:00",
+"category": 2,
+"ace": 7.91,
+"landfall": false,
+"min_pressure_mb": 963
+},
+{
+"id": "AL112024",
+"name": "Joyce",
+"peak_kt": 45,
+"peak_time": "2024-09-27T18:00:00",
+"category": 0,
+"ace": 1.69,
+"landfall": false,
+"min_pressure_mb": 1001
+},
+{
+"id": "AL122024",
+"name": "Kirk",
+"peak_kt": 130,
+"peak_time": "2024-10-04T00:00:00",
+"category": 4,
+"ace": 23.66,
+"landfall": false,
+"min_pressure_mb": 928
+},
+{
+"id": "AL132024",
+"name": "Leslie",
+"peak_kt": 90,
+"peak_time": "2024-10-10T00:00:00",
+"category": 2,
+"ace": 16.14,
+"landfall": false,
+"min_pressure_mb": 970
+},
+{
+"id": "AL142024",
+"name": "Milton",
+"peak_kt": 155,
+"peak_time": "2024-10-07T20:00:00",
+"category": 5,
+"ace": 22.57,
+"landfall": true,
+"min_pressure_mb": 895
+},
+{
+"id": "AL152024",
+"name": "Nadine",
+"peak_kt": 50,
+"peak_time": "2024-10-19T16:00:00",
+"category": 0,
+"ace": 0.69,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL162024",
+"name": "Oscar",
+"peak_kt": 75,
+"peak_time": "2024-10-19T20:15:00",
+"category": 1,
+"ace": 4.54,
+"landfall": true,
+"min_pressure_mb": 984
+},
+{
+"id": "AL172024",
+"name": "Patty",
+"peak_kt": 55,
+"peak_time": "2024-10-31T18:00:00",
+"category": 0,
+"ace": 2.31,
+"landfall": false,
+"min_pressure_mb": 977
+},
+{
+"id": "AL182024",
+"name": "Rafael",
+"peak_kt": 105,
+"peak_time": "2024-11-08T06:00:00",
+"category": 3,
+"ace": 12.28,
+"landfall": true,
+"min_pressure_mb": 954
+},
+{
+"id": "AL192024",
+"name": "Sara",
+"peak_kt": 45,
+"peak_time": "2024-11-15T12:00:00",
+"category": 0,
+"ace": 1.98,
+"landfall": true,
+"min_pressure_mb": 997
+},
+{
+"id": "AL012025",
+"name": "Andrea",
+"peak_kt": 35,
+"peak_time": "2025-06-23T12:00:00",
+"category": 0,
+"ace": 0.61,
+"landfall": false,
+"min_pressure_mb": 1014
+},
+{
+"id": "AL022025",
+"name": "Barry",
+"peak_kt": 40,
+"peak_time": "2025-06-29T18:00:00",
+"category": 0,
+"ace": 0.4,
+"landfall": true,
+"min_pressure_mb": 1006
+},
+{
+"id": "AL032025",
+"name": "Chantal",
+"peak_kt": 50,
+"peak_time": "2025-07-06T06:00:00",
+"category": 0,
+"ace": 0.98,
+"landfall": true,
+"min_pressure_mb": 1002
+},
+{
+"id": "AL042025",
+"name": "Dexter",
+"peak_kt": 70,
+"peak_time": "2025-08-08T06:00:00",
+"category": 1,
+"ace": 2.15,
+"landfall": false,
+"min_pressure_mb": 988
+},
+{
+"id": "AL052025",
+"name": "Erin",
+"peak_kt": 140,
+"peak_time": "2025-08-16T18:00:00",
+"category": 5,
+"ace": 31.77,
+"landfall": true,
+"min_pressure_mb": 913
+},
+{
+"id": "AL062025",
+"name": "Fernand",
+"peak_kt": 50,
+"peak_time": "2025-08-25T12:00:00",
+"category": 0,
+"ace": 2.73,
+"landfall": false,
+"min_pressure_mb": 999
+},
+{
+"id": "AL072025",
+"name": "Gabrielle",
+"peak_kt": 120,
+"peak_time": "2025-09-23T00:00:00",
+"category": 4,
+"ace": 18.48,
+"landfall": false,
+"min_pressure_mb": 944
+},
+{
+"id": "AL082025",
+"name": "Humberto",
+"peak_kt": 140,
+"peak_time": "2025-09-27T18:00:00",
+"category": 5,
+"ace": 26.53,
+"landfall": false,
+"min_pressure_mb": 918
+},
+{
+"id": "AL092025",
+"name": "Imelda",
+"peak_kt": 80,
+"peak_time": "2025-10-01T12:00:00",
+"category": 1,
+"ace": 5.99,
+"landfall": true,
+"min_pressure_mb": 966
+},
+{
+"id": "AL102025",
+"name": "Jerry",
+"peak_kt": 55,
+"peak_time": "2025-10-08T12:00:00",
+"category": 0,
+"ace": 4.21,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL112025",
+"name": "Karen",
+"peak_kt": 50,
+"peak_time": "2025-10-08T12:00:00",
+"category": 0,
+"ace": 0.92,
+"landfall": false,
+"min_pressure_mb": 996
+},
+{
+"id": "AL122025",
+"name": "Lorenzo",
+"peak_kt": 50,
+"peak_time": "2025-10-14T00:00:00",
+"category": 0,
+"ace": 1.72,
+"landfall": false,
+"min_pressure_mb": 1000
+},
+{
+"id": "AL132025",
+"name": "Melissa",
+"peak_kt": 165,
+"peak_time": "2025-10-28T12:00:00",
+"category": 5,
+"ace": 34.27,
+"landfall": true,
+"min_pressure_mb": 892
+}
+]

@@ -1,0 +1,46 @@
+---
+title: "Water Year Rings"
+subtitle: "One hydrologic year in two southern British Columbia watersheds, played by acoustic instruments"
+toc: false
+---
+
+::: {.eyebrow}
+Water year 2024 · October 1, 2023 to September 30, 2024
+:::
+
+These are two pieces of music built from river gauges, weather stations, satellite plant-productivity data and fish counts. Every three days of data becomes one bar of music. Rising flow thickens the piano. Ice forming on the river brings in a falling glockenspiel and a bowed cymbal. Sockeye passing a dam climb the marimba. Nothing is a simple value-to-pitch beep: slow signals set the harmony, and faster ones set rhythm, texture and short motifs.
+
+[Listen with the synced visual →](listen.qmd){.cta}
+
+## The two pieces
+
+::: {.grid}
+::: {.g-col-12 .g-col-md-6 .piece-card}
+### Granby River
+Grand Forks, BC · key of D · 6:57
+
+A warm El Niño winter. The gauge flagged ice on only 28 days, in broken spells, and the spring freshet came early and small: 147 m³/s, against 465 in the 2010–24 record.
+
+<audio controls preload="none" src="listen/granby_wy2024.mp3"></audio>
+:::
+
+::: {.g-col-12 .g-col-md-6 .piece-card}
+### Okanagan
+Okanagan Lake and River · key of F · 7:50
+
+A drought year on the lake, which rose only 0.7 m. It was also the biggest sockeye return in ten years of Wells Dam counts: 491,039 fish.
+
+<audio controls preload="none" src="listen/okanagan_wy2024.mp3"></audio>
+:::
+:::
+
+## How to read this site
+
+- **[Listen](listen.qmd)** shows each piece as tree rings: one ring per record, filling clockwise from October as the music plays, with a live readout of the date, the harmony and which instruments are sounding.
+- **[Methods & code](methods.qmd)** explains every mapping from data to sound, the music theory behind the harmony, the quality checks, and the full source code.
+
+## Credits and licences
+
+Data from the Water Survey of Canada and Environment and Climate Change Canada (contains information licensed under the [Open Government Licence – Canada](https://open.canada.ca/en/open-government-licence-canada)), NASA MODIS via the ORNL DAAC, and Columbia River DART (Columbia Basin Research, University of Washington; Wells Dam data courtesy of Douglas County PUD). Instruments from VSCO 2 Community Edition (Versilian Studios, CC0). Bird recordings from Wikimedia Commons, credited on the [Methods](methods.qmd#sources-and-licences) page. Because the bird recordings are CC BY-SA, the rendered audio is released under CC BY-SA 4.0. The code is under the Mozilla Public License 2.0.
+
+Who did what is set out on [How this was made](about.qmd): Graham Watt brought the question, the rivers and the domain knowledge; Claude Code led the music theory and wrote the code.

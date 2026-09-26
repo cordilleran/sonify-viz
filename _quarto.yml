@@ -8,8 +8,11 @@ project:
   output-dir: _site
   render:
     - index.qmd
-    - methods.qmd
+    - water-year.qmd
     - listen.qmd
+    - methods.qmd
+    - climate.qmd
+    - about.qmd
   resources:
     - listen/index.html
     # listed one by one: Quarto doesn't expand wildcards inside symlinked folders
@@ -19,26 +22,42 @@ project:
     - listen/okanagan_wy2024.mp3
     - figs/granby_wy2024_check.png
     - figs/okanagan_wy2024_check.png
+    - figs/climate_pacific_1958_2025_check.png
+    - figs/climate_atlantic_1958_2025_check.png
+    - audio/*
     - listen/fonts/*
     - .nojekyll
 
 website:
-  title: "Water Year Rings"
-  description: "Hydrology and ecology of one water year, played by acoustic instruments."
+  title: "sonify-viz"
+  description: "Environmental data as music: a learning workbench for data sonification."
   site-url: "https://cordilleran.github.io/sonify-viz/"
   repo-url: "https://github.com/cordilleran/sonify-viz"
+  repo-actions: [source, issue]
   page-navigation: true
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - href: listen.qmd
-        text: Listen
-      - href: methods.qmd
-        text: Methods & code
+      - text: Water Year Rings
+        menu:
+          - href: water-year.qmd
+            text: The pieces
+          - href: listen.qmd
+            text: Listen with the visual
+          - href: methods.qmd
+            text: Methods & code
+      - href: climate.qmd
+        text: Climate Pair
+      - href: about.qmd
+        text: How this was made
+    right:
+      - icon: github
+        href: https://github.com/cordilleran/sonify-viz
+        aria-label: Source code on GitHub
   page-footer:
-    left: "Graham Watt · built with Claude Code"
-    right: "Code MPL 2.0 · audio CC BY-SA 4.0 · data per source"
+    left: "Graham Watt & Claude Code · [how this was made](about.qmd) · [source on GitHub](https://github.com/cordilleran/sonify-viz)"
+    right: "Code MPL 2.0 · audio: see each piece · data per source"
 
 format:
   html:

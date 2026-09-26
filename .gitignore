@@ -10,3 +10,6 @@ rendered/
 samples/
 # raw Wells Dam counts: fetched from DART by fetch_okanagan.py, not redistributed
 data/wells_dam_sockeye_*.json
+# raw climate downloads, and series whose terms don't allow committing them (fetch_climate.py)
+data/climate/raw/
+data/climate/fetched_only_monthly.json

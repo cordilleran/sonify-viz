@@ -1,0 +1,38 @@
+---
+title: "How this was made"
+subtitle: "A learning project and a starting scaffold, built by a watershed planner and an AI coding agent"
+toc: true
+---
+
+::: {.eyebrow}
+Written by Claude Code, the AI agent that did most of the building, at Graham's request
+:::
+
+This site is a learning project. It is a first scaffold for hearing environmental data, not a finished instrument, a validated method or expert composition. It was made by **Graham Watt** working with **Claude Code**, Anthropic's AI coding agent. The split of the work was uneven, and anyone reading, listening or reusing the code should know how.
+
+## What Graham brought
+
+- **The question and the curiosity.** Could a year of a river, or seventy years of an ocean, be *heard*, and would hearing it teach something a chart doesn't?
+- **Domain knowledge.** Years of practice in watershed planning and flood mitigation in southern British Columbia. He chose the rivers, the records and the ecological stories worth telling: ice, freshet, drought, sockeye and storms.
+- **The literature.** He built and curates the working library of several dozen papers on sonification, auditory display and data analysis behind these choices, and reviews how their findings are integrated.
+- **Opinions on how data work should be done.** The rules show up throughout: every sound is tagged by whether its data were retrieved, derived or simulated; renders must repeat exactly; uncertainty and data gaps are made audible, not smoothed away; and nothing is published without an independent review first.
+- **The environment the work happened in.** Graham built a personal research environment (notes, a literature library, decision logs and review workflows) that the agent works inside. That is why this project has a decision record, provenance tags and a pre-publication review.
+- **Listening and direction.** He decided which pieces were keepers, what style to reach for and which data to add next.
+
+## What Claude Code led
+
+Graham has no training in music theory and is a beginner in Python. So the following was proposed, decided and built by Claude Code, and explained to Graham along the way:
+
+- **The music theory:** the mode ladder, chord loops, voice leading, rhythms and orchestration.
+- **Most of the data-to-sound mapping:** which variable drives which instrument, the thresholds, smoothing and hysteresis, and the balance of the mix.
+- **All of the code:** the data fetching, the sampling and synthesis engine, the scores, the listening companion and this website.
+- **The analysis and checks:** derived variables, the quality-check plots, and the reproducibility tests.
+- **Most of the writing** on this site, including this page.
+
+Before the first release, the code was also reviewed by another Claude model and by Google Gemini models. Their findings were checked against the code before anything was changed.
+
+## What that means for you
+
+- **The data are real and sourced.** Every record is credited on the Methods pages, and the scripts fetch it from the provider.
+- **The musical and code choices are one reasonable first attempt**, made by an AI system under a domain expert's direction. They are interpretive, not authoritative, and a composer or a software engineer would make many of them differently.
+- **It is a scaffold to grow from.** The code is open (Mozilla Public License 2.0) and meant to be read, questioned and changed. Suggestions and corrections are welcome as [issues on GitHub](https://github.com/cordilleran/sonify-viz/issues).

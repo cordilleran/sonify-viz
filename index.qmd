@@ -1,46 +1,35 @@
 ---
-title: "Water Year Rings"
-subtitle: "One hydrologic year in two southern British Columbia watersheds, played by acoustic instruments"
+title: "sonify-viz"
+subtitle: "Listening to rivers, oceans and climate: a learning workbench for data sonification"
 toc: false
 ---
 
 ::: {.eyebrow}
-Water year 2024 · October 1, 2023 to September 30, 2024
+A learning project and a starting scaffold · Graham Watt and Claude Code
 :::
 
-These are two pieces of music built from river gauges, weather stations, satellite plant-productivity data and fish counts. Every three days of data becomes one bar of music. Rising flow thickens the piano. Ice forming on the river brings in a falling glockenspiel and a bowed cymbal. Sockeye passing a dam climb the marimba. Nothing is a simple value-to-pitch beep: slow signals set the harmony, and faster ones set rhythm, texture and short motifs.
+These are pieces of music made from real environmental records: river gauges, weather stations, satellites, fish counts, storm tracks and the Keeling curve. Nothing is a simple value-to-pitch beep. Slow signals set the harmony, and faster ones set rhythm, texture and short motifs. Every sound is tagged by whether its data were retrieved, derived or simulated.
 
-[Listen with the synced visual →](listen.qmd){.cta}
+This is a first scaffold, not a finished instrument. A watershed planner brought the questions, the rivers and the domain knowledge. An AI coding agent led the music theory and wrote the code. [How this was made](about.qmd) sets out who did what.
 
-## The two pieces
+## Pieces
 
 ::: {.grid}
 ::: {.g-col-12 .g-col-md-6 .piece-card}
-### Granby River
-Grand Forks, BC · key of D · 6:57
+### [Water Year Rings](water-year.qmd)
+One hydrologic year, October 2023 to September 2024, in two southern British Columbia watersheds: the Granby River and the Okanagan. About 7 minutes each, recorded acoustic instruments, with a synced tree-ring page.
 
-A warm El Niño winter. The gauge flagged ice on only 28 days, in broken spells, and the spring freshet came early and small: 147 m³/s, against 465 in the 2010–24 record.
-
-<audio controls preload="none" src="listen/granby_wy2024.mp3"></audio>
+[The pieces](water-year.qmd) · [Listen with the visual](listen.qmd) · [Methods](methods.qmd)
 :::
 
 ::: {.g-col-12 .g-col-md-6 .piece-card}
-### Okanagan
-Okanagan Lake and River · key of F · 7:50
+### [Climate Pair](climate.qmd)
+Sixty-eight years, 1958 to 2025, one year per bar. CO₂, ocean heat, ENSO and a century of storm tracks, heard from the Pacific and from the Atlantic. About 8 minutes each; strings, organ, timpani and synthesizers.
 
-A drought year on the lake, which rose only 0.7 m. It was also the biggest sockeye return in ten years of Wells Dam counts: 491,039 fish.
-
-<audio controls preload="none" src="listen/okanagan_wy2024.mp3"></audio>
+[The pieces and how they work](climate.qmd)
 :::
 :::
 
-## How to read this site
+## The code
 
-- **[Listen](listen.qmd)** shows each piece as tree rings: one ring per record, filling clockwise from October as the music plays, with a live readout of the date, the harmony and which instruments are sounding.
-- **[Methods & code](methods.qmd)** explains every mapping from data to sound, the music theory behind the harmony, the quality checks, and the full source code.
-
-## Credits and licences
-
-Data from the Water Survey of Canada and Environment and Climate Change Canada (contains information licensed under the [Open Government Licence – Canada](https://open.canada.ca/en/open-government-licence-canada)), NASA MODIS via the ORNL DAAC, and Columbia River DART (Columbia Basin Research, University of Washington; Wells Dam data courtesy of Douglas County PUD). Instruments from VSCO 2 Community Edition (Versilian Studios, CC0). Bird recordings from Wikimedia Commons, credited on the [Methods](methods.qmd#sources-and-licences) page. Because the bird recordings are CC BY-SA, the rendered audio is released under CC BY-SA 4.0. The code is under the Mozilla Public License 2.0.
-
-Built by Graham Watt with Claude Code, as a curiosity project alongside professional work in watershed planning and flood mitigation.
+Everything is open: the data fetching, the instrument engine, the scores and this site. It's all on [GitHub](https://github.com/cordilleran/sonify-viz), under the Mozilla Public License 2.0. Each piece's page lists its data sources and licences.
