@@ -49,3 +49,31 @@ figure img, .figure img { border: 1px solid $line; border-radius: 4px; }
 .cta:hover { filter: brightness(1.08); }
 details > summary { cursor: pointer; font-family: "JetBrains Mono", monospace; font-size: .9rem; color: $river; }
 iframe.companion { width: 100%; border: 0; display: block; min-height: 900px; background: $ground; }
+
+// Climate Pair visualizer (climate/viz.js)
+.cviz { margin: 1rem 0 1.4rem; }
+.cviz-bar { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; align-items: center; margin-bottom: .6rem; }
+.cviz-seg { display: inline-flex; border: 1px solid $line; border-radius: 999px; overflow: hidden; }
+.cviz-seg button { background: none; border: 0; color: $muted; padding: .35rem 1rem; font: 600 .8rem "JetBrains Mono", monospace; letter-spacing: .06em; cursor: pointer; }
+.cviz-seg button[aria-pressed="true"] { background: $salmon; color: #fff; }
+.cviz-both { font: .8rem "JetBrains Mono", monospace; color: $muted; cursor: pointer; }
+.cviz-stage { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; }
+.cviz-stage figure { margin: 0; text-align: center; }
+.cviz-stage figure[hidden] { display: none; }
+.cviz-stage canvas { display: block; max-width: 100%; }
+.cviz-stage figcaption { font: .78rem "JetBrains Mono", monospace; color: $muted; min-height: 1.2em; }
+.cviz-stage figcaption button { background: none; border: 0; padding: 0; color: $river; font: inherit; text-decoration: underline; cursor: pointer; }
+.cviz-caption { min-height: 3em; margin: .5rem 0 .3rem; font-size: .95rem; }
+.cviz-caption .t { font: 600 .75rem "JetBrains Mono", monospace; color: $sun; margin-right: .6rem; }
+.cviz-strip { display: block; width: 100%; cursor: ew-resize; touch-action: none; border-radius: 4px; }
+.cviz-strip:focus-visible { outline: 2px solid $river; outline-offset: 2px; }
+.cviz audio { width: 100%; margin: .5rem 0; }
+.cviz-layers { display: flex; flex-wrap: wrap; gap: .35rem; }
+.cviz-layers .chip { --lvl: 0; font-size: .74rem; padding: .15rem .55rem; border-radius: 999px; border: 1px solid $line; color: $muted;
+  background: rgba(93, 180, 184, calc(var(--lvl) * .28)); border-color: rgba(93, 180, 184, calc(.15 + var(--lvl) * .7)); transition: background .12s linear, border-color .12s linear; }
+.cviz-layers .chip b { color: $text; font-weight: 600; }
+.cviz-layers .chip .src { font-size: .62rem; padding: 0 5px; margin-left: .2rem; }
+.cviz-err { color: $salmon; }
+.ramp { display: inline-block; width: 4.5em; height: .7em; border-radius: 2px; vertical-align: baseline;
+  background: linear-gradient(90deg, rgb(27,58,82), rgb(47,127,149), rgb(143,198,184), rgb(231,180,79), rgb(232,87,60)); }
+@media (prefers-reduced-motion: reduce) { .cviz-layers .chip { transition: none; } }

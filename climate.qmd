@@ -21,7 +21,6 @@ Key of D · 8:10
 
 The Pacific Decadal Oscillation sets the mode. Typhoons in the West Pacific sound on the left and hurricanes in the Northeast Pacific on the right, as on a map. Each spring the Kettle River, which crosses the BC–Washington border near Grand Forks, blooms at the date of its annual peak.
 
-<audio controls preload="none" src="audio/climate_pacific_1958_2025.mp3"></audio>
 :::
 
 ::: {.g-col-12 .g-col-md-6 .piece-card}
@@ -30,9 +29,30 @@ Key of A · 8:10
 
 The Atlantic Multidecadal Oscillation sets the mode, and winter wind follows the North Atlantic Oscillation. Atlantic hurricanes are the drums. From November 1978, when satellites began measuring it, Arctic sea ice enters as a high glass voice that breathes with the seasons and thins over the decades.
 
-<audio controls preload="none" src="audio/climate_atlantic_1958_2025.mp3"></audio>
 :::
 :::
+
+## Watch and listen
+
+::: {#cviz .cviz}
+<noscript>
+<p>The visualizer needs JavaScript. The pieces: <a href="audio/climate_pacific_1958_2025.mp3">Pacific (MP3)</a> · <a href="audio/climate_atlantic_1958_2025.mp3">Atlantic (MP3)</a></p>
+</noscript>
+:::
+
+<script src="climate/viz.js" defer></script>
+
+**How to read the spiral.** Each ring is a year: 1958 at the centre, 2025 at the edge, January at the top, running clockwise. The ring is drawn as you hear it.
+
+- **Colour** is the global ocean surface temperature anomaly, from <span class="ramp"></span> cool blue to ember.
+- **Thickness** is ENSO strength: the ring swells in strong El Niño and La Niña months.
+- **Sparks** are storms at their peak, larger for higher categories. Each one flares as its drum sounds, and a ring marks a landfall. In the Pacific piece, West Pacific typhoons are pale blue and Northeast Pacific hurricanes pale amber.
+- **Pacific:** green blooms mark the Kettle River's annual peak, larger for bigger years. **Atlantic:** from November 1978, a white line along the inside of each ring is Arctic sea-ice extent. It swells each winter and thins each September.
+- **Grey marks** are volcanic eruptions. A **red halo** appears while the high violin plays (global temperature above +0.8 °C). The glow at the centre follows the contrabass (ocean heat), and the twinkles at the playhead follow the shimmer (sunspots).
+
+The strip under the spiral is a timeline: click or drag it to move through the years. The labels below it light up as each instrument plays. Tick **both side by side** to watch the two oceans at once while you listen to one. In the big El Niño years, the Pacific sparks crowd while the Atlantic ones thin.
+
+The spiral and strip are drawn from the same data as the music (`scripts/export_climate_viz.py`). Sunspot numbers and ocean heat content are not published as values (see [Sources and licences](#sources-and-licences)), so those two layers appear only as the loudness of their instruments.
 
 ## How to listen
 
@@ -131,4 +151,4 @@ The sunspot numbers are licensed for non-commercial use only, and the heat-conte
 ```
 :::
 
-To rebuild: from `scripts/`, run `python fetch_climate.py`, then `python climate_pair.py pacific` and `python climate_pair.py atlantic`, then `python climate_check_plot.py pacific` (and `atlantic`) and `python export_climate_guide.py`. The instrument samples come from `fetch_samples.py`, as for Water Year Rings.
+To rebuild: from `scripts/`, run `python fetch_climate.py`, then `python climate_pair.py pacific` and `python climate_pair.py atlantic`, then `python climate_check_plot.py pacific` (and `atlantic`) and `python export_climate_guide.py`, then `python export_climate_viz.py` for the visualizer data. The instrument samples come from `fetch_samples.py`, as for Water Year Rings.

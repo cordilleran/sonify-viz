@@ -25,6 +25,9 @@ project:
     - figs/climate_pacific_1958_2025_check.png
     - figs/climate_atlantic_1958_2025_check.png
     - audio/*
+    - climate/viz.js
+    - climate/viz_pacific.json
+    - climate/viz_atlantic.json
     - listen/fonts/*
     - .nojekyll
 
