@@ -15,7 +15,7 @@ This site is a learning project. It is a first scaffold for hearing environmenta
 - **The question and the curiosity.** Could a year of a river, or seventy years of an ocean, be *heard*, and would hearing it teach something a chart doesn't?
 - **Domain knowledge.** Years of practice in watershed planning and flood mitigation in southern British Columbia. He chose the rivers, the records and the ecological stories worth telling: ice, freshet, drought, sockeye and storms.
 - **The literature.** He built and curates the working library of several dozen papers on sonification, auditory display and data analysis behind these choices, and reviews how their findings are integrated.
-- **Opinions on how data work should be done.** The rules show up throughout: every sound is tagged by whether its data were retrieved, derived or simulated; renders must repeat exactly; uncertainty and data gaps are made audible, not smoothed away; and nothing is published without an independent review first.
+- **A commitment to reproducible, reviewable research.** It shows up throughout: every sound is tagged by whether its data were retrieved, derived or simulated; renders repeat byte for byte from the same code and data; uncertainty and data gaps are made audible, not smoothed away; and nothing is published without an independent review first.
 - **The environment the work happened in.** Graham built a personal research environment (notes, a literature library, decision logs and review workflows) that the agent works inside. That is why this project has a decision record, provenance tags and a pre-publication review.
 - **Listening and direction.** He decided which pieces were keepers, what style to reach for and which data to add next.
 
@@ -30,6 +30,17 @@ Graham has no training in music theory and is a beginner in Python. So the follo
 - **Most of the writing** on this site, including this page.
 
 Before the first release, the code was also reviewed by another Claude model and by Google Gemini models. Their findings were checked against the code before anything was changed.
+
+## Why not just ask a chatbot?
+
+Anyone can ask a chat assistant to "make a sonification" and get something back in a minute. This project is deliberately the opposite, and that difference is the point Graham wanted it to make. Every step here can be audited and reviewed:
+
+- **Every data source is named and fetched by a script**, so you can check the records against their providers.
+- **Every mapping from data to sound is written down**, in the code and on the pages, with its provenance tag.
+- **Every render can be rerun exactly.** The same code and data produce the same audio, byte for byte, and quality-check plots show whether each layer speaks when its data says it should.
+- **Every decision has a record.** What was tried, what changed and why were logged as the work went, and the code was independently reviewed before publication.
+
+An AI agent did most of the building, but inside a process designed so that its work can be checked, not just trusted.
 
 ## What that means for you
 
