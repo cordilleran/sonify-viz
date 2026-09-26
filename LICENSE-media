@@ -1,0 +1,19 @@
+Rendered audio in listen/ (granby_wy2024.mp3, okanagan_wy2024.mp3) and the
+figures in figs/ are licensed under the Creative Commons Attribution-ShareAlike
+4.0 International licence (CC BY-SA 4.0):
+https://creativecommons.org/licenses/by-sa/4.0/
+
+The audio is CC BY-SA because it incorporates CC BY-SA bird recordings from
+Wikimedia Commons; each recording's author and licence is listed in
+samples_manifest.csv and on the site's Methods page.
+
+Instrument samples: VSCO 2 Community Edition (Versilian Studios), CC0. They are
+not redistributed here; scripts/fetch_samples.py downloads them.
+
+Fonts in listen/fonts/: SIL Open Font License 1.1 (see the OFL-*.txt files).
+
+Data: see "Sources and licences" on the Methods page. Each dataset remains under
+its provider's terms. Hydrometric and climate data contain information licensed
+under the Open Government Licence - Canada.
+
+The code (everything else) is under the Mozilla Public License 2.0; see LICENSE.

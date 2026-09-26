@@ -1,0 +1,26 @@
+set_or_file,local_path,license,author,source_url,notes
+Keys/Upright Piano,samples/vsco2ce/Keys/Upright Piano,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,"Upright piano (Ivy Audio / Simon Dalzell), 3 dynamics, sampled every major 3rd"
+Strings/Harp,samples/vsco2ce/Strings/Harp,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,"Harp, mf"
+Strings/Cello Section/susvib,samples/vsco2ce/Strings/Cello Section/susvib,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,Cello section sustain w/ vibrato
+Strings/Cello Section/pizzT,samples/vsco2ce/Strings/Cello Section/pizzT,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,Cello section pizzicato
+Strings/Violin Section/susVib,samples/vsco2ce/Strings/Violin Section/susVib,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,Violin section sustain w/ vibrato
+Strings/Violin Section/Pizz,samples/vsco2ce/Strings/Violin Section/Pizz,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,Violin section pizzicato
+Strings/Violin Section/Trem,samples/vsco2ce/Strings/Violin Section/Trem,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,Violin section tremolo
+Strings/Solo Contrabass/SusNV,samples/vsco2ce/Strings/Solo Contrabass/SusNV,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,"Solo contrabass sustain, no vibrato"
+Strings/Solo Contrabass/Pizz,samples/vsco2ce/Strings/Solo Contrabass/Pizz,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,Solo contrabass pizzicato
+Woodwinds/Flute/susNV,samples/vsco2ce/Woodwinds/Flute/susNV,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,"Flute sustain, no vibrato"
+Percussion/Marimba,samples/vsco2ce/Percussion/Marimba,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,Marimba
+Percussion/Glock,samples/vsco2ce/Percussion/Glock,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,Glockenspiel
+Percussion/Timpani,samples/vsco2ce/Percussion/Timpani,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,Timpani hits and rolls (added 2026-09-25 for the climate pair's storm layer)
+Percussion/BDrumNewhit_*,samples/vsco2ce/Percussion/BDrumNewhit_*,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,"Concert bass drum, 7 dynamics (added 2026-09-25)"
+Percussion/gongHit_*,samples/vsco2ce/Percussion/gongHit_*,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,Tam-tam / gong hits p..fff (added 2026-09-25)
+Percussion/cymbal-crash1_* + susCymb1-hit_*,samples/vsco2ce/Percussion/cymbal-crash1_* + susCymb1-hit_*,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,Crash and suspended-cymbal hits (added 2026-09-25)
+Keys/Organ/Quiet,samples/vsco2ce/Keys/Organ/Quiet,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,"Pipe organ, quiet manual, for drones (added 2026-09-25)"
+Percussion/*,samples/vsco2ce/Percussion/*,CC0-1.0,Versilian Studios (VSCO 2 CE),https://github.com/sgossner/VSCO-2-CE,"Hand percussion + cymbal/gong/triangle one-shots (conga, tumba, quinto, log drum, tambourine shake, bowed/crescendo cymbal, gong scrape, bass-drum rub, bell tree)"
+Swainson's Thrush,samples/birds/swainsons_thrush_a.mp3,CC BY-SA 4.0,Niels Krabbe,https://commons.wikimedia.org/wiki/File:Catharus_ustulatus_-_Swainson%27s_Thrush_XC250599.mp3,"Granby riparian; late-May arrival, spiralling evening song"
+Swainson's Thrush,samples/birds/swainsons_thrush_b.mp3,CC BY-SA 4.0,Niels Krabbe,https://commons.wikimedia.org/wiki/File:Catharus_ustulatus_-_Swainson%27s_Thrush_XC250601.mp3,second take for variety
+American Dipper,samples/birds/american_dipper.mp3,Public domain,NPS &amp; MSU Acoustic Atlas/Jennifer Jerrett,https://commons.wikimedia.org/wiki/File:Yellowstone_sound_library_-_American_Dipper_%26_Canada_Geese_-_001.mp3,the river's winter singer; sings through ice season
+Western Meadowlark,samples/birds/western_meadowlark_a.ogg,CC BY-SA 3.0,Jonathon Jongsma,https://commons.wikimedia.org/wiki/File:Sturnella_neglecta_-_Western_Meadowlark_-_XC104522.ogg,Okanagan grassland benches; March arrival
+Western Meadowlark,samples/birds/western_meadowlark_b.mp3,CC BY-SA 4.0,Jonathon Jongsma,https://commons.wikimedia.org/wiki/File:Sturnella_neglecta_-_Western_Meadowlark_XC254454.mp3,second take
+Sandhill Crane,samples/birds/sandhill_crane.ogg,CC BY-SA 3.0,Jonathon Jongsma,https://commons.wikimedia.org/wiki/File:Grus_canadensis_-_Sandhill_Crane_-_XC111491.ogg,"Okanagan flyway passage, April and September"
+"Bank Swallow (Sand Martin, European recording, same species)",samples/birds/bank_swallow.mp3,CC BY-SA 4.0,Pascal Christe,https://commons.wikimedia.org/wiki/File:Riparia_riparia_-_Sand_Martin_XC487832.mp3,"Grand Forks cutbank colonies, May-Aug"

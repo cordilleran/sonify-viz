@@ -1,0 +1,12 @@
+/.quarto/
+/_site/
+/docs/
+**/*.quarto_ipynb
+__pycache__/
+.ruff_cache/
+# local renders (WAVs, stems, MP3s, scores); the published audio is in listen/
+rendered/
+# downloaded instrument samples (fetch_samples.py)
+samples/
+# raw Wells Dam counts: fetched from DART by fetch_okanagan.py, not redistributed
+data/wells_dam_sockeye_*.json

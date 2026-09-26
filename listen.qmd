@@ -1,0 +1,18 @@
+---
+title: "Listen"
+toc: false
+page-layout: full
+---
+
+Press play and the year fills in clockwise from October. Each ring is one record, and it glows when its instrument is sounding. Click a ring, the score or any line of the listening guide to jump to that moment. The page also works [on its own, full screen](listen/index.html).
+
+<iframe class="companion" id="companion" src="listen/index.html?embed" title="Water Year Rings listening companion" loading="eager"></iframe>
+
+<script>
+// The companion posts its content height; grow the frame to fit it.
+window.addEventListener('message', (e) => {
+  if (e.data && typeof e.data.wyrHeight === 'number') {
+    document.getElementById('companion').style.height = (e.data.wyrHeight + 8) + 'px';
+  }
+});
+</script>

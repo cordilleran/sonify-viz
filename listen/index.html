@@ -1,0 +1,437 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Water Year Rings</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{
+  color-scheme: dark;
+  --ground:#0c1618; --surface:#112022; --line:#223538; --line2:#2d4549;
+  --text:#dde7e4; --muted:#8aa0a0; --faint:#5d7374;
+  --river:#5db4b8; --river2:#3f8595; --deep:#7e8fd6; --clay:#cc8e60; --ice:#bfe3ee;
+  --snow:#eef3f1; --rain:#80b7e2; --moss:#96c06b; --salmon:#e8573c; --salmon2:#f19070;
+  --sun:#e7b44f; --sun2:#b89c5f;
+  --display:"Gloock", "Iowan Old Style", Georgia, serif;
+  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font:15px/1.55 var(--body);}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:28px 64px;display:grid;gap:40px}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;letter-spacing:.005em}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+header{display:grid;gap:14px}
+header h1{font-size:clamp(40px,7vw,76px);line-height:.95}
+header p{margin:0;max-width:62ch;color:var(--muted)}
+.pieces{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.piece{appearance:none;border:1px solid var(--line2);background:transparent;color:var(--text);
+  padding:10px 16px 11px;border-radius:999px;font:15px var(--body);cursor:pointer;display:flex;gap:10px;align-items:baseline}
+.piece small{font:12px var(--mono);color:var(--muted)}
+.piece[aria-pressed="true"]{background:var(--text);color:var(--ground);border-color:var(--text)}
+.piece[aria-pressed="true"] small{color:#3c4d4f}
+.piece:focus-visible,button:focus-visible,.ev:focus-visible{outline:2px solid var(--salmon);outline-offset:3px}
+
+.stage{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:36px;align-items:center}
+@media (max-width:860px){.stage{grid-template-columns:1fr}}
+.ringbox{position:relative;width:100%;max-width:620px;aspect-ratio:1;justify-self:center}
+#ring{width:100%;height:100%;display:block;cursor:pointer}
+.now{display:grid;gap:18px;align-content:start}
+.piece-title{display:grid;gap:4px}
+.piece-title h2{font-size:30px}
+.piece-title .sub{font:12px/1.5 var(--mono);color:var(--muted)}
+.blurb{margin:0;color:var(--text);max-width:52ch}
+.date{font-family:var(--display);font-size:clamp(34px,5vw,50px);line-height:1}
+.harm{font:13px/1.6 var(--mono);color:var(--muted)}
+.harm b{color:var(--text);font-weight:600}
+.caption{min-height:3.2em;font-size:16px;color:var(--snow);border-left:2px solid var(--salmon);padding-left:12px;transition:opacity .6s}
+.transport{display:flex;align-items:center;gap:14px}
+.play{width:52px;height:52px;border-radius:50%;border:none;background:var(--salmon);color:#fff;cursor:pointer;display:grid;place-items:center;flex:none}
+.play svg{width:20px;height:20px;fill:currentColor}
+.time{font:13px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{flex:1;height:4px;background:var(--line2);border-radius:2px;position:relative;cursor:pointer}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--text);border-radius:2px;width:0}
+.voices{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 18px}
+.voice{display:grid;grid-template-columns:auto 1fr;gap:4px 8px;align-items:center;font-size:13px}
+.voice .dot{width:8px;height:8px;border-radius:50%}
+.voice .m{grid-column:1/-1;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.voice .m i{display:block;height:100%;width:0;border-radius:2px}
+
+section{display:grid;gap:16px}
+section > h2{font-size:28px}
+.lede{margin:0;color:var(--muted);max-width:70ch}
+.scorebox{overflow-x:auto;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+#score{display:block;width:100%;min-width:720px;cursor:pointer}
+
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px}
+@media (max-width:860px){.cols{grid-template-columns:1fr}}
+.guide{list-style:none;margin:0;padding:0;display:grid;gap:2px;max-height:520px;overflow:auto;border-top:1px solid var(--line)}
+.ev{display:grid;grid-template-columns:4.2em 1fr;gap:12px;padding:7px 6px;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-left:none;border-right:none;border-top:none;color:var(--text);text-align:left;font:14px/1.45 var(--body);width:100%}
+.ev time{font:12px/1.9 var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.ev.struct{color:var(--muted)}
+.ev.past time{color:var(--text)}
+.ev.cur{background:var(--surface)}
+.ev.cur time{color:var(--salmon)}
+
+.ladder{display:grid;gap:6px}
+.mode{display:grid;grid-template-columns:7.5em repeat(7,1fr);gap:4px;align-items:center;font:13px var(--mono);padding:4px 6px;border-radius:6px}
+.mode span.n{text-align:center;padding:3px 0;border-radius:4px;color:var(--muted)}
+.mode span.n.chg{color:var(--sun);box-shadow:inset 0 0 0 1px var(--sun2)}
+.mode .name{color:var(--muted)}
+.mode.cur{background:var(--surface)}
+.mode.cur .name{color:var(--text);font-weight:600}
+.mode.cur span.n{color:var(--text)}
+.mode.off{opacity:.45}
+.note{font-size:13px;color:var(--muted);margin:0;max-width:70ch}
+
+.maptable{width:100%;border-collapse:collapse;font-size:14px}
+.maptable th{font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line2)}
+.maptable td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+.maptable td:first-child{white-space:nowrap}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:8px;vertical-align:baseline}
+.src{font:600 11px var(--mono);padding:2px 7px;border-radius:999px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
+.src.R{color:var(--river);border-color:var(--river2)}
+.src.S{color:var(--salmon2);border-color:var(--salmon);border-style:dashed}
+.src.D{color:var(--sun);border-color:var(--sun2)}
+.tablebox{overflow-x:auto}
+.credits{font-size:13px;color:var(--muted);display:grid;gap:8px;max-width:80ch}
+.credits p{margin:0}
+.credits a{color:var(--river)}
+@media (prefers-reduced-motion: reduce){.caption{transition:none}}
+/* embedded in the Quarto site (listen.html?embed): the site supplies the title */
+.embedded header h1,.embedded header > p,.embedded header .eyebrow{display:none}
+.embedded .wrap{padding-block:4px 48px}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Water year 2024 · Granby River and Okanagan</div>
+    <h1>Water Year Rings</h1>
+    <p>Two pieces built from one hydrologic year, October 1, 2023 to September 30, 2024. Each ring is one record, read clockwise from October like the growth rings of a tree. Every three days of data is one bar of music. Press play and the year fills in as you hear it.</p>
+    <div class="pieces" role="group" aria-label="Choose a piece">
+      <button class="piece" id="p-granby" data-name="granby_wy2024" aria-pressed="true">Granby River <small>D · 72 bpm · 6:57</small></button>
+      <button class="piece" id="p-okanagan" data-name="okanagan_wy2024" aria-pressed="false">Okanagan <small>F · 64 bpm · 7:50</small></button>
+    </div>
+  </header>
+
+  <div class="stage">
+    <div class="ringbox"><canvas id="ring" aria-label="Water year ring chart; click to jump to that date"></canvas></div>
+    <div class="now">
+      <div class="piece-title"><h2 id="ptitle">Granby River</h2><div class="sub" id="psub"></div></div>
+      <p class="blurb" id="pblurb"></p>
+      <div>
+        <div class="date" id="date">Oct 1, 2023</div>
+        <div class="harm" id="harm"></div>
+      </div>
+      <div class="caption" id="caption" aria-live="polite"></div>
+      <div class="transport">
+        <button class="play" id="play" aria-label="Play"><svg viewBox="0 0 20 20" id="picon"><path d="M5 3l12 7-12 7z"/></svg></button>
+        <span class="time" id="time">0:00 / 0:00</span>
+        <div class="bar" id="bar" aria-hidden="true"><i id="barfill"></i></div>
+      </div>
+      <div class="voices" id="voices"></div>
+    </div>
+  </div>
+  <audio id="audio" preload="metadata"></audio>
+
+  <section>
+    <h2>The score</h2>
+    <p class="lede">Data on top, sound underneath. Each blue lane is a record; each orange lane is how loud that instrument group plays at that moment. When a record moves, its instrument should move with it. Click anywhere to jump there.</p>
+    <div class="scorebox"><canvas id="score"></canvas></div>
+  </section>
+
+  <div class="cols">
+    <section>
+      <h2>Listening guide</h2>
+      <p class="lede">Moments to listen for, placed automatically from the data. Grey lines are changes of mode or hydrologic phase.</p>
+      <ol class="guide" id="guide"></ol>
+    </section>
+    <section>
+      <h2>How the harmony moves</h2>
+      <p class="lede">A mode is a set of seven notes. Arranged from dark to bright, each mode differs from its neighbour by exactly one note (in gold), so one step along the ladder is the smallest change of mood music can make. The season sets how bright the mode is. The year's departure from its 15-year normal nudges it one step darker or brighter. The mode can change only once every eight bars.</p>
+      <div class="ladder" id="ladder"></div>
+      <p class="note">Phrygian is not used. Its second note sits a half step above the home note and clashes under a sustained piano. The chord on top is written as a Roman numeral: upper case is major, lower case is minor. Each hydrologic phase (dormant, rising, peak, recession, low; or winter, filling, full, drawdown for the lake) has its own four-chord loop.</p>
+    </section>
+  </div>
+
+  <section>
+    <h2>What drives what</h2>
+    <p class="lede">Rings run from the centre outward in this order. <span class="src R">R</span> retrieved measurements. <span class="src D">D</span> derived from measurements or the calendar. <span class="src S">S</span> simulated timing. The simulated layers are modelled from temperature and season, not observed.</p>
+    <div class="tablebox"><table class="maptable"><thead><tr><th>Record</th><th>Source</th><th>What you hear</th></tr></thead><tbody id="map"></tbody></table></div>
+  </section>
+
+  <section class="credits">
+    <h2>Sources</h2>
+    <p>Hydrometric: Water Survey of Canada daily means via the ECCC GeoMet OGC API. The Granby ice record is WSC's "Ice Conditions" data flag. Climate: ECCC daily climate (Billings; Summerland CS). Plant productivity: MODIS MOD17A2HGF 8-day gross primary productivity via the ORNL DAAC subset service. Sockeye and water temperature: Wells Dam adult counts, Columbia Basin Research DART. Bird timing uses typical regional arrival windows, not observations.</p>
+    <p>Instruments: VSCO 2 Community Edition (Versilian Studios, CC0): upright piano, harp, string sections, contrabass, flute, marimba, glockenspiel, hand percussion. Birds, via Wikimedia Commons: Swainson's thrush (Niels Krabbe, CC BY-SA 4.0); American dipper (NPS &amp; MSU Acoustic Atlas / Jennifer Jerrett, public domain); western meadowlark and sandhill crane (Jonathon Jongsma, CC BY-SA); bank swallow (Pascal Christe, CC BY-SA 4.0).</p>
+  </section>
+</div>
+
+<script>
+(() => {
+if (new URLSearchParams(location.search).has('embed')) document.documentElement.classList.add('embedded');
+const _css = {};
+const css = n => _css[n] || (_css[n] = getComputedStyle(document.documentElement).getPropertyValue('--' + n).trim());
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const MODES = [["Phrygian",[0,1,3,5,7,8,10]],["Aeolian",[0,2,3,5,7,8,10]],["Dorian",[0,2,3,5,7,9,10]],
+  ["Mixolydian",[0,2,4,5,7,9,10]],["Ionian",[0,2,4,5,7,9,11]],["Lydian",[0,2,4,6,7,9,11]]];
+const KEYS = {D:{pc:2,letter:1}, F:{pc:5,letter:3}};
+const LETTERS = ["C","D","E","F","G","A","B"], LPC = [0,2,4,5,7,9,11];
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const ROMAN = ["I","II","III","IV","V","VI","VII"];
+const $ = id => document.getElementById(id);
+const audio = $('audio');
+let D = null, cache = {}, ringDim = null, ringLit = null, particles = [], lastT = -1, playing = false;
+
+function spell(keyName, modeIdx, deg){
+  const k = KEYS[keyName], iv = MODES[modeIdx][1][deg];
+  const letter = (k.letter + deg) % 7, target = (k.pc + iv) % 12;
+  let acc = ((target - LPC[letter]) % 12 + 12) % 12; if (acc > 6) acc -= 12;
+  return LETTERS[letter] + (acc === 1 ? "♯" : acc === -1 ? "♭" : acc === 2 ? "𝄪" : acc === -2 ? "𝄫" : "");
+}
+function chordInfo(deg, mode){
+  const iv = MODES[mode][1], at = d => iv[((d % 7) + 7) % 7] + 12 * Math.floor(d / 7);
+  if (((at(deg + 4) - at(deg)) % 12 + 12) % 12 === 6) deg -= 2;  // same substitution as seasonal.chord()
+  const d7 = ((deg % 7) + 7) % 7, third = ((at(deg + 2) - at(deg)) % 12 + 12) % 12;
+  const minor = third === 3;
+  return {roman: minor ? ROMAN[d7].toLowerCase() : ROMAN[d7], name: spell(D.key, mode, d7) + (minor ? "m" : ""), deg: d7};
+}
+const tidy = e => e.replace(/ - /, ' · ').replace(/->/g, '→');
+const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+const fmtDate = s => { const d = new Date(s + "T12:00:00"); return `${MON[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`; };
+
+// ------------------------------------------------------------ ring ------
+const ring = $('ring'), rctx = ring.getContext('2d');
+let RS = 0, CX = 0, R0 = 0, R1 = 0;
+function sizeRing(){
+  const r = ring.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+  RS = Math.round(r.width * dpr); ring.width = ring.height = RS;
+  CX = RS / 2; R0 = RS * 0.13; R1 = RS * 0.43;
+  if (D) buildRing();
+}
+const QUIET = new Set(['temp','daylength','humidity_min','flow_pct_normal','lake_pct_normal']);
+const ang = day => -Math.PI / 2 + (day / 366) * Math.PI * 2;
+function drawRingLayer(ctx, alpha){
+  const L = D.lanes, band = (R1 - R0) / L.length;
+  L.forEach((ln, i) => {
+    const base = R0 + i * band + band * 0.08, h = band * 0.84, col = css(ln.color);
+    const q = QUIET.has(ln.key) ? 0.42 : 1;  // context rings (temperature, day length, humidity) sit back
+    ctx.fillStyle = col; ctx.globalAlpha = alpha * q * (ln.source === 'S' ? 0.75 : 1);
+    ctx.globalAlpha *= 0.14; ctx.beginPath(); ctx.arc(CX, CX, base + h, 0, Math.PI*2); ctx.arc(CX, CX, base, 0, Math.PI*2, true); ctx.fill();
+    ctx.globalAlpha = alpha * q * (ln.source === 'S' ? 0.75 : 1);
+    for (let d = 0; d < 366; d++){
+      const v = ln.v[d]; if (!(v > 0.004)) continue;
+      const a0 = ang(d), a1 = ang(d + 1.02), r = base + h * Math.min(1, v);
+      ctx.beginPath(); ctx.arc(CX, CX, r, a0, a1); ctx.arc(CX, CX, base, a1, a0, true); ctx.closePath(); ctx.fill();
+    }
+    if (ln.source === 'S'){ // simulated: dashed outline so it never reads as observed
+      ctx.globalAlpha = alpha * 0.6; ctx.strokeStyle = col; ctx.lineWidth = Math.max(1, RS/900); ctx.setLineDash([RS/180, RS/140]);
+      ctx.beginPath(); ctx.arc(CX, CX, base + h, 0, Math.PI*2); ctx.stroke(); ctx.setLineDash([]);
+    }
+  });
+  ctx.globalAlpha = 1;
+}
+function buildRing(){
+  ringDim = new OffscreenCanvas(RS, RS); ringLit = new OffscreenCanvas(RS, RS);
+  drawRingLayer(ringDim.getContext('2d'), 0.2);
+  drawRingLayer(ringLit.getContext('2d'), 1);
+}
+function drawRing(t, day, frac, env){
+  const c = rctx; c.clearRect(0, 0, RS, RS);
+  const started = playing || t > 0.05;
+  c.drawImage(ringDim, 0, 0);
+  c.save(); c.beginPath(); c.moveTo(CX, CX);
+  c.arc(CX, CX, R1 + RS * 0.05, -Math.PI/2, started ? ang(day + frac) : Math.PI * 1.5); c.closePath(); c.clip();
+  c.drawImage(ringLit, 0, 0); c.restore();
+  // month ticks + labels (water year starts at the top)
+  c.fillStyle = css('muted'); c.strokeStyle = css('line2'); c.font = `${Math.round(RS*0.024)}px ${css('display')}`;
+  c.textAlign = 'center'; c.textBaseline = 'middle';
+  const monthStarts = []; D.dates.forEach((s, i) => { if (s.endsWith('-01')) monthStarts.push(i); });
+  monthStarts.forEach(i => {
+    const a = ang(i), m = MON[+D.dates[i].slice(5,7) - 1];
+    c.beginPath(); c.moveTo(CX + Math.cos(a)*(R1+RS*0.008), CX + Math.sin(a)*(R1+RS*0.008));
+    c.lineTo(CX + Math.cos(a)*(R1+RS*0.025), CX + Math.sin(a)*(R1+RS*0.025)); c.lineWidth = Math.max(1, RS/700); c.stroke();
+    const am = ang(i + 15);
+    c.fillText(m, CX + Math.cos(am)*(R1+RS*0.045), CX + Math.sin(am)*(R1+RS*0.045));
+  });
+  // hand + sound pulses on each ring at the current angle
+  const a = ang(day + frac), band = (R1 - R0) / D.lanes.length;
+  if (started){
+    c.strokeStyle = css('snow'); c.globalAlpha = 0.85; c.lineWidth = Math.max(1.5, RS/500);
+    c.beginPath(); c.moveTo(CX + Math.cos(a)*R0*0.92, CX + Math.sin(a)*R0*0.92);
+    c.lineTo(CX + Math.cos(a)*(R1+RS*0.018), CX + Math.sin(a)*(R1+RS*0.018)); c.stroke(); c.globalAlpha = 1;
+    D.lanes.forEach((ln, i) => {
+      const e = ln.stem && env[ln.stem] || 0, v = ln.v[day] || 0;
+      const r = R0 + i*band + band*0.08 + band*0.84*Math.min(1, v);
+      const x = CX + Math.cos(a)*r, y = CX + Math.sin(a)*r;
+      const g = c.createRadialGradient(x, y, 0, x, y, band * (0.6 + 1.6*e));
+      g.addColorStop(0, css(ln.color)); g.addColorStop(1, 'rgba(0,0,0,0)');
+      c.globalAlpha = 0.35 + 0.65*e; c.fillStyle = g; c.beginPath(); c.arc(x, y, band*(0.6+1.6*e), 0, Math.PI*2); c.fill();
+    });
+    c.globalAlpha = 1;
+  }
+  // centre: key and water-year label
+  c.fillStyle = css('text'); c.font = `${Math.round(RS*0.07)}px ${css('display')}`;
+  c.fillText(D.key, CX, CX - RS*0.012);
+  c.fillStyle = css('muted'); c.font = `${Math.round(RS*0.019)}px ${css('mono')}`;
+  c.fillText('WY 2024', CX, CX + RS*0.045);
+  // particles, spawned by what you HEAR (stem loudness), at the hand
+  if (!reduce && playing) spawn(a, env);
+  stepParticles(c);
+}
+const PKIND = {precip:['rain','snow'], fish:['salmon'], birds:['sun'], ice:['ice'], frost:['ice'], perc:['clay']};
+function spawn(a, env){
+  for (const [stem, cols] of Object.entries(PKIND)){
+    const e = env[stem] || 0; if (e < 0.18) continue;
+    if (Math.random() < e * 0.5){
+      const col = cols[Math.floor(Math.random()*cols.length)];
+      const r = R1 + RS*(0.005 + Math.random()*0.02);
+      particles.push({x: CX + Math.cos(a)*r, y: CX + Math.sin(a)*r, a, col,
+        vr: RS*(0.0006 + Math.random()*0.0012) * (stem === 'birds' ? 1.8 : 1),
+        va: stem === 'fish' ? 0.004 + Math.random()*0.004 : (Math.random()-0.5)*0.002,
+        life: 1, size: RS*(stem==='perc'?0.003:0.0045)*(0.6+Math.random()*0.8), kind: stem, r});
+    }
+  }
+  if (particles.length > 260) particles.splice(0, particles.length - 260);
+}
+function stepParticles(c){
+  for (const p of particles){
+    p.life -= 0.012; p.r += p.vr; p.a += p.va;
+    p.x = CX + Math.cos(p.a)*p.r; p.y = CX + Math.sin(p.a)*p.r;
+    c.globalAlpha = Math.max(0, p.life) * 0.9; c.fillStyle = css(p.col); c.strokeStyle = css(p.col);
+    if (p.kind === 'fish'){ c.save(); c.translate(p.x, p.y); c.rotate(p.a + Math.PI); c.beginPath();
+      c.moveTo(p.size*1.6, 0); c.lineTo(-p.size, p.size*0.7); c.lineTo(-p.size*0.6, 0); c.lineTo(-p.size, -p.size*0.7); c.closePath(); c.fill(); c.restore(); }
+    else if (p.kind === 'ice' || p.kind === 'frost'){ c.lineWidth = Math.max(1, RS/900); c.beginPath();
+      for (let k = 0; k < 3; k++){ const q = k*Math.PI/3; c.moveTo(p.x - Math.cos(q)*p.size, p.y - Math.sin(q)*p.size); c.lineTo(p.x + Math.cos(q)*p.size, p.y + Math.sin(q)*p.size);} c.stroke(); }
+    else if (p.kind === 'birds'){ c.lineWidth = Math.max(1, RS/800); c.beginPath(); c.moveTo(p.x - p.size, p.y - p.size*0.5); c.quadraticCurveTo(p.x - p.size*0.3, p.y - p.size*0.2, p.x, p.y);
+      c.quadraticCurveTo(p.x + p.size*0.3, p.y - p.size*0.2, p.x + p.size, p.y - p.size*0.5); c.stroke(); }
+    else { c.beginPath(); c.arc(p.x, p.y, p.size*0.55, 0, Math.PI*2); c.fill(); }
+  }
+  c.globalAlpha = 1; particles = particles.filter(p => p.life > 0);
+}
+
+// ----------------------------------------------------------- score ------
+const score = $('score'), sctx = score.getContext('2d');
+let SW = 0, SH = 0, LBL = 0, ROWH = 0, dpr = 1, rowsSound = [];
+function sizeScore(){
+  dpr = Math.min(devicePixelRatio || 1, 2);
+  const w = score.getBoundingClientRect().width;
+  rowsSound = D ? D.voices : [];
+  const rows = (D ? D.lanes.length : 12) + rowsSound.length;
+  ROWH = 22; LBL = Math.min(230, Math.max(150, w * 0.2));
+  const h = rows * ROWH + 46;
+  score.style.height = h + 'px'; SW = Math.round(w * dpr); SH = Math.round(h * dpr);
+  score.width = SW; score.height = SH;
+}
+function drawScore(t){
+  if (!D) return;
+  const c = sctx; c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, SW, SH);
+  const w = SW/dpr, x0 = LBL, x1 = w - 8, span = x1 - x0, T = D.duration;
+  const X = s => x0 + (s / T) * span;
+  c.font = `12px ${css('body')}`; c.textBaseline = 'middle';
+  // month grid
+  c.fillStyle = css('faint'); c.font = `11px ${css('mono')}`;
+  D.dates.forEach((s, i) => { if (s.endsWith('-01')){ const x = X(D.t[i]);
+    c.fillRect(x, 20, 1, SH/dpr - 26); c.fillText(MON[+s.slice(5,7)-1], x + 3, 10); }});
+  let y = 24;
+  const row = (label, color, vals, xs, sub, dashed) => {
+    c.fillStyle = sub ? css('muted') : css('text'); c.font = `12px ${css('body')}`;
+    c.textAlign = 'right'; c.fillText(label, x0 - 10, y + ROWH/2); c.textAlign = 'left';
+    c.fillStyle = color; c.globalAlpha = 0.9; c.beginPath(); c.moveTo(X(xs[0]), y + ROWH - 3);
+    for (let i = 0; i < vals.length; i++) c.lineTo(X(xs[i]), y + ROWH - 3 - (ROWH - 6) * Math.min(1, vals[i] || 0));
+    c.lineTo(X(xs[xs.length-1]), y + ROWH - 3); c.closePath(); c.fill(); c.globalAlpha = 1;
+    if (dashed){ c.strokeStyle = color; c.setLineDash([3,3]); c.beginPath(); c.moveTo(x0, y+ROWH-2.5); c.lineTo(x1, y+ROWH-2.5); c.stroke(); c.setLineDash([]); }
+    y += ROWH;
+  };
+  D.lanes.forEach(ln => row(ln.label, css(ln.color), ln.v, D.t, false, ln.source === 'S'));
+  c.fillStyle = css('line2'); c.fillRect(0, y + 2, w, 1); y += 6;
+  const envT = D.voices.length ? D.env[D.voices[0].stem].map((_, i) => i / D.env_hz) : [];
+  D.voices.forEach(v => row('♪ ' + v.label, css('clay'), D.env[v.stem], envT, true));
+  // events + playhead
+  c.fillStyle = css('salmon'); D.events.forEach(([s, e]) => { if (!/^(Mode|Phase|Lake phase)/.test(e)) c.fillRect(X(s) - 1, 16, 2, 6); });
+  if (t > 0.05 || playing){ c.fillStyle = css('snow'); c.fillRect(X(t) - 0.75, 16, 1.5, SH/dpr - 20); }
+}
+score.addEventListener('click', e => {
+  const r = score.getBoundingClientRect(), x = e.clientX - r.left;
+  if (x < LBL) return; seek(((x - LBL) / (r.width - LBL - 8)) * D.duration);
+});
+ring.addEventListener('click', e => {
+  const r = ring.getBoundingClientRect(), dx = e.clientX - r.left - r.width/2, dy = e.clientY - r.top - r.height/2;
+  let a = Math.atan2(dy, dx) + Math.PI/2; if (a < 0) a += Math.PI*2;
+  seek((a / (Math.PI*2)) * 366 * D.bar_seconds / 3);
+});
+$('bar').addEventListener('click', e => { const r = e.currentTarget.getBoundingClientRect(); seek((e.clientX - r.left)/r.width * D.duration); });
+function seek(s){ audio.currentTime = Math.max(0, Math.min(D.duration - 0.5, s)); if (!playing) frame(true); }
+
+// ------------------------------------------------------- panels ---------
+function buildPanels(){
+  $('ptitle').textContent = D.title; $('psub').textContent = D.sub; $('pblurb').textContent = D.blurb;
+  $('voices').innerHTML = D.voices.map(v => `<div class="voice"><span class="dot" style="background:var(--${v.color})"></span><span>${v.label}</span><span class="m"><i id="vm-${v.stem}" style="background:var(--${v.color})"></i></span></div>`).join('');
+  $('guide').innerHTML = D.events.map(([s, e], i) => `<li><button class="ev ${/^(Mode|Phase|Lake phase)/.test(e) ? 'struct' : ''}" data-i="${i}" data-t="${s}"><time>${fmt(s)}</time><span>${tidy(e)}</span></button></li>`).join('');
+  $('guide').querySelectorAll('.ev').forEach(b => b.addEventListener('click', () => seek(+b.dataset.t + 0.01)));
+  $('map').innerHTML = D.lanes.map(ln => `<tr><td><span class="sw" style="background:var(--${ln.color})"></span>${ln.label}</td><td><span class="src ${ln.source}">${ln.source}</span></td><td>${ln.does}</td></tr>`).join('');
+  const k = D.key;
+  $('ladder').innerHTML = MODES.map((m, i) => {
+    const prev = i > 0 ? MODES[i-1][1] : null;
+    return `<div class="mode ${i === 0 ? 'off' : ''}" id="mode-${i}"><span class="name">${k} ${m[0]}</span>` +
+      m[1].map((iv, d) => `<span class="n ${prev && prev[d] !== iv ? 'chg' : ''}">${spell(k, i, d)}</span>`).join('') + `</div>`;
+  }).join('');
+}
+
+// -------------------------------------------------------- frame ---------
+function envAt(t){ const o = {}; const i = Math.floor(t * D.env_hz); for (const k in D.env) o[k] = D.env[k][Math.min(i, D.env[k].length-1)] || 0; return o; }
+let lastEvent = -1, lastMode = -1;
+function frame(force){
+  if (!D) return;
+  const t = audio.currentTime || 0, dayF = Math.min(365.99, t / (D.bar_seconds / 3));
+  const day = Math.floor(dayF), frac = dayF - day, env = envAt(t);
+  drawRing(t, day, frac, env);
+  if (force || Math.abs(t - lastT) > 0.05){
+    drawScore(t);
+    const bar = D.bars[Math.min(D.bars.length - 1, Math.floor(day / 3))];
+    const mi = MODES.findIndex(m => m[0] === bar.mode), ch = chordInfo(bar.degree, mi);
+    $('date').textContent = fmtDate(D.dates[day]);
+    $('harm').innerHTML = `<b>${D.key} ${bar.mode}</b> · chord <b>${ch.roman}</b> (${ch.name}) · phase <b>${bar.phase}</b>`;
+    $('time').textContent = `${fmt(t)} / ${fmt(D.duration)}`;
+    $('barfill').style.width = (100 * t / D.duration) + '%';
+    for (const v of D.voices){ const el = $('vm-' + v.stem); if (el) el.style.width = (100 * (env[v.stem] || 0)) + '%'; }
+    if (mi !== lastMode){ document.querySelectorAll('.mode').forEach(m => m.classList.remove('cur')); const m = $('mode-' + mi); if (m) m.classList.add('cur'); lastMode = mi; }
+    let cur = -1; D.events.forEach(([s], i) => { if (s <= t + 0.05) cur = i; });
+    if (cur !== lastEvent){
+      document.querySelectorAll('.ev').forEach((b, i) => { b.classList.toggle('past', i <= cur); b.classList.toggle('cur', i === cur); });
+      let cap = -1; D.events.forEach(([s, e], i) => { if (s <= t + 0.05 && !/^(Mode|Phase|Lake phase)/.test(e)) cap = i; });
+      $('caption').textContent = cap >= 0 ? tidy(D.events[cap][1]) : 'Press play. The ring fills clockwise from October.';
+      lastEvent = cur;
+    }
+    lastT = t;
+  }
+}
+function loop(){ frame(); if (playing) requestAnimationFrame(loop); }
+
+// ------------------------------------------------------- loading --------
+async function load(name){
+  audio.pause(); playing = false; setIcon(); particles = []; lastEvent = -1; lastMode = -1; lastT = -1;
+  document.querySelectorAll('.piece').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.name === name)));
+  if (!cache[name]) cache[name] = await (await fetch(name + '.json')).json();
+  D = cache[name]; audio.src = name + '.mp3'; audio.currentTime = 0;
+  buildPanels(); sizeRing(); sizeScore(); frame(true);
+  try { localStorage.setItem('wyr-piece', name); } catch (e) {}
+}
+function setIcon(){ $('picon').innerHTML = playing ? '<path d="M5 3h4v14H5zM11 3h4v14h-4z"/>' : '<path d="M5 3l12 7-12 7z"/>'; $('play').setAttribute('aria-label', playing ? 'Pause' : 'Play'); }
+$('play').addEventListener('click', async () => {
+  if (playing){ audio.pause(); return; }
+  try { await audio.play(); } catch (e) { $('caption').textContent = 'The audio could not start. Try pressing play again.'; }
+});
+audio.addEventListener('play', () => { playing = true; setIcon(); requestAnimationFrame(loop); });
+audio.addEventListener('pause', () => { playing = false; setIcon(); frame(true); });
+audio.addEventListener('ended', () => { playing = false; setIcon(); });
+audio.addEventListener('seeked', () => frame(true));
+document.querySelectorAll('.piece').forEach(b => b.addEventListener('click', () => load(b.dataset.name)));
+addEventListener('resize', () => { if (D){ sizeRing(); sizeScore(); frame(true); } });
+let start = 'granby_wy2024'; try { start = localStorage.getItem('wyr-piece') || start; } catch (e) {}
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => load(start));
+// When embedded in the Quarto site, tell the parent page our height so the
+// iframe can grow to fit (no inner scrollbar). Harmless when not embedded.
+const postHeight = () => { try { parent.postMessage({wyrHeight: document.documentElement.scrollHeight}, '*'); } catch (e) {} };
+if (window.ResizeObserver) new ResizeObserver(postHeight).observe(document.body);
+addEventListener('load', postHeight);
+})();
+</script>

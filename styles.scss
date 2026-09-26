@@ -1,0 +1,51 @@
+/*-- scss:defaults --*/
+// Same palette and type as the listening companion, so the site and the
+// piece read as one thing.
+$ground:  #0c1618;
+$surface: #112022;
+$line:    #223538;
+$text:    #dde7e4;
+$muted:   #8aa0a0;
+$river:   #5db4b8;
+$salmon:  #e8573c;
+$sun:     #e7b44f;
+
+$body-bg: $ground;
+$body-color: $text;
+$link-color: $river;
+$navbar-bg: $ground;
+$navbar-fg: $text;
+$navbar-hl: $salmon;
+$footer-bg: $ground;
+$code-block-bg: $surface;
+$border-color: $line;
+$text-muted: $muted;
+
+$font-family-sans-serif: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+$font-family-monospace: "JetBrains Mono", ui-monospace, Menlo, monospace;
+$headings-font-family: "Gloock", "Iowan Old Style", Georgia, serif;
+$headings-font-weight: 400;
+$font-size-root: 17px;
+$web-font-path: false;  // stop the darkly theme importing Lato from Google; fonts are self-hosted
+
+/*-- scss:rules --*/
+// fonts are self-hosted: listen/fonts/fonts.css, linked from _quarto.yml
+:root { color-scheme: dark; }  // native audio controls, scrollbars
+
+h1, h2, h3 { text-wrap: balance; letter-spacing: .005em; }
+h1.title { font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 1; }
+.quarto-title .subtitle { color: $muted; }
+.navbar { border-bottom: 1px solid $line; }
+.navbar-title { font-family: "Gloock", Georgia, serif; font-weight: 400; }
+table { font-size: .92rem; }
+table th { font-family: "JetBrains Mono", monospace; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: $muted; }
+figure img, .figure img { border: 1px solid $line; border-radius: 4px; }
+.eyebrow { font: 600 .72rem/1 "JetBrains Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: $muted; }
+.src { font: 600 .72rem "JetBrains Mono", monospace; padding: 1px 7px; border-radius: 999px; border: 1px solid $line; white-space: nowrap; }
+.src.R { color: $river; } .src.D { color: $sun; } .src.S { color: #f19070; border-style: dashed; }
+.piece-card { border-top: 1px solid $line; padding-top: .8rem; }
+.piece-card audio { width: 100%; margin-top: .4rem; }
+.cta { display: inline-block; background: $salmon; color: #fff !important; padding: .55rem 1.1rem; border-radius: 999px; text-decoration: none; font-weight: 700; }
+.cta:hover { filter: brightness(1.08); }
+details > summary { cursor: pointer; font-family: "JetBrains Mono", monospace; font-size: .9rem; color: $river; }
+iframe.companion { width: 100%; border: 0; display: block; min-height: 900px; background: $ground; }

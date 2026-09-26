@@ -1,0 +1,7 @@
+# Versions that rendered the published audio (Python 3.13). Renders are seeded
+# and repeat byte for byte with these; other versions may differ slightly.
+# Also needed: ffmpeg (MP3 encoding) and Quarto (the site).
+numpy==2.5.3
+scipy==1.18.1
+soundfile==0.14.0
+matplotlib==3.11.2

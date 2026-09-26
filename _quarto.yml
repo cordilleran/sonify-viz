@@ -1,0 +1,53 @@
+# sonify-viz public site (Quarto website). GitHub Actions renders it and
+# deploys to Pages (.github/workflows/publish.yml); _site/ is not committed.
+# Source lives in the vault (site/); scripts/publish_site.sh syncs it, with the
+# symlinks listen -> ../listen, scripts -> ../scripts and figs -> ../figs
+# resolved, into the git checkout in runtime. Git can't live in the vault.
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+    - methods.qmd
+    - listen.qmd
+  resources:
+    - listen/index.html
+    # listed one by one: Quarto doesn't expand wildcards inside symlinked folders
+    - listen/granby_wy2024.json
+    - listen/granby_wy2024.mp3
+    - listen/okanagan_wy2024.json
+    - listen/okanagan_wy2024.mp3
+    - figs/granby_wy2024_check.png
+    - figs/okanagan_wy2024_check.png
+    - listen/fonts/*
+    - .nojekyll
+
+website:
+  title: "Water Year Rings"
+  description: "Hydrology and ecology of one water year, played by acoustic instruments."
+  site-url: "https://cordilleran.github.io/sonify-viz/"
+  repo-url: "https://github.com/cordilleran/sonify-viz"
+  page-navigation: true
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: listen.qmd
+        text: Listen
+      - href: methods.qmd
+        text: Methods & code
+  page-footer:
+    left: "Graham Watt · built with Claude Code"
+    right: "Code MPL 2.0 · audio CC BY-SA 4.0 · data per source"
+
+format:
+  html:
+    theme: [darkly, styles.scss]
+    highlight-style: nord
+    toc: true
+    toc-depth: 2
+    smooth-scroll: true
+    code-copy: true
+    link-external-newwindow: true
+    include-in-header:
+      text: '<link rel="stylesheet" href="listen/fonts/fonts.css">'
