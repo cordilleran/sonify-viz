@@ -49,11 +49,33 @@ header p{margin:0;max-width:62ch;color:var(--muted)}
 .time{font:13px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
 .bar{flex:1;height:4px;background:var(--line2);border-radius:2px;position:relative;cursor:pointer}
 .bar i{position:absolute;inset:0 auto 0 0;background:var(--text);border-radius:2px;width:0}
-.voices{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 18px}
-.voice{display:grid;grid-template-columns:auto 1fr;gap:4px 8px;align-items:center;font-size:13px}
-.voice .dot{width:8px;height:8px;border-radius:50%}
-.voice .m{grid-column:1/-1;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
-.voice .m i{display:block;height:100%;width:0;border-radius:2px}
+/* dashboard: every record's value at the playhead, next to the instrument it drives */
+.dash{display:grid;gap:0;border-top:1px solid var(--line)}
+.dash .hd{display:flex;justify-content:space-between;gap:12px;font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:8px 4px}
+.drow{display:grid;grid-template-columns:10px minmax(0,1fr) 9.4em 1.6em minmax(0,.8fr);gap:4px 10px;align-items:center;
+  padding:4px 4px;border-bottom:1px solid var(--line);font-size:13px;line-height:1.3;border-radius:4px}
+.drow .sw{width:10px;height:10px;border-radius:2px;margin:0}
+.drow .lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.drow .val{font:12.5px var(--mono);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.drow .val.none{color:var(--faint)}
+.drow .src{justify-self:center;font-size:10px;padding:1px 5px}
+.drow .ins{display:grid;gap:3px;font-size:12px;color:var(--muted);min-width:0}
+.drow .ins span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.drow .m{height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.drow .m i{display:block;height:100%;width:0;border-radius:2px}
+.drow.quiet .lab,.drow.quiet .val{color:var(--muted)}
+.drow.hot{background:var(--surface);box-shadow:inset 2px 0 0 var(--salmon)}
+.dnote{font-size:12px;color:var(--faint);margin:6px 0 0}
+@media (max-width:520px){.drow{grid-template-columns:10px minmax(0,1fr) 9.4em 1.6em}.drow .ins{grid-column:2/-1}}
+/* hover readout over the ring and the score */
+.tip{position:absolute;z-index:5;pointer-events:none;background:rgba(12,22,24,.94);border:1px solid var(--line2);border-radius:6px;
+  padding:7px 10px;font-size:13px;line-height:1.4;max-width:260px;opacity:0;transition:opacity .12s;box-shadow:0 4px 18px rgba(0,0,0,.4)}
+.tip.on{opacity:1}
+.tip b{font-weight:600}
+.tip .v{font:13px var(--mono);font-variant-numeric:tabular-nums}
+.tip .d{font:11px var(--mono);color:var(--muted)}
+.tip .w{color:var(--muted);font-size:12px;margin-top:3px}
+.scorebox{position:relative}
 
 section{display:grid;gap:16px}
 section > h2{font-size:28px}
@@ -113,7 +135,7 @@ section > h2{font-size:28px}
   </header>
 
   <div class="stage">
-    <div class="ringbox"><canvas id="ring" aria-label="Water year ring chart; click to jump to that date"></canvas></div>
+    <div class="ringbox"><canvas id="ring" aria-label="Water year ring chart; hover a ring for its value that day, click to jump to that date"></canvas><div class="tip" id="rtip" aria-hidden="true"></div></div>
     <div class="now">
       <div class="piece-title"><h2 id="ptitle">Granby River</h2><div class="sub" id="psub"></div></div>
       <p class="blurb" id="pblurb"></p>
@@ -127,7 +149,13 @@ section > h2{font-size:28px}
         <span class="time" id="time">0:00 / 0:00</span>
         <div class="bar" id="bar" aria-hidden="true"><i id="barfill"></i></div>
       </div>
-      <div class="voices" id="voices"></div>
+      <div>
+        <div class="dash" id="dash" role="table" aria-label="Each record's value at the playhead and the instrument it drives">
+          <div class="hd" role="row"><span role="columnheader">Record · value on this day</span><span role="columnheader">Instrument · how loud now</span></div>
+          <div id="drows"></div>
+        </div>
+        <p class="dnote">Hover over (or tap) a ring or a lane of the score for its value on any day. Values are the daily numbers the piece played from; gaps of a day or two in a gauge record are filled by interpolation.</p>
+      </div>
     </div>
   </div>
   <audio id="audio" preload="metadata"></audio>
@@ -135,7 +163,7 @@ section > h2{font-size:28px}
   <section>
     <h2>The score</h2>
     <p class="lede">Data on top, sound underneath. Each blue lane is a record; each orange lane is how loud that instrument group plays at that moment. When a record moves, its instrument should move with it. Click anywhere to jump there.</p>
-    <div class="scorebox"><canvas id="score"></canvas></div>
+    <div class="scorebox"><canvas id="score"></canvas><div class="tip" id="stip" aria-hidden="true"></div></div>
   </section>
 
   <div class="cols">
@@ -208,7 +236,8 @@ function sizeRing(){
   if (D) buildRing();
 }
 const QUIET = new Set(['temp','daylength','humidity_min','flow_pct_normal','lake_pct_normal']);
-const ang = day => -Math.PI / 2 + (day / 366) * Math.PI * 2;
+const ND = () => (D && D.n_days) || 366;  // days in this piece's year (365, 366; 354 for a lunar year)
+const ang = day => -Math.PI / 2 + (day / ND()) * Math.PI * 2;
 function drawRingLayer(ctx, alpha){
   const L = D.lanes, band = (R1 - R0) / L.length;
   L.forEach((ln, i) => {
@@ -217,7 +246,7 @@ function drawRingLayer(ctx, alpha){
     ctx.fillStyle = col; ctx.globalAlpha = alpha * q * (ln.source === 'S' ? 0.75 : 1);
     ctx.globalAlpha *= 0.14; ctx.beginPath(); ctx.arc(CX, CX, base + h, 0, Math.PI*2); ctx.arc(CX, CX, base, 0, Math.PI*2, true); ctx.fill();
     ctx.globalAlpha = alpha * q * (ln.source === 'S' ? 0.75 : 1);
-    for (let d = 0; d < 366; d++){
+    for (let d = 0; d < ND(); d++){
       const v = ln.v[d]; if (!(v > 0.004)) continue;
       const a0 = ang(d), a1 = ang(d + 1.02), r = base + h * Math.min(1, v);
       ctx.beginPath(); ctx.arc(CX, CX, r, a0, a1); ctx.arc(CX, CX, base, a1, a0, true); ctx.closePath(); ctx.fill();
@@ -272,7 +301,7 @@ function drawRing(t, day, frac, env){
   c.fillStyle = css('text'); c.font = `${Math.round(RS*0.07)}px ${css('display')}`;
   c.fillText(D.key, CX, CX - RS*0.012);
   c.fillStyle = css('muted'); c.font = `${Math.round(RS*0.019)}px ${css('mono')}`;
-  c.fillText('WY 2024', CX, CX + RS*0.045);
+  c.fillText(D.year_label || 'WY 2024', CX, CX + RS*0.045);
   // particles, spawned by what you HEAR (stem loudness), at the hand
   if (!reduce && playing) spawn(a, env);
   stepParticles(c);
@@ -356,15 +385,102 @@ score.addEventListener('click', e => {
 ring.addEventListener('click', e => {
   const r = ring.getBoundingClientRect(), dx = e.clientX - r.left - r.width/2, dy = e.clientY - r.top - r.height/2;
   let a = Math.atan2(dy, dx) + Math.PI/2; if (a < 0) a += Math.PI*2;
-  seek((a / (Math.PI*2)) * 366 * D.bar_seconds / 3);
+  seek((a / (Math.PI*2)) * ND() * D.bar_seconds / 3);
 });
 $('bar').addEventListener('click', e => { const r = e.currentTarget.getBoundingClientRect(); seek((e.clientX - r.left)/r.width * D.duration); });
 function seek(s){ audio.currentTime = Math.max(0, Math.min(D.duration - 0.5, s)); if (!playing) frame(true); }
 
+// ------------------------------------------------------ readouts --------
+const SRCNAME = {R: 'retrieved measurement', D: 'derived from measurements or the calendar', S: 'simulated timing (modelled, not observed)'};
+const ORD = n => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th','st','nd','rd'][n % 10] || 'th');
+function fmtVal(ln, d){
+  if (ln.withheld) return 'heard only';
+  const x = ln.raw ? ln.raw[d] : null;
+  if (x === null || x === undefined) return null;
+  switch (ln.unit){
+    case 'flag': return x ? 'ice' : 'open water';
+    case 'pct': return `${ORD(Math.round(x * 100))} percentile`;
+    case 'peak': return `${x.toFixed(ln.dp)} × peak`;
+    case 'sim': return x > 0.005 ? `${x.toFixed(ln.dp)} (modelled)` : 'outside window';
+    case 'fish': return `${Math.round(x).toLocaleString()} fish`;
+    default: return `${x.toFixed(ln.dp)} ${ln.unit}`;
+  }
+}
+const UNITNOTE = {pct: 'where this day sits among all 2010–24 values within a week of the same date',
+  peak: 'plant productivity as a share of a typical peak day (95th percentile, 2015–24)',
+  sim: 'modelled spawning window, 0 to 1'};
+const dbOf = e => Math.round(e * 40 - 62);  // the export maps −62..−22 dBFS onto 0..1
+function tipHTML(ln, d, env){
+  const v = fmtVal(ln, d), st = ln.stem && D.voices.find(x => x.stem === ln.stem);
+  const e = st && env ? env[st.stem] || 0 : null;
+  return `<b>${ln.label}</b><div class="d">${fmtDate(D.dates[d])} · ${SRCNAME[ln.source]}</div>` +
+    `<div class="v">${v === null ? 'no reading' : v}</div>` + (ln.withheld ? `<div class="w">${ln.withheld}</div>` : UNITNOTE[ln.unit] ? `<div class="w">${UNITNOTE[ln.unit]}</div>` : '') +
+    `<div class="w">${st ? `→ ${st.label}${e !== null ? (e > 0.02 ? `, ${dbOf(e)} dB at that moment` : ', silent at that moment') : ''}` : '→ shapes the mix'}</div>`;
+}
+function showTip(tip, box, x, y, html){
+  tip.innerHTML = html; tip.classList.add('on');
+  const bw = box.clientWidth, tw = tip.offsetWidth, th = tip.offsetHeight;
+  let lx = x + 14, ly = y + 14;
+  if (lx + tw > box.scrollLeft + bw - 4) lx = x - tw - 14;
+  if (ly + th > box.scrollHeight - 4) ly = y - th - 14;
+  tip.style.left = Math.max(box.scrollLeft + 4, lx) + 'px'; tip.style.top = Math.max(4, ly) + 'px';
+}
+let hotRow = -1;
+function setHot(i){
+  if (i === hotRow) return;
+  const o = $('dr-' + hotRow); if (o) o.classList.remove('hot');
+  const n = $('dr-' + i); if (n) n.classList.add('hot');
+  hotRow = i;
+}
+function hideTip(tip){ tip.classList.remove('on'); setHot(-1); }
+// ring: radius picks the record, angle picks the day
+const ringHover = e => {
+  if (!D) return;
+  const r = ring.getBoundingClientRect(), k = RS / r.width;
+  const dx = (e.clientX - r.left) * k - CX, dy = (e.clientY - r.top) * k - CX, rad = Math.hypot(dx, dy);
+  const band = (R1 - R0) / D.lanes.length, i = Math.floor((rad - R0) / band);
+  if (i < 0 || i >= D.lanes.length){ hideTip($('rtip')); return; }
+  let a = Math.atan2(dy, dx) + Math.PI/2; if (a < 0) a += Math.PI*2;
+  const d = Math.min(ND() - 1, Math.floor(a / (Math.PI*2) * ND()));
+  showTip($('rtip'), ring.parentElement, e.clientX - r.left, e.clientY - r.top, tipHTML(D.lanes[i], d, envAt(D.t[d])));
+  setHot(i);
+};
+ring.addEventListener('pointermove', ringHover);
+ring.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') ringHover(e); });  // a tap reads the value too
+ring.addEventListener('pointerleave', () => hideTip($('rtip')));
+// score: the row picks the record (or the instrument), x picks the moment
+const scoreHover = e => {
+  if (!D) return;
+  const r = score.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  if (x < LBL || x > r.width - 8){ hideTip($('stip')); return; }
+  const t = (x - LBL) / (r.width - LBL - 8) * D.duration, d = Math.max(0, Math.min(ND() - 1, Math.floor(t / (D.bar_seconds / 3))));
+  const nl = D.lanes.length, row = Math.floor((y - 24) / ROWH), vrow = Math.floor((y - 24 - nl * ROWH - 6) / ROWH);
+  const box = score.parentElement, bx = x, by = y;  // the canvas starts at the box's content origin
+  if (row >= 0 && row < nl){ showTip($('stip'), box, bx, by, tipHTML(D.lanes[row], d, envAt(t))); setHot(row); return; }
+  if (vrow >= 0 && vrow < D.voices.length){
+    const v = D.voices[vrow], ev = envAt(t)[v.stem] || 0;
+    showTip($('stip'), box, bx, by, `<b>♪ ${v.label}</b><div class="d">${fmt(t)} · ${fmtDate(D.dates[d])}</div><div class="v">${ev > 0.02 ? dbOf(ev) + ' dB' : 'silent'}</div><div class="w">loudness of this instrument's own track</div>`);
+    setHot(-1); return;
+  }
+  hideTip($('stip'));
+};
+score.addEventListener('pointermove', scoreHover);
+score.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') scoreHover(e); });
+score.addEventListener('pointerleave', () => hideTip($('stip')));
+
 // ------------------------------------------------------- panels ---------
 function buildPanels(){
   $('ptitle').textContent = D.title; $('psub').textContent = D.sub; $('pblurb').textContent = D.blurb;
-  $('voices').innerHTML = D.voices.map(v => `<div class="voice"><span class="dot" style="background:var(--${v.color})"></span><span>${v.label}</span><span class="m"><i id="vm-${v.stem}" style="background:var(--${v.color})"></i></span></div>`).join('');
+  const vby = Object.fromEntries(D.voices.map(v => [v.stem, v]));
+  const meter = st => st && vby[st] ? `<span>${vby[st].label}</span><span class="m"><i data-stem="${st}" style="background:var(--${vby[st].color})"></i></span>` : `<span>shapes the mix, no instrument of its own</span>`;
+  const used = new Set(D.lanes.map(l => l.stem));
+  $('drows').innerHTML = D.lanes.map((ln, i) =>
+    `<div class="drow ${QUIET.has(ln.key) ? 'quiet' : ''}" role="row" id="dr-${i}"><span class="sw" style="background:var(--${ln.color})"></span>` +
+    `<span class="lab" role="cell" title="${ln.label}">${ln.label}</span><span class="val" role="cell" id="dv-${i}"></span>` +
+    `<span class="src ${ln.source}" role="cell" title="${SRCNAME[ln.source]}">${ln.source}</span><span class="ins" role="cell">${meter(ln.stem)}</span></div>`).join('') +
+    D.voices.filter(v => !used.has(v.stem)).map(v =>
+    `<div class="drow quiet" role="row"><span class="sw" style="background:var(--${v.color})"></span><span class="lab" role="cell">${v.stem === 'birds' ? 'Bird arrival windows' : v.label}</span>` +
+    `<span class="val none" role="cell">${v.stem === 'birds' ? 'typical timing' : 'follows flow'}</span><span class="src ${v.stem === 'birds' ? 'S' : 'R'}" role="cell"></span><span class="ins" role="cell">${meter(v.stem)}</span></div>`).join('');
   $('guide').innerHTML = D.events.map(([s, e], i) => `<li><button class="ev ${/^(Mode|Phase|Lake phase)/.test(e) ? 'struct' : ''}" data-i="${i}" data-t="${s}"><time>${fmt(s)}</time><span>${tidy(e)}</span></button></li>`).join('');
   $('guide').querySelectorAll('.ev').forEach(b => b.addEventListener('click', () => seek(+b.dataset.t + 0.01)));
   $('map').innerHTML = D.lanes.map(ln => `<tr><td><span class="sw" style="background:var(--${ln.color})"></span>${ln.label}</td><td><span class="src ${ln.source}">${ln.source}</span></td><td>${ln.does}</td></tr>`).join('');
@@ -381,7 +497,7 @@ function envAt(t){ const o = {}; const i = Math.floor(t * D.env_hz); for (const 
 let lastEvent = -1, lastMode = -1;
 function frame(force){
   if (!D) return;
-  const t = audio.currentTime || 0, dayF = Math.min(365.99, t / (D.bar_seconds / 3));
+  const t = audio.currentTime || 0, dayF = Math.min(ND() - 0.01, t / (D.bar_seconds / 3));
   const day = Math.floor(dayF), frac = dayF - day, env = envAt(t);
   drawRing(t, day, frac, env);
   if (force || Math.abs(t - lastT) > 0.05){
@@ -392,7 +508,8 @@ function frame(force){
     $('harm').innerHTML = `<b>${D.key} ${bar.mode}</b> · chord <b>${ch.roman}</b> (${ch.name}) · phase <b>${bar.phase}</b>`;
     $('time').textContent = `${fmt(t)} / ${fmt(D.duration)}`;
     $('barfill').style.width = (100 * t / D.duration) + '%';
-    for (const v of D.voices){ const el = $('vm-' + v.stem); if (el) el.style.width = (100 * (env[v.stem] || 0)) + '%'; }
+    document.querySelectorAll('#drows .m i').forEach(el => { el.style.width = (100 * (env[el.dataset.stem] || 0)) + '%'; });
+    D.lanes.forEach((ln, i) => { const el = $('dv-' + i), v = fmtVal(ln, day); el.textContent = v === null ? 'no reading' : v; el.classList.toggle('none', v === null); });
     if (mi !== lastMode){ document.querySelectorAll('.mode').forEach(m => m.classList.remove('cur')); const m = $('mode-' + mi); if (m) m.classList.add('cur'); lastMode = mi; }
     let cur = -1; D.events.forEach(([s], i) => { if (s <= t + 0.05) cur = i; });
     if (cur !== lastEvent){
@@ -414,6 +531,7 @@ async function load(name){
   D = cache[name]; audio.src = name + '.mp3'; audio.currentTime = 0;
   buildPanels(); sizeRing(); sizeScore(); frame(true);
   try { localStorage.setItem('wyr-piece', name); } catch (e) {}
+  try { const u = new URL(location.href); u.searchParams.set('piece', name); history.replaceState(null, '', u); } catch (e) {}
 }
 function setIcon(){ $('picon').innerHTML = playing ? '<path d="M5 3h4v14H5zM11 3h4v14h-4z"/>' : '<path d="M5 3l12 7-12 7z"/>'; $('play').setAttribute('aria-label', playing ? 'Pause' : 'Play'); }
 $('play').addEventListener('click', async () => {
@@ -426,7 +544,10 @@ audio.addEventListener('ended', () => { playing = false; setIcon(); });
 audio.addEventListener('seeked', () => frame(true));
 document.querySelectorAll('.piece').forEach(b => b.addEventListener('click', () => load(b.dataset.name)));
 addEventListener('resize', () => { if (D){ sizeRing(); sizeScore(); frame(true); } });
+const NAMES = [...document.querySelectorAll('.piece')].map(b => b.dataset.name);
+const asked = new URLSearchParams(location.search).get('piece');
 let start = 'granby_wy2024'; try { start = localStorage.getItem('wyr-piece') || start; } catch (e) {}
+if (NAMES.includes(asked)) start = asked;  // ?piece=okanagan_wy2024 opens that piece
 (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => load(start));
 // When embedded in the Quarto site, tell the parent page our height so the
 // iframe can grow to fit (no inner scrollbar). Harmless when not embedded.

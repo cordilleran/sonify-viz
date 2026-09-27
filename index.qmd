@@ -10,7 +10,7 @@ A learning project and a starting scaffold · Graham Watt and Claude Code
 
 These are pieces of music made from real environmental records: river gauges, weather stations, satellites, fish counts, storm tracks and the Keeling curve. Nothing is a simple value-to-pitch beep. Slow signals set the harmony, and faster ones set rhythm, texture and short motifs. Every sound is tagged by whether its data were retrieved, derived or simulated.
 
-This is a first scaffold, not a finished instrument. A watershed planner brought the questions, the rivers and the domain knowledge. An AI coding agent led the music theory and wrote the code. [How this was made](about.qmd) sets out who did what.
+This is a first scaffold, not a finished instrument. An interdisciplinary planner brought the questions, the rivers and the domain knowledge. An AI coding agent led the music theory and wrote the code. [How this was made](about.qmd) sets out who did what.
 
 ## Pieces
 
@@ -29,6 +29,8 @@ Sixty-eight years, 1958 to 2025, one year per bar. CO₂, ocean heat, ENSO and a
 [The pieces and how they work](climate.qmd)
 :::
 :::
+
+Every track has a card with its version, its records, what drives each sound, what to be careful about, and how to check it byte for byte: see [Tracks](tracks.qmd).
 
 ## The code
 

@@ -4,8 +4,10 @@
    ENSO strength (|ONI|). Sparks: storms at their peak, sized by category.
    Atlantic: a pale sea-ice line along the inside of each ring from Nov 1978.
    Pacific: green blooms at the Kettle River's annual peak. Underneath: a
-   timeline strip (scrub it), the current guide event, and the instruments
-   lit by their loudness in the render.
+   timeline strip (scrub it), the current guide event, a dashboard of every
+   layer's value this month beside its instrument's loudness, and hover
+   readouts on the spiral and the strip (added 2026-09-27). Sunspots and ocean
+   heat are shown as loudness only: their terms don't allow republishing values.
    Data: climate/viz_{basin}.json, written by scripts/export_climate_viz.py.
    The audio element's clock drives everything. No libraries. */
 (() => {
@@ -48,9 +50,11 @@
       ${BASINS.map(b => `<figure data-b="${b}"><canvas role="img"></canvas><figcaption></figcaption></figure>`).join("")}
     </div>
     <p class="cviz-caption"><span class="t"></span><span class="e"></span></p>
+    <div class="cviz-dash" role="table" aria-label="Each layer's value this month and how loud its instrument is"></div>
     <canvas class="cviz-strip" tabindex="0" aria-label="Timeline, 1958 to 2025. Click, drag, or use the arrow keys to move by a year."></canvas>
     <audio controls preload="metadata"></audio>
-    <div class="cviz-layers" aria-hidden="true"></div>`;
+    <div class="cviz-layers" aria-hidden="true"></div>
+    <div class="cviz-tip" aria-hidden="true"></div>`;
   const audio = root.querySelector("audio");
   const strip = root.querySelector(".cviz-strip");
   const both = root.querySelector(".cviz-both input");
@@ -299,17 +303,122 @@
     }
   }
 
+  // ----------------------------------------------------------- readouts ---
+  const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const sgn = (v, dp) => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(dp);
+  const at = (arr, m) => (arr && m >= 0 && m < arr.length ? arr[m] : null);
+  const ensoWord = v => (v >= 0.5 ? "El Niño range" : v <= -0.5 ? "La Niña range" : "neutral");
+  const monthOf = (d, t) => Math.max(0, Math.min(d.years * 12 - 1, Math.floor(t / d.bar * 12)));
+  // one value per layer for month m of basin d, as text (null: no reading); kept to what may be published
+  function layerValue(k, d, m, b) {
+    const yi = Math.floor(m / 12), yr = d.yearly[yi], y0 = yi * d.bar, y1 = y0 + d.bar;
+    switch (k) {
+      case "drone": { const v = at(d.monthly.co2, m); return v == null ? null : `${v.toFixed(1)} ppm`; }
+      case "cello": { const v = at(d.monthly.sst, m); return v == null ? null : `${sgn(v, 2)} °C`; }
+      case "heat": { const v = at(d.monthly.gistemp, m); return v == null ? null : `${sgn(v, 2)} °C`; }
+      case "pulse": { const v = at(d.monthly.oni, m); return v == null ? null : `ONI ${sgn(v, 1)} · ${ensoWord(v)}`; }
+      case "pad": { const v = at(d.monthly.mode_index, m); return v == null ? null : `${b === "pacific" ? "PDO" : "AMO"} ${sgn(v, 2)}`; }
+      case "ice": { const v = at(d.monthly.ice, m); return v == null ? "no record yet" : `${v.toFixed(2)} M km²`; }
+      case "rumble": return yr ? `ACE ${Math.round(yr.ace)} (${yr.year})` : null;
+      case "storms": {
+        const tEnd = y0 + (m % 12 + 1) / 12 * d.bar, ss = d.storms.filter(s => s[0] >= y0 && s[0] < Math.min(y1, tEnd));
+        return `${ss.length} by ${MON[m % 12]} · top cat. ${ss.length ? Math.max(...ss.map(s => s[1])) : "–"}`;
+      }
+      case "events": { const v = d.volcanoes.filter(v => v.t <= (m + 1) / 12 * d.bar && (m + 1) / 12 * d.bar - v.t < 2 * d.bar).pop();
+        return v ? v.name.split(",")[0] : "none recent"; }
+      case "local":
+        if (b === "atlantic") { const v = at(d.monthly.nao, m); return v == null ? null : `NAO ${sgn(v, 2)}`; }
+        { const kp = (d.kettle || []).find(x => x.t >= y0 && x.t < y1); return kp ? `${kp.q} m³/s peak` : null; }
+      case "deep": case "shimmer": return "heard only";
+    }
+    return null;
+  }
+  const HEARD_ONLY = "Shown only as loudness: the source's terms don't allow republishing its values here.";
+  const dash = root.querySelector(".cviz-dash");
+  function buildDash() {
+    const d = D[heard];
+    dash.innerHTML = `<div class="hd" role="row"><span role="columnheader">Layer · this month</span><span role="columnheader">Instrument · how loud now</span></div>` +
+      Object.keys(LAYERS).filter(k => d.env[k]).map(k => {
+        let [ins, data, tag] = LAYERS[k];
+        if (k === "local" && heard === "atlantic") [ins, data] = ["Winter wind", "NAO"];
+        if (k === "pad") data = heard === "pacific" ? "PDO" : "AMO";
+        const ho = k === "deep" || k === "shimmer";
+        return `<div class="drow" role="row" data-k="${k}"${ho ? ` title="${HEARD_ONLY}"` : ""}><span class="lab" role="cell">${data}</span>` +
+          `<span class="val${ho ? " none" : ""}" role="cell"></span><span class="src ${tag}" role="cell">${tag}</span>` +
+          `<span class="ins" role="cell"><span>${ins}</span><span class="m"><i></i></span></span></div>`;
+      }).join("") + `<p class="note">Ocean heat and sunspots are heard, not shown: their data terms don't allow republishing the values. Storm energy is the year's accumulated cyclone energy (ACE).</p>`;
+  }
+  function updateDash(t) {
+    const d = D[heard], m = monthOf(d, started ? t : d.years * d.bar - 0.01), on = started && !audio.ended;
+    dash.querySelector(".hd span").textContent = `Layer · ${MON[m % 12]} ${d.y0 + Math.floor(m / 12)}`;
+    for (const row of dash.querySelectorAll(".drow")) {
+      const k = row.dataset.k, v = layerValue(k, d, m, heard), e = on ? envAt(d, k, t) : 0;
+      const val = row.querySelector(".val"); val.textContent = v == null ? "no reading" : v;
+      row.querySelector(".m i").style.width = (100 * Math.max(0, (e - 0.3) / 0.55)).toFixed(0) + "%";
+    }
+  }
+  const tip = root.querySelector(".cviz-tip");
+  function showTip(clientX, clientY, html) {
+    const rr = root.getBoundingClientRect();
+    tip.innerHTML = html; tip.classList.add("on");
+    let x = clientX - rr.left + 14, y = clientY - rr.top + 14;
+    if (x + tip.offsetWidth > rr.width - 4) x = clientX - rr.left - tip.offsetWidth - 14;
+    tip.style.left = Math.max(4, x) + "px"; tip.style.top = y + "px";
+  }
+  const hideTip = () => tip.classList.remove("on");
+  function monthTip(b, m, extra) {
+    const d = D[b], keys = ["cello", "pulse", "drone", "heat", "pad"].concat(b === "atlantic" ? ["ice"] : []);
+    const rows = keys.map(k => [k === "pad" ? "" : LAYERS[k][1], layerValue(k, d, m, b)]).filter(r => r[1] != null);
+    return `<b>${MON[m % 12]} ${d.y0 + Math.floor(m / 12)}</b>${b !== heard ? ` <span class="d">· ${b}</span>` : ""}` +
+      rows.map(([lab, v]) => `<div>${lab ? `<span class="d">${lab}</span> ` : ""}<span class="v">${v}</span></div>`).join("") + (extra || "");
+  }
+  // spiral: angle gives the month, radius the year; nearby storms, peaks and eruptions are named
+  function onSpiral(b, e) {
+    const g = geo[b], d = D[b]; if (!g) return;
+    const r = g.cvs.getBoundingClientRect(), k = g.size / r.width;
+    const x = (e.clientX - r.left) * k, y = (e.clientY - r.top) * k, dx = x - g.cx, dy = y - g.cx;
+    let f = (Math.atan2(dy, dx) + Math.PI / 2) / (2 * Math.PI); f -= Math.floor(f);
+    const n = Math.round((Math.hypot(dx, dy) - g.r0) / g.sp - f);
+    if (n < 0 || n >= d.years || Math.abs(Math.hypot(dx, dy) - (g.r0 + g.sp * (n + f))) > g.sp * 0.8) { hideTip(); return; }
+    const m = n * 12 + Math.min(11, Math.floor(f * 12)), near = 7 * g.k;
+    let extra = "";
+    const st = g.storms.filter(s => Math.hypot(s.xy[0] - x, s.xy[1] - y) < Math.max(near, s.r + 2)).sort((a, c) => c.cat - a.cat)[0];
+    if (st) extra += `<div class="w">A category ${st.cat} storm at its peak${st.land ? ", with landfall" : ""} (${{ wpac: "West Pacific", nepac: "Northeast Pacific", atl: "Atlantic" }[st.basin]})</div>`;
+    const kp = (d.kettle || []).find(p => { const [px, py] = g.pos(p.t / d.bar, g.sp * 0.9); return Math.hypot(px - x, py - y) < near + 3 * g.k; });
+    if (kp) extra += `<div class="w">Kettle River's peak for the year: ${kp.q} m³/s</div>`;
+    const vo = d.volcanoes.find(v => { const [px, py] = g.pos(v.t / d.bar, g.sp * 1.1); return Math.hypot(px - x, py - y) < near + 3 * g.k; });
+    if (vo) extra += `<div class="w">Eruption: ${vo.name}</div>`;
+    showTip(e.clientX, e.clientY, monthTip(b, m, extra));
+  }
+  for (const b of BASINS) {
+    const c = figs[b].querySelector("canvas");
+    c.addEventListener("pointermove", e => onSpiral(b, e));
+    c.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse") onSpiral(b, e); });  // a tap reads the month too
+    c.addEventListener("pointerleave", hideTip);
+  }
+  // strip: the lane under the pointer, at that month
+  const STRIP_LANES = ["drone", "cello", "pulse", "rumble", "ice"];
+  function onStrip(e) {
+    const d = D[heard]; if (!strip._x) return;
+    const [L, W, span] = strip._x, r = strip.getBoundingClientRect(), x = e.clientX - r.left, i = Math.floor((e.clientY - r.top - 2) / 17);
+    if (x < L || x > L + W || i < 0 || i >= (d.monthly.ice ? 5 : 4)) { hideTip(); return; }
+    const m = monthOf(d, (x - L) / W * span), k = STRIP_LANES[i];
+    showTip(e.clientX, e.clientY, `<b>${MON[m % 12]} ${d.y0 + Math.floor(m / 12)}</b><div><span class="d">${LAYERS[k][1]}</span> <span class="v">${layerValue(k, d, m, heard) ?? "no reading"}</span></div>`);
+  }
+  strip.addEventListener("pointerleave", hideTip);
+
   // --------------------------------------------------------------- loop ---
   function frame() {
     const t = curT();
     for (const b of BASINS) if (!figs[b].hidden) drawSpiral(b, t);
-    drawStrip(t); updateText(t);
+    drawStrip(t); updateText(t); updateDash(t);
   }
   let raf = 0;
   const loop = () => { frame(); raf = audio.paused ? 0 : requestAnimationFrame(loop); };
   const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
 
   function sizeAll() {
+    if (!D[heard]) return;  // the ResizeObserver can fire before the data arrives
     const w = root.querySelector(".cviz-stage").clientWidth;
     const pair = both.checked, side = pair && w >= 640;
     const size = Math.floor(Math.min(pair ? (side ? (w - 24) / 2 : w) : w, 620));
@@ -334,7 +443,7 @@
       pendingT = t;
       if (playing) audio.addEventListener("loadedmetadata", () => audio.play(), { once: true });
     }
-    buildChips(); lastEv = undefined; sizeAll();
+    buildChips(); buildDash(); lastEv = undefined; sizeAll();
   }
 
   // ------------------------------------------------------------- events ---
@@ -350,7 +459,7 @@
   };
   let drag = false;
   strip.addEventListener("pointerdown", e => { drag = true; strip.setPointerCapture(e.pointerId); seekTo(e.clientX); });
-  strip.addEventListener("pointermove", e => { if (drag) seekTo(e.clientX); });
+  strip.addEventListener("pointermove", e => { if (drag) { seekTo(e.clientX); hideTip(); } else onStrip(e); });
   strip.addEventListener("pointerup", () => { drag = false; });
   strip.addEventListener("keydown", e => {
     const step = { ArrowRight: 7, ArrowLeft: -7, PageUp: 70, PageDown: -70 }[e.key];

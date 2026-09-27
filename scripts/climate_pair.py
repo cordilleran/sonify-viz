@@ -53,6 +53,7 @@ import sampler as S
 from sampler import Instrument, OneShots, Bus, make_ir, SR
 import seasonal as W
 import synth as Y
+import records as R
 
 BASIN = (sys.argv[1] if len(sys.argv) > 1 else "pacific").lower()
 if BASIN not in ("pacific", "atlantic"):
@@ -65,22 +66,24 @@ CFG = {
                      storms={"atl": (0.0, 1.0)}, seed=1492, pulse="harp"),
 }[BASIN]
 NAME, TONIC = CFG["name"], CFG["tonic"]
-OUT = W.HERE / "rendered" / "climate"
+OUT = W.LIGHT_OUT / "climate"
 HEAVY = W.HEAVY_OUT / "climate"
 OUT.mkdir(parents=True, exist_ok=True)
 HEAVY.mkdir(parents=True, exist_ok=True)
 rng = np.random.default_rng(CFG["seed"])
 np.random.seed(CFG["seed"])
+NOISE_SEED = 99  # the high noise band's own generator
+print(f"seeds: {CFG['seed']}, {NOISE_SEED}")  # renders.py records these in the lock
 
-DATA = W.HERE / "data" / "climate"
-J = json.loads((DATA / "indices_monthly.json").read_text())
+J = R.climate_monthly()  # data/climate/parquet (or the parsed JSON it was built from)
+J["volcanoes"] = R.volcanoes()
 MONTHS = J["months"]
 NM = len(MONTHS)
 Y0 = int(MONTHS[0][:4])
 NY = NM // 12
 ser = {k: np.array([np.nan if v is None else v for v in a], dtype=float) for k, a in J["series"].items()}
 # sunspots (CC BY-NC) and ocean heat (terms unconfirmed) live in their own, uncommitted file
-FO = json.loads((DATA / "fetched_only_monthly.json").read_text())
+FO = R.climate_monthly("fetched_only_monthly")
 ser.update({k: np.array([np.nan if v is None else v for v in a], dtype=float) for k, a in FO["series"].items()})
 
 
@@ -340,7 +343,7 @@ duck_hits, duck_depth = [], []
 ace_year = np.zeros(NY)
 cat_counts = {}
 for basin, (pan0, bgain) in CFG["storms"].items():
-    storms = json.loads((DATA / f"storms_{basin}.json").read_text())
+    storms = R.storms(basin)
     cc = np.zeros(6, dtype=int)
     cat5 = []
     for s_ in storms:
@@ -433,7 +436,7 @@ for v in J["volcanoes"]:
 # ------------------------------------------------------ local layer ---------
 if BASIN == "pacific":
     # GW's note: the Kettle at Laurier (USGS, complete since 1929) replaces the Granby, whose record has a 1958-66 gap
-    gr = json.loads((DATA / "kettle_annual_max.json").read_text())
+    gr = R.kettle_annual_peak()
     vals = np.array([v["max_daily_m3s"] for k_, v in gr.items() if Y0 <= int(k_) < Y0 + NY])
     for y in range(NY):
         rec = gr.get(str(Y0 + y))
@@ -462,7 +465,7 @@ else:
             wind[mth] = np.clip(0.25 + 0.3 * nao[mth], 0, 1.2)
     w_s = at_sample(smooth(wind, 2))
     lo_n = Y.noise_band(n, 300, 1400, rng=rng)
-    hi_n = Y.noise_band(n, 1400, 4200, rng=np.random.default_rng(99))
+    hi_n = Y.noise_band(n, 1400, 4200, rng=np.random.default_rng(NOISE_SEED))
     gust = 0.7 + 0.3 * np.sin(2 * np.pi * np.arange(n) / SR / 5.3) * np.sin(2 * np.pi * np.arange(n) / SR / 2.1)
     B["local"].add((lo_n * 0.6 + hi_n * 0.25) * (w_s * gust)[:, None] * 0.22, 0)
     top = int(np.argmax(np.where((np.arange(NM) % 12) < 3, nao, -9)))
@@ -513,8 +516,8 @@ B["shimmer"].buf += Y.pingpong(B["shimmer"].buf, MONTH, fb=0.5, mix=0.4).astype(
 irs = {"hall": make_ir(4.5, bright=0.45, seed=21)}
 mix, stems = S.master(list(B.values()), irs, HEAVY / f"{NAME}.wav", stems_dir=HEAVY / f"{NAME}_stems", wet_gain=0.42)
 S.to_mp3(HEAVY / f"{NAME}.wav", OUT / f"{NAME}.mp3")
-AUDIO = W.HERE / "audio"                                      # the site's copy: 160 kbps, encoded from the WAV
-AUDIO.mkdir(exist_ok=True)
+AUDIO = W.SITE_AUDIO                                          # the site's copy: 160 kbps, encoded from the WAV
+AUDIO.mkdir(parents=True, exist_ok=True)
 subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(HEAVY / f"{NAME}.wav"), "-af",
                 "loudnorm=I=-16:TP=-1.5:LRA=11", "-ar", "44100", "-b:a", "160k", str(AUDIO / f"{NAME}.mp3")], check=True)
 

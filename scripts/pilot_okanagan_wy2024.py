@@ -1,5 +1,7 @@
 """
 PILOT B - Okanagan, water year 2023-24 (Oct 1 2023 - Sep 30 2024).
+Any other year the records cover: `pilot_okanagan_wy2024.py wy2019` (WY2016-WY2024,
+bounded by the Wells Dam counts; the arrangement was tuned on WY2024).
 Key of F, 64 bpm, 1 bar = 3 days, ~7.7 minutes. Slower tempo and HALF the
 harmonic rhythm of the Granby pilot (a chord every 4 bars, not 2), because a
 big regulated lake changes slowly.
@@ -35,22 +37,25 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import sampler as S
 from sampler import Bus, bird_phrases, make_ir, SR
 import seasonal as W
-from seasonal import DAYS, N_DAYS, N_BARS, per_bar, smooth, norm01
+from timegrid import per_bar, smooth, norm01
 from dsp_core import ice_crinkle_grain
 
 
 def main():
-    OUT = W.HERE / "rendered" / "pilots"
+    OUT = W.LIGHT_OUT / "pilots"
     OUT.mkdir(parents=True, exist_ok=True)
     HEAVY = W.HEAVY_OUT / "pilots"  # WAV + stems (large) live in runtime
     HEAVY.mkdir(parents=True, exist_ok=True)
-    NAME = "okanagan_wy2024"
+    Y = W.Year.parse(sys.argv[1] if len(sys.argv) > 1 else "wy2024")
+    DAYS, N_DAYS, N_BARS = Y.days, Y.n_days, Y.n_bars
+    y0, y1 = DAYS[0].year, DAYS[-1].year
+    NAME = f"okanagan_{Y.label.lower()}"
     rng = np.random.default_rng(1997)
     np.random.seed(1997)  # the ice grain helper uses the global RNG; seed it so renders repeat exactly
 
     TONIC = 53  # F3
     BPM = 64
-    g = W.Grid(BPM, tail_s=12.0)
+    g = W.Grid(BPM, Y.n_bars, tail_s=12.0)
     print(f"{N_BARS} bars, {g.dur / 60:.1f} min")
 
     # --------------------------------------------------------------- features --
@@ -58,25 +63,28 @@ def main():
     pen_all, _ = W.wsc_series("okanagan_river_penticton_08NM050_2010_2024.json")
     oli_all, _ = W.wsc_series("okanagan_river_oliver_08NM085_2010_2024.json")
     clim = "summerland_cs_979_climate_2010_2024.json"
-    lake = W.wy(lake_all)
+    clim_T = W.climate_series(clim, "MEAN_TEMPERATURE")
+    W.check_coverage({"Okanagan Lake level": lake_all, "Penticton flow": pen_all,
+                      "Oliver flow": oli_all, "Summerland temperature": clim_T}, Y)
+    lake = W.in_year(lake_all, year=Y)
     lake_n = norm01(lake, 0, 100)
-    lake_pct = W.doy_percentile(lake_all)
-    pen = W.wy(pen_all)
+    lake_pct = W.doy_percentile(lake_all, year=Y)
+    pen = W.in_year(pen_all, year=Y)
     pen_n = norm01(pen, 0, 100)
-    oli = W.wy(oli_all)
+    oli = W.in_year(oli_all, year=Y)
     oli_n = norm01(np.log(oli))
-    T = W.wy(W.climate_series(clim, "MEAN_TEMPERATURE"))
-    precip = W.wy(W.climate_series(clim, "TOTAL_PRECIPITATION"), fill="zero")
+    T = W.in_year(clim_T, year=Y)
+    precip = W.in_year(W.climate_series(clim, "TOTAL_PRECIPITATION"), fill="zero", year=Y)
     rain = np.where(T > 1.0, precip, 0.0)
     snow = np.where(T <= 1.0, precip, 0.0)  # mm water equivalent
-    hum = W.wy(W.climate_series(clim, "MIN_REL_HUMIDITY"))
-    DL = W.daylength(49.6)
-    gpp, gppn = W.modis_gpp_daily("summerland")
+    hum = W.in_year(W.climate_series(clim, "MIN_REL_HUMIDITY"), year=Y)
+    DL = Y.daylength(49.6)
+    gpp, gppn = W.modis_gpp_daily("summerland", Y)
     GPP_SOURCE = "MODIS MOD17A2HGF (retrieved)"
     if gpp is None:
         gppn = np.clip(smooth(np.maximum(0, T - 5), 21) / 12, 0, 1)
         GPP_SOURCE = "temperature proxy (derived; MODIS pull unavailable)"
-    sock, wells_T = W.dart_sockeye()
+    sock, wells_T = W.dart_sockeye(Y)
     doy = np.array([d.timetuple().tm_yday for d in DAYS])
 
     # ---------------------------------------------------------------- harmony --
@@ -204,9 +212,9 @@ def main():
             B["fish"].add(marimba.note(m, float(np.clip(0.3 + 0.05 * k + rng.normal(0, 0.05), 0.2, 0.9)), rng=rng),
                           g.s(b, sl * 0.25, jitter_ms=4, rng=rng), pan=float(np.clip(-0.6 + 0.1 * j, -0.7, 0.7)))
     pk = int(np.argmax(sock))
-    fs = next((i for i in range(N_DAYS) if sock[i] > 0 and DAYS[i].year == 2024), None)
+    fs = next((i for i in range(N_DAYS) if sock[i] > 0 and DAYS[i].year == y1), None)
     if fs is not None:
-        mark(g.day_to_time(fs), f"First sockeye of the 2024 run pass Wells Dam ({DAYS[fs]:%b %d}) - marimba")
+        mark(g.day_to_time(fs), f"First sockeye of the {y1} run pass Wells Dam ({DAYS[fs]:%b %d}) - marimba")
     mark(g.day_to_time(pk), f"Sockeye peak at Wells: {sock[pk]:,.0f} fish in one day ({DAYS[pk]:%b %d})")
 
     # thermal stress: Wells water temperature (a real measurement) above 18 C
@@ -225,8 +233,9 @@ def main():
         mark(g.day_to_time(wmax), f"Warmest water at Wells, {wells_T[wmax]:.1f} C ({DAYS[wmax]:%b %d})")
 
     # spawning near Oliver (simulated timing, scaled by the run that produced it)
-    runs_size = {2023: 136956, 2024: 491039}
-    spawn = sum(runs_size[y] / 491039 * np.exp(-0.5 * (np.array([(d - W.dt.date(y, 10, 15)).days for d in DAYS]) / 9) ** 2)
+    # WY2024 keeps the counts it was rendered with on 09-24 (the cache now sums 2024 to 491,040, one more)
+    runs_size = {2023: 136956, 2024: 491039} if Y.label == "WY2024" else W.dart_run_totals(Y)
+    spawn = sum(runs_size[y] / runs_size[y1] * np.exp(-0.5 * (np.array([(d - W.dt.date(y, 10, 15)).days for d in DAYS]) / 9) ** 2)
                 for y in runs_size)
     sp_bar = per_bar(spawn)
     sp_fire = W.fire_bars(sp_bar, 2.2)
@@ -235,7 +244,7 @@ def main():
             v = sorted(tones(b, 41, 57, ext=(0, 2, 4)), reverse=True)
             for i, m in enumerate(v):
                 B["fish"].add(cpizz.note(m, 0.5, rng=rng), g.s(b, 1 + i * 0.75, jitter_ms=5, rng=rng), gain=0.8, pan=-0.35)
-    mark(0.0, "Oct 2023: the 2023 sockeye spawning near Oliver (timing simulated) - low cello pizzicato")
+    mark(0.0, f"{DAYS[0]:%b %Y}: the {y0} sockeye spawning near Oliver (timing simulated) - low cello pizzicato")
 
     # ------------------------------------------------------- soft percussion --
     active = np.clip((smooth(oli_n, 7) - 0.3) / 0.25, 0, 1)
@@ -293,7 +302,7 @@ def main():
             if b in fire:
                 B["birds"].add(phr[rng.integers(len(phr))] * gain, g.s(b, rng.uniform(0, 3)), pan=rng.uniform(-0.7, 0.7))
     mark(0.0, "Early Oct: sandhill cranes passing over (typical timing)")
-    mark(g.day_to_time(W.doy_index(71)), "Western meadowlark returns (typical ~Mar 10)")
+    mark(g.day_to_time(Y.doy_index(71)), "Western meadowlark returns (typical ~Mar 10)")
 
     # ---------------------------------------------------------------- master --
     humid = np.clip((smooth(hum, 7) - 20) / 50, 0, 1)

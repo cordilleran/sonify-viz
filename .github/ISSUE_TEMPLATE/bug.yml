@@ -1,0 +1,21 @@
+name: Bug
+description: Something doesn't run, doesn't reproduce, or looks wrong.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: how
+    attributes:
+      label: Command and output
+      description: The command you ran and what it printed. For a render that doesn't reproduce, the output of `python scripts/renders.py verify TRACK`.
+      render: shell
+  - type: input
+    id: env
+    attributes:
+      label: Python and package versions
+      description: "e.g. Python 3.13, numpy 2.5.3 (pip freeze | grep -E 'numpy|scipy|soundfile')"

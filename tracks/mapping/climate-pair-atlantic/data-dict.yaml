@@ -1,0 +1,128 @@
+$version: 0.1.0
+$learn_more: https://data-dict.tidyverse.org/
+
+name: climate-pair-atlantic-mapping
+label: Climate Pair, Atlantic - mapping
+description: >
+  How the Atlantic piece of the Climate Pair turns 68 years of climate
+  records into music, one bar per year: what it read for each year and
+  what it decided. Together with the records dictionary
+  (data/climate/parquet/data-dict.yaml), this is the path from an index to
+  a note. One row per calendar year, 1958 to 2025. Each year is one bar of 7 seconds, felt as four dotted-quarter beats (the seasons) with the twelve eighth notes as months. The key is A.
+details: >
+  Copied by scripts/export_mapping.py from the score of the locked v2.0
+  render (renders.lock.json), and only if that score's SHA-256 matches the
+  lock. The values are the piece's own yearly summaries; the piece itself
+  works month by month (scripts/climate_pair.py), and the Climate Pair page
+  shows the monthly layers. Not in this table: the yearly ocean heat
+  content the piece also summarizes (IAP terms unconfirmed; the solo
+  contrabass carries it) and the sunspot number (CC BY-NC; the high
+  shimmer carries it). Other layers work per storm or per event rather than
+  per year and are described in the records dictionary and on the page:
+  storm hits, volcanoes, the monthly ENSO pulse (harp) and the winter wind from the North Atlantic Oscillation.
+origin: ../../../scripts/export_mapping.py
+version:
+  number: 2.0.0
+
+tables:
+  - name: years
+    source:
+      parquet: years.parquet
+    columns:
+      - name: year
+        type: number(ordinal)
+        constraints: [primary_key]
+        range: [1958, 2025]
+      - name: bar
+        type: number(ordinal)
+        constraints: [required]
+        description: The bar the year plays in, from 0.
+        range: [0, 67]
+      - name: t
+        type: number(quantity)
+        units: seconds
+        constraints: [required]
+        description: When the year starts in the audio (7 seconds per year).
+        range: [0.0, 469.0]
+      - name: mode
+        type: enum
+        constraints: [required]
+        description: >
+          (R/D) The mode for the year, from the Atlantic Multidecadal Oscillation (AMO; its record ends January 2023, and the piece holds the last value): its 36-month
+          running mean, read at mid-year, turns the mode Dorian (warm phase)
+          when it rises above a threshold and Aeolian (cool phase) when it
+          falls below minus that threshold, and otherwise keeps the mode
+          it had. The threshold is a quarter of the smoothed index's
+          standard deviation, so the pieces don't flicker at zero. The
+          synth and violin pad brightens with the index.
+        values:
+          Dorian: the warm phase (AMO positive); minor with a raised sixth
+          Aeolian: the cool phase (AMO negative); natural minor
+      - name: chord_first_half
+        type: number(ordinal)
+        constraints:
+          - required
+          - assert: chord_first_half IN (0, 2, 3, 4, 5, 6)
+        description: >
+          (D, from the retrieved ONI) The chord for January to June, as a scale degree (0 = the
+          tonic), from ENSO: the Oceanic Niño Index averaged over the six
+          months. 1.5 or above (a strong El Niño) lifts to III (2); 0.5 or
+          above lifts to VI (5); -0.5 or below (La Niña) sinks to iv (3);
+          neutral half-years circle i, VII, i, v (0, 6, 0, 4) in turn.
+        range: [0, 5]
+      - name: chord_second_half
+        type: number(ordinal)
+        constraints:
+          - required
+          - assert: chord_second_half IN (0, 2, 3, 4, 5, 6)
+        description: (D) The chord for July to December, by the same rule.
+        range: [2, 6]
+      - name: co2_ppm
+        type: number(quantity)
+        units: ppm
+        constraints: [required]
+        description: >
+          (R) The year's mean of deseasonalized CO2 at Mauna Loa (gaps
+          interpolated). The drone and organ pedal rise in level and open
+          their filter with it, scaled from 315 to 428 ppm (fixed ends, 1958
+          to about 2025); the seasonal cycle, removed here, makes the drone
+          breathe.
+        range: [315.2, 427.4]
+      - name: sst_anom
+        type: number(quantity)
+        units: °C
+        constraints: [required]
+        description: >
+          (R) The year's mean global ocean surface temperature anomaly
+          (against 1901-2000). The cello section plays chord tones, growing
+          from one voice to three and louder, scaled from -0.25 to 1.05 °C.
+          The heat layer is separate: a held high violin once the GISTEMP
+          land-ocean anomaly passes +0.8 °C.
+        range: [-0.1, 0.95]
+      - name: ace
+        type: number(quantity)
+        units: 10⁴ kt²
+        constraints:
+          - required
+          - assert: ace >= 0
+        description: >
+          (D) Accumulated cyclone energy of the year's storms in the North Atlantic,
+          by the year of each storm's peak. It sets the low storm rumble
+          under the season. Each storm is also heard on its own, by
+          category (see the records dictionary).
+        range: [17.4, 243.9]
+      - name: seaice_sep_mkm2
+        type: number(quantity)
+        units: million km²
+        description: >
+          (R) Arctic sea-ice extent in September, the yearly minimum. Empty
+          before the satellite record (1958-1978). A high glass voice
+          breathes with the season's ice and thins, playing fewer voices, as
+          September ice declines.
+        range: [3.57, 7.67]
+
+glossary:
+  mode: A scale's pattern of whole and half steps on a home note. The pieces use a ladder from dark (Aeolian) to bright (Ionian); Dorian and Aeolian are both minor, and Dorian's raised sixth makes it the warmer of the two.
+  scale degree: A note's position in the scale, counted from the home note (0).
+  hysteresis: A rule that needs a clear move past a threshold to change state, so a value hovering near it doesn't flip back and forth.
+  dotted quarter: A beat one and a half quarter notes long; four of them fill a bar of twelve eighth notes.

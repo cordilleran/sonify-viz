@@ -1,0 +1,16 @@
+# Named variants of the Granby piece (scripts/pilot_granby_wy2024.py), for
+# listening A/Bs and version history. Render one with
+#   python scripts/pilot_granby_wy2024.py --variant NAME
+# Keys are the piece's DEFAULTS; anything else is refused. See scripts/variants.py.
+
+frozen:
+  note: The mood never moves. The mode stays Dorian all year, so any sense of season comes from the other layers alone.
+  mode: Dorian
+
+no-perc:
+  note: Without the Burrell Creek hand drums, to hear how much of the freshet's energy they carry.
+  mute: [perc]
+
+slow:
+  note: At 60 bpm instead of 72, the year runs about 8.3 minutes instead of 6.9.
+  bpm: 60

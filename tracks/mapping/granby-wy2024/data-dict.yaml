@@ -1,0 +1,277 @@
+$version: 0.1.0
+$learn_more: https://data-dict.tidyverse.org/
+
+name: granby-wy2024-mapping
+label: Granby River, water year 2024 - mapping
+description: >
+  How the Granby piece turns its records into music, as two tables: what
+  the piece read for each day, and what it decided for each bar. Together
+  with the records dictionary (data/parquet/data-dict.yaml), this is the
+  path from a gauge reading to a note.
+details: >
+  Copied by scripts/export_mapping.py from the score of the locked v1.0
+  render (renders.lock.json), and only if that score's SHA-256 matches the
+  lock. The values are the piece's own, not recomputed; each column says
+  how the piece computed it (scripts/pilot_granby_wy2024.py). Three
+  transforms recur. "Scaled in-year" means the value is mapped onto 0 to 1
+  between its 2nd and 98th percentile within the year, and clipped. "Per
+  bar" means the mean over the bar's three days. "Smoothed n days" means a
+  centred moving average of n days, with the ends held.
+origin: ../../../scripts/export_mapping.py
+version:
+  number: 1.0.0
+
+tables:
+  - name: days
+    label: What the piece read, each day
+    description: >
+      One row per day of water year 2024 (October 1, 2023 to September 30,
+      2024): the records the piece read and the signals it derived, before
+      they become sound. Retrieved (R), derived (D) and simulated (S) values
+      are marked in each description.
+    source:
+      parquet: days.parquet
+    columns:
+      - name: date
+        type: date
+        constraints: [primary_key]
+        range: [2023-10-01, 2024-09-30]
+      - name: bar
+        type: number(id)
+        constraints: [required, foreign_key]
+        description: The bar this day plays in (three days per bar, from 0).
+        examples: [0, 30, 61, 91, 121]
+      - name: t
+        type: number(quantity)
+        units: seconds
+        constraints: [required]
+        description: When the day starts in the audio.
+        range: [0.0, 405.56]
+      - name: flow
+        type: number(quantity)
+        units: m³/s
+        constraints: [required]
+        description: >
+          (R) Granby River at Grand Forks (WSC 08NN002), daily mean
+          discharge; gaps linearly interpolated. Drives the piano: its log,
+          scaled in-year, sets the ostinato's density (see bars.piano_density)
+          and loudness, and above half of that scale the cello joins the bass.
+          Its share of the year's peak, smoothed 9 days, sets the river's
+          phase (see bars.phase).
+        range: [1.56, 147.0]
+      - name: flow_pct_normal
+        type: number(quantity)
+        units: 0 to 1 (percentile)
+        constraints:
+          - required
+          - assert: flow_pct_normal BETWEEN 0 AND 1
+        description: >
+          (D) Where the day's flow sits among all 2010-2024 flows within 7
+          days of the same date (ties count half). This is the "is it normal
+          for the time of year" signal: smoothed 15 days and averaged per
+          bar, it nudges the mode brighter or darker by up to about one step
+          (see bars.mode).
+        range: [0.007, 0.984]
+      - name: burrell
+        type: number(quantity)
+        units: m³/s
+        constraints: [required]
+        description: >
+          (R) Burrell Creek above Gloucester Creek (WSC 08NN023), daily mean
+          discharge. Drives the hand percussion (see bars.perc_drive).
+        range: [0.103, 21.6]
+      - name: ice
+        type: boolean
+        constraints: [required]
+        description: >
+          (R) WSC's "Ice Conditions" symbol on the Granby's discharge that
+          day: ice affected the gauge. Runs of flagged days (gaps shorter
+          than 3 days merged) are the ice episodes: a descending glockenspiel
+          and bowed cymbal as they begin, crackle while they last, a cymbal
+          swell and harp as they end. Ice also forces the phase to dormant.
+      - name: temp
+        type: number(quantity)
+        units: °C
+        constraints: [required]
+        description: >
+          (R) Billings (ECCC 1100) daily mean air temperature; gaps
+          interpolated. Smoothed 15 days, it is 30% of the mode's brightness.
+          Smoothed 14 days, it stands in for water temperature in the fish
+          windows (no Granby stream-temperature record exists), and it sets
+          how cold the ice crackle sounds.
+        range: [-24.3, 29.0]
+      - name: rain
+        type: number(quantity)
+        units: mm
+        constraints: [required]
+        description: (R) Billings total rain; missing days count as dry. Rain falls as harp drops, more for heavier rain.
+        range: [0.0, 17.8]
+      - name: snow
+        type: number(quantity)
+        units: cm
+        constraints: [required]
+        description: (R) Billings new snowfall; missing days count as none. Snow falls as glockenspiel flakes.
+        range: [0.0, 8.8]
+      - name: snow_on_ground
+        type: number(quantity)
+        units: cm
+        constraints: [required]
+        description: >
+          (R) Billings snow on the ground; missing days count as none.
+          Smoothed 5 days and divided by 25 cm (capped at 1), it crossfades
+          the reverb from an open room to a short, dark one: snow absorbs
+          sound.
+        range: [0.0, 22.0]
+      - name: daylength
+        type: number(quantity)
+        units: hours
+        constraints: [required]
+        description: >
+          (D) Astronomical day length at 49.03° N, from the calendar. Scaled
+          between the year's shortest and longest day, it is 70% of the
+          mode's brightness and part of the piano's loudness.
+        range: [8.01, 15.99]
+      - name: gpp_norm
+        type: number(quantity)
+        units: 0 to 1 (share of a high day)
+        constraints:
+          - required
+          - assert: gpp_norm BETWEEN 0 AND 1
+        description: >
+          (R) MODIS gross primary productivity at the Granby valley point:
+          each 8-day composite's valid pixels averaged, placed at the
+          composite's centre, interpolated to days, and divided by the
+          2015-2024 95th percentile (capped at 1). Per bar, it swells the
+          violin pad, which stays silent below 0.08.
+        range: [0.0, 1.0]
+      - name: trout_sim
+        type: number(quantity)
+        units: 0 to 1 (window strength)
+        constraints:
+          - required
+          - assert: trout_sim BETWEEN 0 AND 1
+        description: >
+          (S) Redband trout spawning window, modelled, not observed: a bell
+          curve on the water-temperature stand-in centred at 8 °C (width 2.5
+          °C), only from April 1 to June 30 (day of year 91 to 181) and only
+          while the river is above 0.3 on its in-year scale. The flute plays
+          a short rising figure in bars where it is strong.
+        range: [0.0, 0.998]
+      - name: whitefish_sim
+        type: number(quantity)
+        units: 0 to 1 (window strength)
+        constraints:
+          - required
+          - assert: whitefish_sim BETWEEN 0 AND 1
+        description: >
+          (S) Mountain whitefish spawning window, modelled: a bell curve
+          centred at 4.5 °C (width 2 °C), only from mid-October to
+          mid-December (day of year 288 to 344). Cello pizzicato plays a
+          falling figure.
+        range: [0.0, 0.998]
+
+  - name: bars
+    label: What the piece decided, each bar
+    description: >
+      One row per bar (122 bars of three days; 72 bpm, so about 3.3
+      seconds each): the harmony and the densities the piece chose.
+    source:
+      parquet: bars.parquet
+    columns:
+      - name: bar
+        type: number(id)
+        constraints: [primary_key]
+        examples: [0, 30, 61, 91, 121]
+      - name: t
+        type: number(quantity)
+        units: seconds
+        constraints: [required]
+        description: When the bar starts in the audio.
+        range: [0.0, 403.33]
+      - name: mode
+        type: enum
+        constraints: [required]
+        description: >
+          The mode on D, from a dark-to-bright ladder (Aeolian, Dorian,
+          Mixolydian, Ionian; Phrygian is kept out). The target rung is 1 +
+          3 x brightness, plus the flow anomaly (flow_pct_normal smoothed,
+          minus 0.5, times 2.4, capped at ±1.2), where brightness is 0.7
+          x day length + 0.3 x smoothed temperature, both scaled. The mode
+          may change only every 8 bars, and by one rung at a time. The
+          ladder's hard stop is one rung higher, Lydian: a bright season
+          with a very wet anomaly could reach it, but WY2024 never went
+          above Ionian.
+        values:
+          Aeolian: natural minor, the darkest rung used
+          Dorian: minor with a raised sixth
+          Mixolydian: major with a lowered seventh
+          Ionian: major, the brightest rung WY2024 reached
+          Lydian: major with a raised fourth, reachable but not reached
+      - name: degree
+        type: number(ordinal)
+        constraints:
+          - required
+          - assert: degree BETWEEN 0 AND 6
+        description: >
+          The chord's root as a scale degree of the current mode (0 = the
+          tonic, D). Chords change every 2 bars, stepping through the
+          current phase's four-chord loop.
+        range: [0, 5]
+      - name: phase
+        type: enum
+        constraints: [required]
+        description: >
+          The river's phase, which picks the chord loop. Each day is labelled
+          from flow as a share of the year's peak (smoothed 9 days) and its
+          daily change, then each bar takes its days' majority, and runs
+          shorter than 6 bars are absorbed into the run before. The phases
+          are dormant (ice, or below 10% of peak from late October
+          through February), peak (above 50%), rising (climbing faster than 0.4% of
+          peak a day, above 10%), recession (falling faster than 0.3% a day,
+          above 15%) and low (the rest). In WY2024 only dormant, peak and
+          low lasted long enough to be heard; the warm winter's early melt
+          never held a rising or recession phase for 6 bars.
+        values:
+          dormant: i VI i iv, circling home
+          rising: i iv v VI, climbing without resolving
+          peak: VI iv i v, wide
+          recession: i VII VI iv, the bass stepping down
+          low: i iv i VI, sparse
+      - name: piano_density
+        type: number(ordinal)
+        constraints:
+          - required
+          - assert: piano_density BETWEEN 0 AND 3
+        description: >
+          How many eighth notes the piano ostinato plays in the bar: 0 = 2
+          notes, 1 = 4, 2 and 3 = all 8, and 3 adds a soft upper-octave echo.
+          It is the square root of the flow's in-year scale, averaged per
+          bar, times 3.99, rounded down.
+        range: [0, 3]
+      - name: perc_drive
+        type: number(quantity)
+        units: 0 to 1
+        constraints:
+          - required
+          - assert: perc_drive BETWEEN 0 AND 1
+        description: >
+          How hard the hand percussion (tumba, conga, shaker) plays: the
+          square root of 0.6 x Burrell's log flow (scaled in-year) + 0.4 x
+          its day-to-day flashiness (scaled), gated by how high the Granby is
+          (0 below 0.25 on its smoothed in-year scale, full above 0.45), per
+          bar. Below 0.12 the percussion rests; near the top it plays a
+          tresillo (3-3-2).
+        range: [0.0, 0.92]
+
+relationships:
+  - join: days.bar = bars.bar
+    cardinality: many-to-one
+    description: Three days play in each bar (the last bar of a 365-day year has two).
+
+glossary:
+  mode: A scale's pattern of whole and half steps on a home note. The pieces use a ladder from dark (Aeolian) to bright (Ionian); Dorian and Aeolian are both minor, and Dorian's raised sixth makes it the warmer of the two.
+  scale degree: A note's position in the scale, counted from the home note (0).
+  ostinato: A short pattern repeated bar after bar.
+  tresillo: A 3-3-2 rhythm (eight eighth-note pulses grouped as three, three and two).
+  pizzicato: Plucking a bowed string instrument's strings.
+  percentile: The share of values below a given one.

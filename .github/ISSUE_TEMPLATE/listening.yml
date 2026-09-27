@@ -1,0 +1,23 @@
+name: Listening note
+description: Tell us what you heard in a track.
+labels: [listening]
+body:
+  - type: input
+    id: track
+    attributes:
+      label: Track and version
+      description: Both are on the track's page, e.g. "Granby WY2024, v1.0".
+    validations:
+      required: true
+  - type: textarea
+    id: heard
+    attributes:
+      label: What did you hear?
+      description: What worked, what confused you, what you expected. Times help (e.g. "around 3:20").
+    validations:
+      required: true
+  - type: dropdown
+    id: device
+    attributes:
+      label: How did you listen?
+      options: [Headphones, Laptop or phone speakers, Other speakers, Other]

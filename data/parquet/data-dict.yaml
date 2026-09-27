@@ -1,0 +1,288 @@
+$version: 0.1.0
+$learn_more: https://data-dict.tidyverse.org/
+
+name: water-year-records
+label: Water Year Rings records
+description: >
+  The daily records behind the Water Year Rings pieces (Granby River and
+  Okanagan): river and lake gauges, weather stations, and satellite plant
+  productivity in southern British Columbia, 2010-2024. The values are copied
+  from what the agencies published, not transformed; the pieces transform
+  them in code (scripts/records.py) and the listening page says how.
+details: >
+  Built by scripts/build_parquet.py from the raw API responses kept beside
+  it in data/*.json, which stay as the originals. Hydrometric and climate
+  data: Environment and Climate Change Canada (Water Survey of Canada and
+  the Meteorological Service of Canada) via the MSC GeoMet OGC API; contains
+  information licensed under the Open Government Licence - Canada. Plant
+  productivity: NASA MODIS MOD17A2HGF v061 (doi:10.5067/MODIS/MOD17A2HGF.061)
+  via the ORNL DAAC subset service. The Wells Dam sockeye counts the
+  Okanagan piece also uses are not redistributed; they are fetched by
+  scripts/fetch_okanagan.py and described in a dictionary kept
+  with the local copy (its ranges would be DART values).
+origin: ../../scripts/build_parquet.py
+version:
+  date: 2026-09-27
+
+tables:
+  - name: stations
+    label: Stations and satellite points
+    description: >
+      One row per place a record comes from: a Water Survey of Canada gauge,
+      an ECCC climate station, or a point where MODIS pixels were sampled.
+    source:
+      parquet: stations.parquet
+    columns:
+      - name: station_id
+        type: string
+        constraints: [primary_key]
+        description: >
+          The agency's own identifier: a WSC station number (08NN002), an
+          ECCC climate STN_ID (1100; not the 7-character Climate ID), or a
+          name for a MODIS point (granby_valley).
+        examples: [08NN002, 08NM083, "1100", "979", granby_valley]
+      - name: kind
+        type: enum
+        constraints: [required]
+        values:
+          hydrometric: Water Survey of Canada gauge (river discharge or lake level)
+          climate: ECCC daily climate station
+          modis_point: a latitude-longitude point where MODIS pixels were sampled
+      - name: name
+        type: string
+        constraints: [required]
+        description: The agency's station name, or a short description of a MODIS point.
+        examples: [GRANBY RIVER AT GRAND FORKS, OKANAGAN LAKE AT KELOWNA, BILLINGS, SUMMERLAND CS]
+      - name: latitude
+        type: number(quantity)
+        units: degrees north (WGS 84)
+        constraints: [required]
+        description: >
+          From the API's GeoJSON geometry for gauges and climate stations; for
+          MODIS points, the point that was requested.
+        range: [49.0, 49.9]
+      - name: longitude
+        type: number(quantity)
+        units: degrees east (WGS 84)
+        constraints: [required]
+        range: [-119.7, -118.2]
+      - name: used_for
+        type: string
+        description: What the pieces do with this station's record, in a phrase.
+        examples: ["Granby pilot: discharge (piano, bass), ice flag, phase", "Okanagan pilot: lake level (drone, mood)"]
+
+  - name: hydrometric_daily
+    label: Daily river and lake records (WSC)
+    description: >
+      One row per gauge per day: the Water Survey of Canada's daily mean
+      discharge or water level, with its data symbol. Five gauges, 2010-2024.
+    details: >
+      Rivers report discharge; Okanagan Lake at Kelowna (08NM083) reports
+      level only, and some river gauges also report level on some days.
+      Values are WSC's published daily means, which may be revised by WSC
+      after the pull date (the JSON files record when each pull was made by
+      their modification time). A day with no row had no published value;
+      the pieces fill short gaps by linear interpolation.
+    source:
+      parquet: hydrometric_daily.parquet
+    columns:
+      - name: station_id
+        type: string
+        constraints: [required, foreign_key]
+        description: WSC station number; see stations.
+        examples: [08NN002, 08NN023, 08NM083, 08NM050, 08NM085]
+      - name: date
+        type: date
+        constraints: [required]
+        range: [2010-01-01, 2024-12-31]
+      - name: discharge
+        type: number(quantity)
+        units: m³/s
+        description: Daily mean discharge (flow). Empty for lake-level-only days.
+        range: [0.054, 465]
+      - name: discharge_symbol
+        type: enum
+        description: WSC's data symbol for the discharge value; empty when there is none.
+        values:
+          Ice Conditions: >
+            Ice affected the gauge, so the usual relation between water height
+            and flow didn't hold that day. The Granby piece uses this flag as
+            its record of river ice.
+          Estimated: The value was estimated by WSC rather than computed from a measured stage.
+          Partial Day: The daily mean is based on less than a full day of data.
+      - name: level
+        type: number(quantity)
+        units: m
+        description: >
+          Daily mean water level above the gauge's local datum, not elevation
+          above sea level (Okanagan Lake reads about 1 to 2 m here).
+        todo: Record each gauge's datum and its offset to a geodetic elevation, if the pieces ever need it.
+        range: [0.478, 4.428]
+      - name: level_symbol
+        type: enum
+        description: WSC's data symbol for the level value; empty when there is none.
+        values:
+          Estimated: The value was estimated by WSC.
+          Partial Day: The daily mean is based on less than a full day of data.
+
+  - name: climate_daily
+    label: Daily weather (ECCC)
+    description: >
+      One row per climate station per day, 2010-2024: temperature,
+      precipitation, snow and humidity from ECCC's daily climate data, with
+      each value's data flag.
+    details: >
+      Billings (STN_ID 1100) serves the Granby piece; Summerland CS (979)
+      serves the Okanagan piece. Summerland's separate rain and snow values
+      are flagged missing on 3,116 of 5,479 days, so the Okanagan piece splits
+      total precipitation into rain and snow by temperature instead (a
+      derived value, tagged D on the listening page).
+    source:
+      parquet: climate_daily.parquet
+    columns:
+      - name: station_id
+        type: string
+        constraints: [required, foreign_key]
+        description: ECCC STN_ID; see stations.
+        examples: ["1100", "979"]
+      - name: climate_identifier
+        type: string
+        constraints: [required]
+        description: ECCC's 7-character Climate ID for the same station.
+        examples: ["1140876", 112G8L1]
+      - name: date
+        type: date
+        constraints: [required]
+        description: The local calendar day the values summarize.
+        range: [2010-01-01, 2024-12-31]
+      - name: mean_temperature
+        type: number(quantity)
+        units: °C
+        range: [-24.3, 35.3]
+      - name: min_temperature
+        type: number(quantity)
+        units: °C
+        range: [-28, 26.4]
+      - name: max_temperature
+        type: number(quantity)
+        units: °C
+        range: [-20.5, 44.7]
+      - name: total_precipitation
+        type: number(quantity)
+        units: mm
+        description: Rain plus the water equivalent of snow.
+        range: [0, 45.4]
+      - name: total_rain
+        type: number(quantity)
+        units: mm
+        range: [0, 45.4]
+      - name: total_snow
+        type: number(quantity)
+        units: cm
+        description: Depth of new snowfall.
+        range: [0, 21.4]
+      - name: snow_on_ground
+        type: number(quantity)
+        units: cm
+        description: >
+          Depth of snow on the ground. The Granby piece darkens and shortens
+          its reverb as this rises (snow absorbs sound).
+        range: [0, 56]
+      - name: min_rel_humidity
+        type: number(quantity)
+        units: "%"
+        description: The day's minimum relative humidity (Summerland only).
+        range: [7, 96]
+      - name: mean_temperature_flag
+        type: enum
+        description: ECCC data flag for mean_temperature; empty when there is none.
+        values: {E: Estimated, M: Missing}
+      - name: min_temperature_flag
+        type: enum
+        values: {E: Estimated, M: Missing}
+      - name: max_temperature_flag
+        type: enum
+        values: {E: Estimated, M: Missing}
+      - name: total_precipitation_flag
+        type: enum
+        values: {E: Estimated, M: Missing, T: "Trace: precipitation too small to measure, recorded as 0"}
+      - name: total_rain_flag
+        type: enum
+        values: {M: Missing, T: "Trace: recorded as 0"}
+      - name: total_snow_flag
+        type: enum
+        values: {M: Missing, T: "Trace: recorded as 0"}
+      - name: snow_on_ground_flag
+        type: enum
+        values: {M: Missing, T: "Trace: recorded as 0"}
+      - name: min_rel_humidity_flag
+        type: enum
+        values: {M: Missing}
+
+  - name: modis_gpp
+    label: Satellite plant productivity (MODIS GPP)
+    description: >
+      One row per point, 8-day composite and pixel: NASA MODIS gross primary
+      productivity (MOD17A2HGF v061, gap-filled, 500 m) for 25 pixels (a 5 by
+      5 block, about 2.3 km on a side) around each point, 2015-2024.
+    details: >
+      The pieces average each composite's valid pixels, convert to g C per
+      m² per day, and place the value at the composite's centre (date + 4
+      days). The block mixes land covers; the Summerland point includes
+      irrigated orchard.
+    source:
+      parquet: modis_gpp.parquet
+    columns:
+      - name: station_id
+        type: string
+        constraints: [required, foreign_key]
+        description: The MODIS point; see stations.
+        examples: [granby_valley, summerland]
+      - name: date
+        type: date
+        constraints: [required]
+        description: First day of the 8-day composite period.
+        range: [2015-01-01, 2024-12-26]
+      - name: pixel
+        type: number(id)
+        constraints: [required]
+        description: Position of the pixel in the 5 by 5 block, 0 to 24.
+        todo: Confirm the order the ORNL subset service returns pixels in (the pieces average them, so it doesn't matter to the audio).
+        examples: [0, 6, 12, 18, 24]
+      - name: gpp_raw
+        type: number(quantity)
+        units: 0.0001 kg C m⁻² per 8 days
+        constraints: [required]
+        description: >
+          Gross primary productivity as stored in the product: multiply by
+          0.0001 for kg of carbon per m² over the 8 days. Values of 32761 and
+          above are fill codes (no valid retrieval), not productivity.
+        range: [0, 32766]
+
+relationships:
+  - join: hydrometric_daily.station_id = stations.station_id
+    cardinality: many-to-one
+    description: Each daily hydrometric value comes from one gauge.
+  - join: climate_daily.station_id = stations.station_id
+    cardinality: many-to-one
+    description: Each day of weather comes from one climate station.
+  - join: modis_gpp.station_id = stations.station_id
+    cardinality: many-to-one
+    description: Each pixel value belongs to one sampled point.
+
+glossary:
+  discharge: The volume of water passing a gauge per second, in m³/s.
+  water year: >
+    October 1 to September 30, named for the year it ends in (WY2024 =
+    October 2023 to September 2024), so a winter's snow and the melt it
+    feeds fall in the same year.
+  WSC: Water Survey of Canada, the federal agency that runs Canada's river and lake gauges.
+  ECCC: Environment and Climate Change Canada.
+  STN_ID: ECCC's numeric station identifier, used by its OGC API; not the same as the Climate ID.
+  GPP: >
+    Gross primary productivity: the carbon plants take up by photosynthesis,
+    here estimated from satellite observations and a light-use-efficiency model.
+  MODIS: The Moderate Resolution Imaging Spectroradiometer, on NASA's Terra and Aqua satellites.
+  composite: A value summarizing several days of satellite passes (8 days here), which reduces gaps from cloud.
+  trace: Precipitation too small to measure; ECCC records it as 0 with the flag T.
+  gauge datum: The fixed reference level a gauge's water levels are measured from; it is local to the gauge.

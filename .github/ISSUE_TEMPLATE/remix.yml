@@ -1,0 +1,22 @@
+name: Remix
+description: Propose or share a remix of a published track.
+labels: [remix]
+body:
+  - type: input
+    id: parent
+    attributes:
+      label: Parent track and version
+      description: e.g. "granby-wy2024 v1.0"
+    validations:
+      required: true
+  - type: textarea
+    id: changes
+    attributes:
+      label: What it changes, and why
+      description: Paste your remix YAML, or describe the change if it needs something that isn't a parameter yet (like new instruments).
+    validations:
+      required: true
+  - type: input
+    id: credit
+    attributes:
+      label: How you'd like to be credited

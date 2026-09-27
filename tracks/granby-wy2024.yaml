@@ -1,0 +1,48 @@
+id: granby-wy2024
+title: Granby River, water year 2024
+album: water-year
+script: pilot_granby_wy2024.py
+args: []
+question: >
+  What does a warm El Niño winter sound like on a small mountain river: a
+  year that never fully committed to winter, with broken ice and an early,
+  small freshet?
+place: >
+  The Granby River at Grand Forks and its tributary Burrell Creek, with the
+  Billings climate station, in the Kettle River basin of southern British
+  Columbia.
+territory: null
+year: {label: WY2024, framing: water year, from: 2023-10-01, to: 2024-09-30}
+records:
+  - Granby River at Grand Forks, daily discharge and ice flag (Water Survey of Canada 08NN002)
+  - Burrell Creek above Gloucester Creek, daily discharge (WSC 08NN023)
+  - Billings daily climate (ECCC station 1100)
+  - Plant productivity (NASA MODIS MOD17A2HGF, Granby valley point)
+mapping: companion
+harmony: >
+  Key of D, 72 bpm, one bar per three days (122 bars, about 7 minutes). The
+  mode moves along a dark-to-bright ladder, from Aeolian to Ionian, set by
+  day length and temperature, and nudged one step by how the river's flow
+  compares with its 2010-24 normal; it changes at most one step every eight
+  bars. The river's phase (dormant, rising, peak, recession, low) chooses a
+  four-chord loop.
+simulated:
+  - Redband trout and mountain whitefish spawning windows, modelled from air temperature and season.
+  - Bird arrival windows (dipper, Swainson's thrush, bank swallow), typical regional timing, not sightings.
+limitations:
+  - Air temperature stands in for water temperature; no Granby stream-temperature record was available.
+  - The ice record is WSC's "Ice Conditions" data flag, which marks when ice affected the gauge, not an observation of the whole river.
+  - Plant productivity is the mean of a 2.3 km block and mixes land covers.
+credits:
+  - Graham Watt, the question, the rivers and records, listening and direction
+  - Claude Code (Anthropic's AI coding agent), music theory, mapping and all of the code
+  - Instruments, VSCO 2 Community Edition (Versilian Studios, CC0); birds from Wikimedia Commons (see samples_manifest.csv)
+lineage:
+  parent: null
+  variants: [frozen, no-perc, slow]
+  remixes: []
+changelog:
+  - {version: "1.0", date: 2026-09-25, change: First published version.}
+todo:
+  - Graham to write the territory line.
+  - Graham to confirm or rewrite the question (drafted from the piece's notes).

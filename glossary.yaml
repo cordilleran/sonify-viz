@@ -1,0 +1,165 @@
+# The shared glossary (2026-09-27): one definition per term, used by every
+# data dictionary in the project and rendered as the site's Glossary page by
+# scripts/export_glossary.py. A dictionary's own `glossary` entries must match
+# these word for word (tests/test_glossary.py), so a term means the same thing
+# everywhere. This is the seed of the audiovisual glossary on the ideas list.
+#
+# domains: music, water and climate, data, sources, making
+
+- term: bar
+  domain: music
+  definition: A unit of musical time holding a fixed number of beats. In the Water Year pieces a bar is three days; in the Climate Pair it is one year.
+- term: chord loop
+  domain: music
+  definition: A short sequence of chords that repeats. Each river or lake phase has its own loop of four chords.
+- term: dotted quarter
+  domain: music
+  definition: A beat one and a half quarter notes long; four of them fill a bar of twelve eighth notes.
+- term: drone
+  domain: music
+  definition: A long, sustained sound under the music, usually on the home note.
+- term: mode
+  domain: music
+  definition: A scale's pattern of whole and half steps on a home note. The pieces use a ladder from dark (Aeolian) to bright (Ionian); Dorian and Aeolian are both minor, and Dorian's raised sixth makes it the warmer of the two.
+- term: Aeolian cadence
+  domain: music
+  definition: The chord on the lowered seventh degree resolving to the minor tonic (VII to i).
+- term: ostinato
+  domain: music
+  definition: A short pattern repeated bar after bar.
+- term: pedal point
+  domain: music
+  definition: A note held (or repeated) in the bass while the harmony above it changes.
+- term: pizzicato
+  domain: music
+  definition: Plucking a bowed string instrument's strings.
+- term: reverb
+  domain: music
+  definition: The echoes of a space that trail after a sound. The pieces change the room with the weather, such as a dark, short room under snow.
+- term: scale degree
+  domain: music
+  definition: A note's position in the scale, counted from the home note (0).
+- term: stem
+  domain: music
+  definition: One instrument group's audio on its own, before it is mixed with the others.
+- term: tresillo
+  domain: music
+  definition: A 3-3-2 rhythm (eight eighth-note pulses grouped as three, three and two).
+- term: voice leading
+  domain: music
+  definition: Moving each note of one chord to a nearby note of the next, so the parts move smoothly.
+
+- term: ACE
+  domain: water and climate
+  definition: Accumulated cyclone energy, a measure of a storm's (or a season's) combined strength and duration.
+- term: AMO
+  domain: water and climate
+  definition: Atlantic Multidecadal Oscillation, a slow swing in North Atlantic sea-surface temperature over several decades.
+- term: anomaly
+  domain: water and climate
+  definition: The difference between a value and the average for a reference period.
+- term: attraction flow
+  domain: water and climate
+  definition: Water released at a fishway's entrance to draw migrating fish to it.
+- term: best track
+  domain: water and climate
+  definition: An agency's after-the-fact record of a storm's position and strength every six hours.
+- term: discharge
+  domain: water and climate
+  definition: The volume of water passing a gauge per second, in m³/s.
+- term: ENSO
+  domain: water and climate
+  definition: El Niño-Southern Oscillation, the Pacific's two-to-seven-year swing between warm (El Niño) and cool (La Niña) states.
+- term: freshet
+  domain: water and climate
+  definition: The spring rise of a river as snow melts.
+- term: gauge datum
+  domain: water and climate
+  definition: The fixed reference level a gauge's water levels are measured from; it is local to the gauge.
+- term: GPP
+  domain: water and climate
+  definition: "Gross primary productivity: the carbon plants take up by photosynthesis, here estimated from satellite observations and a light-use-efficiency model."
+- term: Keeling curve
+  domain: water and climate
+  definition: The record of atmospheric CO2 at Mauna Loa, begun by Charles David Keeling in 1958.
+- term: NAO
+  domain: water and climate
+  definition: North Atlantic Oscillation, the see-saw of air pressure between Iceland and the Azores.
+- term: ONI
+  domain: water and climate
+  definition: Oceanic Niño Index, NOAA's standard measure of ENSO.
+- term: PDO
+  domain: water and climate
+  definition: Pacific Decadal Oscillation, a slow pattern of North Pacific sea-surface temperature that shifts every decade or two.
+- term: Saffir-Simpson scale
+  domain: water and climate
+  definition: The five hurricane categories, by 1-minute sustained wind.
+- term: sea-ice extent
+  domain: water and climate
+  definition: The area of ocean with at least 15% ice cover.
+- term: tailrace
+  domain: water and climate
+  definition: The channel carrying water away below a dam.
+- term: trace
+  domain: water and climate
+  definition: Precipitation too small to measure; ECCC records it as 0 with the flag T.
+- term: VEI
+  domain: water and climate
+  definition: Volcanic Explosivity Index.
+- term: water year
+  domain: water and climate
+  definition: October 1 to September 30, named for the year it ends in (WY2024 = October 2023 to September 2024), so a winter's snow and the melt it feeds fall in the same year.
+
+- term: composite
+  domain: data
+  definition: A value summarizing several days of satellite passes (8 days here), which reduces gaps from cloud.
+- term: hysteresis
+  domain: data
+  definition: A rule that needs a clear move past a threshold to change state, so a value hovering near it doesn't flip back and forth.
+- term: percentile
+  domain: data
+  definition: The share of values below a given one.
+- term: retrieved, derived, simulated
+  domain: data
+  definition: The three tags on every layer (R, D, S). Retrieved is a measurement as published; derived is computed from measurements or the calendar; simulated is modelled timing, not observed.
+- term: smoothing
+  domain: data
+  definition: Averaging each value with its neighbours (here a centred moving average over some days) so the music follows the trend, not the daily noise.
+
+- term: DART
+  domain: sources
+  definition: Columbia River Data Access in Real Time, a data service of Columbia Basin Research, University of Washington.
+- term: ECCC
+  domain: sources
+  definition: Environment and Climate Change Canada.
+- term: MODIS
+  domain: sources
+  definition: The Moderate Resolution Imaging Spectroradiometer, on NASA's Terra and Aqua satellites.
+- term: STN_ID
+  domain: sources
+  definition: ECCC's numeric station identifier, used by its OGC API; not the same as the Climate ID.
+- term: WSC
+  domain: sources
+  definition: Water Survey of Canada, the federal agency that runs Canada's river and lake gauges.
+
+- term: data dictionary
+  domain: making
+  definition: A plain-text description of a dataset (what each column is, its units, how it was measured and its quirks) that can be checked against the data. This project uses the data-dict format.
+- term: parquet
+  domain: making
+  definition: A compact file format for tables, readable from Python, R and most data tools.
+- term: remix
+  domain: making
+  definition: A new track made from a published one by changing its named settings, credited to whoever made it and linked to its parent.
+- term: render lock
+  domain: making
+  definition: The file (renders.lock.json) recording, for each track version, the code, data, seed and output hashes, so anyone can re-render it and check the result is identical.
+- term: seed
+  domain: making
+  definition: The starting number for the random choices in a piece (small timing and loudness variations), fixed so each render comes out the same.
+- term: SHA-256
+  domain: making
+  definition: A fingerprint of a file's exact bytes; if a single byte changes, the fingerprint changes.
+- term: variant
+  domain: making
+  definition: A published track rendered with a few settings changed (such as a frozen mode or no percussion), to hear what a layer contributes.

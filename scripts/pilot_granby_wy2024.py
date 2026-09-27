@@ -1,5 +1,7 @@
 """
 PILOT A - Granby River, water year 2023-24 (Oct 1 2023 - Sep 30 2024).
+Any other year the records cover: `pilot_granby_wy2024.py wy2019` (WY2011-WY2024;
+the arrangement was tuned on WY2024, and the phase thresholds assume a water year).
 Key of D, 72 bpm, 1 bar = 3 days, ~7 minutes.
 
 A warm El Nino winter: the Granby gauge flagged only 28 ice days, in broken
@@ -32,41 +34,57 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import sampler as S
 from sampler import Bus, bird_phrases, make_ir, SR
 import seasonal as W
-from seasonal import DAYS, N_DAYS, N_BARS, per_bar, smooth, norm01
+import variants as V
+from timegrid import per_bar, smooth, norm01
 from dsp_core import ice_crinkle_grain
+
+# Named parameters: variants/granby.yaml and remixes override these (variants.py)
+DEFAULTS = {
+    "year": "wy2024",
+    "bpm": 72,
+    "tonic": 50,            # MIDI; D3
+    "mode": None,           # a mode name (e.g. "Dorian") freezes the harmony's mood
+    "mode_range": [1, 4],   # Aeolian..Ionian, the ladder's span for season + anomaly
+    "mute": [],             # layers left out of the mix
+    "gains": {},            # layer -> gain, replacing the defaults below
+    "seed": 2024,
+}
 
 
 def main():
-    OUT = W.HERE / "rendered" / "pilots"
+    OUT = W.LIGHT_OUT / "pilots"
     OUT.mkdir(parents=True, exist_ok=True)
     HEAVY = W.HEAVY_OUT / "pilots"  # WAV + stems (large) live in runtime
     HEAVY.mkdir(parents=True, exist_ok=True)
-    NAME = "granby_wy2024"
-    rng = np.random.default_rng(2024)
-    np.random.seed(2024)  # the ice grain helper uses the global RNG; seed it so renders repeat exactly
+    P, Y, NAME, META = V.setup("granby", DEFAULTS)
+    DAYS, N_DAYS, N_BARS = Y.days, Y.n_days, Y.n_bars
+    rng = np.random.default_rng(P["seed"])
+    np.random.seed(P["seed"])  # the ice grain helper uses the global RNG; seed it so renders repeat exactly
 
-    TONIC = 50  # D3
-    BPM = 72
-    g = W.Grid(BPM)
+    TONIC = P["tonic"]
+    BPM = P["bpm"]
+    g = W.Grid(BPM, Y.n_bars)
     print(f"{N_BARS} bars, {g.dur / 60:.1f} min")
 
     # --------------------------------------------------------------- features --
     q_all, q_sym = W.wsc_series("granby_08NN002_2010_2024.json")
     b_all, _ = W.wsc_series("burrell_08NN023_2010_2024.json")
     clim = "billings_1100_climate_2010_2024.json"
-    q = W.wy(q_all)
+    clim_T = W.climate_series(clim, "MEAN_TEMPERATURE")
+    W.check_coverage({"Granby flow": q_all, "Burrell flow": b_all, "Billings temperature": clim_T}, Y)
+    q = W.in_year(q_all, year=Y)
     qn = norm01(np.log(q))                                   # in-year level 0..1
-    qpct = W.doy_percentile(q_all)                           # vs. 15-yr normal
+    qpct = W.doy_percentile(q_all, year=Y)                   # vs. 15-yr normal
     ice = np.array([q_sym.get(str(d)) == "Ice Conditions" for d in DAYS])
-    bq = W.wy(b_all)
+    bq = W.in_year(b_all, year=Y)
     bn = norm01(np.log(bq))
     bflash = norm01(np.abs(np.diff(np.log(bq), prepend=np.log(bq[0]))))
-    T = W.wy(W.climate_series(clim, "MEAN_TEMPERATURE"))
-    rain = W.wy(W.climate_series(clim, "TOTAL_RAIN"), fill="zero")
-    snow = W.wy(W.climate_series(clim, "TOTAL_SNOW"), fill="zero")
-    sog = W.wy(W.climate_series(clim, "SNOW_ON_GROUND"), fill="zero")
-    DL = W.daylength(49.03)
-    gpp, gppn = W.modis_gpp_daily("granby_valley")
+    T = W.in_year(clim_T, year=Y)
+    rain = W.in_year(W.climate_series(clim, "TOTAL_RAIN"), fill="zero", year=Y)
+    snow = W.in_year(W.climate_series(clim, "TOTAL_SNOW"), fill="zero", year=Y)
+    sog = W.in_year(W.climate_series(clim, "SNOW_ON_GROUND"), fill="zero", year=Y)
+    DL = Y.daylength(49.03)
+    gpp, gppn = W.modis_gpp_daily("granby_valley", Y)
     GPP_SOURCE = "MODIS MOD17A2HGF (retrieved)"
     if gpp is None:
         gdd = W.growing_degree_days(T)
@@ -78,7 +96,9 @@ def main():
     # ---------------------------------------------------------------- harmony --
     bright = per_bar(0.7 * norm01(DL, 0, 100) + 0.3 * norm01(smooth(T, 15)))
     anom = per_bar(smooth(qpct, 15)) - 0.5
-    modes = W.mode_track(bright, anom, lo=1, hi=4)
+    modes = W.mode_track(bright, anom, lo=P["mode_range"][0], hi=P["mode_range"][1])
+    if P["mode"]:
+        modes = np.full(len(modes), [m[0] for m in W.MODES].index(P["mode"]))
 
     # phase uses LINEAR flow share of the year's peak (log flow, used for the
     # piano, would call a 20 m3/s February bump a "peak")
@@ -104,7 +124,7 @@ def main():
     flute, harp, glock, perc = K["flute"], K["harp"], K["glock"], K["perc"]
 
     n = g.n
-    B = {k: Bus(k, n, **kw) for k, kw in {
+    B = {k: Bus(k, n, **kw) for k, kw in V.bus_settings({
         "piano":  dict(gain=1.0, hp=70, send=0.35),
         "bass":   dict(gain=0.55, lp=900, send=0.12),
         "pad":    dict(gain=0.28, hp=220, send=0.6),
@@ -113,7 +133,7 @@ def main():
         "perc":   dict(gain=2.0, hp=60, send=0.15),
         "fish":   dict(gain=0.24, hp=150, send=0.5),
         "birds":  dict(gain=0.2, hp=900, send=0.35),
-    }.items()}
+    }, P).items()}
     events = []  # (seconds, label) -> listening guide
 
 
@@ -283,14 +303,14 @@ def main():
             if b in fire:
                 x = phr[rng.integers(len(phr))]
                 B["birds"].add(x * gain, g.s(b, rng.uniform(0, 3)), pan=rng.uniform(-0.7, 0.7))
-    mark(g.day_to_time(W.doy_index(140)), "Swainson's thrush arrives (typical ~May 20)")
+    mark(g.day_to_time(Y.doy_index(140)), "Swainson's thrush arrives (typical ~May 20)")
 
     # ---------------------------------------------------------------- master --
     snowcov = np.clip(smooth(sog, 5) / 25, 0, 1)
     t_day = np.arange(n) / SR / g.day_to_time(1)
     snow_env = np.interp(t_day, np.arange(N_DAYS), snowcov)
     irs = {"open": make_ir(3.4, bright=0.65), "snow": make_ir(1.4, bright=0.1, seed=11)}
-    mix, stems = S.master(list(B.values()), irs, HEAVY / f"{NAME}.wav", stems_dir=HEAVY / f"{NAME}_stems",
+    mix, stems = S.master([b for k, b in B.items() if k not in P["mute"]], irs, HEAVY / f"{NAME}.wav", stems_dir=HEAVY / f"{NAME}_stems",
                           ir_env={"open": 1 - snow_env, "snow": snow_env})
     S.to_mp3(HEAVY / f"{NAME}.wav", OUT / f"{NAME}.mp3")
 
@@ -319,6 +339,8 @@ def main():
                   "perc_drive": round(float(drive_bar[b]), 3)} for b in range(N_BARS)],
         "events": events, "stem_rms_db": level,
     }
+    if META:  # variants and remixes say what they changed; the published render has no such key
+        score["variant"] = META
     with open(OUT / f"{NAME}_score.json", "w") as fh:
         json.dump(score, fh, indent=1)
     print("\n".join(f"{W.fmt_time(t)}  {e}" for t, e in events))

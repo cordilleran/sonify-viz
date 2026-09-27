@@ -12,6 +12,8 @@ project:
     - listen.qmd
     - methods.qmd
     - climate.qmd
+    - tracks.qmd
+    - glossary.qmd
     - about.qmd
   resources:
     - listen/index.html
@@ -30,6 +32,7 @@ project:
     - climate/viz_atlantic.json
     - listen/fonts/*
     - .nojekyll
+    - dictionary/*.html
 
 website:
   title: "sonify-viz"
@@ -52,6 +55,10 @@ website:
             text: Methods & code
       - href: climate.qmd
         text: Climate Pair
+      - href: tracks.qmd
+        text: Tracks
+      - href: glossary.qmd
+        text: Glossary
       - href: about.qmd
         text: How this was made
     right:

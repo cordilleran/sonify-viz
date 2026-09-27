@@ -1,6 +1,6 @@
 ---
 title: "How this was made"
-subtitle: "A learning project and a starting scaffold, built by a watershed planner and an AI coding agent"
+subtitle: "A learning project and a starting scaffold, built by an interdisciplinary planner and an AI coding agent"
 toc: true
 ---
 

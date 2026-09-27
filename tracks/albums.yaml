@@ -1,0 +1,11 @@
+# Albums: named groupings of tracks, each with its page on the site.
+- id: water-year
+  title: Water Year Rings
+  page: water-year.qmd
+  about: One hydrologic year in two southern British Columbia watersheds, on recorded acoustic instruments.
+  tracks: [granby-wy2024, okanagan-wy2024]
+- id: climate-pair
+  title: Climate Pair
+  page: climate.qmd
+  about: Sixty-eight years of the global climate record, one year per bar, heard from the Pacific and from the Atlantic.
+  tracks: [climate-pair-pacific, climate-pair-atlantic]

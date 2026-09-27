@@ -1,0 +1,55 @@
+id: climate-pair-atlantic
+title: "Climate Pair: Atlantic"
+album: climate-pair
+script: climate_pair.py
+args: [atlantic]
+question: >
+  Can seventy years of a warming planet be heard as one rising form, with
+  the ocean's own cycles and storms moving through it?
+place: >
+  The global record, heard from the Atlantic: its ocean phase, hurricanes, the North Atlantic Oscillation and Arctic sea ice.
+territory: null
+year: {label: 1958-2025, framing: calendar years, from: 1958-01-01, to: 2025-12-31}
+records:
+  - Mauna Loa CO₂ (NOAA GML)
+  - Global ocean surface temperature anomaly (NOAA NCEI) and global temperature (NASA GISTEMP v4)
+  - Ocean heat content 0-2000 m (IAP v4.2; fetched, not redistributed)
+  - Oceanic Niño Index (NOAA CPC)
+  - Atlantic Multidecadal Oscillation and North Atlantic Oscillation (NOAA PSL, CPC)
+  - Atlantic hurricane best tracks (HURDAT2)
+  - Arctic sea-ice extent (NSIDC Sea Ice Index v4, from November 1978)
+  - Sunspot number (SILSO; fetched, not redistributed)
+mapping:
+  - {layer: Drone and organ pedal, data: "Mauna Loa CO₂, deseasonalized (NOAA GML)", sound: "level and brightness rise with ppm; the seasonal CO₂ cycle makes it breathe", tag: R}
+  - {layer: Cellos, data: global ocean surface temperature anomaly (NOAA NCEI), sound: "chord tones, from one voice to three, louder as it warms", tag: R}
+  - {layer: Contrabass, data: "ocean heat content, 0-2000 m (IAP v4.2)", sound: "the deep ocean filling: root, then root and fifth, louder", tag: R}
+  - {layer: Chords and month pulse, data: Oceanic Niño Index (NOAA CPC), sound: "El Niño lifts the chords, La Niña sinks them; one pulse note a month, louder in strong years", tag: R}
+  - {layer: Mode and pad, data: "Atlantic Multidecadal Oscillation, 3-year mean", sound: "Dorian in the warm phase, Aeolian in the cool; the pad brightens with the index", tag: D}
+  - {layer: Drums, data: "Atlantic hurricanes (HURDAT2)", sound: "tropical storm: bass-drum rub; hurricane: timpani; major: timpani, bass drum and sub; category 5: tam-tam; landfall: cymbal", tag: R}
+  - {layer: Rumble, data: season's accumulated cyclone energy (ACE), sound: a low storm rumble, tag: D}
+  - {layer: Shimmer, data: "sunspot number (SILSO)", sound: "high shimmer and glockenspiel sparkles on the 11-year cycle", tag: R}
+  - {layer: High violin, data: global temperature anomaly (NASA GISTEMP), sound: "a held high note once it passes +0.8 °C", tag: R}
+  - {layer: Gong, data: large volcanic eruptions and their cooling, sound: "a gong; the drone darkens for about two years", tag: D}
+  - {layer: Winter wind, data: North Atlantic Oscillation (NOAA CPC), sound: "band-limited wind, stronger when positive", tag: R}
+  - {layer: Glass voice, data: "Arctic sea-ice extent (NSIDC), from Nov 1978", sound: "breathes with the season and thins as September ice declines", tag: R}
+harmony: >
+  Key of A, one bar per year (68 bars of 7 seconds, about 8 minutes);
+  the four beats are the seasons and the twelve pulses the months. ENSO sets
+  the chords and the ocean's multidecadal phase sets the mode.
+simulated: []
+limitations:
+  - Early storms are undercounted, before routine satellite coverage (about 1966; later in the Northeast Pacific).
+  - Records end at different times; the AMO stopped updating in January 2023, and the piece holds its last value to the end. Interior gaps are interpolated.
+  - The ocean phases are 3-year means, so their turns sound about two years late.
+  - The volcanic cooling shape, the ENSO-to-chord table and every loudness curve are interpretive choices, not measurements.
+credits:
+  - Graham Watt, the brief (CO₂, SST, ENSO, PDO and storms; rising, moody without being overly dark), the choice of records, listening and direction
+  - Claude Code (Anthropic's AI coding agent), music theory, mapping and all of the code
+  - Instruments, VSCO 2 Community Edition (Versilian Studios, CC0), plus synthesizers
+lineage: {parent: null, variants: [], remixes: []}
+changelog:
+  - {version: "1.0", date: 2026-09-25, change: "First render, not published."}
+  - {version: "2.0", date: 2026-09-25, change: "First published version. Ocean heat content (IAP) and Arctic sea ice (NSIDC) were added; storm levels rebalanced so the rise is heard."}
+todo:
+  - Graham to confirm or rewrite the question (drafted by Claude Code from the brief).
+  - Territory is left empty for a global piece unless Graham wants a line.

@@ -4,11 +4,14 @@ toc: false
 page-layout: full
 ---
 
-Press play and the year fills in clockwise from October. Each ring is one record, and it glows when its instrument is sounding. Click a ring, the score or any line of the listening guide to jump to that moment. The page also works [on its own, full screen](listen/index.html).
+Press play and the year fills in clockwise from October. Each ring is one record, and it glows when its instrument is sounding. Hover over a ring or the score to read any day's value, and click to jump to that moment; the panel beside the rings shows every record's value on the day you're hearing. Link straight to a piece with `?piece=okanagan_wy2024`. The page also works [on its own, full screen](listen/index.html).
 
 <iframe class="companion" id="companion" src="listen/index.html?embed" title="Water Year Rings listening companion" loading="eager"></iframe>
 
 <script>
+// listen.html?piece=okanagan_wy2024 opens that piece in the companion.
+(() => { const p = new URLSearchParams(location.search).get('piece');
+  if (p && /^[a-z0-9_]+$/.test(p)) document.getElementById('companion').src = 'listen/index.html?embed&piece=' + p; })();
 // The companion posts its content height; grow the frame to fit it.
 window.addEventListener('message', (e) => {
   if (e.data && typeof e.data.wyrHeight === 'number') {

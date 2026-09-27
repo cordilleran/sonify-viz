@@ -18,10 +18,17 @@ A learning workbench for turning environmental data into music and pictures. It 
 | `data/` | cached data used by the pieces; restricted series (Wells Dam counts, sunspots, ocean heat content) are fetched, not stored |
 | `figs/` | QA plots: each data lane against each instrument's loudness |
 | `samples_manifest.csv` | sources and licences for every instrument and bird recording |
+| `tests/` | the engine's test suite (`pytest tests`, about a second, no data or samples needed); run on every push |
+| `renders.lock.json` | each track's version, seed and content hashes; `python scripts/renders.py verify` re-renders and compares |
+| `tracks/` | one card per published track (version, changelog, records, mapping, credits) and the album list; rendered into `tracks.qmd` by `scripts/export_cards.py` |
+| `data/parquet/` | the records as tidy parquet tables, with their data dictionaries (`*.data-dict.yaml`, [data-dict](https://data-dict.tidyverse.org/) format); the site's build validates the data against them |
+| `variants/`, `remixes/` | named variants of a track, and remixes of published tracks (see `CONTRIBUTING.md`) |
 
 ## Rebuild
 
 Python 3.13, the packages in `requirements.txt`, `ffmpeg`, and [Quarto](https://quarto.org).
+
+**Hear it first, in a minute, with no downloads:** `pip install -r requirements.txt`, then `python scripts/demo.py`. It plays the Granby River's 2024 water year on synthesizers through the same harmony engine, in about 45 seconds, and writes `rendered/demo_wy2024.wav`.
 
 ```bash
 pip install -r requirements.txt
@@ -41,7 +48,7 @@ python export_climate_viz.py      # data for the spiral visualizer
 cd .. && quarto preview
 ```
 
-Samples go to `samples/` and renders to `rendered/` (both git-ignored); set `SONIFICATION_SAMPLES` or `SONIFICATION_HEAVY` to put them elsewhere. Renders are seeded and, with the pinned packages, repeat byte for byte.
+Samples go to `samples/` and renders to `rendered/` (both git-ignored); set `SONIFICATION_SAMPLES` or `SONIFICATION_HEAVY` to put them elsewhere. Renders are seeded and, with the pinned packages, repeat byte for byte. Any water year the records cover renders with `python pilot_granby_wy2024.py wy2019`. To contribute a listening note, a remix or a fix, see `CONTRIBUTING.md`.
 
 ## Licences
 

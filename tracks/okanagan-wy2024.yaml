@@ -1,0 +1,46 @@
+id: okanagan-wy2024
+title: Okanagan, water year 2024
+album: water-year
+script: pilot_okanagan_wy2024.py
+args: []
+question: >
+  What does it sound like when a drought year on a regulated lake is also
+  the biggest sockeye return in a decade?
+place: >
+  Okanagan Lake at Kelowna and the Okanagan River at Penticton and near
+  Oliver, with the Summerland climate station, in southern British
+  Columbia; and Wells Dam on the Columbia, below the Okanagan confluence.
+territory: null
+year: {label: WY2024, framing: water year, from: 2023-10-01, to: 2024-09-30}
+records:
+  - Okanagan Lake at Kelowna, daily level (WSC 08NM083)
+  - Okanagan River at Penticton, dam outflow (WSC 08NM050)
+  - Okanagan River near Oliver, daily discharge (WSC 08NM085)
+  - Summerland CS daily climate (ECCC station 979)
+  - Plant productivity (NASA MODIS MOD17A2HGF, Summerland point)
+  - Adult sockeye and water temperature at Wells Dam (Columbia River DART; fetched, not redistributed)
+mapping: companion
+harmony: >
+  Key of F, 64 bpm, one bar per three days (122 bars, about 8 minutes). The
+  same mode ladder as the Granby piece, set by day length and temperature
+  and nudged by the lake's level against its 2010-24 normal. The lake's
+  phase (winter, filling, full, drawdown) chooses the chord loop, and the
+  piano plays strictly, without variation, while the dam holds the outflow
+  flat.
+simulated:
+  - Sockeye spawning near Oliver, timing modelled around mid-October and scaled by the run that produced it.
+  - Bird arrival windows (western meadowlark, sandhill crane), typical timing, not sightings.
+limitations:
+  - The Wells temperature is Columbia River water, pumped from the dam tailrace into the fishway, not Okanagan water.
+  - Summerland's separate rain and snow values are missing on most days, so rain and snow are split from total precipitation by temperature (derived).
+  - Lake level is measured from the gauge's local datum, not sea level.
+credits:
+  - Graham Watt, the question, the rivers and records, listening and direction
+  - Claude Code (Anthropic's AI coding agent), music theory, mapping and all of the code
+  - Instruments, VSCO 2 Community Edition (Versilian Studios, CC0); birds from Wikimedia Commons (see samples_manifest.csv)
+lineage: {parent: null, variants: [], remixes: []}
+changelog:
+  - {version: "1.0", date: 2026-09-25, change: First published version.}
+todo:
+  - Graham to write the territory line.
+  - Graham to confirm or rewrite the question.

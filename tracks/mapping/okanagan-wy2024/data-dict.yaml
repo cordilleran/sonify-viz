@@ -1,0 +1,276 @@
+$version: 0.1.0
+$learn_more: https://data-dict.tidyverse.org/
+
+name: okanagan-wy2024-mapping
+label: Okanagan, water year 2024 - mapping
+description: >
+  How the Okanagan piece turns its records into music, as two tables: what
+  the piece read for each day, and what it decided for each bar. Together
+  with the records dictionary (data/parquet/data-dict.yaml), this is the
+  path from a lake gauge to a note.
+details: >
+  Copied by scripts/export_mapping.py from the score of the locked v1.0
+  render (renders.lock.json), and only if that score's SHA-256 matches the
+  lock. The values are the piece's own, not recomputed; each column says how
+  the piece computed it (scripts/pilot_okanagan_wy2024.py). Two records the
+  piece plays are not in these tables, because Columbia River DART data are
+  not republished here: the daily sockeye count at Wells Dam (marimba runs:
+  each bar's count sets how many notes, 1.7 x ln(1 + count/40), at most
+  12, and the runs start higher as the season's cumulative count grows) and
+  the water temperature there (above 18 °C, smoothed 5 days, a held high
+  violin fades in, full at 20.5 °C). Recurring transforms: "scaled in-year"
+  maps a value onto 0 to 1 between its 2nd and 98th percentile within the
+  year, clipped; "scaled min-max" uses the year's minimum and maximum
+  instead; "per bar" is the mean over the bar's three days; "smoothed n
+  days" is a centred moving average with the ends held.
+origin: ../../../scripts/export_mapping.py
+version:
+  number: 1.0.0
+
+tables:
+  - name: days
+    label: What the piece read, each day
+    description: >
+      One row per day of water year 2024 (October 1, 2023 to September 30,
+      2024): the records the piece read and the signals it derived, before
+      they become sound. Retrieved (R), derived (D) and simulated (S) values
+      are marked in each description.
+    source:
+      parquet: days.parquet
+    columns:
+      - name: date
+        type: date
+        constraints: [primary_key]
+        range: [2023-10-01, 2024-09-30]
+      - name: bar
+        type: number(id)
+        constraints: [required, foreign_key]
+        description: The bar this day plays in (three days per bar, from 0).
+        examples: [0, 30, 61, 91, 121]
+      - name: t
+        type: number(quantity)
+        units: seconds
+        constraints: [required]
+        description: When the day starts in the audio.
+        range: [0.0, 456.25]
+      - name: lake_level
+        type: number(quantity)
+        units: m above the gauge datum
+        constraints: [required]
+        description: >
+          (R) Okanagan Lake at Kelowna (WSC 08NM083), daily mean level; gaps
+          interpolated. The lake is a pedal point: a low F under every
+          chord, louder as the level (scaled min-max) rises, with the cello
+          adding the fifth while the lake fills faster than 0.3 cm a day.
+          Its rate of change, smoothed 7 days, sets the phase (see
+          bars.phase).
+        range: [1.334, 2.041]
+      - name: lake_pct_normal
+        type: number(quantity)
+        units: 0 to 1 (percentile)
+        constraints:
+          - required
+          - assert: lake_pct_normal BETWEEN 0 AND 1
+        description: >
+          (D) Where the day's level sits among all 2010-2024 levels within 7
+          days of the same date (ties count half). Smoothed 15 days and
+          averaged per bar, it nudges the mode darker or brighter (see
+          bars.mode). In this drought year it never passed 0.66.
+        range: [0.071, 0.664]
+      - name: penticton
+        type: number(quantity)
+        units: m³/s
+        constraints: [required]
+        description: >
+          (R) Okanagan River at Penticton (WSC 08NM050), the outflow the dam
+          releases from the lake. Scaled min-max, it sets the piano
+          ostinato's density and loudness (see bars.piano_density), and when
+          the dam holds it flat the piano plays strictly (see bars.held).
+        range: [5.14, 30.0]
+      - name: oliver
+        type: number(quantity)
+        units: m³/s
+        constraints: [required]
+        description: (R) Okanagan River near Oliver (WSC 08NM085), daily mean discharge. Drives the soft percussion (see bars.perc_drive).
+        range: [5.82, 27.8]
+      - name: temp
+        type: number(quantity)
+        units: °C
+        constraints: [required]
+        description: >
+          (R) Summerland CS (ECCC 979) daily mean air temperature; gaps
+          interpolated. Smoothed 15 days, it is 25% of the mode's
+          brightness. It splits precipitation into rain and snow at 1 °C,
+          and below -8 °C frost crackles, more as it gets colder (full at
+          -20 °C).
+        range: [-21.9, 29.8]
+      - name: rain
+        type: number(quantity)
+        units: mm
+        constraints: [required]
+        description: >
+          (D) Summerland total precipitation on days warmer than 1 °C
+          (the station's own rain and snow values are missing too often; see
+          the records dictionary). Above 0.2 mm it falls as harp drops, 1.6 x
+          the square root of the rain, at most 9.
+        range: [0.0, 31.0]
+      - name: snow_we
+        type: number(quantity)
+        units: mm of water
+        constraints: [required]
+        description: >
+          (D) Summerland total precipitation on days at or below 1 °C, as
+          water. Above 0.2 mm it falls as glockenspiel flakes, 1.8 x the
+          square root, at most 7.
+        range: [0.0, 9.3]
+      - name: humidity_min
+        type: number(quantity)
+        units: "%"
+        constraints: [required]
+        description: >
+          (R) Summerland's daily minimum relative humidity; gaps
+          interpolated. Smoothed 7 days and mapped from 20% (dry) to 70%
+          (humid), it crossfades the reverb from a short, bright room to a
+          long hall.
+        range: [11.0, 95.0]
+      - name: daylength
+        type: number(quantity)
+        units: hours
+        constraints: [required]
+        description: >
+          (D) Astronomical day length at 49.6° N, from the calendar. Scaled
+          between the year's shortest and longest day, it is 75% of the
+          mode's brightness and part of the piano's loudness.
+        range: [7.92, 16.08]
+      - name: gpp_norm
+        type: number(quantity)
+        units: 0 to 1 (share of a high day)
+        constraints:
+          - required
+          - assert: gpp_norm BETWEEN 0 AND 1
+        description: >
+          (R) MODIS gross primary productivity at the Summerland point
+          (irrigated orchard in the mix): each 8-day composite's valid
+          pixels averaged, placed at the composite's centre, interpolated to
+          days, and divided by the 2015-2024 95th percentile (capped at 1).
+          Per bar, it swells the violin pad.
+        range: [0.0, 1.0]
+      - name: spawn_sim
+        type: number(quantity)
+        units: 0 to 1 (window strength)
+        constraints:
+          - required
+          - assert: spawn_sim BETWEEN 0 AND 1
+        description: >
+          (S) Sockeye spawning near Oliver, modelled timing: a bell curve
+          around October 15 (9-day width) for each autumn the water year
+          touches, scaled by that year's run at Wells Dam relative to the
+          2024 run. Only the 2023 spawning falls inside WY2024, and the 2023
+          run was 28% of 2024's, hence the low peak. Low cello pizzicato
+          plays when it is strong.
+        range: [0.0, 0.279]
+
+  - name: bars
+    label: What the piece decided, each bar
+    description: >
+      One row per bar (122 bars of three days; 64 bpm, so 3.75 seconds
+      each): the harmony and densities the piece chose.
+    source:
+      parquet: bars.parquet
+    columns:
+      - name: bar
+        type: number(id)
+        constraints: [primary_key]
+        examples: [0, 30, 61, 91, 121]
+      - name: t
+        type: number(quantity)
+        units: seconds
+        constraints: [required]
+        description: When the bar starts in the audio.
+        range: [0.0, 453.75]
+      - name: mode
+        type: enum
+        constraints: [required]
+        description: >
+          The mode on F, from the same dark-to-bright ladder as the Granby
+          piece (Aeolian to Ionian). Target rung: 1 + 3 x brightness plus the
+          lake anomaly (lake_pct_normal smoothed, minus 0.5, times 2.4,
+          capped at ±1.2); brightness is 0.75 x day length + 0.25 x smoothed
+          temperature, both scaled. It may change only every 8 bars, one
+          rung at a time (hard stops at Aeolian and Lydian). No bar reached Ionian: the below-normal lake kept
+          pulling the target down.
+        values:
+          Aeolian: natural minor, the darkest rung used
+          Dorian: minor with a raised sixth
+          Mixolydian: major with a lowered seventh
+          Ionian: major, reachable but not reached
+          Lydian: major with a raised fourth, reachable but not reached
+      - name: degree
+        type: number(ordinal)
+        constraints:
+          - required
+          - assert: degree BETWEEN 0 AND 6
+        description: >
+          The chord's root as a scale degree of the current mode (0 = F).
+          Chords change every 4 bars, half the Granby's pace, because a big
+          regulated lake changes slowly.
+        range: [0, 6]
+      - name: phase
+        type: enum
+        constraints: [required]
+        description: >
+          The lake's phase, which picks the chord loop. Each day: filling if
+          the smoothed level rises faster than 0.4 cm a day; otherwise full
+          if the level is above 85% of the year's range; otherwise drawdown
+          if it falls faster than 0.25 cm a day; otherwise winter. Each bar
+          takes its days' majority, and runs shorter than 8 bars are
+          absorbed into the run before.
+        values:
+          winter: i VI iv VI, rocking and patient
+          filling: i III iv v, the bass climbing with the water
+          full: VI III VII i, broad, ending on the Aeolian cadence
+          drawdown: i VII VI v, the bass walking down
+      - name: piano_density
+        type: number(ordinal)
+        constraints:
+          - required
+          - assert: piano_density BETWEEN 0 AND 3
+        description: >
+          How many eighth notes the piano ostinato plays in the bar: 0 = 2
+          notes, 1 = 4, 2 and 3 = all 8. It is the square root of the
+          Penticton outflow (scaled min-max), averaged per bar, times 3.99,
+          rounded down.
+        range: [0, 3]
+      - name: held
+        type: boolean
+        constraints: [required]
+        description: >
+          True when the dam held the outflow flat: on most of the bar's
+          days, the outflow's range over the surrounding 15 days was less
+          than 6% of its mean (about ±3%). The piano then plays its pattern
+          strictly, with no variation.
+      - name: perc_drive
+        type: number(quantity)
+        units: 0 to 1
+        constraints:
+          - required
+          - assert: perc_drive BETWEEN 0 AND 1
+        description: >
+          How hard the soft percussion (log drum, conga, shaker) plays: the
+          square root of the Oliver flow's log (scaled in-year), gated by
+          the same value smoothed 7 days (0 below 0.3, full above 0.55), per
+          bar. Below 0.12 it rests.
+        range: [0.0, 1.0]
+
+relationships:
+  - join: days.bar = bars.bar
+    cardinality: many-to-one
+    description: Three days play in each bar (the last bar of a 365-day year has two).
+
+glossary:
+  pedal point: A note held (or repeated) in the bass while the harmony above it changes.
+  Aeolian cadence: The chord on the lowered seventh degree resolving to the minor tonic (VII to i).
+  mode: A scale's pattern of whole and half steps on a home note. The pieces use a ladder from dark (Aeolian) to bright (Ionian); Dorian and Aeolian are both minor, and Dorian's raised sixth makes it the warmer of the two.
+  scale degree: A note's position in the scale, counted from the home note (0).
+  ostinato: A short pattern repeated bar after bar.
+  pizzicato: Plucking a bowed string instrument's strings.

@@ -3,6 +3,7 @@
 /docs/
 **/*.quarto_ipynb
 __pycache__/
+.pytest_cache/
 .ruff_cache/
 # local renders (WAVs, stems, MP3s, scores); the published audio is in listen/
 rendered/
@@ -10,6 +11,10 @@ rendered/
 samples/
 # raw Wells Dam counts: fetched from DART by fetch_okanagan.py, not redistributed
 data/wells_dam_sockeye_*.json
+data/parquet/wells_dam_daily.parquet
+data/parquet/wells-dam.data-dict.yaml
 # raw climate downloads, and series whose terms don't allow committing them (fetch_climate.py)
 data/climate/raw/
 data/climate/fetched_only_monthly.json
+data/climate/parquet/fetched_only_monthly.parquet
+data/climate/parquet/fetched-only.data-dict.yaml

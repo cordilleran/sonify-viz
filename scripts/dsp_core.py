@@ -2,10 +2,13 @@
 rate, astronomical day length, and the ice-crackle grain. Design notes live on
 the methods page (methods.qmd).
 
-Paths default to folders inside the repo (both git-ignored):
-  rendered/  WAVs, stems and MP3s        override: SONIFICATION_HEAVY
-  samples/   downloaded instrument audio override: SONIFICATION_SAMPLES
-Set the environment variables to keep large audio somewhere else."""
+Paths default to folders inside the repo:
+  rendered/  WAVs and stems (git-ignored)       override: SONIFICATION_HEAVY
+  rendered/  MP3s and score JSON                override: SONIFICATION_LIGHT
+  audio/     the site's copies of some tracks   override: SONIFICATION_SITE_AUDIO
+  samples/   downloaded instrument audio        override: SONIFICATION_SAMPLES
+Set the environment variables to keep large audio somewhere else; renders.py
+sets the first three to a scratch folder to re-render without overwriting."""
 import os
 from pathlib import Path
 
@@ -17,6 +20,8 @@ SR = 44100
 ROOT = Path(__file__).resolve().parent.parent
 HEAVY_OUT = Path(os.environ.get("SONIFICATION_HEAVY", ROOT / "rendered"))
 SAMPLES = Path(os.environ.get("SONIFICATION_SAMPLES", ROOT / "samples"))
+LIGHT_OUT = Path(os.environ.get("SONIFICATION_LIGHT", ROOT / "rendered"))
+SITE_AUDIO = Path(os.environ.get("SONIFICATION_SITE_AUDIO", ROOT / "audio"))
 
 
 def ice_crinkle_grain(sr=SR, dur=0.035, intensity=0.5):

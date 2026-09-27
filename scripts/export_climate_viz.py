@@ -15,10 +15,11 @@ import numpy as np
 import soundfile as sf
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from dsp_core import ROOT, HEAVY_OUT
+from dsp_core import ROOT, HEAVY_OUT, LIGHT_OUT
+import records as R
 
-DATA = ROOT / "data" / "climate"
-J = json.loads((DATA / "indices_monthly.json").read_text())
+J = R.climate_monthly()
+J["volcanoes"] = R.volcanoes()
 MONTHS = J["months"]
 Y0 = int(MONTHS[0][:4])
 ENV_HZ = 4                                     # loudness frames per second
@@ -46,12 +47,12 @@ def envelope(path):
 
 for basin in ("pacific", "atlantic"):
     name = f"climate_{basin}_1958_2025"
-    sc = json.loads((ROOT / "rendered" / "climate" / f"{name}_score.json").read_text())
+    sc = json.loads((LIGHT_OUT / "climate" / f"{name}_score.json").read_text())
     bar = sc["bar_seconds"]
     ny = sc["years"][1] - sc["years"][0] + 1
     storms = []
     for b in STORMS[basin]:
-        for s in json.loads((DATA / f"storms_{b}.json").read_text()):
+        for s in R.storms(b):
             dt = datetime.fromisoformat(s["peak_time"])
             if Y0 <= dt.year < Y0 + ny:
                 # [seconds, category 0-5, basin index, landfall, name, peak kt]
@@ -64,7 +65,8 @@ for basin in ("pacific", "atlantic"):
         "basin": basin, "key": sc["key"], "y0": Y0, "years": ny, "bar": bar, "duration": sc["duration_s"],
         "storm_basins": STORMS[basin],
         "monthly": {"sst": r(ser["sst_global_anom"], 2), "oni": r(ser["oni"], 2),
-                    "co2": r(ser["co2_deseason_ppm"], 1), "mode_index": r(ser[mode_key], 2)},
+                    "co2": r(ser["co2_deseason_ppm"], 1), "mode_index": r(ser[mode_key], 2),
+                    "gistemp": r(ser["gistemp_anom"], 2)},  # public (NASA); sunspots and ocean heat stay out
         "yearly": [{k: y[k] for k in ("year", "mode", "co2_ppm", "sst_anom", "ace")} for y in sc["years_detail"]],
         "storms": storms,
         "events": sc["events"],
@@ -75,8 +77,9 @@ for basin in ("pacific", "atlantic"):
     }
     if basin == "atlantic":
         out["monthly"]["ice"] = r(ser["seaice_extent_mkm2"], 2)
+        out["monthly"]["nao"] = r(ser["nao"], 2)
     else:
-        kt = json.loads((DATA / "kettle_annual_max.json").read_text())
+        kt = R.kettle_annual_peak()
         vals = [v["max_daily_m3s"] for k, v in kt.items() if Y0 <= int(k) < Y0 + ny]
         out["kettle"] = [{"t": round(t_date(datetime.fromisoformat(v["date"]), bar), 2),
                           "q": round(v["max_daily_m3s"]), "rank": round(float(np.mean(np.array(vals) < v["max_daily_m3s"])), 2)}

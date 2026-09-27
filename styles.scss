@@ -77,3 +77,24 @@ iframe.companion { width: 100%; border: 0; display: block; min-height: 900px; ba
 .ramp { display: inline-block; width: 4.5em; height: .7em; border-radius: 2px; vertical-align: baseline;
   background: linear-gradient(90deg, rgb(27,58,82), rgb(47,127,149), rgb(143,198,184), rgb(231,180,79), rgb(232,87,60)); }
 @media (prefers-reduced-motion: reduce) { .cviz-layers .chip { transition: none; } }
+
+/* Climate Pair dashboard + hover readouts (2026-09-27) */
+.cviz { position: relative; }
+.cviz-dash { display: grid; border-top: 1px solid $line; margin: .4rem 0 .8rem; font-size: .82rem; }
+.cviz-dash .hd { display: flex; justify-content: space-between; gap: 1rem; font: 600 .66rem/1 "JetBrains Mono", monospace; letter-spacing: .1em; text-transform: uppercase; color: $muted; padding: .5rem .2rem; }
+.cviz-dash .drow { display: grid; grid-template-columns: minmax(0, 1fr) 13em 1.7em minmax(0, .9fr); gap: .2rem .7rem; align-items: center; padding: .22rem .2rem; border-bottom: 1px solid $line; }
+.cviz-dash .lab { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cviz-dash .val { font: .78rem "JetBrains Mono", monospace; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cviz-dash .val.none { color: $muted; }
+.cviz-dash .src { justify-self: center; font-size: .6rem; padding: 0 5px; }
+.cviz-dash .ins { display: grid; gap: 3px; color: $muted; font-size: .76rem; min-width: 0; }
+.cviz-dash .m { height: 3px; background: $line; border-radius: 2px; overflow: hidden; }
+.cviz-dash .m i { display: block; height: 100%; width: 0; background: $river; border-radius: 2px; }
+.cviz-dash .note { font-size: .74rem; color: $muted; margin: .4rem 0 0; }
+@media (max-width: 560px) { .cviz-dash .drow { grid-template-columns: minmax(0, 1fr) 11em 1.7em; } .cviz-dash .ins { grid-column: 1 / -1; } }
+.cviz-tip { position: absolute; z-index: 5; pointer-events: none; background: rgba(12, 22, 24, .95); border: 1px solid $line; border-radius: 6px; padding: .45rem .65rem; font-size: .8rem; line-height: 1.45; max-width: 270px; opacity: 0; transition: opacity .12s; box-shadow: 0 4px 18px rgba(0, 0, 0, .4); }
+.cviz-tip.on { opacity: 1; }
+.cviz-tip .v { font: .78rem "JetBrains Mono", monospace; }
+.cviz-tip .d { font: .7rem "JetBrains Mono", monospace; color: $muted; }
+.cviz-tip .w { color: $muted; font-size: .76rem; margin-top: .2rem; }
+@media (prefers-reduced-motion: reduce) { .cviz-tip { transition: none; } }

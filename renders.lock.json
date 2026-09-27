@@ -1,0 +1,268 @@
+{
+ "tracks": {
+  "climate-pair-atlantic": {
+   "args": [
+    "atlantic"
+   ],
+   "code": {
+    "climate_pair.py": "dc193d4ba0813bab09756655cd728820cda0315ec45b8001cecb8d7a78a00489",
+    "dsp_core.py": "d29ae14afe5f34d8d9ee1f889733705a9b4eeaba2746d3199923006d2ef12574",
+    "harmony.py": "6e2883b89b9c74fd303fb784732288761b3813dcde9d4424125277fa330a51be",
+    "records.py": "1833058e8c8312c45187ee777100eea62dceda42de9e2fde09857a8b9a76cf73",
+    "sampler.py": "669dc814a4d39a9f0634838def95aeb1aa4f4f7276ac85cfcc7a6c1c8311b17d",
+    "seasonal.py": "d4183072da6926df366ea19a6ffeaee358cb2a76f82229334e65d369006344d5",
+    "synth.py": "1ad1c282fe61ec1233fac7ca29011ad9d7994db95bf460fe6870ad67bd7b4d2f",
+    "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
+   },
+   "data": {
+    "data/climate/parquet/fetched_only_monthly.parquet": "ead313d6a7180e64f294a22b8cf27415b46a13a7db76b5595f0ad36c634a3a82",
+    "data/climate/parquet/indices_monthly.parquet": "ef49062b22221db8534ef3ceeaca48c52ba0f4d355383e445cf9b3ad0002d5ab",
+    "data/climate/parquet/storms.parquet": "3828b64fbd3823b614a9aa5ca687fe4d6a546a511fb132e0437ede1293614fad",
+    "data/climate/parquet/volcanoes.parquet": "42f12ee96581462b30551b8c5574c3d930b6960902ce63cb8fa2f8d83b579585"
+   },
+   "environment": {
+    "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm4 Copyright (c) 2000-2025 the FFmpeg developers",
+    "numpy": "2.5.3",
+    "python": "3.13.13",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+   },
+   "locked": "2026-09-27",
+   "outputs": {
+    "heavy/climate/climate_atlantic_1958_2025.wav": "419bd7afe084e191c69854bf64f2460e31dcfa1528456fcffdd9e404112f4313",
+    "heavy/climate/climate_atlantic_1958_2025_stems/cello.flac": "fc124ec6097b66fa22cd962b14b1934c6031918ccac698ec3b433ba21ada7f6d",
+    "heavy/climate/climate_atlantic_1958_2025_stems/deep.flac": "4bbabde1bfbf7f4766acdcd8ae85b6e2b314c93aec7f010f57391f15009d0823",
+    "heavy/climate/climate_atlantic_1958_2025_stems/drone.flac": "ff259eca0e7d24a3f5166f935032a504f130dcf3a4d6bb3fba62edb7fc391590",
+    "heavy/climate/climate_atlantic_1958_2025_stems/events.flac": "d278f79b99adac466779aebd41e25df909ac9555b92fd918ab4c3bb936597ac1",
+    "heavy/climate/climate_atlantic_1958_2025_stems/heat.flac": "8bf6b8994b3e5dff4428d9f23803c93d97be0b0d8bda07e02ff253e1cb1226ca",
+    "heavy/climate/climate_atlantic_1958_2025_stems/ice.flac": "3218de0d140aa4add817da6e5692c0d9a77fd1a7276aa0deeeabbc8d85b9d428",
+    "heavy/climate/climate_atlantic_1958_2025_stems/local.flac": "0e12121bc6d486371b3992e657adda017eb3d107992a2492d47e6a5c57595c0c",
+    "heavy/climate/climate_atlantic_1958_2025_stems/pad.flac": "208c663f5c0fb48e2e63e3d7f6697712420121c64c99b1766e0857750083614b",
+    "heavy/climate/climate_atlantic_1958_2025_stems/pulse.flac": "6b72ddf013aea4f797f0096c24362e1b8e84aad8948885d2c38082aa3aa04b8d",
+    "heavy/climate/climate_atlantic_1958_2025_stems/rumble.flac": "b633d267dde6a020bb213bb798736f4da36bcb072528376637e97bca97c4d819",
+    "heavy/climate/climate_atlantic_1958_2025_stems/shimmer.flac": "cfd718adedac463df9a26c4755e3091be995ef2fc0b0e27b98909a5b6af1e377",
+    "heavy/climate/climate_atlantic_1958_2025_stems/storms.flac": "2ba96893817334d011bbf74e9f00e73d4588feb814a3a2a4d51b89b8de5f0054",
+    "light/climate/climate_atlantic_1958_2025.mp3": "f43e3051240f49538a303f33884bd36f4a81b7c7be6c4cddfe6ee6076330aaea",
+    "light/climate/climate_atlantic_1958_2025_score.json": "ca63f3e8529d20628c74678bafb5e408404646eb67efcdf9e3aa969fabf22297",
+    "site_audio/climate_atlantic_1958_2025.mp3": "f5eff1acdd7babadcb110ea10e0ed1a8fdbc2a1e26af0442de4f9ca45500e0db"
+   },
+   "samples": {
+    "files": 92,
+    "sha256": "c5f3d731dd8f7399960dbad571fe2889c21172aa9b55061139ed65797bd8b3cd"
+   },
+   "script": "climate_pair.py",
+   "seeds": [
+    1492,
+    99
+   ],
+   "version": "2.0"
+  },
+  "climate-pair-pacific": {
+   "args": [
+    "pacific"
+   ],
+   "code": {
+    "climate_pair.py": "dc193d4ba0813bab09756655cd728820cda0315ec45b8001cecb8d7a78a00489",
+    "dsp_core.py": "d29ae14afe5f34d8d9ee1f889733705a9b4eeaba2746d3199923006d2ef12574",
+    "harmony.py": "6e2883b89b9c74fd303fb784732288761b3813dcde9d4424125277fa330a51be",
+    "records.py": "1833058e8c8312c45187ee777100eea62dceda42de9e2fde09857a8b9a76cf73",
+    "sampler.py": "669dc814a4d39a9f0634838def95aeb1aa4f4f7276ac85cfcc7a6c1c8311b17d",
+    "seasonal.py": "d4183072da6926df366ea19a6ffeaee358cb2a76f82229334e65d369006344d5",
+    "synth.py": "1ad1c282fe61ec1233fac7ca29011ad9d7994db95bf460fe6870ad67bd7b4d2f",
+    "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
+   },
+   "data": {
+    "data/climate/parquet/fetched_only_monthly.parquet": "ead313d6a7180e64f294a22b8cf27415b46a13a7db76b5595f0ad36c634a3a82",
+    "data/climate/parquet/indices_monthly.parquet": "ef49062b22221db8534ef3ceeaca48c52ba0f4d355383e445cf9b3ad0002d5ab",
+    "data/climate/parquet/kettle_annual_peak.parquet": "ae6579e96c2433411128d72c154a1aea857082d00f4913d512f8b57b0af313ab",
+    "data/climate/parquet/storms.parquet": "3828b64fbd3823b614a9aa5ca687fe4d6a546a511fb132e0437ede1293614fad",
+    "data/climate/parquet/volcanoes.parquet": "42f12ee96581462b30551b8c5574c3d930b6960902ce63cb8fa2f8d83b579585"
+   },
+   "environment": {
+    "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm4 Copyright (c) 2000-2025 the FFmpeg developers",
+    "numpy": "2.5.3",
+    "python": "3.13.13",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+   },
+   "locked": "2026-09-27",
+   "outputs": {
+    "heavy/climate/climate_pacific_1958_2025.wav": "c9fcf25c722d342b6910064ce50a8eeccc1096ddb1767245f99602354cb80770",
+    "heavy/climate/climate_pacific_1958_2025_stems/cello.flac": "113a32d8912f568fbe8be24405277c7e5b9ab397d415c2b24766a46bfc7f3ae6",
+    "heavy/climate/climate_pacific_1958_2025_stems/deep.flac": "29f08de3fef5ef0d7960e302ac6f95c3868283cc40af715441e401c3c0ffa68a",
+    "heavy/climate/climate_pacific_1958_2025_stems/drone.flac": "3ed9b9d928a77c80f3f38559926eec9724d44809cbe927e17d67a034983eeb28",
+    "heavy/climate/climate_pacific_1958_2025_stems/events.flac": "d278f79b99adac466779aebd41e25df909ac9555b92fd918ab4c3bb936597ac1",
+    "heavy/climate/climate_pacific_1958_2025_stems/heat.flac": "b9b48ee2c86f18a746cc6b6a14124573cafdaf61c52ecf1044710dced1a617d3",
+    "heavy/climate/climate_pacific_1958_2025_stems/local.flac": "684782cf527748ea887e7e4f4bab02173ca9fe67d470d2c69f0387de896f42ea",
+    "heavy/climate/climate_pacific_1958_2025_stems/pad.flac": "814c7cec39b129f2e863961c65b34222c86bee7ca831f91b51da8e1f2a375e80",
+    "heavy/climate/climate_pacific_1958_2025_stems/pulse.flac": "7e9de0aadd8ff88e40650df8cea99d11d4b3be98f2763bb4fea1ca0a299c5a8f",
+    "heavy/climate/climate_pacific_1958_2025_stems/rumble.flac": "440cdae71fff3eaa6b830422f7d29c3d66e10b04f050a78cc693c6ec7b70ae6d",
+    "heavy/climate/climate_pacific_1958_2025_stems/shimmer.flac": "55ff035e00337641b2608942c319825299738eff70dae6aee93421faf803a3c5",
+    "heavy/climate/climate_pacific_1958_2025_stems/storms.flac": "f943796e2eb6423d6bdb104b9d520ded946c80dbc7a7e33958d1d7d66ce28681",
+    "light/climate/climate_pacific_1958_2025.mp3": "9e72b2db42a42fd92c0ddda4b0d74fa3def3b635c72fbc59bb458356cf79f1f2",
+    "light/climate/climate_pacific_1958_2025_score.json": "462519593958651d3c7735ff1061541173e62fb48c80eb603464271e8050c223",
+    "site_audio/climate_pacific_1958_2025.mp3": "314128ee9c53d2adeeb2c69adbe99c6c101c677e2614d6cccc7c56abeeeb52e8"
+   },
+   "samples": {
+    "files": 94,
+    "sha256": "bccd7be2f83cc2e50819c7ec0ef43fa2cdb16b35fd441dd434745a3ca1835ef2"
+   },
+   "script": "climate_pair.py",
+   "seeds": [
+    1958,
+    99
+   ],
+   "version": "2.0"
+  },
+  "granby-wy2024": {
+   "args": [],
+   "code": {
+    "dsp_core.py": "d29ae14afe5f34d8d9ee1f889733705a9b4eeaba2746d3199923006d2ef12574",
+    "harmony.py": "6e2883b89b9c74fd303fb784732288761b3813dcde9d4424125277fa330a51be",
+    "pilot_granby_wy2024.py": "bbe2eda4030b8128b669cbc5c4caa63e7d9f7b8d9c7309fe6e47bd875028bac9",
+    "records.py": "1833058e8c8312c45187ee777100eea62dceda42de9e2fde09857a8b9a76cf73",
+    "sampler.py": "669dc814a4d39a9f0634838def95aeb1aa4f4f7276ac85cfcc7a6c1c8311b17d",
+    "seasonal.py": "d4183072da6926df366ea19a6ffeaee358cb2a76f82229334e65d369006344d5",
+    "synth.py": "1ad1c282fe61ec1233fac7ca29011ad9d7994db95bf460fe6870ad67bd7b4d2f",
+    "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
+   },
+   "data": {
+    "data/parquet/climate_daily.parquet": "c788096beb1d1dfe10c86a6f8076dcec4172d33c9138f883bd8f6f6c4a86a864",
+    "data/parquet/hydrometric_daily.parquet": "c8cc53eb4070ecac851988624fb2c87d3a82ccfc921e5f74ccd3af643a0adec7",
+    "data/parquet/modis_gpp.parquet": "d8033e3ac5d0a29ee4ebddb59a967e248591a65730238bb20373b93747665713"
+   },
+   "environment": {
+    "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm4 Copyright (c) 2000-2025 the FFmpeg developers",
+    "numpy": "2.5.3",
+    "python": "3.13.13",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+   },
+   "locked": "2026-09-27",
+   "outputs": {
+    "heavy/pilots/granby_wy2024.wav": "49bee311f92711df980d3c7ed6af48c7e9b052668d8813b4820590a1d3914668",
+    "heavy/pilots/granby_wy2024_stems/bass.flac": "4f5904b17965b549e0388ff988de37ed5a8d06e9b4be467c5c612453982365d7",
+    "heavy/pilots/granby_wy2024_stems/birds.flac": "5ff9c7d614bd6c6d7d07b67290a4869daab6010cd1535c114e168e8c61bd6559",
+    "heavy/pilots/granby_wy2024_stems/fish.flac": "ddbc67e4aec73d478520386db184a2bbbc92ae0816d7f3100c4e5b247cfbc038",
+    "heavy/pilots/granby_wy2024_stems/ice.flac": "d1c37ececfef18fd6972844d6826607bea8234e5d5f99e6b506a5fc6bc714516",
+    "heavy/pilots/granby_wy2024_stems/pad.flac": "d62737c657fd682e1c10cf03abeb67616a63b5f58a253acf573f6cc2d2511245",
+    "heavy/pilots/granby_wy2024_stems/perc.flac": "7fe017b6087159e6ee6b2d01b7d8adb4feeb5e781387fbdb59c92e8308c5ea43",
+    "heavy/pilots/granby_wy2024_stems/piano.flac": "43533a551b5debe564286a5c477255cc6b775bc58d5cc9f89824cadf53b716ad",
+    "heavy/pilots/granby_wy2024_stems/precip.flac": "b8ae46a0a0ec3d7f1aaec23bcc87b88cd4f05603d3db897c3ca7df580c3ab877",
+    "light/pilots/granby_wy2024.mp3": "eb0f70adbdcfbc66c39065dec9cce15bef7df8d51c8052564ad7ab55df5eff6d",
+    "light/pilots/granby_wy2024_score.json": "37a618eafccfe56ab17e3f11d8b0fab86df8f0ee49700a3b203389b09cce918f"
+   },
+   "samples": {
+    "files": 104,
+    "sha256": "7aea85fe6b000cc1cc914313b1f5a0a28ccf00d62eb712334ba98a9fc9e6d689"
+   },
+   "script": "pilot_granby_wy2024.py",
+   "seeds": [
+    2024
+   ],
+   "version": "1.0"
+  },
+  "granby-wy2024:frozen": {
+   "args": [
+    "--variant",
+    "frozen"
+   ],
+   "code": {
+    "dsp_core.py": "d29ae14afe5f34d8d9ee1f889733705a9b4eeaba2746d3199923006d2ef12574",
+    "harmony.py": "6e2883b89b9c74fd303fb784732288761b3813dcde9d4424125277fa330a51be",
+    "pilot_granby_wy2024.py": "bbe2eda4030b8128b669cbc5c4caa63e7d9f7b8d9c7309fe6e47bd875028bac9",
+    "records.py": "1833058e8c8312c45187ee777100eea62dceda42de9e2fde09857a8b9a76cf73",
+    "sampler.py": "669dc814a4d39a9f0634838def95aeb1aa4f4f7276ac85cfcc7a6c1c8311b17d",
+    "seasonal.py": "d4183072da6926df366ea19a6ffeaee358cb2a76f82229334e65d369006344d5",
+    "synth.py": "1ad1c282fe61ec1233fac7ca29011ad9d7994db95bf460fe6870ad67bd7b4d2f",
+    "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
+   },
+   "data": {
+    "data/parquet/climate_daily.parquet": "c788096beb1d1dfe10c86a6f8076dcec4172d33c9138f883bd8f6f6c4a86a864",
+    "data/parquet/hydrometric_daily.parquet": "c8cc53eb4070ecac851988624fb2c87d3a82ccfc921e5f74ccd3af643a0adec7",
+    "data/parquet/modis_gpp.parquet": "d8033e3ac5d0a29ee4ebddb59a967e248591a65730238bb20373b93747665713"
+   },
+   "environment": {
+    "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm4 Copyright (c) 2000-2025 the FFmpeg developers",
+    "numpy": "2.5.3",
+    "python": "3.13.13",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+   },
+   "locked": "2026-09-27",
+   "outputs": {
+    "heavy/pilots/granby_wy2024__frozen.wav": "ff6ae3f7d6ec74f12048da454ca8eb8ffead318c014574dbf0c489ed8cfbb128",
+    "heavy/pilots/granby_wy2024__frozen_stems/bass.flac": "ed33dce666f5268008f98d04ee93250abcc333b526a421d92ec42aa4169dab9f",
+    "heavy/pilots/granby_wy2024__frozen_stems/birds.flac": "0b2520459bf2504a96d45bc1ce4ebdda665ba2b561e274e1fc34552f1b7f3719",
+    "heavy/pilots/granby_wy2024__frozen_stems/fish.flac": "8a7700c88f3be54ac8c1815129a9e9533358b9dd3017d23b61d34274be2bdb7e",
+    "heavy/pilots/granby_wy2024__frozen_stems/ice.flac": "9caa242f84caf026ce5b17d72380b99b6aa9e960c11630683ad506f33f411322",
+    "heavy/pilots/granby_wy2024__frozen_stems/pad.flac": "f3d9ebdee63c36f5131bfff2a8fb246535d047a1a3bf3f4e5be766f6dc09e017",
+    "heavy/pilots/granby_wy2024__frozen_stems/perc.flac": "ed9bddddb8b7abbd5d11068e01b0ad87d1e7b71960cb217c73e114a779400f15",
+    "heavy/pilots/granby_wy2024__frozen_stems/piano.flac": "529615b752433ae098aa123cbd44ea52783139e734fcc697ef58d75162e60a4f",
+    "heavy/pilots/granby_wy2024__frozen_stems/precip.flac": "5596cdc639bb521a2a60e3c13df8b473c3931760abf8e5ff132bf79ab45b79ed",
+    "light/pilots/granby_wy2024__frozen.mp3": "3d3fa37717fb6462353374fdaf26329b37a5e3d2b27b64c99e2c31a907aeeabe",
+    "light/pilots/granby_wy2024__frozen_score.json": "493e1001662fdfd22a0ed352669468efd78ae05c3ecb0fd176ecbcba2eca0289"
+   },
+   "samples": {
+    "files": 103,
+    "sha256": "a37146c962033da2702a3e1ffed9158237f8d20692e99438f4dcb07e8ba02c62"
+   },
+   "script": "pilot_granby_wy2024.py",
+   "seeds": [
+    2024
+   ],
+   "variant": "frozen",
+   "version": "1.0"
+  },
+  "okanagan-wy2024": {
+   "args": [],
+   "code": {
+    "dsp_core.py": "d29ae14afe5f34d8d9ee1f889733705a9b4eeaba2746d3199923006d2ef12574",
+    "harmony.py": "6e2883b89b9c74fd303fb784732288761b3813dcde9d4424125277fa330a51be",
+    "pilot_okanagan_wy2024.py": "1884c3f629632a631b679472e7e0b93e924cd16a838f6ab1e584434e66ba851b",
+    "records.py": "1833058e8c8312c45187ee777100eea62dceda42de9e2fde09857a8b9a76cf73",
+    "sampler.py": "669dc814a4d39a9f0634838def95aeb1aa4f4f7276ac85cfcc7a6c1c8311b17d",
+    "seasonal.py": "d4183072da6926df366ea19a6ffeaee358cb2a76f82229334e65d369006344d5",
+    "synth.py": "1ad1c282fe61ec1233fac7ca29011ad9d7994db95bf460fe6870ad67bd7b4d2f",
+    "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
+   },
+   "data": {
+    "data/parquet/climate_daily.parquet": "c788096beb1d1dfe10c86a6f8076dcec4172d33c9138f883bd8f6f6c4a86a864",
+    "data/parquet/hydrometric_daily.parquet": "c8cc53eb4070ecac851988624fb2c87d3a82ccfc921e5f74ccd3af643a0adec7",
+    "data/parquet/modis_gpp.parquet": "d8033e3ac5d0a29ee4ebddb59a967e248591a65730238bb20373b93747665713",
+    "data/wells_dam_sockeye_2015_2024.json": "96ee16eb0007b33f3368b2334a4a74cc12c7e2e4b45644454b2258db7f1b17f6"
+   },
+   "environment": {
+    "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm4 Copyright (c) 2000-2025 the FFmpeg developers",
+    "numpy": "2.5.3",
+    "python": "3.13.13",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+   },
+   "locked": "2026-09-27",
+   "outputs": {
+    "heavy/pilots/okanagan_wy2024.wav": "f7e8b32fb815dc7a677ecd5c80c68a32fda5faed4c3e8346d30d966bc8e788e1",
+    "heavy/pilots/okanagan_wy2024_stems/birds.flac": "d25a1e1a6bf4a69e6ba440a851d3b3e9870653cbf886580f5d9a8755ff498f99",
+    "heavy/pilots/okanagan_wy2024_stems/drone.flac": "c831f878b4989bf3e45971348fff8e04c7f2cae882260ed09d5ea188e80d20f0",
+    "heavy/pilots/okanagan_wy2024_stems/fish.flac": "f863563d9ac6d143807902efa18507d605dd5d35332a1d97214efd8fc6af424f",
+    "heavy/pilots/okanagan_wy2024_stems/frost.flac": "dfac2789eb49ca573d8172fef601e616154fcb03dd19d7577d0f90e50aa67f14",
+    "heavy/pilots/okanagan_wy2024_stems/heat.flac": "8459cc0ec4ac067a8e35f3e5baef9c25ca8365308011c1a376699fbafdf80cbb",
+    "heavy/pilots/okanagan_wy2024_stems/pad.flac": "ef696bf4b12f09ebd18e479fbd107e69d4e2833bff1949f683b2956c9ca2e3a3",
+    "heavy/pilots/okanagan_wy2024_stems/perc.flac": "d9ca62e25b19528a4d97ac9b3e5eed118a6de628cfa9249bd5648f13351c29c9",
+    "heavy/pilots/okanagan_wy2024_stems/piano.flac": "88242dc896387a57d603743999ed1f432aa5f7a345d3308ecdf6ceda1d2baf25",
+    "heavy/pilots/okanagan_wy2024_stems/precip.flac": "c7d7f4f2754c804a1a3dab8a786ad96ca287fec6ee0b7ebbb5c5e0669308a054",
+    "light/pilots/okanagan_wy2024.mp3": "4ef7aca29c2a7e1ce69cb8358b35326283507f68fc3cd948b469ad7348220f7e",
+    "light/pilots/okanagan_wy2024_score.json": "9d8bbb23a054b705801f11425d145fd6227d939521104bef06fa258cf7c66fd4"
+   },
+   "samples": {
+    "files": 75,
+    "sha256": "8262f9cc35b829ead14eae81d7d8463abaeffbada109907e8859f0f9bb30c0d6"
+   },
+   "script": "pilot_okanagan_wy2024.py",
+   "seeds": [
+    1997
+   ],
+   "version": "1.0"
+  }
+ }
+}

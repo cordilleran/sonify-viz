@@ -51,6 +51,8 @@ def estimate_f0(x, sr=SR, fmin=25, fmax=2000):
     seg = seg - seg.mean()
     ac = fftconvolve(seg, seg[::-1])[len(seg) - 1:]
     lo, hi = int(sr / fmax), int(sr / fmin)
+    neg = np.flatnonzero(ac[:hi] < 0)          # skip the zero-lag lobe: for low notes it otherwise
+    lo = max(lo, int(neg[0])) if len(neg) else lo  # wins (a 55 Hz tone read as 2 kHz; test_sound.py)
     lag = lo + np.argmax(ac[lo:hi])
     return sr / lag
 
@@ -305,3 +307,29 @@ def vsco_kit():
         "marimba": Instrument("Percussion/Marimba", octave_offset=1),
         "perc": OneShots(),
     }
+
+
+def sustain(ins, midi, vel, dur, rng, seg=4.5, xf=1.2, release=1.5):
+    """Hold a sampled note longer than its recording by re-articulating
+    overlapping takes with crossfades (string sections do exactly this in
+    real life - players change bow at different times). Moved here from
+    seasonal.py on 2026-09-27."""
+    n = int((dur + release) * SR)
+    out = np.zeros((n, 2), dtype=np.float32)
+    t = 0.0
+    first = True
+    while t < dur:
+        piece = ins.note(midi, vel, dur=min(seg, dur - t) + xf, release=xf, rng=rng)
+        if not first:
+            f = min(len(piece), int(xf * SR))
+            piece = piece.copy()
+            # skip the new take's bow attack and fade it in under the old one
+            piece[:f] *= np.linspace(0, 1, f)[:, None]
+        a = int(t * SR)
+        piece = piece[: n - a]
+        out[a:a + len(piece)] += piece
+        t += seg
+        first = False
+    r = int(release * SR)
+    out[-r:] *= np.linspace(1, 0, r)[:, None] ** 2
+    return out

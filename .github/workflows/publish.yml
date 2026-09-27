@@ -1,5 +1,6 @@
-# Render the Quarto site and deploy it to GitHub Pages on every push to main.
-# The site is plain Markdown plus static files; no code runs during the build.
+# Run the engine tests, then render the Quarto site and deploy it to GitHub
+# Pages on every push to main. The site is plain Markdown plus static files;
+# no code runs during the build. A failing test stops the deploy.
 name: Publish site
 on:
   push:
@@ -13,7 +14,25 @@ concurrency:
   group: pages
   cancel-in-progress: true
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -r requirements.txt pytest
+      - run: pytest tests -q
+      - uses: astral-sh/setup-uv@v6
+      - name: the data matches its dictionaries (data-dict)
+        run: |
+          for d in data/parquet/data-dict.yaml data/climate/parquet/data-dict.yaml tracks/mapping/*/data-dict.yaml; do
+            uvx --from data-dict-yaml==0.0.3 data-dict validate-data "$d"
+          done
+      - name: the synth-only demo still renders (no samples needed)
+        run: cd scripts && SONIFICATION_LIGHT=/tmp/demo python demo.py
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
