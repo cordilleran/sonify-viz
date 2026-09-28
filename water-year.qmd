@@ -28,7 +28,7 @@ A warm El Niño winter. The gauge flagged ice on only 28 days, in broken spells,
 ### Okanagan
 Okanagan Lake and River · key of F · 7:50
 
-A drought year on the lake, which rose only 0.7 m. It was also the biggest sockeye return in ten years of Wells Dam counts: 491,039 fish.
+A drought year on the lake, which rose only 0.7 m. It was also the biggest sockeye return in ten years of Wells Dam counts.
 
 <audio controls preload="none" src="listen/okanagan_wy2024.mp3"></audio>
 :::

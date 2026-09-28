@@ -74,7 +74,7 @@ TITLES = {
     "granby_wy2024": dict(title="Granby River", sub="Grand Forks, BC · WSC 08NN002 + Burrell Creek 08NN023 · Billings climate",
                           key="D", year_label="WY 2024", blurb="A warm El Niño winter. The gauge flagged ice on only 28 days, in broken episodes, and the freshet came early and small: 147 m³/s, against 465 in the 2010–24 record."),
     "okanagan_wy2024": dict(title="Okanagan", sub="Okanagan Lake 08NM083 · Penticton 08NM050 · Oliver 08NM085 · Summerland CS · Wells Dam",
-                            key="F", year_label="WY 2024", blurb="A drought year on the lake, which rose only 0.7 m, that was also the biggest sockeye return in ten years of Wells Dam counts: 491,039 fish."),
+                            key="F", year_label="WY 2024", blurb="A drought year on the lake, which rose only 0.7 m, that was also the biggest sockeye return in ten years of Wells Dam counts."),
 }
 
 
