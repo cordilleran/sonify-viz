@@ -33,6 +33,11 @@ project:
     - listen/fonts/*
     - .nojekyll
     - dictionary/*.html
+    - meridian/index.html
+    - meridian/meridian_ds2023__layer2-wide-long.json
+    - meridian/meridian_ds2023__layer2-wide-long.mp3
+    - meridian/meridian_ds2023.json
+    - meridian/meridian_ds2023.mp3
 
 website:
   title: "sonify-viz"
@@ -55,6 +60,8 @@ website:
             text: Methods & code
       - href: climate.qmd
         text: Climate Pair
+      - href: meridian/index.html
+        text: Meridian Chorus
       - href: tracks.qmd
         text: Tracks
       - href: glossary.qmd

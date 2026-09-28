@@ -30,6 +30,9 @@ Sixty-eight years, 1958 to 2025, one year per bar. CO₂, ocean heat, ENSO and a
 :::
 :::
 
+### [Meridian Chorus](meridian/index.html)
+Thirteen voices on the 100th meridian, one every 15 degrees from the North Pole to the South Pole, sing one year from the December 2023 solstice to the December 2024 solstice. Each voice sounds while its sun is up, and every voice shares one noon. Air temperature colours the organ, the sea sings on its own floor below, and sea ice quiets it. About 16 minutes in four movements; a 7-minute daylight-only version is kept beside it. A work in progress: the territory acknowledgements for its land voices are still being prepared.
+
 Every track has a card with its version, its records, what drives each sound, what to be careful about, and how to check it byte for byte: see [Tracks](tracks.qmd).
 
 ## The code

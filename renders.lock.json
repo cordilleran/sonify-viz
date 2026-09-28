@@ -214,6 +214,170 @@
    "variant": "frozen",
    "version": "1.0"
   },
+  "meridian-chorus-daylight": {
+   "args": [],
+   "code": {
+    "dsp_core.py": "d29ae14afe5f34d8d9ee1f889733705a9b4eeaba2746d3199923006d2ef12574",
+    "harmony.py": "6e2883b89b9c74fd303fb784732288761b3813dcde9d4424125277fa330a51be",
+    "meridian.py": "80c8006396aa015521a8dd26d927541ef1fa08b2ebc862f49e76b65c189bb24d",
+    "records.py": "1833058e8c8312c45187ee777100eea62dceda42de9e2fde09857a8b9a76cf73",
+    "sampler.py": "669dc814a4d39a9f0634838def95aeb1aa4f4f7276ac85cfcc7a6c1c8311b17d",
+    "seasonal.py": "d4183072da6926df366ea19a6ffeaee358cb2a76f82229334e65d369006344d5",
+    "solar.py": "6341f24e8c7669588e16ef1d4cd258702b034109ffa9c65ed90aa29eb83fb5ae",
+    "synth.py": "1ad1c282fe61ec1233fac7ca29011ad9d7994db95bf460fe6870ad67bd7b4d2f",
+    "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
+   },
+   "data": {},
+   "environment": {
+    "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm4 Copyright (c) 2000-2025 the FFmpeg developers",
+    "numpy": "2.5.3",
+    "python": "3.13.13",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+   },
+   "locked": "2026-09-28",
+   "outputs": {
+    "heavy/meridian/meridian_ds2023.wav": "f7382da9f0d8953bbd9eda6576aa976db79f75da1e1e6e0bdb0d1daeae86196c",
+    "heavy/meridian/meridian_ds2023_stems/breath.flac": "159db32c9d90e1dd5d3cb6e9ad2da675392c4f8b48fe989f8bc086241b7c845c",
+    "heavy/meridian/meridian_ds2023_stems/organ.flac": "c46875c2131779d489cbfe30dbe4142f12cf134b8ec8d0d15dd3dcc179f27cff",
+    "heavy/meridian/meridian_ds2023_stems/strings.flac": "649cc268d5b4eccc30bbc8105dfe703040366feb72241a3d85b6732e613b2bbd",
+    "heavy/meridian/meridian_ds2023_stems/voice.flac": "b63ac40747c3bac11514201455d2ee92eb428e8b282d23b98430423ba48e4156",
+    "light/meridian/meridian_ds2023.mp3": "1f74f02120b6b44c3c56cf5a0fbefaed66878444dbe19b1be763a970e39e7f24",
+    "light/meridian/meridian_ds2023_score.json": "4d8e27d4d1142404a56fa549156aa2c52f9027e9c50e5e5ad69586e9bda204e8",
+    "light/meridian/meridian_ds2023_viz.json": "5e0775f603333ea3519e406a139996073d830e5398623e8a7327b177e17b486b"
+   },
+   "previous": {
+    "locked": "2026-09-27",
+    "version": "0.1"
+   },
+   "samples": {
+    "files": 26,
+    "sha256": "a20594020581f673c6b7ff816c71c8b9ad5afc6fbcb53522ab0184293fc56ed4"
+   },
+   "script": "meridian.py",
+   "seeds": [
+    2023
+   ],
+   "version": "0.2"
+  },
+  "meridian-chorus-daylight:long": {
+   "args": [
+    "--variant",
+    "long"
+   ],
+   "code": {
+    "dsp_core.py": "d29ae14afe5f34d8d9ee1f889733705a9b4eeaba2746d3199923006d2ef12574",
+    "harmony.py": "6e2883b89b9c74fd303fb784732288761b3813dcde9d4424125277fa330a51be",
+    "meridian.py": "80c8006396aa015521a8dd26d927541ef1fa08b2ebc862f49e76b65c189bb24d",
+    "records.py": "1833058e8c8312c45187ee777100eea62dceda42de9e2fde09857a8b9a76cf73",
+    "sampler.py": "669dc814a4d39a9f0634838def95aeb1aa4f4f7276ac85cfcc7a6c1c8311b17d",
+    "seasonal.py": "d4183072da6926df366ea19a6ffeaee358cb2a76f82229334e65d369006344d5",
+    "solar.py": "6341f24e8c7669588e16ef1d4cd258702b034109ffa9c65ed90aa29eb83fb5ae",
+    "synth.py": "1ad1c282fe61ec1233fac7ca29011ad9d7994db95bf460fe6870ad67bd7b4d2f",
+    "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
+   },
+   "data": {},
+   "environment": {
+    "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm4 Copyright (c) 2000-2025 the FFmpeg developers",
+    "numpy": "2.5.3",
+    "python": "3.13.13",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+   },
+   "locked": "2026-09-28",
+   "outputs": {
+    "heavy/meridian/meridian_ds2023__long.wav": "7aa359a02142322e43020a1de071086060c47c5fb4187680d608ed989c20f902",
+    "heavy/meridian/meridian_ds2023__long_movement1.wav": "7bbcb92f24b554daf50a0b3e5113e35ea159d29ca09e88d926f85ad4d44a1084",
+    "heavy/meridian/meridian_ds2023__long_movement2.wav": "e8a0b61799abc85d3c71757546a092356aa7e60a725bcdf534e836e1d8d81c03",
+    "heavy/meridian/meridian_ds2023__long_movement3.wav": "0d632733553bcea6f480e2c3ba73c3902ed868f7dadadaad01a45c8fba135b8c",
+    "heavy/meridian/meridian_ds2023__long_movement4.wav": "85a139531c41f4a645574440149291f22dee1d451735df01c8a4239592d92787",
+    "heavy/meridian/meridian_ds2023__long_norm.wav": "28bbb04a86720b558c35525bf2cc9d69598103d1392082e99016861039aba0b2",
+    "heavy/meridian/meridian_ds2023__long_stems/breath.flac": "7ab453f433fb14a8e193ed31821d1f6d980586a6c49c66e1cb7f0105d3acf3db",
+    "heavy/meridian/meridian_ds2023__long_stems/organ.flac": "11ac3415e6de6709a7f082cb96c4b57aaacd22abf958e049d534a4847de39086",
+    "heavy/meridian/meridian_ds2023__long_stems/strings.flac": "fcdb5a65c0518b312b788595978113c885874a3646f64a71102e554d43c6b3f2",
+    "heavy/meridian/meridian_ds2023__long_stems/voice.flac": "901872b6091f6991033cc963ff1c68bad045afcc7ff14273c6a7cc0d775f5d5a",
+    "light/meridian/meridian_ds2023__long.mp3": "0c757ec1fdea9c405779969c8b0d501e2b4952a7d796ef589bb10d32b283020c",
+    "light/meridian/meridian_ds2023__long_movement1.mp3": "163ba2185ef33e336504d87899103e028279272099791215f5a58deee6a05637",
+    "light/meridian/meridian_ds2023__long_movement2.mp3": "4d944f473cd92d42e30ce22bee6664606ba0098547ff465cc496de45b214cb17",
+    "light/meridian/meridian_ds2023__long_movement3.mp3": "9b7badb7f452e2989692d4d75e04504fa5d268df0d72231ed8756c3b54a9a0fb",
+    "light/meridian/meridian_ds2023__long_movement4.mp3": "b803a8757cca059e7dbeef58a57a73b0d03eadfb6f3246f63a09610f8be4abc0",
+    "light/meridian/meridian_ds2023__long_score.json": "0d6aaa5a5bab700fef5b639dc12eb64130c15b9f42b9c08c9e20d99f0b82d60a",
+    "light/meridian/meridian_ds2023__long_viz.json": "f7d3ab554a6c9bb3256c11e22d2f683ecb2f635634b5339030078c369ddf7cf2"
+   },
+   "previous": {
+    "locked": "2026-09-27",
+    "version": "0.1"
+   },
+   "samples": {
+    "files": 26,
+    "sha256": "a20594020581f673c6b7ff816c71c8b9ad5afc6fbcb53522ab0184293fc56ed4"
+   },
+   "script": "meridian.py",
+   "seeds": [
+    2023
+   ],
+   "variant": "long",
+   "version": "0.2"
+  },
+  "meridian-chorus-layer2:wide-long": {
+   "args": [
+    "--variant",
+    "layer2-wide-long"
+   ],
+   "code": {
+    "dsp_core.py": "d29ae14afe5f34d8d9ee1f889733705a9b4eeaba2746d3199923006d2ef12574",
+    "harmony.py": "6e2883b89b9c74fd303fb784732288761b3813dcde9d4424125277fa330a51be",
+    "meridian.py": "80c8006396aa015521a8dd26d927541ef1fa08b2ebc862f49e76b65c189bb24d",
+    "records.py": "1833058e8c8312c45187ee777100eea62dceda42de9e2fde09857a8b9a76cf73",
+    "sampler.py": "669dc814a4d39a9f0634838def95aeb1aa4f4f7276ac85cfcc7a6c1c8311b17d",
+    "seasonal.py": "d4183072da6926df366ea19a6ffeaee358cb2a76f82229334e65d369006344d5",
+    "solar.py": "6341f24e8c7669588e16ef1d4cd258702b034109ffa9c65ed90aa29eb83fb5ae",
+    "synth.py": "1ad1c282fe61ec1233fac7ca29011ad9d7994db95bf460fe6870ad67bd7b4d2f",
+    "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
+   },
+   "data": {
+    "data/meridian/meridian_100w_ds2023.json": "af97d617815286ab3c1d2b54e302b198797afdcb62c013a950c58b749e7b25a9"
+   },
+   "environment": {
+    "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm4 Copyright (c) 2000-2025 the FFmpeg developers",
+    "numpy": "2.5.3",
+    "python": "3.13.13",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+   },
+   "locked": "2026-09-28",
+   "outputs": {
+    "heavy/meridian/meridian_ds2023__layer2-wide-long.wav": "b6e07ad348b4e03fda83d80e9895279ba1ee0adce6d34fc2a76c654cefefb924",
+    "heavy/meridian/meridian_ds2023__layer2-wide-long_movement1.wav": "18c51618d721352939713a93c018b6143b9a39e9a7d4fcfd1bcc4b901e06edcd",
+    "heavy/meridian/meridian_ds2023__layer2-wide-long_movement2.wav": "7799530aed97b0a2bfbac978ef18ab3dd285cd80859b4612d2e4c8e93eadf1d8",
+    "heavy/meridian/meridian_ds2023__layer2-wide-long_movement3.wav": "2f9f927bf88256005b5468795fbc8edd58b2cf1b8d198162e7ed96be23ab5c1a",
+    "heavy/meridian/meridian_ds2023__layer2-wide-long_movement4.wav": "b2f2275307b88f2f0ab4ebfbf9f3f01f2ece4136e9375404a63371e1c28ea34d",
+    "heavy/meridian/meridian_ds2023__layer2-wide-long_norm.wav": "e276b9b23905ed3abb7f96ed99896357854aaa23f5d0ae1f3f565adf6111e7f8",
+    "heavy/meridian/meridian_ds2023__layer2-wide-long_stems/breath.flac": "57206913668f37072ae671f00b9cfbe397a186e40161eff76f48e9b3250d1207",
+    "heavy/meridian/meridian_ds2023__layer2-wide-long_stems/ice.flac": "a4cca26e3bf6bf6fee5c7a08d5c69327306490aba4a95679284d0fe0c6bb2707",
+    "heavy/meridian/meridian_ds2023__layer2-wide-long_stems/organ.flac": "869fab34fa5509d85d381ee1d07341dfd775be21b886a4b02cef08529357474e",
+    "heavy/meridian/meridian_ds2023__layer2-wide-long_stems/sea.flac": "67ba6824abbe55963f5ca3e636df395b40cd824a5164782a26551565923c4374",
+    "heavy/meridian/meridian_ds2023__layer2-wide-long_stems/strings.flac": "788610d3e4966f6874533c7f3ae110ba778f9667a80af7ed9038213a16dc98cd",
+    "heavy/meridian/meridian_ds2023__layer2-wide-long_stems/voice.flac": "c0f633e5ce06e9ed1588826ba9c088e71f2c1a09a44e34901b65faae88cafd96",
+    "light/meridian/meridian_ds2023__layer2-wide-long.mp3": "3a63e7dc24e3cfbd0e55ae750e46631677bf12c3803d3763d2042c45232043e5",
+    "light/meridian/meridian_ds2023__layer2-wide-long_movement1.mp3": "af2b625196809cafea25abda7ead680e57ddd75383af58b6a15e8c79cfd92bde",
+    "light/meridian/meridian_ds2023__layer2-wide-long_movement2.mp3": "a4205d7ad45e922f5f762cc5b1ccb8a6f525ec15412e1f4b56fe8f968cc4a98a",
+    "light/meridian/meridian_ds2023__layer2-wide-long_movement3.mp3": "0f9c9e209a49e27dc13713ff787bd536627c1813bdcaee90e599d7ca225f4073",
+    "light/meridian/meridian_ds2023__layer2-wide-long_movement4.mp3": "4a96914bd309306a92749683c7dd1eec8e5a5936e3eb6e7436ef60e429c0e8b9",
+    "light/meridian/meridian_ds2023__layer2-wide-long_score.json": "fe970526e3f0ad744b664afb7cf8423199b6a76e7e4e490bb8586ddef3bcd1cf",
+    "light/meridian/meridian_ds2023__layer2-wide-long_viz.json": "00596e1dee406dc6d9febcc51cf251382d5fb3cd8bf0be18074f9c59620f244b"
+   },
+   "samples": {
+    "files": 21,
+    "sha256": "d8b68a870541233efe37e3bcd57ebf6d2fef9c9681aa5e92115d748471d7c953"
+   },
+   "script": "meridian.py",
+   "seeds": [
+    2023
+   ],
+   "variant": "layer2-wide-long",
+   "version": "0.1"
+  },
   "okanagan-wy2024": {
    "args": [],
    "code": {

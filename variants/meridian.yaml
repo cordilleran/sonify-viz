@@ -1,0 +1,61 @@
+# Variants of the Meridian Chorus (scripts/meridian.py). Each overrides only
+# parameters the piece declares in DEFAULTS; see variants.py.
+long:
+  note: "Three days per breath (~16 minutes), also cut into four movements at the solstices and equinoxes (GW, 09-27)."
+  days_per_breath: 3
+  movements: true
+strings:
+  note: "Strings only, to hear the timbre on its own."
+  timbre: {organ: 0, strings: 1.0, voice: 0}
+organ:
+  note: "Organ only."
+  timbre: {organ: 1.0, strings: 0, voice: 0}
+voice:
+  note: "The sung (synthesized) voice only."
+  timbre: {organ: 0, strings: 0, voice: 1.0}
+poles-high:
+  note: "GW's alternative register: the equator lowest, both poles highest."
+  register: poles-high
+triad:
+  note: "The first build's chord, D F# A only, for comparison with the pentatonic default (both agy reviewers, 09-27, found the triad static over 7-16 minutes)."
+  chord: triad
+# ---- layer 2 (2026-09-27, GW: "air temp and sea temp and sea ice ... we may need more space in the
+# main chorus, and to consider variations"). Layer 1 above is kept as it is. Data: fetch_meridian.py.
+layer2:
+  note: "Layer 2: air temperature, sea surface temperature and sea ice over the daylight chorus. To make room, the chorus is un-doubled: the sung voice carries the light, the organ the air (its registration follows the day's high temperature), strings the sea an octave below each ocean parallel (day and night), and a glass shimmer the ice."
+  layers: [daylight, air, sea, ice]
+  timbre: {organ: 1.0, strings: 0, voice: 0.8}
+layer2-seasonal:
+  note: "As layer2, but each voice's own year of air temperature spans the organ's whole range, so every parallel's seasons are equally audible (the absolute default keeps the equator always brighter than the poles)."
+  layers: [daylight, air, sea, ice]
+  timbre: {organ: 1.0, strings: 0, voice: 0.8}
+  air_scale: seasonal
+layer2-unison:
+  note: "As layer2, but the sea sings its parallel's own note, not an octave below: at ocean voices the note never quite stops at night, the ocean holding the day."
+  layers: [daylight, air, sea, ice]
+  timbre: {organ: 1.0, strings: 0, voice: 0.8}
+  sea_octave: 0
+layer2-dense:
+  note: "As layer2, but with layer 1's doubled chorus kept (strings back on the daylight notes as well as the sea): the control for GW's 'more space' question."
+  layers: [daylight, air, sea, ice]
+layer2-long:
+  note: "Layer 2 at three days per breath (~16 minutes), cut into four movements."
+  layers: [daylight, air, sea, ice]
+  timbre: {organ: 1.0, strings: 0, voice: 0.8}
+  days_per_breath: 3
+  movements: true
+# ---- layer 2.1 (2026-09-28, GW after listening: "the in breath is too loud of a hiss, and there is a lot of
+# unison happening so it is hard to hear separation ... spread a bit more out with a bit richer depth in the
+# lower range"; "one long version next with your recommendations, and create variation by hemisphere").
+layer2-wide-long:
+  note: "Layer 2.1, long (three days per breath, four movements). The sky choir (voice and organ) sits above the sea on 13 distinct notes, D4 to A6; the sea has its own floor below on contrabass and cello, D1 to A3, warmest sea highest, so no two voices share a pitch. North sings on the left and south on the right, each hemisphere fuller and more open in its own summer and withdrawn in its winter. The in-breath is about 8 dB quieter and lower: breath, not hiss."
+  layers: [daylight, air, sea, ice]
+  timbre: {organ: 1.0, strings: 0, voice: 0.8}
+  chord: wide
+  sea_floor: true
+  hemisphere: true
+  breath_tone: dark
+  glass_range: [96, 108]
+  sea_level: 2.2   # +6 dB: the floor carries the depth (the first 2.1 render measured 80-320 Hz 3.5 dB thinner than layer2)
+  days_per_breath: 3
+  movements: true

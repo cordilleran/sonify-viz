@@ -1,0 +1,418 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meridian Chorus</title>
+<link rel="stylesheet" href="../listen/fonts/fonts.css">
+<style>
+:root{
+  color-scheme: dark;
+  --ground:#0b1119; --surface:#111a24; --line:#1f2c3a; --line2:#2c3d4f;
+  --text:#e3e8ee; --muted:#8d9bab; --faint:#5b6878;
+  --night:#0f1c33; --dusk:#6b4f8a; --day:#e7b44f; --day2:#f6dc9a; --sun:#ffd36b;
+  --display:"Gloock", "Iowan Old Style", Georgia, serif;
+  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font:15px/1.55 var(--body)}
+.wrap{max-width:1240px;margin:0 auto;padding:28px 16px 64px;overflow-x:clip;display:grid;gap:28px}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(38px,6.5vw,70px);line-height:.95;margin:0}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+header{display:grid;gap:12px}
+header p{margin:0;max-width:66ch;color:var(--muted)}
+.stage{display:grid;grid-template-columns:minmax(280px,560px) 64px minmax(0,1fr);gap:14px;align-items:start}
+.ringbox{position:relative;aspect-ratio:1}
+canvas{display:block;width:100%;height:100%}
+.ringlabel{position:absolute;inset:0;display:grid;place-content:center;text-align:center;pointer-events:none}
+.ringlabel .date{font-family:var(--display);font-size:clamp(20px,3vw,34px);line-height:1.05}
+.ringlabel .sub{font:11px/1.5 var(--mono);color:var(--muted);margin-top:4px}
+.barbox{position:relative}
+.rows{position:relative}
+.row{position:absolute;left:0;right:0;display:grid;grid-template-columns:52px 1fr auto auto;gap:10px;align-items:center;
+  transform:translateY(-50%);font-size:13.5px;line-height:1.25;padding:2px 8px;border-radius:6px;transition:background .08s;cursor:pointer}
+.row .lat{font:600 12px var(--mono);color:var(--muted)}
+.row .place{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .place small{display:block;font:11px var(--mono);color:var(--faint)}
+.row .val{font:12.5px var(--mono);text-align:right;white-space:nowrap}
+.row .val small{display:block;color:var(--muted)}
+.row .cov{font:12px var(--mono);text-align:right;white-space:nowrap;min-width:8.5em;color:var(--text)}
+.row .cov small{display:block;color:var(--muted)}
+.row .cov:empty{display:none}
+.row.lit{background:rgba(231,180,79,.08)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.modes[hidden]{display:none}
+.modes button{padding:5px 12px;font:12px var(--mono);letter-spacing:.04em}
+.modes button[aria-pressed=true]{border-color:var(--day);color:var(--day2)}
+.legend{font:11px var(--mono);color:var(--faint)}
+select{appearance:none;border:1px solid var(--line2);background:var(--surface);color:var(--text);padding:9px 14px;border-radius:999px;font:13px var(--mono);max-width:100%}
+.pick{display:grid;gap:6px}
+.pick .k{font:12px/1.45 var(--body);color:var(--muted);max-width:72ch}
+.row.focus{outline:1px solid var(--day);outline-offset:-1px}
+.focusbox{border:1px solid var(--line2);border-radius:10px;padding:12px 14px;display:grid;gap:6px;max-width:760px}
+.focusbox[hidden]{display:none}
+.focusbox .t{font:600 12px var(--mono);letter-spacing:.06em;color:var(--muted)}
+.focusbox svg{width:100%;height:84px;display:block}
+.focusbox .k{font:12px var(--mono);color:var(--muted)}
+.controls{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+button{appearance:none;border:1px solid var(--line2);background:transparent;color:var(--text);padding:9px 18px;border-radius:999px;
+  font:15px var(--body);cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--day);outline-offset:3px}
+input[type=range]{flex:1;min-width:200px;accent-color:var(--day)}
+.time{font:13px var(--mono);color:var(--muted)}
+.notes{display:grid;gap:10px;max-width:72ch;color:var(--muted)}
+.notes b{color:var(--text);font-weight:600}
+.caption{font:12px var(--mono);color:var(--faint)}
+@media (max-width: 820px){
+  .stage{grid-template-columns:40px minmax(0,1fr);gap:10px}
+  .ringbox{grid-column:1 / -1;max-width:520px;width:100%;justify-self:center}
+  .row{grid-template-columns:36px minmax(0,1fr) auto auto;gap:6px;font-size:12px;padding:2px 4px}
+  .row .lat{font-size:10.5px}
+  .row .val,.row .cov{font-size:10.5px}
+  .row .place small{display:none}
+  .row .cov{min-width:0}
+}
+</style>
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="eyebrow">Meridian Chorus · layer 1 · daylight</div>
+    <h1>One meridian, one year of light</h1>
+    <p id="blurb">Thirteen voices stand on one meridian, from the North Pole to the South Pole, and sing through one year from solstice to solstice. Each breath is one day, midnight to midnight: a voice sounds while its sun is up, swells in through twilight, and only breathes while its sun is down. Everyone on a meridian shares solar noon, so every note centres on the same instant.</p>
+  </header>
+
+  <div class="pick">
+    <select id="piece" aria-label="Which render">
+      <option value="meridian_ds2023__layer2-wide-long">light, air, sea and ice · 16 min, four movements (layer 2.1)</option>
+      <option value="meridian_ds2023">daylight only · 7 min (layer 1)</option>
+    </select>
+    <div class="k" id="pieceNote"></div>
+  </div>
+  <div class="controls">
+    <button id="play" aria-label="Play">Play</button>
+    <input id="seek" type="range" min="0" max="1000" value="0" aria-label="Position in the year">
+    <span class="time" id="time">0:00</span>
+  </div>
+  <div class="modes" id="modes" hidden role="group" aria-label="What the ring shows">
+    <button data-m="light" aria-pressed="true">light</button><button data-m="air" aria-pressed="false">air</button><button data-m="sea" aria-pressed="false">sea</button><button data-m="ice" aria-pressed="false">ice</button>
+    <span class="legend" id="legend"></span>
+  </div>
+
+  <div class="stage">
+    <div class="ringbox"><canvas id="ring" aria-label="The year as rings of daylight, one ring per voice"></canvas>
+      <div class="ringlabel"><div class="date" id="date">–</div><div class="sub" id="sub"></div></div></div>
+    <div class="barbox" id="barbox"><canvas id="bar" aria-label="The meridian, pole to pole, with the sun's latitude"></canvas></div>
+    <div class="rows" id="rows" aria-live="off"></div>
+  </div>
+
+  <div class="focusbox" id="focus" hidden>
+    <div class="t" id="focusT"></div>
+    <svg id="spark" viewBox="0 0 520 84" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <div class="k" id="focusK"></div>
+  </div>
+
+  <div class="notes">
+    <p><b>The ring</b> is the year, starting at the December solstice at the top and running clockwise. Each band is one voice, North Pole outermost; its colour is that place's day length, from polar night (deep blue) to polar day (gold). The bands light up as the year plays.</p>
+    <p><b>The bar</b> is the meridian itself. Each parallel glows while its voice sounds. The sun marker rides between the tropics: it is the latitude where the sun stands overhead at noon, and the reason for everything you hear.</p>
+    <p><b>Tap or hover</b> a parallel, or its band in the ring, to see its whole year of daylight; tap it again to let go.</p>
+    <p id="numbers"><b>The numbers</b> beside the bar are that day at each parallel: day length, and sunrise and sunset in local solar time (noon is 12:00 everywhere on the line). Everything here is calculated from the sun's geometry (D, derived); later layers will add measured weather, ocean and ice.</p>
+    <p id="l2note" hidden><b>Layer 2</b> adds air, sea and ice, each on its own instrument so the chorus has room. The <b>sung voice</b> still carries the light. The <b>organ</b> is the air: on a cold day it plays one dark rank; on a warm day it adds the octave rank and opens up. A warm night also breathes fuller. The <b>strings</b> are the sea, an octave under each ocean parallel, heard day and night because the ocean doesn't sleep; warmer water sounds fuller. <b>Sea ice</b> is a lid on the sea voice, quieting it, and a high glass shimmer as loud as the ice is dense. The buttons recolour the ring by each layer. Air temperature is ERA5 reanalysis (D, modelled; Copernicus, CC BY 4.0, via Open-Meteo); sea surface temperature is NOAA OISST v2.1 (R); sea ice is the NOAA/NSIDC Climate Data Record v6 (R). Each value is the mean over the breath's block of days, at the grid cell nearest the parallel.</p>
+    <p><b>Places and territory.</b> The land and ice voices stand on Inuit Nunangat (75°N), at the Nunavut–Manitoba boundary (60°N), in South Dakota (45°N), on the Edwards Plateau in Texas (30°N), and in Antarctica (75°S and 90°S). Acknowledgements of the peoples whose lands these are, in their own words where they publish them, are being prepared and will be added here.</p>
+    <p><b>Sources.</b> Daylight is calculated from solar geometry (Meeus, as in NOAA's solar calculator; checked against the JPL DE421 ephemeris). Air temperature: ERA5 reanalysis (Copernicus Climate Change Service, CC BY 4.0), via the Open-Meteo historical weather API. Sea surface temperature: NOAA OISST v2.1 (Reynolds et al. 2007; Huang et al. 2020), via NOAA CoastWatch ERDDAP. Sea ice: NOAA/NSIDC Sea Ice Concentration Climate Data Record, version 6, via NOAA CoastWatch ERDDAP. Each value is the mean over a breath's days at the grid cell nearest the parallel; the cell used and its distance are recorded in <code>data/meridian/</code>. The South Pole's air temperature is ERA5 standing in for the Amundsen–Scott station record.</p>
+    <p class="caption" id="caption"></p>
+  </div>
+</div>
+<audio id="audio" preload="auto"></audio>
+<script>
+const $ = id => document.getElementById(id);
+const params = new URLSearchParams(location.search);
+let NAME = 'meridian_ds2023__layer2-wide-long';
+const audio = $('audio');
+let D = null, ringDim = null, ringLit = null;
+const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const MONTH = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const fmtDate = s => { const [y, m, d] = s.split('-').map(Number); return `${MONTH[m - 1]} ${d}, ${y}`; };
+const hm = h => { if (h === null || h === undefined) return '—'; const t = Math.round(h * 60); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; };
+const dur = h => h >= 23.999 ? 'all day' : h <= 0.001 ? 'none' : `${Math.floor(h)}h ${String(Math.round((h % 1) * 60)).padStart(2, '0')}m`;
+const fmtT = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+// day length (h) -> colour: polar night deep blue, through dusk violet, to polar day gold
+function dayColour(h, alpha){
+  const t = Math.max(0, Math.min(1, h / 24));
+  const stops = [[15, 28, 51], [70, 70, 130], [150, 110, 140], [231, 180, 79], [246, 220, 154]];
+  const x = t * (stops.length - 1), i = Math.min(stops.length - 2, Math.floor(x)), f = x - i;
+  const c = stops[i].map((v, k) => Math.round(v + (stops[i + 1][k] - v) * f));
+  return `rgba(${c[0]},${c[1]},${c[2]},${alpha})`;
+}
+
+// temperature -> colour (blue cold, pale middle, red warm) on the layer's own range; ice -> white on night
+function tempColour(x, lo, hi, alpha){
+  if (x === null || x === undefined) return `rgba(15,28,51,${alpha * 0.5})`;
+  const t = Math.max(0, Math.min(1, (x - lo) / (hi - lo)));
+  const stops = [[49, 54, 149], [116, 173, 209], [240, 236, 214], [244, 109, 67], [165, 0, 38]];
+  const y = t * (stops.length - 1), i = Math.min(stops.length - 2, Math.floor(y)), f = y - i;
+  const c = stops[i].map((v, k) => Math.round(v + (stops[i + 1][k] - v) * f));
+  return `rgba(${c[0]},${c[1]},${c[2]},${alpha})`;
+}
+function iceColour(x, alpha){
+  if (x === null || x === undefined) return `rgba(15,28,51,${alpha * 0.5})`;
+  const c = [15 + 225 * x, 28 + 212 * x, 51 + 199 * x].map(Math.round);
+  return `rgba(${c[0]},${c[1]},${c[2]},${alpha})`;
+}
+let mode = 'light';
+const COVCOL = {air: 'air_max_c', sea: 'sst_c', ice: 'ice_frac'};
+const covVal = (v, k, m) => { const s = D.covariates[String(D.voices[v].lat)][COVCOL[m]]; return s ? s[k] : null; };
+function cellColour(v, k, alpha){
+  if (mode === 'light') return dayColour(D.breaths[k].voices[v][0], alpha);
+  if (mode === 'air') return tempColour(covVal(v, k, 'air'), D.air_range[0], D.air_range[1], alpha);
+  if (mode === 'sea') return tempColour(covVal(v, k, 'sea'), D.sea_range[0], D.sea_range[1], alpha);
+  return iceColour(covVal(v, k, 'ice'), alpha);
+}
+const LEGEND = {light: 'colour: day length, polar night (blue) to polar day (gold)',
+  air: 'colour: daily high air temperature, -40 °C (blue) to 35 °C (red)',
+  sea: 'colour: sea surface temperature, -2 °C (blue) to 30 °C (red); land voices dark',
+  ice: 'colour: sea-ice concentration, open water (dark) to full cover (white)'};
+function setMode(m){
+  mode = m;
+  [...$('modes').querySelectorAll('button')].forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m));
+  $('legend').textContent = LEGEND[m];
+  buildRing(); if (focus !== null) drawSpark(focus); frame(true);
+}
+$('modes').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setMode(b.dataset.m); });
+
+function sizeCanvas(cv){
+  const r = cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = Math.max(1, Math.round(r.width * dpr)); cv.height = Math.max(1, Math.round(r.height * dpr));
+  return dpr;
+}
+
+function drawRingLayer(ctx, W, alpha){
+  const n = D.voices.length, nb = D.n_breaths, cx = W / 2, cy = W / 2;
+  const rOut = W * 0.48, rIn = W * 0.3, band = (rOut - rIn) / n;
+  ctx.clearRect(0, 0, W, W);
+  for (let v = 0; v < n; v++){
+    const r0 = rOut - (v + 1) * band, r1 = rOut - v * band - band * 0.12;
+    for (let k = 0; k < nb; k++){
+      const a0 = -Math.PI / 2 + 2 * Math.PI * k / nb, a1 = -Math.PI / 2 + 2 * Math.PI * (k + 1) / nb + 0.002;
+      ctx.beginPath(); ctx.arc(cx, cy, r1, a0, a1); ctx.arc(cx, cy, r0, a1, a0, true); ctx.closePath();
+      ctx.fillStyle = cellColour(v, k, alpha); ctx.fill();
+    }
+  }
+  // solstices and equinoxes
+  ctx.strokeStyle = `rgba(227,232,238,${alpha * 0.55})`; ctx.lineWidth = Math.max(1, W / 600);
+  for (const k of [0, ...D.movement_cuts_breath]){
+    const a = -Math.PI / 2 + 2 * Math.PI * k / nb;
+    ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * (rIn - W * 0.01), cy + Math.sin(a) * (rIn - W * 0.01));
+    ctx.lineTo(cx + Math.cos(a) * (rOut + W * 0.012), cy + Math.sin(a) * (rOut + W * 0.012)); ctx.stroke();
+  }
+}
+
+function buildRing(){
+  const cv = $('ring'); sizeCanvas(cv); const W = cv.width;
+  ringDim = document.createElement('canvas'); ringDim.width = ringDim.height = W;
+  ringLit = document.createElement('canvas'); ringLit.width = ringLit.height = W;
+  drawRingLayer(ringDim.getContext('2d'), W, 0.22);
+  drawRingLayer(ringLit.getContext('2d'), W, 1);
+}
+
+function drawRing(frac){
+  const cv = $('ring'), c = cv.getContext('2d'), W = cv.width;
+  if (!ringDim || ringDim.width !== W) buildRing();
+  c.clearRect(0, 0, W, W); c.drawImage(ringDim, 0, 0);
+  c.save(); c.beginPath(); c.moveTo(W / 2, W / 2);
+  c.arc(W / 2, W / 2, W, -Math.PI / 2, -Math.PI / 2 + 2 * Math.PI * frac); c.closePath(); c.clip();
+  c.drawImage(ringLit, 0, 0); c.restore();
+  if (focus !== null){
+    const n = D.voices.length, rOut = W * 0.48, rIn = W * 0.3, band = (rOut - rIn) / n;
+    c.strokeStyle = css('--text'); c.lineWidth = Math.max(1.5, W / 400);
+    for (const r of [rOut - focus * band + band * 0.02, rOut - (focus + 1) * band - band * 0.02]){
+      c.beginPath(); c.arc(W / 2, W / 2, r, 0, 2 * Math.PI); c.stroke(); }
+  }
+  const a = -Math.PI / 2 + 2 * Math.PI * frac;
+  c.strokeStyle = css('--day2'); c.lineWidth = Math.max(1.5, W / 360);
+  c.beginPath(); c.moveTo(W / 2 + Math.cos(a) * W * 0.29, W / 2 + Math.sin(a) * W * 0.29);
+  c.lineTo(W / 2 + Math.cos(a) * W * 0.495, W / 2 + Math.sin(a) * W * 0.495); c.stroke();
+}
+
+// the bar: y position of a latitude
+const latY = (lat, H) => { const pad = H * 0.04; return pad + (90 - lat) / 180 * (H - 2 * pad); };
+
+let curBreath = null;
+function drawBar(env, decl, hourFrac){
+  const cv = $('bar'), c = cv.getContext('2d'), W = cv.width, H = cv.height;
+  c.clearRect(0, 0, W, H);
+  const x = W / 2;
+  c.strokeStyle = css('--line2'); c.lineWidth = Math.max(2, W / 16);
+  c.beginPath(); c.moveTo(x, latY(90, H)); c.lineTo(x, latY(-90, H)); c.stroke();
+  // tropics and polar circles, faint
+  c.setLineDash([3, 4]); c.lineWidth = 1; c.strokeStyle = css('--faint');
+  for (const l of [23.44, -23.44, 66.56, -66.56]){ const y = latY(l, H); c.beginPath(); c.moveTo(x - W * 0.3, y); c.lineTo(x + W * 0.3, y); c.stroke(); }
+  c.setLineDash([]);
+  D.voices.forEach((v, i) => {
+    const y = latY(v.lat, H), e = env[i];
+    if (e > 0.01){ const g = c.createRadialGradient(x, y, 0, x, y, W * 0.5);
+      g.addColorStop(0, `rgba(246,220,154,${0.9 * e})`); g.addColorStop(1, 'rgba(246,220,154,0)');
+      c.fillStyle = g; c.beginPath(); c.arc(x, y, W * 0.5, 0, 2 * Math.PI); c.fill(); }
+    c.fillStyle = e > 0.01 ? dayColour(24 * (0.4 + 0.6 * e), 1) : css('--night');
+    c.strokeStyle = css('--muted'); c.lineWidth = 1;
+    c.beginPath(); c.arc(x, y, W * 0.14, 0, 2 * Math.PI); c.fill(); c.stroke();
+    if (D.covariates && curBreath !== null){
+      const sst = covVal(i, curBreath, 'sea'), ice = covVal(i, curBreath, 'ice');
+      if (sst !== null){ c.fillStyle = tempColour(sst, D.sea_range[0], D.sea_range[1], 0.95);
+        c.fillRect(x - W * 0.46, y - W * 0.035, W * 0.2, W * 0.07); }
+      if (ice){ c.strokeStyle = `rgba(240,244,250,${0.25 + 0.75 * ice})`; c.lineWidth = Math.max(1.5, W / 22);
+        c.beginPath(); c.arc(x, y, W * 0.2, 0, 2 * Math.PI); c.stroke(); }
+    }
+  });
+  // the sun marker: overhead-at-noon latitude, drawn as a small sun
+  const ys = latY(decl, H), noonness = Math.cos((hourFrac - 0.5) * 2 * Math.PI);
+  c.fillStyle = css('--sun'); c.globalAlpha = 0.55 + 0.45 * Math.max(0, noonness);
+  c.beginPath(); c.arc(x + W * 0.36, ys, W * 0.1, 0, 2 * Math.PI); c.fill();
+  for (let k = 0; k < 8; k++){ const a = k * Math.PI / 4; c.beginPath(); c.strokeStyle = css('--sun'); c.lineWidth = 1.2;
+    c.moveTo(x + W * 0.36 + Math.cos(a) * W * 0.14, ys + Math.sin(a) * W * 0.14);
+    c.lineTo(x + W * 0.36 + Math.cos(a) * W * 0.19, ys + Math.sin(a) * W * 0.19); c.stroke(); }
+  c.globalAlpha = 1;
+}
+
+function layoutRows(){
+  const H = $('bar').getBoundingClientRect().height;
+  $('rows').style.height = H + 'px';
+  [...$('rows').children].forEach((r, i) => r.style.top = latY(D.voices[i].lat, H) + 'px');
+}
+
+function buildRows(){
+  $('rows').innerHTML = D.voices.map((v, i) => `<div class="row" data-i="${i}" tabindex="0" role="button" aria-label="${latName(v.lat)} ${v.place}: show its year"><span class="lat">${v.lat > 0 ? v.lat + '°N' : v.lat < 0 ? -v.lat + '°S' : '0°'}</span>
+    <span class="place">${v.place}<small>${v.surface}</small></span><span class="val"><span class="dl">–</span><small class="rs"></small></span><span class="cov"></span></div>`).join('');
+}
+
+function sizeAll(){
+  if (!D) return;
+  const box = $('ring').getBoundingClientRect();
+  const h = Math.max(box.height, D.voices.length * 44);  // never let the 13 rows overlap (phones)
+  $('bar').style.height = h + 'px'; $('barbox').style.height = h + 'px';
+  sizeCanvas($('bar')); buildRing(); layoutRows(); frame(true);
+}
+
+let lastBreath = -1, focus = null, pinned = false;
+function latName(l){ return l > 0 ? l + '°N' : l < 0 ? -l + '°S' : '0°'; }
+function setFocus(i, pin){
+  if (pin){ if (pinned && focus === i){ pinned = false; i = null; } else pinned = true; }
+  else if (pinned) return;
+  focus = i;
+  [...$('rows').children].forEach((r, j) => r.classList.toggle('focus', j === i));
+  $('focus').hidden = i === null;
+  if (i !== null) drawSpark(i);
+  frame(true);
+}
+// the focus curve: the ring's current layer for one voice, on that layer's scale
+function sparkSeries(i){
+  if (mode === 'light') return {vals: D.breaths.map(b => b.voices[i][0]), lo: 0, hi: 24, ticks: [0, 12, 24], unit: 'h', what: 'day length'};
+  if (mode === 'air') return {vals: D.covariates[String(D.voices[i].lat)].air_max_c, lo: D.air_range[0], hi: D.air_range[1], ticks: [-40, -20, 0, 20], unit: '°', what: 'daily high air temperature (°C)'};
+  if (mode === 'sea') return {vals: D.covariates[String(D.voices[i].lat)].sst_c, lo: D.sea_range[0], hi: D.sea_range[1], ticks: [0, 15, 30], unit: '°', what: 'sea surface temperature (°C)'};
+  const s = D.covariates[String(D.voices[i].lat)].ice_frac;
+  return {vals: s && s.map(x => 100 * x), lo: 0, hi: 100, ticks: [0, 50, 100], unit: '%', what: 'sea-ice concentration'};
+}
+function sparkY(x, S, H, pad){ return H - pad - (H - 2 * pad) * (Math.max(S.lo, Math.min(S.hi, x)) - S.lo) / (S.hi - S.lo); }
+function drawSpark(i){
+  const v = D.voices[i], nb = D.n_breaths, W = 520, H = 84, pad = 6, S = sparkSeries(i);
+  const pts = S.vals ? S.vals.map((x, k) => [pad + (W - 2 * pad) * k / (nb - 1), sparkY(x, S, H, pad)]) : [];
+  const lines = S.ticks.map(h => { const y = sparkY(h, S, H, pad);
+    return `<line x1="0" x2="${W}" y1="${y}" y2="${y}" stroke="#2c3d4f" stroke-width="1"/><text x="${W - 2}" y="${y < 12 ? y + 10 : y - 2}" fill="#5b6878" font-size="10" text-anchor="end">${h}${S.unit}</text>`; }).join('');
+  const cuts = D.movement_cuts_breath.map(k => `<line x1="${pad + (W - 2 * pad) * k / (nb - 1)}" x2="${pad + (W - 2 * pad) * k / (nb - 1)}" y1="0" y2="${H}" stroke="#2c3d4f" stroke-dasharray="3 3"/>`).join('');
+  $('spark').innerHTML = lines + cuts + `<polyline fill="none" stroke="#e7b44f" stroke-width="2" points="${pts.map(p => p.join(',')).join(' ')}"/>` +
+    `<circle id="sparkDot" r="4" fill="#ffd36b"/>`;
+  $('focusT').textContent = `${latName(v.lat)} · ${v.place} · ${S.what} through the year (dashed: equinoxes and the June solstice)`;
+  if (!S.vals){ $('focusK').textContent = `no ${mode} layer at this voice (${v.surface}) · its note: ${noteName(v.midi)}`; }
+  else if (mode === 'light'){ $('focusK').textContent = `shortest ${dur(Math.min(...S.vals))} · longest ${dur(Math.max(...S.vals))} · its note: ${noteName(v.midi)}`; }
+  else { const f = x => mode === 'ice' ? Math.round(x) + '%' : x.toFixed(1) + ' °C';
+    $('focusK').textContent = `lowest ${f(Math.min(...S.vals))} · highest ${f(Math.max(...S.vals))} · its note: ${noteName(v.midi)}` +
+      (mode === 'sea' && D.sea_pitch && D.sea_pitch[String(v.lat)] !== undefined ? ` · the sea sings ${noteName(D.sea_pitch[String(v.lat)])}` : ''); }
+  drawSparkMarker(lastBreath < 0 ? 0 : lastBreath);
+}
+function drawSparkMarker(k){
+  const dot = document.getElementById('sparkDot'); if (!dot || focus === null) return;
+  const nb = D.n_breaths, W = 520, H = 84, pad = 6, S = sparkSeries(focus);
+  if (!S.vals){ dot.setAttribute('r', 0); return; }
+  dot.setAttribute('cx', pad + (W - 2 * pad) * k / (nb - 1)); dot.setAttribute('cy', sparkY(S.vals[k], S, H, pad));
+}
+const NOTES = ['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+const noteName = m => NOTES[m % 12] + (Math.floor(m / 12) - 1);
+function frame(force){
+  if (!D) return;
+  const t = audio.currentTime || 0, B = D.breath_s, nb = D.n_breaths;
+  const k = Math.min(nb - 1, Math.floor(t / B)), hourFrac = (t / B) % 1;
+  const fi = Math.min(D.env[0].length - 1, Math.floor(t * D.env_hz));
+  const env = D.env.map(e => e[fi] / 100);
+  const b = D.breaths[k], b2 = D.breaths[Math.min(nb - 1, k + 1)];
+  const decl = b.declination + (b2.declination - b.declination) * hourFrac;
+  curBreath = k;
+  drawRing(Math.min(1, t / (nb * B)));
+  drawBar(env, decl, hourFrac);
+  const rows = $('rows').children;
+  env.forEach((e, i) => rows[i].classList.toggle('lit', e > 0.25));
+  if (k !== lastBreath || force){
+    lastBreath = k;
+    $('date').textContent = fmtDate(b.date);
+    $('sub').innerHTML = `breath ${k + 1} of ${nb}<br>sun overhead at ${Math.abs(b.declination).toFixed(1)}°${b.declination >= 0 ? 'N' : 'S'}`;
+    b.voices.forEach((v, i) => {
+      rows[i].querySelector('.dl').textContent = dur(v[0]);
+      rows[i].querySelector('.rs').textContent = v[2] === null ? (v[0] > 12 ? 'sun never sets' : 'sun never rises') : `${hm(v[2])}–${hm(v[3])}`;
+      if (D.covariates){
+        const C = D.covariates[String(D.voices[i].lat)], deg = x => `${x < 0 ? '−' : ''}${Math.abs(x).toFixed(0)}°`;
+        const sea = [C.sst_c ? `sea ${C.sst_c[k].toFixed(1)}°` : '', C.ice_frac ? `ice ${Math.round(100 * C.ice_frac[k])}%` : ''].filter(Boolean).join(' · ');
+        rows[i].querySelector('.cov').innerHTML = `air ${deg(C.air_max_c[k])} / ${deg(C.air_min_c[k])}<small>${sea || '&nbsp;'}</small>`;
+      }
+    });
+  }
+  const hour = hourFrac * 24;
+  const when = hour < 0.5 || hour > 23.5 ? ' (midnight)' : Math.abs(hour - 12) < 0.5 ? ' (noon)' : '';
+  $('time').textContent = `${fmtT(t)} · solar time ${hm(hour)}${when}`;
+  if (focus !== null && force !== 'skip') drawSparkMarker(k);
+  if (!seeking) $('seek').value = Math.round(1000 * t / (audio.duration || nb * B));
+}
+
+let seeking = false;
+function loop(){ frame(false); if (!audio.paused) requestAnimationFrame(loop); }
+$('play').onclick = async () => {
+  if (audio.paused){ try { await audio.play(); } catch (e) { $('caption').textContent = 'The audio could not start. Try pressing play again.'; return; }
+    $('play').textContent = 'Pause'; $('play').setAttribute('aria-label', 'Pause'); requestAnimationFrame(loop); }
+  else { audio.pause(); $('play').textContent = 'Play'; $('play').setAttribute('aria-label', 'Play'); }
+};
+$('seek').oninput = () => { seeking = true; const d = audio.duration || D.n_breaths * D.breath_s; audio.currentTime = d * $('seek').value / 1000; frame(true); };
+$('seek').onchange = () => { seeking = false; };
+audio.addEventListener('seeked', () => frame(true));
+audio.addEventListener('ended', () => { $('play').textContent = 'Play'; });
+
+$('rows').addEventListener('mouseover', e => { const r = e.target.closest('.row'); if (r) setFocus(+r.dataset.i, false); });
+$('rows').addEventListener('mouseleave', () => { if (!pinned) setFocus(null, false); });
+$('rows').addEventListener('click', e => { const r = e.target.closest('.row'); if (r) setFocus(+r.dataset.i, true); });
+$('rows').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset.i){ e.preventDefault(); setFocus(+e.target.dataset.i, true); } });
+function ringBand(e){
+  const cv = $('ring'), r = cv.getBoundingClientRect(), x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2;
+  const rad = Math.hypot(x, y) / r.width, n = D.voices.length;
+  if (rad > 0.48 || rad < 0.3) return null;
+  return Math.min(n - 1, Math.floor((0.48 - rad) / ((0.48 - 0.3) / n)));
+}
+$('ring').addEventListener('mousemove', e => { if (D) setFocus(ringBand(e), false); });
+$('ring').addEventListener('mouseleave', () => { if (!pinned) setFocus(null, false); });
+$('ring').addEventListener('click', e => { if (!D) return; const i = ringBand(e); if (i !== null) setFocus(i, true); });
+const H1 = document.querySelector('h1').textContent, NUMBERS = $('numbers').innerHTML;
+function loadPiece(name){
+  NAME = name; audio.pause(); $('play').textContent = 'Play'; $('play').setAttribute('aria-label', 'Play');
+  focus = null; pinned = false; lastBreath = -1; $('focus').hidden = true;
+  fetch(`${NAME}.json`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
+    D = d; audio.src = d.audio; mode = 'light';
+    [...$('modes').querySelectorAll('button')].forEach(b => b.setAttribute('aria-pressed', b.dataset.m === 'light'));
+    const l2 = !!d.covariates;
+    $('modes').hidden = !l2; $('l2note').hidden = !l2;
+    $('eyebrow').textContent = l2 ? 'Meridian Chorus · layer 2 · light, air, sea, ice' : 'Meridian Chorus · layer 1 · daylight';
+    document.querySelector('h1').textContent = l2 ? 'One meridian: light, air, sea and ice' : H1;
+    $('legend').textContent = LEGEND.light;
+    $('numbers').innerHTML = l2 ? "<b>The numbers</b> beside the bar are that breath at each parallel: day length, sunrise and sunset in local solar time (noon is 12:00 everywhere on the line), then the air's daily high and low, and the sea's surface temperature and ice cover where there is sea (°C; means over the breath's days). Beside each parallel on the bar, a short tick is the sea's temperature and a white ring is its ice." : NUMBERS;
+    $('pieceNote').textContent = d.variant && d.variant.note ? d.variant.note : 'The first round, kept as it was: daylight alone, organ, strings and sung voice all on the light.';
+    $('caption').textContent = `${d.year} · meridian ${Math.abs(d.meridian)}°${d.meridian < 0 ? 'W' : 'E'} · ${d.n_breaths} breaths of ${d.days_per_breath} days, ${d.breath_s} s each · ${l2 ? 'daylight derived from solar geometry (D); air ERA5 (D); sea OISST (R); ice NSIDC CDR (R)' : 'all values derived from solar geometry'}`;
+    buildRows(); sizeAll();
+  }).catch(e => { $('caption').textContent = `Could not load ${NAME}.json (${e.message}). Reload the page to try again.`; });
+}
+$('piece').addEventListener('change', e => loadPiece(e.target.value));
+loadPiece(NAME);
+new ResizeObserver(() => sizeAll()).observe($('ring'));
+</script>
