@@ -64,7 +64,7 @@ This is an interdisciplinary project, so its words come from several fields. Eac
 : The difference between a value and the average for a reference period. *(in: climate-pair-records)*
 
 **attraction flow**
-: Water released at a fishway's entrance to draw migrating fish to it. *(in: wells-dam-counts)*
+: Water released at a fishway's entrance to draw migrating fish to it.
 
 **best track**
 : An agency's after-the-fact record of a storm's position and strength every six hours. *(in: climate-pair-records)*
@@ -103,7 +103,7 @@ This is an interdisciplinary project, so its words come from several fields. Eac
 : The area of ocean with at least 15% ice cover. *(in: climate-pair-records)*
 
 **tailrace**
-: The channel carrying water away below a dam. *(in: wells-dam-counts)*
+: The channel carrying water away below a dam.
 
 **trace**
 : Precipitation too small to measure; ECCC records it as 0 with the flag T. *(in: water-year-records)*
@@ -134,7 +134,7 @@ This is an interdisciplinary project, so its words come from several fields. Eac
 ## Sources
 
 **DART**
-: Columbia River Data Access in Real Time, a data service of Columbia Basin Research, University of Washington. *(in: wells-dam-counts)*
+: Columbia River Data Access in Real Time, a data service of Columbia Basin Research, University of Washington.
 
 **ECCC**
 : Environment and Climate Change Canada. *(in: water-year-records)*
