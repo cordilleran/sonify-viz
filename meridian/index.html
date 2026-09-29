@@ -2,26 +2,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Meridian Chorus</title>
-<link rel="stylesheet" href="../listen/fonts/fonts.css">
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root{
-  color-scheme: dark;
+  --focus:var(--day); --accent:var(--day);
   --ground:#0b1119; --surface:#111a24; --line:#1f2c3a; --line2:#2c3d4f;
   --text:#e3e8ee; --muted:#8d9bab; --faint:#5b6878;
   --night:#0f1c33; --dusk:#6b4f8a; --day:#e7b44f; --day2:#f6dc9a; --sun:#ffd36b;
-  --display:"Gloock", "Iowan Old Style", Georgia, serif;
-  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
-*{box-sizing:border-box}
-.foot{font:12px var(--mono);color:var(--faint);border-top:1px solid var(--line);padding-top:14px}
-.foot a{color:var(--muted)}
-.foot a:focus-visible{outline:2px solid var(--sun);outline-offset:2px}
-body{margin:0;background:var(--ground);color:var(--text);font:15px/1.55 var(--body)}
 .wrap{max-width:1240px;margin:0 auto;padding:28px 16px 64px;overflow-x:clip;display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
 .wrap > *{min-width:0}
-h1{font-family:var(--display);font-weight:400;font-size:clamp(38px,6.5vw,70px);line-height:.95;margin:0}
-.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 header{display:grid;gap:12px}
 header p{margin:0;max-width:66ch;color:var(--muted)}
 .stage{display:grid;grid-template-columns:minmax(280px,560px) 64px minmax(0,1fr);gap:14px;align-items:start}
@@ -48,7 +38,6 @@ canvas{display:block;width:100%;height:100%}
 .modes button{padding:5px 12px;font:12px var(--mono);letter-spacing:.04em}
 .modes button[aria-pressed=true]{border-color:var(--day);color:var(--day2)}
 .legend{font:11px var(--mono);color:var(--faint)}
-select{appearance:none;border:1px solid var(--line2);background:var(--surface);color:var(--text);padding:9px 14px;border-radius:999px;font:13px var(--mono);max-width:100%;width:100%;text-overflow:ellipsis}
 .pick{display:grid;gap:6px}
 .pick .k{font:12px/1.45 var(--body);color:var(--muted);max-width:72ch}
 .row.focus{outline:1px solid var(--day);outline-offset:-1px}
@@ -57,12 +46,6 @@ select{appearance:none;border:1px solid var(--line2);background:var(--surface);c
 .focusbox .t{font:600 12px var(--mono);letter-spacing:.06em;color:var(--muted)}
 .focusbox svg{width:100%;height:84px;display:block}
 .focusbox .k{font:12px var(--mono);color:var(--muted)}
-.controls{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-button{appearance:none;border:1px solid var(--line2);background:transparent;color:var(--text);padding:9px 18px;border-radius:999px;
-  font:15px var(--body);cursor:pointer}
-button:focus-visible,input:focus-visible{outline:2px solid var(--day);outline-offset:3px}
-input[type=range]{flex:1;min-width:200px;accent-color:var(--day)}
-.time{font:13px var(--mono);color:var(--muted)}
 .notes{display:grid;gap:10px;max-width:72ch;color:var(--muted)}
 .notes b{color:var(--text);font-weight:600}
 .caption{font:12px var(--mono);color:var(--faint)}
@@ -75,9 +58,6 @@ input[type=range]{flex:1;min-width:200px;accent-color:var(--day)}
   .row .place small{display:none}
   .row .cov{min-width:0}
 }
-/* embedded in the Quarto site (?embed): the site supplies the title, intro and footer */
-.embedded header h1,.embedded header > p,.embedded header .eyebrow,.embedded .foot{display:none}
-.embedded .wrap{padding-block:4px 48px}
 </style>
 <div class="wrap">
   <header>
@@ -401,6 +381,7 @@ function ringBand(e){
 }
 $('ring').addEventListener('mousemove', e => { if (D) setFocus(ringBand(e), false); });
 $('ring').addEventListener('mouseleave', () => { if (!pinned) setFocus(null, false); });
+window.addEventListener('keydown', e => { if (e.key === 'Escape' && pinned){ pinned = false; setFocus(null, false); } });   // Escape lets go, as on Superior Ice
 $('ring').addEventListener('click', e => { if (!D) return; const i = ringBand(e); if (i !== null) setFocus(i, true); });
 const H1 = document.querySelector('h1').textContent, NUMBERS = $('numbers').innerHTML;
 function loadPiece(name){
@@ -421,6 +402,7 @@ function loadPiece(name){
   }).catch(e => { $('caption').textContent = `Could not load ${NAME}.json (${e.message}). Reload the page to try again.`; });
 }
 $('piece').addEventListener('change', e => loadPiece(e.target.value));
+if ([...$('piece').options].some(o => o.value === params.get('piece'))){ NAME = params.get('piece'); $('piece').value = NAME; }   // links from the track cards
 loadPiece(NAME);
 new ResizeObserver(() => sizeAll()).observe($('ring'));
 </script>

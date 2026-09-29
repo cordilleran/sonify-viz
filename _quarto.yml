@@ -41,6 +41,8 @@ project:
     - meridian/meridian_ds2023.json
     - meridian/meridian_ds2023.mp3
     - superior-ice/*
+    - superior-ice/days/*
+    - shared/*
 
 website:
   title: "sonify-viz"

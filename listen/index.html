@@ -1,20 +1,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Water Year Rings</title>
-<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root{
-  color-scheme: dark;
+  --focus:var(--salmon); --accent:var(--salmon);
   --ground:#0c1618; --surface:#112022; --line:#223538; --line2:#2d4549;
   --text:#dde7e4; --muted:#8aa0a0; --faint:#5d7374;
   --river:#5db4b8; --river2:#3f8595; --deep:#7e8fd6; --clay:#cc8e60; --ice:#bfe3ee;
   --snow:#eef3f1; --rain:#80b7e2; --moss:#96c06b; --salmon:#e8573c; --salmon2:#f19070;
   --sun:#e7b44f; --sun2:#b89c5f;
-  --display:"Gloock", "Iowan Old Style", Georgia, serif;
-  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
-*{box-sizing:border-box}
 body{margin:0;background:var(--ground);color:var(--text);font:15px/1.55 var(--body);}
 .wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:28px 64px;display:grid;gap:40px}
 h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;letter-spacing:.005em}
@@ -28,7 +24,6 @@ header p{margin:0;max-width:62ch;color:var(--muted)}
 .piece small{font:12px var(--mono);color:var(--muted)}
 .piece[aria-pressed="true"]{background:var(--text);color:var(--ground);border-color:var(--text)}
 .piece[aria-pressed="true"] small{color:#3c4d4f}
-.piece:focus-visible,button:focus-visible,.ev:focus-visible{outline:2px solid var(--salmon);outline-offset:3px}
 
 .stage{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:36px;align-items:center}
 @media (max-width:860px){.stage{grid-template-columns:1fr}}
@@ -44,11 +39,8 @@ header p{margin:0;max-width:62ch;color:var(--muted)}
 .harm b{color:var(--text);font-weight:600}
 .caption{min-height:3.2em;font-size:16px;color:var(--snow);border-left:2px solid var(--salmon);padding-left:12px;transition:opacity .6s}
 .transport{display:flex;align-items:center;gap:14px}
-.play{width:52px;height:52px;border-radius:50%;border:none;background:var(--salmon);color:#fff;cursor:pointer;display:grid;place-items:center;flex:none}
-.play svg{width:20px;height:20px;fill:currentColor}
+.transport input[type=range]{min-width:120px}
 .time{font:13px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
-.bar{flex:1;height:4px;background:var(--line2);border-radius:2px;position:relative;cursor:pointer}
-.bar i{position:absolute;inset:0 auto 0 0;background:var(--text);border-radius:2px;width:0}
 /* dashboard: every record's value at the playhead, next to the instrument it drives */
 .dash{display:grid;gap:0;border-top:1px solid var(--line)}
 .dash .hd{display:flex;justify-content:space-between;gap:12px;font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:8px 4px}
@@ -145,9 +137,9 @@ section > h2{font-size:28px}
       </div>
       <div class="caption" id="caption" aria-live="polite"></div>
       <div class="transport">
-        <button class="play" id="play" aria-label="Play"><svg viewBox="0 0 20 20" id="picon"><path d="M5 3l12 7-12 7z"/></svg></button>
+        <button id="play" aria-label="Play">Play</button>
         <span class="time" id="time">0:00 / 0:00</span>
-        <div class="bar" id="bar" aria-hidden="true"><i id="barfill"></i></div>
+        <input id="seek" type="range" min="0" max="1000" value="0" aria-label="Position in the water year">
       </div>
       <div>
         <div class="dash" id="dash" role="table" aria-label="Each record's value at the playhead and the instrument it drives">
@@ -387,7 +379,10 @@ ring.addEventListener('click', e => {
   let a = Math.atan2(dy, dx) + Math.PI/2; if (a < 0) a += Math.PI*2;
   seek((a / (Math.PI*2)) * ND() * D.bar_seconds / 3);
 });
-$('bar').addEventListener('click', e => { const r = e.currentTarget.getBoundingClientRect(); seek((e.clientX - r.left)/r.width * D.duration); });
+let seeking = false;
+$('seek').addEventListener('input', () => { seeking = true; seek(D.duration * $('seek').value / 1000); });
+$('seek').addEventListener('change', () => { seeking = false; });
+window.addEventListener('keydown', e => { if (e.code === 'Space' && !['BUTTON', 'SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)){ e.preventDefault(); $('play').click(); } });
 function seek(s){ audio.currentTime = Math.max(0, Math.min(D.duration - 0.5, s)); if (!playing) frame(true); }
 
 // ------------------------------------------------------ readouts --------
@@ -507,7 +502,7 @@ function frame(force){
     $('date').textContent = fmtDate(D.dates[day]);
     $('harm').innerHTML = `<b>${D.key} ${bar.mode}</b> · chord <b>${ch.roman}</b> (${ch.name}) · phase <b>${bar.phase}</b>`;
     $('time').textContent = `${fmt(t)} / ${fmt(D.duration)}`;
-    $('barfill').style.width = (100 * t / D.duration) + '%';
+    if (!seeking) $('seek').value = Math.round(1000 * t / D.duration);
     document.querySelectorAll('#drows .m i').forEach(el => { el.style.width = (100 * (env[el.dataset.stem] || 0)) + '%'; });
     D.lanes.forEach((ln, i) => { const el = $('dv-' + i), v = fmtVal(ln, day); el.textContent = v === null ? 'no reading' : v; el.classList.toggle('none', v === null); });
     if (mi !== lastMode){ document.querySelectorAll('.mode').forEach(m => m.classList.remove('cur')); const m = $('mode-' + mi); if (m) m.classList.add('cur'); lastMode = mi; }
@@ -533,7 +528,7 @@ async function load(name){
   try { localStorage.setItem('wyr-piece', name); } catch (e) {}
   try { const u = new URL(location.href); u.searchParams.set('piece', name); history.replaceState(null, '', u); } catch (e) {}
 }
-function setIcon(){ $('picon').innerHTML = playing ? '<path d="M5 3h4v14H5zM11 3h4v14h-4z"/>' : '<path d="M5 3l12 7-12 7z"/>'; $('play').setAttribute('aria-label', playing ? 'Pause' : 'Play'); }
+function setIcon(){ $('play').textContent = playing ? 'Pause' : 'Play'; $('play').setAttribute('aria-label', playing ? 'Pause' : 'Play'); }   // the pill Play button shared by the standalone pieces
 $('play').addEventListener('click', async () => {
   if (playing){ audio.pause(); return; }
   try { await audio.play(); } catch (e) { $('caption').textContent = 'The audio could not start. Try pressing play again.'; }

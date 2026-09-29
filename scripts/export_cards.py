@@ -11,6 +11,7 @@ A card whose version disagrees with the lock stops the export
 (tests/test_cards.py checks the same thing). Card `todo` lists stay in the
 YAML and never reach the page.
 """
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -83,6 +84,8 @@ def mapping_table(c):
 def card_md(c, e, album):
     name = c["script"].replace("pilot_", "").replace(".py", "")
     listen = LISTEN[album].format(name=name, basin=(c["args"] or [""])[0])
+    if c.get("site_mp3") and "?" not in listen:   # a piece page with several renders: open this card's render
+        listen += "?piece=" + Path(c["site_mp3"]).stem
     y = c["year"]
     # hash the MP3 this site actually plays: the site copy the render wrote (Climate Pair), or the
     # companion's encode of the locked WAV (Water Year, written by export_companion.py)
@@ -150,8 +153,11 @@ def render():
 
 
 def main():
-    if "--check-published" in sys.argv:   # publish_site.sh: python export_cards.py --check-published REPO
-        bad = uncarded(sys.argv[sys.argv.index("--check-published") + 1])
+    ap = argparse.ArgumentParser(description="Write the Tracks page from tracks/*.yaml, or check a published tree.")
+    ap.add_argument("--check-published", metavar="REPO", help="fail if any MP3 under REPO has no track card (publish_site.sh)")
+    a = ap.parse_args()
+    if a.check_published:
+        bad = uncarded(a.check_published)
         if bad:
             raise SystemExit("published audio with no track card (add one in tracks/):\n  " + "\n  ".join(bad))
         print("every published MP3 has a track card")

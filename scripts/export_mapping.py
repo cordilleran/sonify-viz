@@ -30,11 +30,11 @@ OUT = ROOT / "tracks" / "mapping"
 WITHHELD = {"sockeye", "wells_temp", "ohc_1e22J"}
 
 
-def locked_score(track):
-    """The locked render's score JSON, after checking it against the lock."""
+def locked_score(track, suffix="_score.json"):
+    """The locked render's score (or page-data) JSON, after checking it against the lock."""
     import dsp_core  # the same LIGHT_OUT the renders wrote to
     e = json.loads(LOCK.read_text())["tracks"][track]
-    rel = next(k for k in e["outputs"] if k.endswith("_score.json"))
+    rel = next(k for k in e["outputs"] if k.endswith(suffix))
     p = dsp_core.LIGHT_OUT / rel.partition("/")[2]
     if hashlib.sha256(p.read_bytes()).hexdigest() != e["outputs"][rel]:
         raise SystemExit(f"{track}: {p.name} differs from the locked render; re-render or re-lock first")
@@ -77,18 +77,82 @@ def climate_pair(track):
     return version, {"years": table(years, types)}
 
 
-TRACKS = {"granby-wy2024": water_year, "okanagan-wy2024": water_year,
-          "climate-pair-pacific": climate_pair, "climate-pair-atlantic": climate_pair}
+def meridian(track):
+    """One row per voice per breath: the sun each voice sings, and (layer 2) the air, sea and ice under it."""
+    sc, version = locked_score(track)
+    cols, cov, warm = sc["voice_columns"], sc.get("covariates", {}), sc.get("warmth", {})
+    def at(a, i):   # one breath of a per-breath series; absent series (land, or layer 1) give None
+        return None if not isinstance(a, list) or a[i] is None else float(a[i])
+
+    rows = []
+    for b in sc["breaths"]:
+        for v, vals in zip(sc["voices"], b["voices"], strict=True):
+            i, c, w = b["breath"], cov.get(str(v["lat"]), {}), warm.get(str(v["lat"]), {})
+            rows.append({"breath": i, "t": b["t"], "date": dt.date.fromisoformat(b["date"]), "lat": v["lat"],
+                         **{n: None if x is None else float(x) for n, x in zip(cols, vals, strict=True)},
+                         "air_max_c": at(c.get("air_max_c"), i), "air_min_c": at(c.get("air_min_c"), i),
+                         "sst_c": at(c.get("sst_c"), i), "ice_frac": at(c.get("ice_frac"), i),
+                         "warmth_day": at(w.get("day"), i), "warmth_night": at(w.get("night"), i)})
+    f = pa.float64()
+    types = [("breath", pa.int32()), ("t", f), ("date", pa.date32()), ("lat", pa.int32())] + [(n, f) for n in cols]
+    if cov:  # layer 1 plays the daylight alone
+        types += [("air_max_c", f), ("air_min_c", f), ("sst_c", f), ("ice_frac", f), ("warmth_day", f), ("warmth_night", f)]
+    sea = sc.get("sea_pitch", {})
+    voices = [{"lat": v["lat"], "place": v["place"], "surface": v["surface"], "midi": v["midi"],
+               "sea_midi": sea.get(str(v["lat"]))} for v in sc["voices"]]
+    vt = [("lat", pa.int32()), ("place", pa.string()), ("surface", pa.string()), ("midi", pa.int32())] + \
+         ([("sea_midi", pa.int32())] if sea else [])
+    return version, {"voices": table(voices, vt), "voice_breaths": table(rows, types)}
+
+
+def superior_ice(track):
+    """The page data of the locked render: each region's day, the lake's day, the events and the regions."""
+    sc, version = locked_score(track, "_viz.json")
+    N, ds, f = sc["n_days"], sc["day_s"], pa.float64()
+    dates = [dt.date.fromisoformat(d) for d in sc["dates"]]
+    cuts = sc["movement_cuts_day"]
+    ren = {"ice": "ice_pct", "sst": "sst_c", "tmean": "air_mean_c", "wind": "wind_max_ms", "wdir": "wind_dir_deg",
+           "precip": "precip_mm", "snow": "snow_mm"}
+    rd = [{"date": dates[d], "day": d, "t": d * ds, "region": r["id"],
+           **{ren[k]: float(sc["region_series"][r["id"]][k][d]) for k in ren}} for d in range(N) for r in sc["regions"]]
+    ld = [{"date": dates[d], "day": d, "t": d * ds, "movement": 1 + sum(d >= c for c in cuts),
+           "lake_ice_pct": float(sc["lake_ice"][d]), **{f"hist_{k}_pct": float(sc["hist"][k][d]) for k in sc["hist"]},
+           "daylength_h": float(sc["daylen"][d]), "turnover": d in sc["turnover_days"]} for d in range(N)]
+    ev = [{"region": r["id"], "day": e[0], "kind": "freeze" if e[1] > 0 else "breakup", "size_pp": float(e[2]),
+           "offset_days": float(e[3]) if len(e) > 3 else 0.0, "t": (e[0] + (e[3] if len(e) > 3 else 0)) * ds}
+          for r in sc["regions"] for e in sc["events"].get(r["id"], [])]
+    bd = sc.get("birds", {})
+    rg = [{**{k: r[k] for k in ("id", "name", "lon", "lat", "pan", "ice_midi", "water_midi", "drop_midi")},
+           "loon_day": (bd.get(r["id"]) or {}).get("loon"), "goose_day": (bd.get(r["id"]) or {}).get("goose")}
+          for r in sc["regions"]]
+    i32, s_ = pa.int32(), pa.string()
+    return version, {
+        "regions": table(rg, [("id", s_), ("name", s_), ("lon", f), ("lat", f), ("pan", f), ("ice_midi", i32),
+                              ("water_midi", i32), ("drop_midi", i32), ("loon_day", i32), ("goose_day", i32)]),
+        "region_days": table(rd, [("date", pa.date32()), ("day", i32), ("t", f), ("region", s_)] + [(v, f) for v in ren.values()]),
+        "lake_days": table(ld, [("date", pa.date32()), ("day", i32), ("t", f), ("movement", i32), ("lake_ice_pct", f)] +
+                           [(f"hist_{k}_pct", f) for k in sc["hist"]] + [("daylength_h", f), ("turnover", pa.bool_())]),
+        "events": table(ev, [("region", s_), ("day", i32), ("kind", s_), ("size_pp", f), ("offset_days", f), ("t", f)])}
+
+
+# mapping folder -> (locked track, exporter)
+TRACKS = {"granby-wy2024": ("granby-wy2024", water_year), "okanagan-wy2024": ("okanagan-wy2024", water_year),
+          "climate-pair-pacific": ("climate-pair-pacific", climate_pair),
+          "climate-pair-atlantic": ("climate-pair-atlantic", climate_pair),
+          "meridian-layer2-wide-long": ("meridian-chorus-layer2:wide-long", meridian),
+          "meridian-daylight": ("meridian-chorus-daylight", meridian),
+          "superior-ice": ("icecover-superior-ice:v1", superior_ice),
+          "superior-ice-short": ("icecover-superior-ice", superior_ice)}
 
 
 def main():
-    for track, fn in TRACKS.items():
+    for folder, (track, fn) in TRACKS.items():
         version, tables = fn(track)
-        d = OUT / track
+        d = OUT / folder
         d.mkdir(parents=True, exist_ok=True)
         for name, t in tables.items():
             pq.write_table(t, d / f"{name}.parquet", compression="zstd")
-        print(f"{track} v{version}: " + ", ".join(f"{n} {t.num_rows} rows" for n, t in tables.items()))
+        print(f"{folder} v{version}: " + ", ".join(f"{n} {t.num_rows} rows" for n, t in tables.items()))
 
 
 if __name__ == "__main__":

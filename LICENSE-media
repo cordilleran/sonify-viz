@@ -12,9 +12,15 @@ Superior Ice Year: the rendered audio in superior-ice/ (icecover_*.mp3, includin
 is licensed under CC BY-SA 4.0, because it incorporates CC BY-SA loon and goose
 recordings from Wikimedia Commons. Ice and water data courtesy of NOAA GLERL
 and the NOAA CoastWatch Great Lakes Node (public data). The lake-floor figure
-(superior-ice/superior_bathymetry_hillshade*) is licensed under CC BY 4.0
-(https://creativecommons.org/licenses/by/4.0/); it is drawn from NOAA NCEI
-Great Lakes Bathymetry (NOAA NGDC, GLERL and the Canadian Hydrographic Service).
+(superior-ice/superior_bathymetry_hillshade*) and the day pictures (superior-ice/days/*.webp) are licensed under CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/). The licence covers the
+rendering only. The underlying data, NOAA NCEI Great Lakes Bathymetry
+(National Geophysical Data Center, 1999, Bathymetry of Lake Superior; compiled
+with GLERL and the Canadian Hydrographic Service), are NOAA public data, not
+subject to copyright protection in the United States, and not to be used for
+navigation. The grid itself is fetched by the script and not redistributed; the images
+derived from it are. The Canadian Hydrographic Service contributed soundings to
+the compilation; NOAA states no separate terms for them.
 
 Meridian Chorus: the rendered audio in meridian/ (meridian_ds2023*.mp3) is
 licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Its

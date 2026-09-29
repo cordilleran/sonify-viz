@@ -23,8 +23,8 @@ records:
   - Sea-ice concentration (NOAA/NSIDC Climate Data Record)
 mapping:
   - {layer: light, data: sun above the horizon and through civil twilight, sound: "the sung voice, on the voice's pitch; it opens from oo to ah as the sun climbs", tag: D}
-  - {layer: air, data: daily maximum air temperature, sound: "the organ's registration: cold is one dark rank, warm adds the octave and opens the tone", tag: R}
-  - {layer: night air, data: daily minimum air temperature, sound: "the in-breath: a warm night adds a lower, fuller band", tag: R}
+  - {layer: air, data: daily maximum air temperature, sound: "the organ's registration: cold is one dark rank, warm adds the octave and opens the tone", tag: D}
+  - {layer: night air, data: daily minimum air temperature, sound: "the in-breath: a warm night adds a lower, fuller band", tag: D}
   - {layer: sea, data: sea surface temperature at the ocean voices, sound: "contrabass and cello on a floor below the chorus, D1 to A3, day and night", tag: R}
   - {layer: ice, data: sea-ice concentration at the four polar voices, sound: a lid on the sea voice and a high glass shimmer, tag: R}
 harmony: >

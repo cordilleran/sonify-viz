@@ -10,12 +10,17 @@ import export_mapping as EM
 
 def test_every_track_has_a_mapping_at_its_locked_version():
     lock = json.loads(EM.LOCK.read_text())["tracks"]
-    for track in EM.TRACKS:
-        d = yaml.safe_load((EM.OUT / track / "data-dict.yaml").read_text())
-        assert d["version"]["number"] == lock[track]["version"] + ".0", track
+    for folder, (track, _) in EM.TRACKS.items():
+        d = yaml.safe_load((EM.OUT / folder / "data-dict.yaml").read_text())
+        assert d["version"]["number"] == lock[track]["version"] + ".0", folder
         for t in d["tables"]:
-            cols = pq.read_schema(EM.OUT / track / t["source"]["parquet"]).names
-            assert cols == [c["name"] for c in t["columns"]], (track, t["name"])
+            cols = pq.read_schema(EM.OUT / folder / t["source"]["parquet"]).names
+            assert cols == [c["name"] for c in t["columns"]], (folder, t["name"])
+
+
+def test_every_card_has_a_mapping():
+    cards = {yaml.safe_load(p.read_text())["id"] for p in (EM.ROOT / "tracks").glob("*.yaml") if p.name != "albums.yaml"}
+    assert cards <= set(EM.TRACKS), cards - set(EM.TRACKS)
 
 
 def test_withheld_records_stay_out():

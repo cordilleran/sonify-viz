@@ -13,7 +13,7 @@ Outputs (heavy, runtime): rendered/icecover/blender/
   days.json        dates + lake-mean ice % and SST per day (D: computed from the atlases)
   bathy_hillshade_4k.png   stand-alone still, 4096 px wide
 """
-import json, os, sys, urllib.request, tarfile
+import hashlib, json, os, sys, urllib.request, tarfile
 from pathlib import Path
 import numpy as np
 import rasterio
@@ -31,6 +31,7 @@ SRC = OUT / "src"
 SRC.mkdir(exist_ok=True)
 BATHY_URL = "https://www.ngdc.noaa.gov/mgg/greatlakes/superior/data/geotiff/superior_lld.geotiff.tar.gz"
 BATHY_TIF = SRC / "superior_lld/superior_lld.tif"
+BATHY_SHA256 = "10a52e255b200057f0507e614e655a2234f9b77ed3b7ec206fd3512ee8e0e4c4"   # the grid as fetched 2026-09-28
 
 meta = json.load(open(ROOT / "data/icecover/superior_grid_meta.json"))
 LAT0, LAT1 = meta["extent"]["lat"]
@@ -48,6 +49,10 @@ def fetch():
     urllib.request.urlretrieve(BATHY_URL, tgz)
     with tarfile.open(tgz) as t:
         t.extractall(SRC, filter="data")   # refuse absolute paths and ..: the archive comes from the network
+    with open(BATHY_TIF, "rb") as fh:   # 165 MB: hash in chunks
+        got = hashlib.file_digest(fh, "sha256").hexdigest()
+    if got != BATHY_SHA256:   # NOAA may revise the grid; the figure and the renders were made from this one
+        print(f"warning: {BATHY_TIF.name} sha256 {got[:12]}... differs from the grid these renders used ({BATHY_SHA256[:12]}...)")
 
 
 def read_bathy(w):

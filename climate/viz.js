@@ -467,6 +467,11 @@
     e.preventDefault(); started = true;
     setT(Math.max(0, curT() + step)); frame();
   });
+  // Space plays and pauses, as on the other pieces (not while typing or on a control that uses it)
+  window.addEventListener("keydown", e => {
+    if (e.code !== "Space" || ["BUTTON", "SELECT", "INPUT", "TEXTAREA", "AUDIO"].includes(e.target.tagName)) return;
+    e.preventDefault(); audio.paused ? audio.play().catch(() => {}) : audio.pause();
+  });
   new ResizeObserver(() => sizeAll()).observe(root.querySelector(".cviz-stage"));
   reduce.addEventListener?.("change", frame);
 

@@ -239,7 +239,7 @@ Thirteen voices on the 100th meridian west, pole to pole, singing one year of da
 
 ## Meridian Chorus, light, air, sea and ice {#meridian-layer2-wide-long}
 
-**v0.1** · 2023-24 (solstice to solstice, 2023-12-22 to 2024-12-21) · [listen](meridian.qmd)
+**v0.1** · 2023-24 (solstice to solstice, 2023-12-22 to 2024-12-21) · [listen](meridian.qmd?piece=meridian_ds2023__layer2-wide-long)
 
 *What does one year sound like along a single line of longitude, from pole to pole, when daylight, air, sea and ice each have a voice?*
 
@@ -257,10 +257,12 @@ Thirteen voices on the 100th meridian west, pole to pole, singing one year of da
 | Layer | Data | What you hear | |
 |---|---|---|---|
 | light | sun above the horizon and through civil twilight | the sung voice, on the voice's pitch; it opens from oo to ah as the sun climbs | <span class="src D">D</span> |
-| air | daily maximum air temperature | the organ's registration: cold is one dark rank, warm adds the octave and opens the tone | <span class="src R">R</span> |
-| night air | daily minimum air temperature | the in-breath: a warm night adds a lower, fuller band | <span class="src R">R</span> |
+| air | daily maximum air temperature | the organ's registration: cold is one dark rank, warm adds the octave and opens the tone | <span class="src D">D</span> |
+| night air | daily minimum air temperature | the in-breath: a warm night adds a lower, fuller band | <span class="src D">D</span> |
 | sea | sea surface temperature at the ocean voices | contrabass and cello on a floor below the chorus, D1 to A3, day and night | <span class="src R">R</span> |
 | ice | sea-ice concentration at the four polar voices | a lid on the sea voice and a high glass shimmer | <span class="src R">R</span> |
+
+Every step from record to sound, with its bounds: [the mapping dictionary](dictionary/meridian-layer2-wide-long-mapping.html) (tables in `tracks/mapping/meridian-layer2-wide-long/`).
 
 **Harmony.** D major pentatonic on thirteen distinct notes, D4 to A6 for the sky choir and D1 to A3 for the sea, so no two voices share a pitch. North sings on the left and south on the right. Three days per breath (about 16 minutes), in four movements; every voice centres on the same solar noon, so the chorus breathes together.
 
@@ -282,7 +284,7 @@ Thirteen voices on the 100th meridian west, pole to pole, singing one year of da
 
 ## Meridian Chorus, daylight {#meridian-daylight}
 
-**v0.2** · 2023-24 (solstice to solstice, 2023-12-22 to 2024-12-21) · [listen](meridian.qmd)
+**v0.2** · 2023-24 (solstice to solstice, 2023-12-22 to 2024-12-21) · [listen](meridian.qmd?piece=meridian_ds2023)
 
 *What does a year of daylight sound like along one meridian, when every voice's note lasts as long as its day?*
 
@@ -300,6 +302,8 @@ Thirteen voices on the 100th meridian west, pole to pole, singing one year of da
 | twilight | sun between -6° and -0.833° | the note swells in and fades out | <span class="src D">D</span> |
 | vowel | the sun's altitude | the sung voice opens from oo to ah | <span class="src D">D</span> |
 | in-breath | sun below the horizon | a faint filtered-noise inhale, peaking at midnight | <span class="src D">D</span> |
+
+Every step from record to sound, with its bounds: [the mapping dictionary](dictionary/meridian-daylight-mapping.html) (tables in `tracks/mapping/meridian-daylight/`).
 
 **Harmony.** D major pentatonic, D at both poles and the equator, north above and south below, D2 to D6. A week per 8-second breath (about 7 minutes). At the equinoxes every voice is about twelve hours long; at the solstices one pole holds its note through the whole breath while the other only breathes.
 
@@ -325,7 +329,7 @@ One winter of ice on Lake Superior, 2025-26, heard region by region from west to
 
 ## Superior Ice Year {#superior-ice}
 
-**v1.0** · 2025-26 (ice season, 2025-11-01 to 2026-06-15) · [listen](superior-ice.qmd)
+**v1.0** · 2025-26 (ice season, 2025-11-01 to 2026-06-15) · [listen](superior-ice.qmd?piece=icecover_sup2526__v1)
 
 *How does one winter of ice move across Lake Superior, region by region, and how does it compare with the lake's recent ordinary year?*
 
@@ -355,6 +359,8 @@ One winter of ice on Lake Superior, 2025-26, heard region by region from west to
 | ghost | 2008-2025 median lake ice | a quiet detuned glass tone; after the data end it holds a low floor and fades (a symbolic coda), and a soft pulse marks the last day of data | <span class="src D">D</span> |
 | deep water | deep water near 4 °C under the ice (known physics, not measured here) | a constant low hum | <span class="src D">D</span> |
 
+Every step from record to sound, with its bounds: [the mapping dictionary](dictionary/superior-ice-mapping.html) (tables in `tracks/mapping/superior-ice/`).
+
 **Harmony.** D major pentatonic. Each region is a note, low in the west and high in the east, panned by longitude, so the chord sounding at any moment is the ice pattern on the map. Three seconds per day (11 min 46 s), cut into four movements at ice-defined days: freeze-up, ice-in, long melt, open water. Higher regions are trimmed 0.5 dB a step so the east doesn't sound louder.
 
 **Simulated, not observed.**
@@ -378,13 +384,14 @@ One winter of ice on Lake Superior, 2025-26, heard region by region from west to
 
 **Changelog.**
 
+- v1.0 (2026-09-29): Page 1.1, the picture only; the audio is unchanged. The map becomes one Blender render per day under toggleable overlays, with the data as measured behind a line you drag.
 - v1.0 (2026-09-29): The long version as the main track, with the ghost and its coda, a deep-water hum, distance-modelled crackles, staggered events and the pitch-loudness tilt, chosen by GW on an A/B bench. Fixes a v0.2 bug in the ghost's pitch (summed at too low a precision, it stepped between wrong notes, mostly about 2.5 semitones sharp).
 - v0.2 (2026-09-28): After a first listen: fewer, more distant birds; quieter, wetter events; a softer ghost.
 - v0.1 (2026-09-28): First render.
 
 ## Superior Ice Year, shorter {#superior-ice-short}
 
-**v0.2** · 2025-26 (ice season, 2025-11-01 to 2026-06-15) · [listen](superior-ice.qmd)
+**v0.2** · 2025-26 (ice season, 2025-11-01 to 2026-06-15) · [listen](superior-ice.qmd?piece=icecover_sup2526)
 
 *The same winter of ice on Lake Superior, at 1.5 seconds per day, for a shorter listen.*
 
@@ -399,6 +406,8 @@ One winter of ice on Lake Superior, 2025-26, heard region by region from west to
 | Layer | Data | What you hear | |
 |---|---|---|---|
 | all | as Superior Ice Year | the same nine layers, without the ghost, the coda, the deep-water hum or the v1 crackle and balance changes | <span class="src D">D</span> |
+
+Every step from record to sound, with its bounds: [the mapping dictionary](dictionary/superior-ice-short-mapping.html) (tables in `tracks/mapping/superior-ice-short/`).
 
 **Harmony.** As Superior Ice Year, at 1.5 seconds per day (5 min 48 s), in one piece.
 

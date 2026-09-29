@@ -61,3 +61,4 @@ changelog:
   - {version: "0.1", date: 2026-09-28, change: First render.}
   - {version: "0.2", date: 2026-09-28, change: "After a first listen: fewer, more distant birds; quieter, wetter events; a softer ghost."}
   - {version: "1.0", date: 2026-09-29, change: "The long version as the main track, with the ghost and its coda, a deep-water hum, distance-modelled crackles, staggered events and the pitch-loudness tilt, chosen by GW on an A/B bench. Fixes a v0.2 bug in the ghost's pitch (summed at too low a precision, it stepped between wrong notes, mostly about 2.5 semitones sharp)."}
+  - {version: "1.0", date: 2026-09-29, change: "Page 1.1, the picture only; the audio is unchanged. The map becomes one Blender render per day under toggleable overlays, with the data as measured behind a line you drag."}

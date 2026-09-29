@@ -1,0 +1,58 @@
+/* sonify-viz shared tokens (2026-09-29): type, spacing, controls, focus and motion for every standalone piece.
+   Each piece keeps its own palette in its own :root: it must define --ground, --surface, --line, --line2, --text,
+   --muted and --faint (this file uses them), and sets two hooks:
+     --focus   the keyboard focus ring and the pressed-control colour
+     --accent  the native control accent (range thumb, checkbox)
+   Load order: this file first, then the piece's <style>, so a piece can still override a rule. */
+@import url("../listen/fonts/fonts.css");
+
+:root{
+  color-scheme: dark;
+  --display:"Gloock", "Iowan Old Style", Georgia, serif;
+  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* type scale */
+  --fs-label:11px; --fs-small:12px; --fs-meta:13px; --fs-body:15px;
+  --fs-h1:clamp(38px, 6.5vw, 72px);
+  /* spacing and shape */
+  --gutter:16px; --gap:22px; --radius:10px; --pill:999px;
+  --tap:44px;   /* minimum touch target */
+  --focus:#e4edf3; --accent:#e4edf3;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font:var(--fs-body)/1.55 var(--body)}
+h1{font-family:var(--display);font-weight:400;font-size:var(--fs-h1);line-height:.95;margin:0;text-wrap:balance}
+.eyebrow{font:600 var(--fs-label)/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* controls: one pill button, one select, one scrub bar */
+button{appearance:none;border:1px solid var(--line2);background:transparent;color:var(--text);padding:9px 18px;
+  border-radius:var(--pill);font:var(--fs-body) var(--body);cursor:pointer}
+button:hover{border-color:var(--focus)}
+button[aria-pressed=true]{border-color:var(--focus);color:var(--focus)}
+button:disabled{opacity:.5;cursor:default}
+select{appearance:none;border:1px solid var(--line2);background:var(--surface);color:var(--text);padding:9px 14px;
+  border-radius:var(--pill);font:var(--fs-meta) var(--mono);max-width:100%;width:100%;text-overflow:ellipsis}
+.controls{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+input[type=range]{flex:1;min-width:200px;accent-color:var(--accent);height:var(--tap);margin:0;cursor:pointer}
+.time{font:var(--fs-meta) var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* one focus ring everywhere */
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+:focus:not(:focus-visible){outline:none}
+
+/* touch: every control at least 44 px */
+@media (pointer: coarse){
+  button,select,[role=slider],[role=button]{min-height:var(--tap)}
+  button{min-width:var(--tap)}
+}
+
+/* reduced motion: no transitions or animations; each piece's canvases also check prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important;scroll-behavior:auto !important}
+}
+
+/* footer, and the embedded mode (the Quarto wrapper supplies the title, intro and footer) */
+.foot{font:var(--fs-small) var(--mono);color:var(--faint);border-top:1px solid var(--line);padding-top:14px}
+.foot a{color:var(--muted)}
+.embedded header h1,.embedded header > p,.embedded header .eyebrow,.embedded .foot{display:none}
+.embedded .wrap{padding-block:4px 48px}

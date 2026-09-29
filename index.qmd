@@ -33,6 +33,9 @@ Sixty-eight years, 1958 to 2025, one year per bar. CO₂, ocean heat, ENSO and a
 ### [Meridian Chorus](meridian/index.html)
 Thirteen voices on the 100th meridian, one every 15 degrees from the North Pole to the South Pole, sing one year from the December 2023 solstice to the December 2024 solstice. Each voice sounds while its sun is up, and every voice shares one noon. Air temperature colours the organ, the sea sings on its own floor below, and sea ice quiets it. About 16 minutes in four movements; a 7-minute daylight-only version is kept beside it. A work in progress: the territory acknowledgements for its land voices are still being prepared.
 
+### [Superior Ice Year](superior-ice.qmd)
+One ice season on Lake Superior, Gichigami, from 1 November 2025 to 15 June 2026. The lake is cut into eight regions and each is a voice, west lowest and east highest, so the chord is the ice pattern on the map. Water, air, sunlight, wind, snow, rain and birds each add an instrument, a quiet ghost tone follows the median year of 2008 to 2025, and freeze and breakup sound as glass pings and low drops. About 12 minutes in four movements; a 6-minute version is kept beside it.
+
 Every track has a card with its version, its records, what drives each sound, what to be careful about, and how to check it byte for byte: see [Tracks](tracks.qmd).
 
 ## The code

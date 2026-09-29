@@ -4,14 +4,14 @@
 #   preview   a synced MP4 with the v1.0 audio, frames cross-blended to 24 fps, the last day held through the coda (for review, not the site)
 # Usage: blender_assemble_superior.sh TAG FPD [AUDIO]
 #   frames are read from $SONIFICATION_HEAVY/icecover/blender/frames_TAG/ (default: the repo's rendered/)
-#   AUDIO defaults to superior-ice/icecover_sup2526__v1.mp3 (3 s per day)
+#   AUDIO defaults to superior-ice/icecover_sup2526__v1.mp3; seconds per day come from its .json (or set DAY_S)
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")/.." && pwd)
 TAG=${1:?tag}; FPD=${2:?frames per day}
 AUDIO=${3:-$HERE/superior-ice/icecover_sup2526__v1.mp3}
 BL=${SONIFICATION_HEAVY:-$HERE/rendered}/icecover/blender
 F="$BL/frames_$TAG"
-DAY_S=3
+DAY_S=${DAY_S:-$(python3 -c "import json,sys; print(json.load(open(sys.argv[1]))['day_s'])" "${AUDIO%.mp3}.json")}   # seconds per day, from the render's page data
 mkdir -p "$BL/webp_$TAG"
 n=$(ls "$F"/frame_*.png | wc -l)
 for ((k = 0; k < n; k += FPD)); do

@@ -1,0 +1,158 @@
+$version: 0.1.0
+$learn_more: https://data-dict.tidyverse.org/
+name: meridian-daylight-mapping
+label: Meridian Chorus, daylight only - mapping
+description: >-
+  How Meridian Chorus turns one year of sunlight on the 100th meridian west into music: thirteen voices, one every
+  15 degrees from the North Pole to the South Pole, sing from the December 2023 solstice to the December 2024 solstice.
+  Seven days per breath of 8 seconds; the sunlight alone.
+details: >-
+  Copied by scripts/export_mapping.py from the score of the locked render (renders.lock.json), and only if its SHA-256
+  matches the lock. The values are the piece's own (scripts/meridian.py, scripts/solar.py). Sunlight is computed
+  from solar geometry, not measured (D).
+origin: ../../../scripts/export_mapping.py
+version:
+  number: 0.2.0
+tables:
+- name: voices
+  label: The thirteen voices
+  source:
+    parquet: voices.parquet
+  columns:
+  - name: lat
+    type: number(id)
+    constraints:
+    - primary_key
+    description: >-
+      Latitude on 100 degrees W in degrees north, every 15 degrees, pole to pole.
+    examples:
+    - -90
+    - -75
+    - -60
+    - -45
+    - -30
+    - -15
+    - 0
+    - 15
+    - 30
+    - 45
+    - 60
+    - 75
+    - 90
+  - name: place
+    type: string
+    examples:
+    - Bathurst Island, Nunavut
+    - Edwards Plateau, Texas
+    - Equatorial Pacific, cold tongue
+  - name: surface
+    type: enum
+    description: What lies under the voice; sets which layers it carries.
+    values:
+      ice sheet: ice sheet
+      land: land
+      land, sea ice: land, sea ice
+      ocean: ocean
+      ocean, sea ice: ocean, sea ice
+      sea ice: sea ice
+  - name: midi
+    type: number(ordinal)
+    description: The voice's pitch as a MIDI note (60 is middle C); north highest.
+    range:
+    - 38
+    - 86
+- name: voice_breaths
+  label: What each voice read, each breath
+  description: >-
+    One row per voice per breath. A voice at the pole in its winter has no sunrise or sunset; those cells are empty.
+  source:
+    parquet: voice_breaths.parquet
+  columns:
+  - name: breath
+    type: number(ordinal)
+    constraints:
+    - required
+    description: The breath, from 0; each breath is one step of the year.
+    range:
+    - 0
+    - 52
+  - name: t
+    type: number(quantity)
+    units: seconds
+    constraints:
+    - required
+    description: When the breath starts in the audio.
+    range:
+    - 0.0
+    - 416.0
+  - name: date
+    type: date
+    constraints:
+    - required
+    description: The date the breath stands for.
+    range:
+    - 2023-12-25
+    - 2024-12-23
+  - name: lat
+    type: number(id)
+    constraints:
+    - required
+    - foreign_key
+    description: 'The voice: its latitude on 100 degrees W, in degrees north.'
+    examples:
+    - -90
+    - -75
+    - -60
+    - -45
+    - -30
+    - -15
+    - 0
+    - 15
+    - 30
+    - 45
+    - 60
+    - 75
+    - 90
+  - name: daylength_h
+    type: number(quantity)
+    units: hours
+    description: >-
+      Hours of sun above the horizon (D, from solar geometry). The voice sounds while its sun is up.
+    range:
+    - 0.0
+    - 24.0
+  - name: twilight_h
+    type: number(quantity)
+    units: hours
+    description: >-
+      Hours of civil twilight (D). The note swells in and fades out through it, at up to 30 % level.
+    range:
+    - 0.0
+    - 12.0
+  - name: sunrise_solar_h
+    type: number(quantity)
+    units: hours
+    description: >-
+      Sunrise in local solar time (D); every voice shares one noon. Empty in 165 of 689 rows.
+    range:
+    - 0.904
+    - 11.321
+  - name: sunset_solar_h
+    type: number(quantity)
+    units: hours
+    description: >-
+      Sunset in local solar time (D). Empty in 165 of 689 rows.
+    range:
+    - 12.679
+    - 23.096
+  - name: noon_altitude_deg
+    type: number(quantity)
+    units: degrees
+    description: The sun's height at noon (D).
+    range:
+    - -23.42
+    - 89.73
+relationships:
+- join: voice_breaths.lat = voices.lat
+  cardinality: many-to-one
+  description: Each voice has one row per breath.

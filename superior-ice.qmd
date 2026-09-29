@@ -12,7 +12,7 @@ One ice season on Lake Superior, from 1 November to 15 June. The lake is cut int
 <script>
 // superior-ice.html?piece=icecover_sup2526 opens that render in the page.
 (() => { const p = new URLSearchParams(location.search).get('piece');
-  if (p && /^[a-z0-9_]+$/.test(p)) document.getElementById('companion').src = 'superior-ice/index.html?embed&piece=' + p; })();
+  if (p && /^[a-z0-9_-]+$/.test(p)) document.getElementById('companion').src = 'superior-ice/index.html?embed&piece=' + p; })();
 window.addEventListener('message', (e) => {
   if (e.source !== document.getElementById('companion').contentWindow) return;   // only our own frame may resize it
   if (e.data && typeof e.data.wyrHeight === 'number') document.getElementById('companion').style.height = (e.data.wyrHeight + 8) + 'px';

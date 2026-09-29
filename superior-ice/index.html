@@ -2,47 +2,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Superior Ice Year</title>
-<link rel="stylesheet" href="../listen/fonts/fonts.css">
+<link rel="stylesheet" href="../shared/tokens.css">
 <style>
 :root{
-  color-scheme: dark;
+  --focus:var(--frost); --accent:var(--frost);
   --ground:#060e15; --surface:#0c1822; --line:#172a38; --line2:#25404f;
   --text:#e4edf3; --muted:#8fa5b4; --faint:#56707f;
   --frost:#cfeaf7; --freeze:#e6f6ff; --thaw:#f0a25c; --sym:#b9a3f0; --land:#0f1b25;
-  --display:"Gloock", "Iowan Old Style", Georgia, serif;
-  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
-*{box-sizing:border-box}
-.foot{font:12px var(--mono);color:var(--faint);border-top:1px solid var(--line);padding-top:14px}
-.foot a{color:var(--muted)}
-.foot a:focus-visible{outline:2px solid var(--frost);outline-offset:2px}
-body{margin:0;background:var(--ground);color:var(--text);font:15px/1.55 var(--body)}
 .wrap{max-width:1280px;margin:0 auto;padding:28px 16px 64px;overflow-x:clip;display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
 .wrap > *{min-width:0}
-h1{font-family:var(--display);font-weight:400;font-size:clamp(38px,6.5vw,70px);line-height:.95;margin:0}
-.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 header{display:grid;gap:12px}
 header p{margin:0;max-width:68ch;color:var(--muted)}
 .pick{display:grid;gap:6px}
 .pick .k{font:12px/1.45 var(--body);color:var(--muted);max-width:72ch}
-select{width:100%;appearance:none;border:1px solid var(--line2);background:var(--surface);color:var(--text);padding:9px 14px;border-radius:999px;font:13px var(--mono);max-width:100%}
-.controls{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-button{appearance:none;border:1px solid var(--line2);background:transparent;color:var(--text);padding:9px 18px;border-radius:999px;font:15px var(--body);cursor:pointer}
-button:hover{border-color:var(--frost)}
-button:focus-visible,input:focus-visible,select:focus-visible,.rrow:focus-visible,canvas:focus-visible{outline:2px solid var(--frost);outline-offset:3px}
-input[type=range]{flex:1;min-width:200px;accent-color:var(--frost)}
-.time{font:13px var(--mono);color:var(--muted)}
 
-.stage{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start}
+.stage{display:grid;gap:16px;align-items:start}
 .mapwrap{position:relative}
 .mapbox{position:relative;aspect-ratio:1.92;background:var(--land);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .mapbox canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 #lake{image-rendering:auto}
-.badge{z-index:2;position:absolute;left:14px;top:10px;pointer-events:none;text-shadow:0 1px 8px #000,0 0 2px #000}
+.badge{z-index:4;position:absolute;left:14px;top:10px;pointer-events:none;text-shadow:0 1px 8px #000,0 0 2px #000;background:rgba(6,14,21,.62);padding:6px 10px 4px;border-radius:8px}
 .badge .date{font-family:var(--display);font-size:clamp(20px,3.2vw,36px);line-height:1.05}
-.badge .sub{font:11px/1.5 var(--mono);color:var(--muted)}
-.modes{z-index:2;position:absolute;right:10px;top:10px;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.badge .sub{font:11px/1.5 var(--mono);color:#b5c6d1}
+.modes{z-index:4;position:absolute;right:10px;top:10px;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
 .modes button{padding:4px 10px;font:11px var(--mono);letter-spacing:.03em;background:rgba(6,14,21,.72);border-color:var(--line2)}
 .modes button[aria-pressed=true]{border-color:var(--frost);color:var(--frost)}
 .legend{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font:11px var(--mono);color:var(--faint);margin-top:8px}
@@ -92,9 +75,31 @@ input[type=range]{flex:1;min-width:200px;accent-color:var(--frost)}
   .rhead{display:none}
 }
 @media (max-width:560px){ .rail{grid-template-columns:minmax(0,1fr)} .badge,.modes{position:static;display:block} .modes{display:flex;justify-content:flex-start;padding:4px 0 8px} .badge{padding-bottom:6px} .modes button{background:transparent} }
-/* embedded in the Quarto site (?embed): the site supplies the title, intro and footer */
-.embedded header h1,.embedded header > p,.embedded header .eyebrow,.embedded .foot{display:none}
-.embedded .wrap{padding-block:4px 48px}
+
+/* the picture (v1.1): Blender day renders under toggleable overlays, the data as measured behind a dragged line */
+#pic{z-index:0}
+#lake{z-index:1}
+#over{z-index:2}
+.stage{grid-template-columns:minmax(0,1fr)}
+.rail{grid-template-columns:repeat(4,minmax(0,1fr))}
+.rhead{display:none}
+.mapbox{border-radius:4px;border-color:transparent}
+.mapwrap .legend{position:absolute;right:10px;bottom:10px;z-index:4;margin:0;background:rgba(6,14,21,.78);padding:6px 10px;border-radius:8px;color:var(--muted);max-width:min(560px,70%)}
+.modes .mb{display:none}
+.comparing .modes .mb{display:inline-block}
+.wipe{position:absolute;top:0;bottom:0;width:0;z-index:3;display:none}
+.wipe::before{content:"";position:absolute;top:0;bottom:0;left:-1px;width:2px;background:var(--frost);box-shadow:0 0 6px rgba(0,0,0,.6)}
+.wipe .grip{position:absolute;top:50%;left:-22px;width:44px;height:44px;margin-top:-22px;border-radius:50%;background:rgba(6,14,21,.85);border:2px solid var(--frost);cursor:ew-resize;touch-action:none;display:grid;place-items:center;font:13px var(--mono);color:var(--frost)}
+.wipe .wl{position:absolute;top:8px;white-space:nowrap;font:10.5px var(--mono);color:var(--text);background:rgba(6,14,21,.72);padding:2px 6px;border-radius:4px}
+.wipe .wl.l{right:8px}.wipe .wl.r{left:8px}
+.comparing .wipe{display:block}
+.layers{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.layers .lk{font:10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-right:4px}
+.layers button{padding:3px 10px;font:11px var(--mono)}
+.layers button[aria-pressed=false]{color:var(--faint)}
+.depth .ramp{width:170px}
+@media (max-width:760px){ .rail{grid-template-columns:repeat(2,minmax(0,1fr))} .mapwrap .legend{position:static;max-width:none;margin-top:8px} }
+@media (max-width:560px){ .rail{grid-template-columns:minmax(0,1fr)} }
 </style>
 <div class="wrap">
   <header>
@@ -122,14 +127,17 @@ input[type=range]{flex:1;min-width:200px;accent-color:var(--frost)}
       <div class="mapwrap">
         <div class="badge"><div class="date" id="date">–</div><div class="sub" id="sub"></div></div>
         <div class="modes" id="modes" role="group" aria-label="What the map shows">
-          <button data-m="both" aria-pressed="true">ice + water</button><button data-m="ice" aria-pressed="false">ice</button><button data-m="water" aria-pressed="false">water temp</button>
+          <button id="cmp" aria-pressed="false">compare with the data</button><button class="mb" data-m="both" aria-pressed="true">ice + water</button><button class="mb" data-m="ice" aria-pressed="false">ice</button><button class="mb" data-m="water" aria-pressed="false">water temp</button>
         </div>
       <div class="mapbox" id="mapbox">
+        <canvas id="pic" aria-hidden="true"></canvas>
         <canvas id="lake" width="285" height="100" aria-hidden="true"></canvas>
         <canvas id="over" tabindex="0" aria-label="Map of Lake Superior with eight regions; the day's ice and water temperature, coloured by season position. Hover or tap a region for its story."></canvas>
-      </div>
+        <div class="wipe" id="wipe"><span class="wl l">◂ as measured</span><span class="wl r">as rendered ▸</span><div class="grip" id="grip" tabindex="0" role="slider" aria-label="Divide the picture from the data as measured" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">⇔</div></div>
       </div>
       <div class="legend" id="legend"></div>
+      </div>
+      <div class="layers" id="layers" role="group" aria-label="What is drawn over the picture"><span class="lk">overlays</span></div>
     </div>
     <div class="rail" id="rail" aria-label="The eight regions, west to east">
       <div class="rhead"><span>region · ice voice</span><span style="text-align:right">ice</span><span style="text-align:right">water</span><span></span></div>
@@ -156,7 +164,7 @@ input[type=range]{flex:1;min-width:200px;accent-color:var(--frost)}
   </div>
 
   <div class="notes">
-    <p><b>The map</b> is the lake for the day being played, coloured by surface water temperature with ice in white where it forms. Each region glows as its ice voice sounds. When a region freezes fast, a pale ring spreads from it and you hear a brief glass ping; when ice breaks up, a warm ring spreads and you hear a low drop. Arrows are wind, flecks are snow and rain, and a violet mark is a symbolic bird.</p>
+    <p><b>The picture</b> is the lake for the day being played, rendered in Blender: the day's ice over the lake floor, lit from the northwest like a relief map and brighter as the noon sun climbs (D), with open water coloured by depth. The amount of ice in each cell is observed; the floe pattern inside a cell is drawn, not observed (S). It shows where the ice is, not water temperature. <b>Compare with the data</b> draws a line you can drag: left of it is the data as measured, 2.8 km cells coloured by surface water temperature with ice in white. Each region brightens softly as its ice voice sounds. When a region freezes fast, a pale ring spreads from it and you hear a brief glass ping; when ice breaks up, a warm ring spreads and you hear a low drop. The overlay buttons under the picture add names, wind (arrows), snow and rain (flecks), symbolic birds (violet marks) and the region outlines.</p>
     <p><b>The heat strip</b> under the map is the whole season at once: one row per region, west at the top, coloured by ice. The dots are the freeze and breakup events that trigger the pings and drops. Click it to move through the season.</p>
     <p><b>Tap or hover</b> a region, on the map or in the list, to see its own year of ice and water temperature; tap it again to let go.</p>
     <table class="notes-t" aria-label="Layers">
@@ -166,11 +174,12 @@ input[type=range]{flex:1;min-width:200px;accent-color:var(--frost)}
     <p><b>What this cannot tell you.</b> The regions are wedges cut by distance from eight anchor points, not lake basins or depth zones. Stereo position follows longitude (blended with rank so the three regions near 88° W are apart), so north and south at the same longitude sit in the same place in the stereo image; the map carries that difference. Freeze and breakup events are derived: a three-day smoothed change in a region's ice of four percentage points or more in a day, with at least three days between events. The 4 °C turnover marker uses lake-mean satellite skin temperature as a proxy; it is not a measurement of the lake overturning. Air temperature, wind, precipitation, snow and sunshine are ERA5 reanalysis at one point per region, not station observations. Water temperature is the satellite skin temperature of the top millimetres, not the lake at depth: under the ice, most of Superior sits near 4 °C all winter. It is used because it is the only daily, lake-wide, gridded water-temperature record, and it is the surface that freezes; sounding the water column would need a lake model such as NOAA's Great Lakes Coastal Forecasting System. Birds are symbolic (S): each region's loon and geese arrive on a date the data suggest, and the calls are recordings, not observations of migration.</p>
     <p><b>Places and territory.</b> This piece sonifies one winter on <b>Gichigami</b>, Lake Superior, in the territory of the Anishinaabe, including Ojibwe nations with treaty rights there: the Robinson-Superior Treaty of 1850 in Ontario, and the treaties of 1836, 1842 and 1854 in Michigan, Wisconsin and Minnesota. I am not from that place; I work from data, at a distance. I respect the people of the lake and the treaties that protect their rights, and I hold this acknowledgement as a draft, open to correction by those it concerns.</p>
     <figure class="floor" id="floor">
-      <a href="superior_bathymetry_hillshade_4k.png"><img src="superior_bathymetry_hillshade.jpg" alt="Lake Superior's floor and surrounding land as a shaded relief map, pale winter blues deepening to navy in the deep eastern basin, with grey stone-coloured land around it" loading="lazy" width="2400" height="1243"></a>
-      <figcaption><b>The lake floor.</b> Lake Superior's bathymetry and the land around it, the ground the animation's ice moves over. Full resolution, 4096 × 2121 px: <a href="superior_bathymetry_hillshade_4k.png">PNG, 10 MB</a>. Data: NOAA NCEI Great Lakes Bathymetry, Lake Superior 3 arc-second grid (NOAA NGDC, GLERL and the Canadian Hydrographic Service), fetched by the script, not redistributed. Method: a hillshade lit from the northwest (azimuth 315°, altitude 45°), the cartographic convention, with 12× vertical exaggeration; depth coloured from pale to deep blue over 0 to 406 m, land in stone greys over 0 to 500 m, then desaturated to about 60 % and blended 20 % toward a winter white. Code: <a href="https://github.com/cordilleran/sonify-viz/blob/main/scripts/blender_prep_superior.py">blender_prep_superior.py</a> and <a href="https://github.com/cordilleran/sonify-viz/blob/main/scripts/superior_palette.py">superior_palette.py</a>. Image CC BY 4.0.</figcaption>
+      <a href="superior_bathymetry_hillshade_4k.png" target="_blank" rel="noopener"><img src="superior_bathymetry_hillshade.jpg" alt="Lake Superior's floor and surrounding land as a shaded relief map, pale winter blues deepening to navy in the deep eastern basin, with grey stone-coloured land around it" loading="lazy" width="2400" height="1243"></a>
+      <div class="legend" aria-label="Legend: water depth and land height"><span>water depth</span><span class="ramp" style="background:linear-gradient(90deg,#bfdbde 3%,#a4c6cc 12%,#7da8b4 25%,#6c92a3 37%,#5c7d92 50%,#536d83 62%,#4a5b71 74%,#414c5f 92%)"></span><span>0 to 406 m</span><span>land</span><span class="ramp" style="width:80px;background:linear-gradient(90deg,#868b8e,#9ea3a5,#b9bfbf)"></span><span>0 to 500 m above the lake</span></div>
+      <figcaption><b>The lake floor.</b> Lake Superior's bathymetry and the land around it, the ground the animation's ice moves over. Full resolution, 4096 × 2121 px: <a href="superior_bathymetry_hillshade_4k.png" target="_blank" rel="noopener">PNG, 10 MB</a>. Data: NOAA NCEI Great Lakes Bathymetry, Lake Superior 3 arc-second grid (NOAA NGDC, GLERL and the Canadian Hydrographic Service), fetched by the script, not redistributed. Method: a hillshade lit from the northwest (azimuth 315°, altitude 45°), the cartographic convention, with 12× vertical exaggeration; depth coloured from pale to deep blue over 0 to 406 m, land in stone greys over 0 to 500 m, then desaturated to about 60 % and blended 20 % toward a winter white. Code: <a href="https://github.com/cordilleran/sonify-viz/blob/main/scripts/blender_prep_superior.py">blender_prep_superior.py</a> and <a href="https://github.com/cordilleran/sonify-viz/blob/main/scripts/superior_palette.py">superior_palette.py</a>. The data are NOAA public data, not subject to copyright in the United States, and not for navigation; cite as National Geophysical Data Center (1999), <i>Bathymetry of Lake Superior</i>, NOAA. The Canadian Hydrographic Service contributed soundings to the compilation. Our image (the rendering, not the data) is CC BY 4.0.</figcaption>
     </figure>
-    <p><b>Sources.</b> Ice and water data courtesy of NOAA: the Great Lakes Environmental Research Laboratory (GLERL) and the CoastWatch Great Lakes Node. Ice concentration: NOAA GLERL and CoastWatch Great Lakes Node, GLSEA analysis using NIC ice charts (public data), daily, block-averaged from about 1.4 km to 2.8 km cells. Surface water temperature: NOAA CoastWatch ACSPO GLSEA satellite analysis; gaps under cloud are filled by the analysis. Lake-average ice, 2008 to 2025: NOAA GLERL. Air temperature, wind, precipitation, snowfall and shortwave radiation: ERA5 reanalysis (Copernicus Climate Change Service, CC BY 4.0) via the Open-Meteo historical weather API. Day length is calculated at 47.6° N. Loon and Canada goose recordings: Jonathon Jongsma, CC BY-SA 3.0, through Wikimedia Commons. Orchestral samples: VSCO 2 Community Edition (CC0). The regions, events and sound mapping are described in the project's spec.</p>
-    <p><b>Versions.</b> 1.0 (29 September 2026) is the main track, with each choice picked by ear on an A/B bench: the ghost of the median year with a symbolic coda after the last day of data; a hum for the deep water that sits near 4 °C under the ice; freeze and breakup sounds placed at a distance (quieter, darker, a little later and wetter the farther away), spread in time so no more than four fall on one day; and eastern (higher) regions trimmed 0.5 dB a step so the east doesn't sound louder. 1.0 also fixes a 0.2 bug: the ghost's pitch was summed at too low a precision, so it stepped between wrong notes and, for most of the piece, played about two and a half semitones sharp (in the longer render it fell silent after about six minutes). 0.2 (28 September), after a first listen: fewer bird calls, each at its own distance; quieter, wetter events; a softer ghost. The shorter 0.2 render stays for a quicker listen. 0.1 was the first render.</p>
+    <p><b>Sources.</b> Ice and water data courtesy of NOAA: the Great Lakes Environmental Research Laboratory (GLERL) and the CoastWatch Great Lakes Node. Ice concentration: NOAA GLERL and CoastWatch Great Lakes Node, GLSEA analysis using NIC ice charts (public data), daily, block-averaged from about 1.4 km to 2.8 km cells. Surface water temperature: NOAA CoastWatch ACSPO GLSEA satellite analysis; gaps under cloud are filled by the analysis. Lake-average ice, 2008 to 2025: NOAA GLERL. Air temperature, wind, precipitation, snowfall and shortwave radiation: ERA5 reanalysis (Copernicus Climate Change Service, CC BY 4.0) via the Open-Meteo historical weather API. Day length is calculated at 47.6° N. Loon and Canada goose recordings: Jonathon Jongsma, CC BY-SA 3.0, through Wikimedia Commons. Orchestral samples: VSCO 2 Community Edition (CC0). The day pictures are rendered from the same ice data over NOAA NCEI Great Lakes Bathymetry (National Geophysical Data Center, 1999; NOAA public data, not for navigation) with Blender 5.2 (EEVEE); code: <a href="https://github.com/cordilleran/sonify-viz/blob/main/scripts/blender_superior_ice.py">blender_superior_ice.py</a>; images CC BY 4.0. The regions, events and sound mapping are described in the project's spec.</p>
+    <p><b>Versions.</b> 1.1 (29 September 2026) changes the picture only, not the music: the map becomes one Blender render per day, cross-faded, with the data as measured behind a line you drag, overlays you turn on and off, a depth legend, and a seek bar that runs through the coda. 1.0 (29 September 2026) is the main track, with each choice picked by ear on an A/B bench: the ghost of the median year with a symbolic coda after the last day of data; a hum for the deep water that sits near 4 °C under the ice; freeze and breakup sounds placed at a distance (quieter, darker, a little later and wetter the farther away), spread in time so no more than four fall on one day; and eastern (higher) regions trimmed 0.5 dB a step so the east doesn't sound louder. 1.0 also fixes a 0.2 bug: the ghost's pitch was summed at too low a precision, so it stepped between wrong notes and, for most of the piece, played about two and a half semitones sharp (in the longer render it fell silent after about six minutes). 0.2 (28 September), after a first listen: fewer bird calls, each at its own distance; quieter, wetter events; a softer ghost. The shorter 0.2 render stays for a quicker listen. 0.1 was the first render.</p>
     <p class="caption" id="caption"></p>
   </div>
   <footer class="foot">Graham Watt &amp; Claude Code · <a href="../index.html">sonify-viz home</a> · <a href="../about.html">how this was made</a> · <a href="https://github.com/cordilleran/sonify-viz">source on GitHub</a> · code MPL 2.0</footer>
@@ -235,23 +244,16 @@ function buildMask(){
   const g = D.grid; NP = g.fw * g.fh; MASK = new Int8Array(NP);
   g.mask.forEach((row, y) => { for (let x = 0; x < g.fw; x++) MASK[y * g.fw + x] = row[x] === '.' ? -1 : +row[x]; });
 }
-let edgeAll = null, edgeBy = [];
+let edgeAll = null;   // the borders between regions, for the optional outline overlay
 function buildEdges(W, H, dpr){
-  const g = D.grid, sx = W * dpr / g.fw, sy = H * dpr / g.fh, R = D.regions.length;
-  edgeAll = new Path2D(); edgeBy = Array.from({length: R}, () => new Path2D());
+  const g = D.grid, sx = W * dpr / g.fw, sy = H * dpr / g.fh;
+  edgeAll = new Path2D();
   const at = (x, y) => x < 0 || y < 0 || x >= g.fw || y >= g.fh ? -1 : MASK[y * g.fw + x];
   for (let y = 0; y < g.fh; y++) for (let x = 0; x < g.fw; x++){
     const m = at(x, y); if (m < 0) continue;
     for (const [nx, ny, vert] of [[x + 1, y, true], [x, y + 1, false]]){
-      const n = at(nx, ny); if (n === m) continue;
-      const seg = p => { if (vert){ p.moveTo((x + 1) * sx, y * sy); p.lineTo((x + 1) * sx, (y + 1) * sy); } else { p.moveTo(x * sx, (y + 1) * sy); p.lineTo((x + 1) * sx, (y + 1) * sy); } };
-      if (n >= 0) seg(edgeAll);
-      seg(edgeBy[m]); if (n >= 0) seg(edgeBy[n]);
-    }
-    for (const [nx, ny, vert] of [[x - 1, y, true], [x, y - 1, false]]){          // land edges on the low sides
-      if (at(nx, ny) >= 0) continue;
-      const p = edgeBy[m];
-      if (vert){ p.moveTo(x * sx, y * sy); p.lineTo(x * sx, (y + 1) * sy); } else { p.moveTo(x * sx, y * sy); p.lineTo((x + 1) * sx, y * sy); }
+      const n = at(nx, ny); if (n === m || n < 0) continue;
+      if (vert){ edgeAll.moveTo((x + 1) * sx, y * sy); edgeAll.lineTo((x + 1) * sx, (y + 1) * sy); } else { edgeAll.moveTo(x * sx, (y + 1) * sy); edgeAll.lineTo((x + 1) * sx, (y + 1) * sy); }
     }
   }
 }
@@ -264,7 +266,7 @@ audio.addEventListener('seeked', () => { if (overrideT !== null && Math.abs(audi
 // ---------- painting the lake ----------
 const lakeCv = $('lake'), lakeCx = lakeCv.getContext('2d');
 let lakeImg = null;
-function paintLake(pos, glow){
+function paintLake(pos){
   if (!ICE) return;
   const N = D.n_days, i0 = clamp(Math.floor(pos), 0, N - 1), i1 = Math.min(N - 1, i0 + 1), f = clamp(pos - i0, 0, 1);
   const o = i0 * NP, p1 = i1 * NP, d32 = lakeImg.data;
@@ -284,9 +286,7 @@ function paintLake(pos, glow){
       const ir = lerp(ICE_LO[0], ICE_HI[0], ice), ig = lerp(ICE_LO[1], ICE_HI[1], ice), ib = lerp(ICE_LO[2], ICE_HI[2], ice);
       r = lerp(r, ir, k); g = lerp(g, ig, k); bl = lerp(bl, ib, k);
     }
-    const gl = glow[m] * 0.32;
-    if (gl > 0){ r = lerp(r, FROST[0], gl); g = lerp(g, FROST[1], gl); bl = lerp(bl, FROST[2], gl); }
-    if (focus !== null && m !== focus){ r *= 0.5; g *= 0.5; bl *= 0.5; }
+    // the voice glow and the focus dimming are drawn over both halves by the soft layer (softRegions)
     d32[q] = r; d32[q + 1] = g; d32[q + 2] = bl; d32[q + 3] = 255;
   }
   lakeCx.putImageData(lakeImg, 0, 0);
@@ -298,6 +298,7 @@ let OW = 0, OH = 0, DPR = 1;
 function sizeOver(){
   const r = $('mapbox').getBoundingClientRect(); DPR = Math.min(2, window.devicePixelRatio || 1);
   over.width = Math.round(r.width * DPR); over.height = Math.round(r.height * DPR); OW = over.width; OH = over.height;
+  pic.width = OW; pic.height = OH; lastPicPos = -1;
   if (D){ buildEdges(r.width, r.height, DPR); }
   drawTL(true); if (focus !== null){ const f = focus, p = pinned; focus = null; pinned = false; setFocus(f, p); } else frame(true);
 }
@@ -312,22 +313,41 @@ function drawArrow(c, x, y, ang, len, alpha, w){
   c.moveTo(x2, y2); c.lineTo(x2 - dx * h - dy * h * 0.55, y2 - dy * h + dx * h * 0.55); c.stroke();
 }
 
+// ---------- soft region layer: the region grid at its own resolution, smoothed up to the picture ----------
+const soft = document.createElement('canvas'), sc2 = soft.getContext('2d'); let softImg = null;
+function softRegions(c, W, H, u){
+  const g = D.grid; if (soft.width !== g.fw){ soft.width = g.fw; soft.height = g.fh; softImg = sc2.createImageData(g.fw, g.fh); }
+  const px = softImg.data; let any = false;
+  for (let p = 0; p < NP; p++){
+    const m = MASK[p], q = p * 4; let r = 0, gg = 0, b = 0, a = 0;
+    if (m >= 0){
+      if (focus !== null && m !== focus){ r = 6; gg = 14; b = 21; a = 0.5; }
+      else if (L.glow && glow[m] > 0.05){ r = 225; gg = 243; b = 252; a = glow[m] * 0.16; }
+    }
+    px[q] = r; px[q + 1] = gg; px[q + 2] = b; px[q + 3] = Math.round(a * 255); if (a) any = true;
+  }
+  if (!any) return;
+  sc2.putImageData(softImg, 0, 0);
+  c.save(); c.imageSmoothingEnabled = true; c.imageSmoothingQuality = 'high'; c.filter = `blur(${(2.5 * u).toFixed(1)}px)`;
+  c.drawImage(soft, 0, 0, W, H); c.restore();
+}
+
 function drawOver(t, pos, day, glow){
   const c = oc, W = OW, H = OH, u = DPR;
   c.clearRect(0, 0, W, H);
   c.lineJoin = 'round';
-  if (edgeAll){ c.strokeStyle = 'rgba(228,237,243,0.20)'; c.lineWidth = 1 * u; c.stroke(edgeAll); }
-  if (focus !== null && edgeBy[focus]){ c.strokeStyle = css('--frost'); c.lineWidth = 2 * u; c.stroke(edgeBy[focus]); }
+  softRegions(c, W, H, u);   // glow and focus as one soft layer: no hard edges on the picture
+  if (edgeAll && L.outlines){ c.save(); c.filter = `blur(${(1.2 * u).toFixed(1)}px)`; c.strokeStyle = 'rgba(6,14,21,0.22)'; c.lineWidth = 1.6 * u; c.stroke(edgeAll); c.restore(); }
   const N = D.n_days, i0 = clamp(Math.floor(pos), 0, N - 1), i1 = Math.min(N - 1, i0 + 1), f = clamp(pos - i0, 0, 1);
   const rs = D.region_series;
   D.regions.forEach((r, i) => {
     const [ax, ay] = anchor(i, W, H), S = rs[r.id];
     // wind
     const ws = lerp(S.wind[i0], S.wind[i1], f), wd = lerp(S.wdir[i0], S.wdir[i0] + ((S.wdir[i1] - S.wdir[i0] + 540) % 360 - 180), f);
-    if (ws > 3){ drawArrow(c, ax - 2 * u, ay + 12 * u, (wd + 180) * Math.PI / 180, clamp(ws, 0, 18) * 2.1 * u, clamp(0.2 + (ws - 3) / 14, 0.2, 0.85), 1.4 * u); }
+    if (L.weather && ws > 3){ drawArrow(c, ax - 2 * u, ay + 12 * u, (wd + 180) * Math.PI / 180, clamp(ws, 0, 18) * 2.1 * u, clamp(0.2 + (ws - 3) / 14, 0.2, 0.85), 1.4 * u); }
     // snow and rain
     const sn = lerp(S.snow[i0], S.snow[i1], f), rn = Math.max(0, lerp(S.precip[i0], S.precip[i1], f) - 0.7 * sn);
-    const nS = sn < 0.2 ? 0 : Math.min(16, Math.ceil(sn * 3 + 2)), nR = rn < 0.3 ? 0 : Math.min(14, Math.ceil(rn * 2 + 2));
+    const nS = !L.weather || sn < 0.2 ? 0 : Math.min(16, Math.ceil(sn * 3 + 2)), nR = !L.weather || rn < 0.3 ? 0 : Math.min(14, Math.ceil(rn * 2 + 2));
     for (let k = 0; k < nS; k++){
       const ph = hash(i * 97 + k), fx = hash(i * 31 + k * 7), sway = RM ? 0 : Math.sin(t * 1.3 + k) * 3 * u;
       const y = ((ph + (RM ? 0 : t * 0.22 * (0.6 + hash(k)))) % 1) * 46 * u - 20 * u;
@@ -338,14 +358,15 @@ function drawOver(t, pos, day, glow){
       c.strokeStyle = 'rgba(127,184,230,0.8)'; c.lineWidth = 1.2 * u; c.beginPath(); c.moveTo(x, ay + y); c.lineTo(x - 1.5 * u, ay + y + 6 * u); c.stroke();
     }
     // label and note
+    if (L.labels || focus === i){
     c.font = `${(W / u < 560 ? 9 : 11) * u}px ${css('--mono')}`; c.textAlign = 'center';
     const lbl = r.name.replace(' and Nipigon', '').replace(' and south shore', '').replace(' and Sault', '').replace('Central basin', 'Central');
     c.fillStyle = 'rgba(6,14,21,0.55)'; const tw = c.measureText(lbl).width;
     c.fillRect(ax - tw / 2 - 3 * u, ay - 8 * u, tw + 6 * u, 15 * u);
-    c.fillStyle = focus === i ? css('--frost') : 'rgba(228,237,243,0.9)'; c.fillText(lbl, ax, ay + 3.5 * u);
+    c.fillStyle = focus === i ? css('--frost') : 'rgba(228,237,243,0.9)'; c.fillText(lbl, ax, ay + 3.5 * u); }
     // birds: a violet mark from the day they arrive
     const b = D.birds && D.birds[r.id];
-    if (b){
+    if (b && L.birds){
       const marks = [];
       if (b.goose !== null && day >= b.goose) marks.push('g'); if (b.loon !== null && day >= b.loon) marks.push('l');
       marks.forEach((m, k) => {
@@ -356,7 +377,7 @@ function drawOver(t, pos, day, glow){
     }
   });
   // events: rings from the region, sized by the change
-  for (const e of EV){
+  if (L.rings) for (const e of EV){
     const age = t - e.t, dur = e.kind > 0 ? 1.7 : 2.4; if (age < 0 || age > dur) continue;
     const p = age / dur, [ax, ay] = anchor(e.i, W, H), jx = (hash(e.n) - 0.5) * 34 * u, jy = (hash(e.n + 7) - 0.5) * 22 * u, sz = clamp(e.size / 12, 0.3, 1);
     const rad = RM ? 26 * u : (10 + 52 * p * (0.6 + sz * 0.6)) * u;
@@ -369,10 +390,10 @@ function drawOver(t, pos, day, glow){
     }
   }
   // the bird arriving: a violet ring
-  for (const b of BIRD){ const age = t - b.t; if (age < 0 || age > 2.4) continue; const p = age / 2.4, [ax, ay] = anchor(b.i, W, H);
+  if (L.birds) for (const b of BIRD){ const age = t - b.t; if (age < 0 || age > 2.4) continue; const p = age / 2.4, [ax, ay] = anchor(b.i, W, H);
     c.strokeStyle = `rgba(185,163,240,${(1 - p) * 0.8})`; c.setLineDash([4 * u, 4 * u]); c.lineWidth = 1.6 * u; c.beginPath(); c.arc(ax, ay + 12 * u, (8 + 26 * p) * u, 0, 6.3); c.stroke(); c.setLineDash([]); }
   // turnover: the lake as a whole passes 4 degrees C
-  for (const d of D.turnover_days){ const age = t - d * D.day_s; if (age < 0 || age > 4) continue; const p = age / 4;
+  if (L.rings) for (const d of D.turnover_days){ const age = t - d * D.day_s; if (age < 0 || age > 4) continue; const p = age / 4;
     c.strokeStyle = `rgba(240,162,92,${(1 - p) * 0.6})`; c.lineWidth = 3 * u; c.beginPath(); c.ellipse(W * 0.5, H * 0.52, W * (0.12 + 0.34 * p), H * (0.14 + 0.36 * p), 0, 0, 6.3); c.stroke();
     c.fillStyle = `rgba(240,162,92,${(1 - p) * 0.9})`; c.font = `${12 * u}px ${css('--mono')}`; c.textAlign = 'center';
     c.fillText('lake mean water passes 4 °C (D)', W * 0.5, H * 0.94); }
@@ -482,7 +503,8 @@ function frame(force){
   const maxIce = D.maxIceEnv;
   D.regions.forEach((r, i) => { glow[i] = Math.sqrt(clamp(((envIce[r.id] || [])[ei] || 0) / maxIce, 0, 1)); });
   D.regions.forEach((r, i) => { const g = $('gl' + i); if (g) g.style.opacity = (glow[i] * 0.18).toFixed(3); });   // the list may not be built yet
-  paintLake(pos, glow);
+  if (comparing) paintLake(pos);   // the data as measured, left of the line
+  drawPic(pos);
   drawOver(t, pos, day, glow);
   tlPos = clamp(u, 0, N); drawTLHead();
   // meters
@@ -506,8 +528,8 @@ function frame(force){
     for (const l of LL) $('mt_' + l[0]).textContent = txt[l[0]];
     if (focus !== null) drawSparkDots(day);
   }
-  $('time').textContent = `${fmtT(t)} / ${fmtT(N * ds)}`;
-  if (!seeking) $('seek').value = Math.round(1000 * clamp(u / N, 0, 1));
+  $('time').textContent = `${fmtT(t)} / ${fmtT(total())}` + (t > N * ds ? ' · coda' : '');
+  if (!seeking) $('seek').value = Math.round(1000 * clamp(t / total(), 0, 1));
 }
 
 // ---------- focus ----------
@@ -552,22 +574,28 @@ function regionAt(e){
 over.addEventListener('mousemove', e => { if (D) setFocus(regionAt(e), false); });
 over.addEventListener('mouseleave', () => { if (!pinned) setFocus(null, false); });
 over.addEventListener('click', e => { if (!D) return; const i = regionAt(e); if (i !== null) setFocus(i, true); });
-over.addEventListener('keydown', e => { if (e.key === 'Escape'){ pinned = false; setFocus(null, false); } });
+window.addEventListener('keydown', e => { if (e.key === 'Escape' && pinned){ pinned = false; setFocus(null, false); } });   // Escape lets go from anywhere, not only the map
 
 // ---------- modes and legend ----------
 const LEG = {
   both: () => `<span>water temperature</span><span class="ramp" style="background:linear-gradient(90deg,${LEGC.map(c => { const i = Math.round(c * 10) * 3; return `rgb(${SST_LUT[i]},${SST_LUT[i + 1]},${SST_LUT[i + 2]})`; }).join(',')})"></span><span>0 to 16 °C, colours stretched below 4 °C</span><span><i class="sw" style="background:#eef8fd"></i>ice, thicker is whiter</span>`,
   ice: () => `<span>ice concentration</span><span class="ramp" style="background:linear-gradient(90deg,rgb(11,26,39),rgb(${ICE_LO}),rgb(${ICE_HI}))"></span><span>open water to full cover</span>`,
   water: () => `<span>water temperature</span><span class="ramp" style="background:linear-gradient(90deg,${LEGC.map(c => { const i = Math.round(c * 10) * 3; return `rgb(${SST_LUT[i]},${SST_LUT[i + 1]},${SST_LUT[i + 2]})`; }).join(',')})"></span><span>0 to 16 °C, stretched below 4 °C, ice hidden</span>`};
+const DEPTH = ['#7aa5bc','#5c96b4','#3986ac','#207da7','#1474a2','#0e6d9c','#0b6897','#0a6393','#0a608e','#035a86'];   // sampled from the open-water picture of 15 June, by depth band
+LEG.picture = () => `<span class="depth"><span>water depth</span> <span class="ramp" style="display:inline-block;vertical-align:-1px;background:linear-gradient(90deg,${DEPTH.map((c, k) => `${c} ${5 + 10 * k}%`).join(',')})"></span> <span title="Colours sampled from the rendered picture of 15 June, when the lake is open, by depth band">0 to 406 m, as rendered</span></span><span><i class="sw" style="background:#eef3f6"></i>ice, from the day's ice chart</span><span><i class="sw" style="background:#a3a9ab"></i>land, shaded relief</span>`;
 function setMode(m){
-  mode = m; [...$('modes').querySelectorAll('button')].forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m));
-  $('legend').innerHTML = LEG[m]() + '<span><i class="sw" style="background:#e6f6ff"></i>freeze ring</span><span><i class="sw" style="background:#f0a25c"></i>breakup ring</span><span><i class="sw" style="background:#b9a3f0"></i>bird (symbolic)</span>';
+  if (!comparing) m = 'picture'; else if (m === 'picture') m = lastMeasured;
+  mode = m; if (m !== 'picture') lastMeasured = m; [...$('modes').querySelectorAll('button[data-m]')].forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m));
+  $('legend').innerHTML = LEG.picture() + (comparing ? '<span style="flex-basis:100%;height:0"></span><span>left of the line:</span>' + LEG[mode]() : '') + (!L.rings && !L.birds ? '' : '<span><i class="sw" style="background:#e6f6ff"></i>freeze ring</span><span><i class="sw" style="background:#f0a25c"></i>breakup ring</span><span><i class="sw" style="background:#b9a3f0"></i>bird (symbolic)</span>');
+  applyClip();
   frame(true);
 }
-$('modes').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setMode(b.dataset.m); });
+$('modes').addEventListener('click', e => { const b = e.target.closest('button[data-m]'); if (b) setMode(b.dataset.m); });
 
 // ---------- transport ----------
 let seeking = false;
+const total = () => Math.max(D.n_days * D.day_s, isFinite(audio.duration) ? audio.duration : 0);   // the data, plus any coda after them
+audio.addEventListener('durationchange', () => frame(true));
 function loop(){ frame(false); if (!audio.paused) requestAnimationFrame(loop); }
 $('play').onclick = async () => {
   if (audio.paused){
@@ -576,7 +604,7 @@ $('play').onclick = async () => {
     $('play').textContent = 'Pause'; $('play').setAttribute('aria-label', 'Pause'); requestAnimationFrame(loop);
   } else { overrideT = audio.currentTime; audio.pause(); $('play').textContent = 'Play'; $('play').setAttribute('aria-label', 'Play'); }
 };
-$('seek').oninput = () => { seeking = true; setTime(D.n_days * D.day_s * $('seek').value / 1000); };
+$('seek').oninput = () => { seeking = true; setTime(total() * $('seek').value / 1000); };
 $('seek').onchange = () => { seeking = false; };
 audio.addEventListener('ended', () => { $('play').textContent = 'Play'; overrideT = null; });
 window.addEventListener('keydown', e => { if (e.code === 'Space' && !['BUTTON', 'SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)){ e.preventDefault(); $('play').click(); } });
@@ -600,12 +628,60 @@ function loadPiece(name){
     $('tlCap').textContent = `Lake-wide ice peaked at ${d.cur_peak} % on ${fmtDate(d.cur_peak_day)}, with a collapse and refreeze in February. The record years of 2008–25 reached 95.7 %.`;
     sizeOver();
     const ft = params.get('focus'); if (ft){ const i = D.regions.findIndex(r => r.id === ft); if (i >= 0) setFocus(i, true); }
-    frame(true); $('play').disabled = false;
+    IMG.length = 0; lastPicPos = -1; frame(true); $('play').disabled = false;
   }).catch(e => { $('caption').textContent = `Could not load ${name}.json (${e.message}). Reload the page to try again.`; });
 }
+
+// ---------- the picture: one Blender render per day (days/day_NNN.webp), cross-faded ----------
+const pic = $('pic'), pc = pic.getContext('2d');
+const IMG = [], LOADING = new Set(); let lastPicPos = -1;
+const AHEAD = 10, KEEP = 24;   // days fetched ahead of the playhead, and days kept decoded around it
+function need(d){
+  if (!D || d < 0 || d >= D.n_days || IMG[d] || LOADING.has(d)) return;
+  LOADING.add(d); const im = new Image(); im.decoding = 'async';
+  im.onload = () => { IMG[d] = im; LOADING.delete(d); if (Math.abs(d - lastPicPos) < 3 || lastPicPos < 0){ lastPicPos = -1; frame(true); } };
+  im.onerror = () => { LOADING.delete(d); };
+  im.src = `days/day_${String(d).padStart(3, '0')}.webp`;
+}
+function pump(i0){   // fetch the next days in order, at most four at a time, and let go of days far from the playhead
+  for (let d = i0; d < i0 + AHEAD && LOADING.size < 4; d++) need(d);
+  for (let d = 0; d < IMG.length; d++) if (IMG[d] && Math.abs(d - i0) > KEEP) IMG[d] = undefined;
+}
+function nearest(d){ for (let k = 0; k < D.n_days; k++){ if (IMG[d - k]) return IMG[d - k]; if (IMG[d + k]) return IMG[d + k]; } return null; }
+function drawPic(pos){
+  if (!D || !OW) return;
+  const N = D.n_days, i0 = clamp(Math.floor(pos), 0, N - 1), i1 = Math.min(N - 1, i0 + 1), f = clamp(pos - i0, 0, 1);
+  need(i0); need(i1); pump(i0);
+  if (Math.abs(pos - lastPicPos) < 0.004) return; lastPicPos = pos;
+  const a = IMG[i0] || nearest(i0); if (!a) return;
+  pc.globalAlpha = 1; pc.drawImage(a, 0, 0, OW, OH);
+  if (IMG[i1] && IMG[i0] && f > 0.01){ pc.globalAlpha = f; pc.drawImage(IMG[i1], 0, 0, OW, OH); pc.globalAlpha = 1; }
+}
+
+// ---------- overlays and the comparison line ----------
+const LNAME = {glow: 'voice glow', rings: 'freeze · breakup rings', labels: 'names', weather: 'wind · snow · rain', birds: 'birds (S)', outlines: 'region outlines'};
+const L = {glow: true, rings: true, labels: false, weather: false, birds: false, outlines: false};
+let comparing = false, wipeX = 0.5, lastMeasured = 'both';
+function applyClip(){
+  $('lake').style.clipPath = comparing ? `inset(0 ${(100 - wipeX * 100).toFixed(2)}% 0 0)` : 'inset(0 100% 0 0)';
+  $('wipe').style.left = (wipeX * 100) + '%'; $('grip').setAttribute('aria-valuenow', Math.round(wipeX * 100));
+  document.body.classList.toggle('comparing', comparing); $('cmp').setAttribute('aria-pressed', comparing);
+}
+for (const k of Object.keys(LNAME)){ const b = document.createElement('button'); b.dataset.k = k; b.textContent = LNAME[k]; b.setAttribute('aria-pressed', L[k]); $('layers').appendChild(b); }
+$('layers').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; L[b.dataset.k] = !L[b.dataset.k]; b.setAttribute('aria-pressed', L[b.dataset.k]); if (D) setMode(mode); });
+$('cmp').onclick = () => { comparing = !comparing; if (comparing) wipeX = 0.5; if (D) setMode(lastMeasured); else applyClip(); };
+(() => {  // drag the line, or focus it and use the arrow keys
+  const grip = $('grip'), mb = $('mapbox'); let drag = false;
+  const to = x => { const r = mb.getBoundingClientRect(); wipeX = clamp((x - r.left) / r.width, 0, 1); applyClip(); };
+  grip.addEventListener('pointerdown', e => { drag = true; grip.setPointerCapture(e.pointerId); e.preventDefault(); });
+  grip.addEventListener('pointermove', e => { if (drag) to(e.clientX); });
+  for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) grip.addEventListener(ev, () => { drag = false; });
+  grip.addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight'){ e.preventDefault(); wipeX = clamp(wipeX + (e.key === 'ArrowLeft' ? -0.05 : 0.05), 0, 1); applyClip(); } });
+})();
+
 $('piece').addEventListener('change', e => loadPiece(e.target.value));
 if (params.get('piece') && [...$('piece').options].some(o => o.value === params.get('piece'))) $('piece').value = params.get('piece');   // links to retired renders fall back to the main track
-if (params.get('mode')) mode = params.get('mode');
+if (['both', 'ice', 'water'].includes(params.get('mode'))){ comparing = true; lastMeasured = mode = params.get('mode'); }   // older links to a map mode open the comparison
 let firstT = params.get('t') ? +params.get('t') : null;
 loadPiece($('piece').value);
 new ResizeObserver(() => { if (D) sizeOver(); }).observe($('mapbox'));

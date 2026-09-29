@@ -1,0 +1,372 @@
+$version: 0.1.0
+$learn_more: https://data-dict.tidyverse.org/
+name: superior-ice-short-mapping
+label: Superior Ice Year, shorter - mapping
+description: >-
+  How Superior Ice Year turns one ice season on Lake Superior into music, as four tables: the eight regions and
+  their pitches, what each region read each day, what the whole lake read each day, and the freeze and breakup events.
+  One day is 1.5 seconds, in one piece. The eight regions are voices, west lowest and east highest; each region's
+  ice sets its voice's loudness, its water temperature a low drone, and its events a glass ping (freeze) or a low
+  drop (breakup).
+details: >-
+  Copied by scripts/export_mapping.py from the page data (_viz.json) of the locked render (renders.lock.json), and
+  only if its SHA-256 matches the lock. The values are the piece's own, not recomputed (scripts/icecover.py). Ice
+  and water are NOAA GLERL and CoastWatch Great Lakes Node daily analyses averaged over each region's cells (R);
+  air, wind, rain and snow are ERA5 reanalysis at one point per region via Open-Meteo, CC BY 4.0 (R); events, day
+  length and the 4 degree C turnover are derived (D); birds are symbolic (S). The regions are wedges cut by distance
+  from eight anchor points, not basins.
+origin: ../../../scripts/export_mapping.py
+version:
+  number: 0.2.0
+tables:
+- name: regions
+  label: The eight voices
+  description: >-
+    One row per region, west to east: where it is, where it sits in the stereo image, its pitches, and the symbolic
+    day its birds arrive.
+  source:
+    parquet: regions.parquet
+  columns:
+  - name: id
+    type: enum
+    constraints:
+    - primary_key
+    description: Short name, used as the key in the other tables.
+    values:
+      west: Western Arm
+      nshore: North Shore
+      royale: Isle Royale
+      thunder: Thunder Bay and Nipigon
+      keweenaw: Keweenaw and south shore
+      central: Central basin
+      northeast: Northeast (Pukaskwa)
+      whitefish: Whitefish Bay and Sault
+  - name: name
+    type: string
+    examples:
+    - Central basin
+    - Isle Royale
+    - Keweenaw and south shore
+  - name: lon
+    type: number(quantity)
+    units: degrees east
+    description: Anchor point longitude.
+    range:
+    - -90.993
+    - -85.477
+  - name: lat
+    type: number(quantity)
+    units: degrees north
+    description: Anchor point latitude.
+    range:
+    - 46.98
+    - 48.544
+  - name: pan
+    type: number(quantity)
+    description: >-
+      Stereo position, -1 left to 1 right: longitude blended with west-to-east rank.
+    range:
+    - -0.7
+    - 0.7
+  - name: ice_midi
+    type: number(ordinal)
+    description: >-
+      The ice voice's pitch as a MIDI note (60 is middle C); west lowest, east highest.
+    range:
+    - 74
+    - 90
+  - name: water_midi
+    type: number(ordinal)
+    description: The water drone's pitch as a MIDI note.
+    range:
+    - 38
+    - 54
+  - name: drop_midi
+    type: number(ordinal)
+    description: The breakup drop's pitch as a MIDI note.
+    range:
+    - 38
+    - 54
+  - name: loon_day
+    type: number(ordinal)
+    description: >-
+      Symbolic (S): the day (from 0) the loon call first sounds, from the region's ice and temperature.
+    range:
+    - 155
+    - 193
+  - name: goose_day
+    type: number(ordinal)
+    description: 'Symbolic (S): the day the goose call first sounds.'
+    range:
+    - 121
+    - 155
+- name: region_days
+  label: What each region read, each day
+  description: >-
+    One row per region per day, 1 November 2025 to 15 June 2026.
+  source:
+    parquet: region_days.parquet
+  columns:
+  - name: date
+    type: date
+    constraints:
+    - required
+    range:
+    - 2025-11-01
+    - 2026-06-15
+  - name: day
+    type: number(ordinal)
+    constraints:
+    - required
+    description: Day of the season, from 0.
+    range:
+    - 0
+    - 226
+  - name: t
+    type: number(quantity)
+    units: seconds
+    constraints:
+    - required
+    description: When the day starts in the audio.
+    range:
+    - 0.0
+    - 339.0
+  - name: region
+    type: enum
+    constraints:
+    - required
+    - foreign_key
+    values:
+      west: Western Arm
+      nshore: North Shore
+      royale: Isle Royale
+      thunder: Thunder Bay and Nipigon
+      keweenaw: Keweenaw and south shore
+      central: Central basin
+      northeast: Northeast (Pukaskwa)
+      whitefish: Whitefish Bay and Sault
+  - name: ice_pct
+    type: number(quantity)
+    units: percent
+    description: >-
+      Ice concentration, mean over the region's cells (R). Sets the region's bowed-glass ice voice, louder as the
+      ice thickens.
+    range:
+    - 0.0
+    - 93.8
+  - name: sst_c
+    type: number(quantity)
+    units: degrees C
+    description: >-
+      Satellite surface water temperature, mean over the region's open-water cells (R): the top millimetres, not
+      the lake at depth. Feeds the low string voices, fuller as it warms; the ice quiets them.
+    range:
+    - 0.2
+    - 11.3
+  - name: air_mean_c
+    type: number(quantity)
+    units: degrees C
+    description: >-
+      Daily mean air temperature (R, ERA5). The lake mean drives the organ bed, which adds ranks and brightens as
+      it warms.
+    range:
+    - -27.9
+    - 21.3
+  - name: wind_max_ms
+    type: number(quantity)
+    units: m/s
+    description: >-
+      Daily maximum wind speed at 10 m (R, ERA5). The wind bed rises only in a gale.
+    range:
+    - 1.8
+    - 18.5
+  - name: wind_dir_deg
+    type: number(quantity)
+    units: degrees
+    description: >-
+      Dominant wind direction, where it blows from (R, ERA5). Drawn on the map, not heard.
+    range:
+    - 0.0
+    - 360.0
+  - name: precip_mm
+    type: number(quantity)
+    units: mm
+    description: Daily precipitation, rain and snow (R, ERA5).
+    range:
+    - 0.0
+    - 42.3
+  - name: snow_mm
+    type: number(quantity)
+    units: mm
+    description: >-
+      Daily snowfall as water equivalent (R, ERA5); rain is precipitation minus 0.7 times this.
+    range:
+    - 0.0
+    - 22.3
+- name: lake_days
+  label: What the whole lake read, each day
+  description: >-
+    One row per day: lake-wide ice against the 2008 to 2025 record, the movement, day length and the 4 degree C
+    turnover.
+  source:
+    parquet: lake_days.parquet
+  columns:
+  - name: date
+    type: date
+    constraints:
+    - primary_key
+    range:
+    - 2025-11-01
+    - 2026-06-15
+  - name: day
+    type: number(ordinal)
+    constraints:
+    - required
+    range:
+    - 0
+    - 226
+  - name: t
+    type: number(quantity)
+    units: seconds
+    constraints:
+    - required
+    description: When the day starts in the audio.
+    range:
+    - 0.0
+    - 339.0
+  - name: movement
+    type: number(ordinal)
+    description: >-
+      Movement 1 to 4, cut where the ice changes phase (freeze-up, ice-in, long melt, open water).
+    range:
+    - 1
+    - 4
+  - name: lake_ice_pct
+    type: number(quantity)
+    units: percent
+    description: Lake-average ice concentration, NOAA GLERL (R).
+    range:
+    - 0.0
+    - 62.6
+  - name: hist_min_pct
+    type: number(quantity)
+    units: percent
+    description: >-
+      The 2008 to 2025 minimum of lake-average ice on this date (D, from NOAA GLERL).
+    range:
+    - 0.0
+    - 4.2
+  - name: hist_p25_pct
+    type: number(quantity)
+    units: percent
+    description: >-
+      The 2008 to 2025 25th percentile of lake-average ice on this date (D, from NOAA GLERL).
+    range:
+    - 0.0
+    - 13.7
+  - name: hist_med_pct
+    type: number(quantity)
+    units: percent
+    description: >-
+      The 2008 to 2025 median of lake-average ice on this date (D, from NOAA GLERL). Drawn on the page; this version
+      has no ghost tone.
+    range:
+    - 0.0
+    - 23.6
+  - name: hist_p75_pct
+    type: number(quantity)
+    units: percent
+    description: >-
+      The 2008 to 2025 75th percentile of lake-average ice on this date (D, from NOAA GLERL).
+    range:
+    - 0.0
+    - 72.2
+  - name: hist_max_pct
+    type: number(quantity)
+    units: percent
+    description: >-
+      The 2008 to 2025 maximum of lake-average ice on this date (D, from NOAA GLERL).
+    range:
+    - 0.0
+    - 95.7
+  - name: daylength_h
+    type: number(quantity)
+    units: hours
+    description: Day length at 47.6 degrees N (D). Sets the choir's loudness.
+    range:
+    - 8.42
+    - 15.96
+  - name: turnover
+    type: boolean
+    description: >-
+      Derived (D): the lake-mean surface temperature crosses 4 degrees C this day, a proxy for turnover, not a measurement
+      of it; heard as a soft sub drop.
+- name: events
+  label: Freeze and breakup
+  description: >-
+    One row per event: a three-day smoothed change in a region's ice of 4 percentage points or more in a day, at
+    least 3 days apart (D). Freeze is a glass ping, breakup a low drop.
+  source:
+    parquet: events.parquet
+  columns:
+  - name: region
+    type: enum
+    constraints:
+    - required
+    - foreign_key
+    values:
+      west: Western Arm
+      nshore: North Shore
+      royale: Isle Royale
+      thunder: Thunder Bay and Nipigon
+      keweenaw: Keweenaw and south shore
+      central: Central basin
+      northeast: Northeast (Pukaskwa)
+      whitefish: Whitefish Bay and Sault
+  - name: day
+    type: number(ordinal)
+    constraints:
+    - required
+    description: The day the change happened.
+    range:
+    - 36
+    - 184
+  - name: kind
+    type: enum
+    constraints:
+    - required
+    description: Which way the ice moved.
+    values:
+      freeze: 'ice grew: a glass ping'
+      breakup: 'ice fell: a low drop with a crack'
+  - name: size_pp
+    type: number(quantity)
+    units: percentage points
+    description: The size of the day's change; larger is louder and brighter.
+    range:
+    - 4.0
+    - 16.1
+  - name: offset_days
+    type: number(quantity)
+    units: days
+    description: >-
+      Where in the day the sound falls, so events on one day don't pile up (v1 spreads them, at most four a day).
+    range:
+    - 0.003
+    - 0.499
+  - name: t
+    type: number(quantity)
+    units: seconds
+    description: When it sounds in the audio.
+    range:
+    - 54.059
+    - 276.221
+relationships:
+- join: region_days.region = regions.id
+  cardinality: many-to-one
+  description: Each region has one row per day.
+- join: events.region = regions.id
+  cardinality: many-to-one
+- join: region_days.date = lake_days.date
+  cardinality: many-to-one
+  description: Eight regions share each lake day.

@@ -10,6 +10,9 @@ Thirteen voices stand on the 100th meridian west, one every 15 degrees from the 
 <iframe class="companion" id="companion" src="meridian/index.html?embed" title="Meridian Chorus" loading="eager"></iframe>
 
 <script>
+// meridian.html?piece=meridian_ds2023 opens that render in the page (the track cards link this way).
+(() => { const p = new URLSearchParams(location.search).get('piece');
+  if (p && /^[a-z0-9_-]+$/.test(p)) document.getElementById('companion').src = 'meridian/index.html?embed&piece=' + p; })();
 window.addEventListener('message', (e) => {
   if (e.source !== document.getElementById('companion').contentWindow) return;   // only our own frame may resize it
   if (e.data && typeof e.data.wyrHeight === 'number') document.getElementById('companion').style.height = (e.data.wyrHeight + 8) + 'px';
