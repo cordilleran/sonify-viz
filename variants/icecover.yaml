@@ -1,0 +1,17 @@
+# Variants of Superior Ice Year (scripts/icecover.py). Each overrides only parameters the piece declares in DEFAULTS; see variants.py.
+long:
+  note: "Three seconds per day (~11.4 minutes), also cut into four movements at the ice-defined days: freeze-up, ice-in, long melt, open water."
+  day_s: 3.0
+  movements: true
+ghost:
+  note: "Adds the ghost year: a quiet detuned glass tone whose level follows the 2008-2025 median lake ice and whose detuning grows with this season's gap from it."
+  layers: [ice, events, water, air, sun, wind, snow, rain, birds, ghost]
+ice-only:
+  note: "Ice glass and its freeze and breakup events only, to hear the spatial story on its own."
+  layers: [ice, events]
+beds:
+  note: "Water, air, sun and wind only: the slow layers with no events."
+  layers: [water, air, sun, wind]
+weather:
+  note: "Snow, rain, wind and birds only."
+  layers: [wind, snow, rain, birds]

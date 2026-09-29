@@ -1,0 +1,608 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Superior Ice Year</title>
+<link rel="stylesheet" href="../listen/fonts/fonts.css">
+<style>
+:root{
+  color-scheme: dark;
+  --ground:#060e15; --surface:#0c1822; --line:#172a38; --line2:#25404f;
+  --text:#e4edf3; --muted:#8fa5b4; --faint:#56707f;
+  --frost:#cfeaf7; --freeze:#e6f6ff; --thaw:#f0a25c; --sym:#b9a3f0; --land:#0f1b25;
+  --display:"Gloock", "Iowan Old Style", Georgia, serif;
+  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+*{box-sizing:border-box}
+.foot{font:12px var(--mono);color:var(--faint);border-top:1px solid var(--line);padding-top:14px}
+.foot a{color:var(--muted)}
+.foot a:focus-visible{outline:2px solid var(--frost);outline-offset:2px}
+body{margin:0;background:var(--ground);color:var(--text);font:15px/1.55 var(--body)}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 16px 64px;overflow-x:clip;display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
+.wrap > *{min-width:0}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(38px,6.5vw,70px);line-height:.95;margin:0}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+header{display:grid;gap:12px}
+header p{margin:0;max-width:68ch;color:var(--muted)}
+.pick{display:grid;gap:6px}
+.pick .k{font:12px/1.45 var(--body);color:var(--muted);max-width:72ch}
+select{width:100%;appearance:none;border:1px solid var(--line2);background:var(--surface);color:var(--text);padding:9px 14px;border-radius:999px;font:13px var(--mono);max-width:100%}
+.controls{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+button{appearance:none;border:1px solid var(--line2);background:transparent;color:var(--text);padding:9px 18px;border-radius:999px;font:15px var(--body);cursor:pointer}
+button:hover{border-color:var(--frost)}
+button:focus-visible,input:focus-visible,select:focus-visible,.rrow:focus-visible,canvas:focus-visible{outline:2px solid var(--frost);outline-offset:3px}
+input[type=range]{flex:1;min-width:200px;accent-color:var(--frost)}
+.time{font:13px var(--mono);color:var(--muted)}
+
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start}
+.mapwrap{position:relative}
+.mapbox{position:relative;aspect-ratio:1.92;background:var(--land);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.mapbox canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#lake{image-rendering:auto}
+.badge{z-index:2;position:absolute;left:14px;top:10px;pointer-events:none;text-shadow:0 1px 8px #000,0 0 2px #000}
+.badge .date{font-family:var(--display);font-size:clamp(20px,3.2vw,36px);line-height:1.05}
+.badge .sub{font:11px/1.5 var(--mono);color:var(--muted)}
+.modes{z-index:2;position:absolute;right:10px;top:10px;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.modes button{padding:4px 10px;font:11px var(--mono);letter-spacing:.03em;background:rgba(6,14,21,.72);border-color:var(--line2)}
+.modes button[aria-pressed=true]{border-color:var(--frost);color:var(--frost)}
+.legend{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font:11px var(--mono);color:var(--faint);margin-top:8px}
+.legend .ramp{width:150px;height:8px;border-radius:4px;border:1px solid var(--line2)}
+.legend .sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+
+.rail{display:grid;gap:4px}
+.rhead{display:grid;grid-template-columns:1fr 46px 50px 20px;gap:6px;font:10.5px var(--mono);color:var(--faint);padding:0 8px 2px;letter-spacing:.06em;text-transform:uppercase}
+.rrow{position:relative;display:grid;grid-template-columns:1fr 46px 50px 20px;gap:6px;align-items:center;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer;overflow:hidden}
+.rrow .glow{position:absolute;inset:0;background:var(--frost);opacity:0;pointer-events:none}
+.rrow > *:not(.glow){position:relative}
+.rrow .nm{font-size:13.5px;line-height:1.2}
+.rrow .nm small{display:block;font:10.5px var(--mono);color:var(--faint)}
+.rrow .v{font:12.5px var(--mono);text-align:right;white-space:nowrap}
+.rrow .b{font-size:13px;text-align:center;color:var(--sym);min-width:20px}
+.rrow.focus{border-color:var(--frost)}
+.rrow:hover{border-color:var(--line2)}
+
+.lower{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start}
+.panel{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:12px 14px;display:grid;gap:8px}
+.panel h2{margin:0;font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+#tl{width:100%;display:block;cursor:pointer;touch-action:none}
+.meters{display:grid;gap:5px}
+.m{display:grid;grid-template-columns:62px 22px 1fr;gap:8px;align-items:center;font:12px var(--mono)}
+.m .n{color:var(--text)}
+.chip{font:600 10px var(--mono);text-align:center;border-radius:4px;padding:1px 0;border:1px solid var(--line2)}
+.chip.R{color:var(--frost);border-color:#3f6c82}.chip.D{color:var(--thaw);border-color:#7a5530}.chip.S{color:var(--sym);border-color:#5f5188}
+.m .bar{position:relative;height:16px;border-radius:4px;background:var(--ground);overflow:hidden}
+.m .bar i{position:absolute;left:0;top:0;bottom:0;background:#3a6a82;width:0}
+.m .bar span{position:absolute;left:6px;top:0;line-height:16px;font-size:10.5px;color:var(--text);text-shadow:0 0 3px var(--ground),0 0 3px var(--ground);white-space:nowrap}
+.focusbox{border:1px solid var(--line2);border-radius:10px;padding:12px 14px;display:grid;gap:6px}
+.focusbox{min-height:176px}
+.focusbox .t{font:600 12px var(--mono);letter-spacing:.06em;color:var(--muted)}
+.focusbox .sp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.focusbox svg{width:100%;height:72px;display:block}
+.focusbox .k{font:12px/1.5 var(--mono);color:var(--muted)}
+.notes{display:grid;gap:10px;max-width:74ch;color:var(--muted)}
+.notes b{color:var(--text);font-weight:600}
+.notes table{border-collapse:collapse;font:12.5px var(--mono);width:100%;display:block;overflow-x:auto}
+.notes th,.notes td{border-bottom:1px solid var(--line);padding:5px 10px 5px 0;text-align:left;vertical-align:top}
+.notes th{color:var(--muted);font-weight:600}
+.caption{font:12px var(--mono);color:var(--faint)}
+@media (max-width:980px){
+  .stage,.lower{grid-template-columns:minmax(0,1fr)}
+  .rail{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rhead{display:none}
+}
+@media (max-width:560px){ .rail{grid-template-columns:minmax(0,1fr)} .badge,.modes{position:static;display:block} .modes{display:flex;justify-content:flex-start;padding:4px 0 8px} .badge{padding-bottom:6px} .modes button{background:transparent} }
+</style>
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="eyebrow">Superior Ice Year · winter 2025–26 · a spatial sonification</div>
+    <h1>Superior Ice Year</h1>
+    <p>One ice season on Lake Superior, from 1 November to 15 June, played as music. The lake is cut into eight regions and each region is a voice: the west sings lowest and the east highest, so the chord you hear is the ice pattern on the map. Ice, water, air, sunlight, wind, snow, rain and birds each get their own instrument.</p>
+  </header>
+
+  <div class="pick">
+    <select id="piece" aria-label="Which render">
+      <option value="icecover_sup2526">the season · 5.8 minutes</option>
+      <option value="icecover_sup2526__long">the season, slowly · 11.6 minutes, four movements</option>
+      <option value="icecover_sup2526__ghost">with the ghost of the average year · 5.8 minutes</option>
+    </select>
+    <div class="k" id="pieceNote"></div>
+  </div>
+  <div class="controls">
+    <button id="play" aria-label="Play">Play</button>
+    <input id="seek" type="range" min="0" max="1000" value="0" aria-label="Position in the season">
+    <span class="time" id="time">0:00</span>
+  </div>
+
+  <div class="stage">
+    <div>
+      <div class="mapwrap">
+        <div class="badge"><div class="date" id="date">–</div><div class="sub" id="sub"></div></div>
+        <div class="modes" id="modes" role="group" aria-label="What the map shows">
+          <button data-m="both" aria-pressed="true">ice + water</button><button data-m="ice" aria-pressed="false">ice</button><button data-m="water" aria-pressed="false">water temp</button>
+        </div>
+      <div class="mapbox" id="mapbox">
+        <canvas id="lake" width="285" height="100" aria-hidden="true"></canvas>
+        <canvas id="over" tabindex="0" aria-label="Map of Lake Superior with eight regions; the day's ice and water temperature, coloured by season position. Hover or tap a region for its story."></canvas>
+      </div>
+      </div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div class="rail" id="rail" aria-label="The eight regions, west to east">
+      <div class="rhead"><span>region · ice voice</span><span style="text-align:right">ice</span><span style="text-align:right">water</span><span></span></div>
+    </div>
+  </div>
+
+  <div class="focusbox" id="focus">
+    <div class="t" id="focusT">Hover or tap a region</div>
+    <div class="sp"><svg id="spI" viewBox="0 0 320 72" aria-hidden="true"></svg><svg id="spW" viewBox="0 0 320 72" aria-hidden="true"></svg></div>
+    <div class="k" id="focusK">Its own year of ice cover and surface water temperature will appear here, with a dot at the day being played.</div>
+  </div>
+
+  <div class="lower">
+    <div class="panel">
+      <h2>The season: lake ice against 2008 to 2025, and each region's ice</h2>
+      <canvas id="tl" aria-label="Lake-wide ice through the season with the 2008 to 2025 range, and one heat strip per region. Click or drag to move through the season."></canvas>
+      <div class="caption" id="tlCap"></div>
+    </div>
+    <div class="panel">
+      <h2>What is sounding</h2>
+      <div class="meters" id="meters"></div>
+      <div class="caption">Bars are each layer's loudness in the mix. Chips: R observed or reanalysed, D derived from data, S symbolic.</div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <p><b>The map</b> is the lake for the day being played, coloured by surface water temperature with ice in white where it forms. Each region glows as its ice voice sounds. When a region freezes fast, a pale ring spreads from it and you hear a brief glass ping; when ice breaks up, a warm ring spreads and you hear a low drop. Arrows are wind, flecks are snow and rain, and a violet mark is a symbolic bird.</p>
+    <p><b>The heat strip</b> under the map is the whole season at once: one row per region, west at the top, coloured by ice. The dots are the freeze and breakup events that trigger the pings and drops. Click it to move through the season.</p>
+    <p><b>Tap or hover</b> a region, on the map or in the list, to see its own year of ice and water temperature; tap it again to let go.</p>
+    <table class="notes-t" aria-label="Layers">
+      <thead><tr><th>Layer</th><th>Data</th><th>Sound</th><th></th></tr></thead>
+      <tbody id="layerTable"></tbody>
+    </table>
+    <p><b>What this cannot tell you.</b> The regions are wedges cut by distance from eight anchor points, not lake basins or depth zones. Stereo position follows longitude (blended with rank so the three regions near 88° W are apart), so north and south at the same longitude sit in the same place in the stereo image; the map carries that difference. Freeze and breakup events are derived: a three-day smoothed change in a region's ice of four percentage points or more in a day, with at least three days between events. The 4 °C turnover marker uses lake-mean satellite skin temperature as a proxy; it is not a measurement of the lake overturning. Air temperature, wind, precipitation, snow and sunshine are ERA5 reanalysis at one point per region, not station observations. Water temperature is the satellite skin temperature of the top millimetres, not the lake at depth: under the ice, most of Superior sits near 4 °C all winter. It is used because it is the only daily, lake-wide, gridded water-temperature record, and it is the surface that freezes; sounding the water column would need a lake model such as NOAA's Great Lakes Coastal Forecasting System. Birds are symbolic (S): each region's loon and geese arrive on a date the data suggest, and the calls are recordings, not observations of migration.</p>
+    <p><b>Places and territory.</b> Draft acknowledgement, not yet reviewed with the nations concerned.</p>
+    <p>We acknowledge that the lands and waters encompassed by this sonification lie within the ancestral, traditional, and treaty territories of the <b>Anishinaabeg</b>, including the Ojibwe (Chippewa), Odawa, and Potawatomi peoples, as well as the homeland of the Métis Nation. Known to the Anishinaabeg as <b>Gichigami</b> (or <i>Anishinaabewi-gichigami</i>), this watershed has sustained Indigenous lifeways since time immemorial and continues to be cared for as a living relative and sacred source of life.</p>
+    <p>The Lake Superior basin spans numerous sovereign tribal nations and First Nations across borders imposed by the United States and Canada. These homelands are governed by enduring treaty agreements, including the <b>Robinson-Superior and Robinson-Huron Treaties of 1850</b> in present-day Ontario, and the <b>Treaties of 1836, 1842, and 1854</b> in present-day Michigan, Wisconsin, and Minnesota. Under these treaties, sovereign tribal nations reserved inherent rights to hunt, fish, gather, and steward the natural resources across the ceded territories.</p>
+    <p>We recognize tribal and First Nation governments, alongside intertribal co-management bodies like the <b>Great Lakes Indian Fish &amp; Wildlife Commission (GLIFWC)</b> and the <b>1854 Treaty Authority</b>, as primary authorities and leaders in environmental protection, watershed science, and natural asset stewardship. In conducting this work, we commit to respecting Indigenous sovereignty, upholding treaty responsibilities, and ensuring that our findings support collaborative, ecologically sound governance across the basin.</p>
+    <p><b>Sources.</b> Ice and water data courtesy of NOAA: the Great Lakes Environmental Research Laboratory (GLERL) and the CoastWatch Great Lakes Node. Ice concentration: NOAA GLERL and CoastWatch Great Lakes Node, GLSEA analysis using NIC ice charts (public data), daily, block-averaged from about 1.4 km to 2.8 km cells. Surface water temperature: NOAA CoastWatch ACSPO GLSEA satellite analysis; gaps under cloud are filled by the analysis. Lake-average ice, 2008 to 2025: NOAA GLERL. Air temperature, wind, precipitation, snowfall and shortwave radiation: ERA5 reanalysis (Copernicus Climate Change Service, CC BY 4.0) via the Open-Meteo historical weather API. Day length is calculated at 47.6° N. Loon and Canada goose recordings: Jonathon Jongsma, CC BY-SA 3.0, through Wikimedia Commons. Orchestral samples: VSCO 2 Community Edition (CC0). The regions, events and sound mapping are described in the project's spec.</p>
+    <p><b>Versions.</b> 0.2 (28 September 2026), after a first listen: fewer bird calls, each heard at its own distance, from near to far across the water; the freeze pings and breakup cracks quieter, wetter and at varying distances; the ghost tone softer. 0.1 was the first render.</p>
+    <p class="caption" id="caption"></p>
+  </div>
+  <footer class="foot">Graham Watt &amp; Claude Code · <a href="../index.html">sonify-viz home</a> · <a href="../about.html">how this was made</a> · <a href="https://github.com/cordilleran/sonify-viz">source on GitHub</a> · code MPL 2.0</footer>
+</div>
+<audio id="audio" preload="auto"></audio>
+<script>
+const $ = id => document.getElementById(id);
+const audio = $('audio');
+const params = new URLSearchParams(location.search);
+const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const fmtDate = s => { const [y, m, d] = s.split('-').map(Number); return `${MON[m - 1]} ${d}, ${y}`; };
+const fmtT = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+const NOTES = ['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+const noteName = m => NOTES[m % 12] + (Math.floor(m / 12) - 1);
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, f) => a + (b - a) * f;
+const hm = h => `${Math.floor(h)} h ${String(Math.round((h % 1) * 60)).padStart(2, '0')} min`;
+
+let D = null, NP = 0, ICE = null, SST = null, MASK = null, G = null;      // data, pixels per frame, per-day pixel arrays, region mask
+let mode = 'both', focus = null, pinned = false, overrideT = null, lastDay = -1;
+let EV = [], BIRD = [], geo = null, flecks = [];
+const atlasCache = {};
+
+// ---------- colour ----------
+const SST_STOPS = [[0,[8,24,44]],[1,[16,52,86]],[2,[26,84,120]],[4,[45,130,140]],[8,[120,190,155]],[12,[214,220,160]],[16,[245,205,130]]];
+const LEGC = [0,1,2,4,8,12,16];
+const SST_LUT = new Uint8Array(256 * 3);
+for (let i = 0; i < 256; i++){
+  const c = i / 10; let k = 0; while (k < SST_STOPS.length - 2 && c > SST_STOPS[k + 1][0]) k++;
+  const [a, ca] = SST_STOPS[k], [b, cb] = SST_STOPS[k + 1], f = clamp((c - a) / (b - a), 0, 1);
+  for (let j = 0; j < 3; j++) SST_LUT[i * 3 + j] = Math.round(lerp(ca[j], cb[j], f));
+}
+const DARK = [11, 26, 39], LAND = [15, 27, 37], ICE_LO = [78, 128, 168], ICE_HI = [240, 249, 254], FROST = [207, 234, 247];
+
+// ---------- atlases ----------
+function loadAtlas(url, nDays, g){
+  if (atlasCache[url]) return atlasCache[url];
+  return atlasCache[url] = new Promise((res, rej) => {
+    const im = new Image();
+    im.onload = () => {
+      const cv = document.createElement('canvas'); cv.width = im.width; cv.height = im.height;
+      const cx = cv.getContext('2d', {willReadFrequently: true}); cx.drawImage(im, 0, 0);
+      const px = cx.getImageData(0, 0, im.width, im.height).data, out = new Uint8Array(nDays * g.fw * g.fh);
+      for (let d = 0; d < nDays; d++){
+        const ox = (d % g.cols) * g.fw, oy = Math.floor(d / g.cols) * g.fh;
+        for (let y = 0; y < g.fh; y++) for (let x = 0; x < g.fw; x++) out[d * g.fw * g.fh + y * g.fw + x] = px[((oy + y) * im.width + ox + x) * 4];
+      }
+      res(out);
+    };
+    im.onerror = () => rej(new Error('could not load ' + url));
+    im.src = url;
+  });
+}
+
+// ---------- geometry ----------
+const ext = () => D.grid.extent;
+const ptX = (lon, W) => (lon - ext().lon[0]) / (ext().lon[1] - ext().lon[0]) * W;
+const ptY = (lat, H) => (ext().lat[1] - lat) / (ext().lat[1] - ext().lat[0]) * H;
+function buildMask(){
+  const g = D.grid; NP = g.fw * g.fh; MASK = new Int8Array(NP);
+  g.mask.forEach((row, y) => { for (let x = 0; x < g.fw; x++) MASK[y * g.fw + x] = row[x] === '.' ? -1 : +row[x]; });
+}
+let edgeAll = null, edgeBy = [];
+function buildEdges(W, H, dpr){
+  const g = D.grid, sx = W * dpr / g.fw, sy = H * dpr / g.fh, R = D.regions.length;
+  edgeAll = new Path2D(); edgeBy = Array.from({length: R}, () => new Path2D());
+  const at = (x, y) => x < 0 || y < 0 || x >= g.fw || y >= g.fh ? -1 : MASK[y * g.fw + x];
+  for (let y = 0; y < g.fh; y++) for (let x = 0; x < g.fw; x++){
+    const m = at(x, y); if (m < 0) continue;
+    for (const [nx, ny, vert] of [[x + 1, y, true], [x, y + 1, false]]){
+      const n = at(nx, ny); if (n === m) continue;
+      const seg = p => { if (vert){ p.moveTo((x + 1) * sx, y * sy); p.lineTo((x + 1) * sx, (y + 1) * sy); } else { p.moveTo(x * sx, (y + 1) * sy); p.lineTo((x + 1) * sx, (y + 1) * sy); } };
+      if (n >= 0) seg(edgeAll);
+      seg(edgeBy[m]); if (n >= 0) seg(edgeBy[n]);
+    }
+    for (const [nx, ny, vert] of [[x - 1, y, true], [x, y - 1, false]]){          // land edges on the low sides
+      if (at(nx, ny) >= 0) continue;
+      const p = edgeBy[m];
+      if (vert){ p.moveTo(x * sx, y * sy); p.lineTo(x * sx, (y + 1) * sy); } else { p.moveTo(x * sx, y * sy); p.lineTo((x + 1) * sx, y * sy); }
+    }
+  }
+}
+
+// ---------- clock ----------
+const clock = () => overrideT !== null ? overrideT : (audio.currentTime || 0);
+function setTime(t){ overrideT = t; try { audio.currentTime = t; } catch (e) {} frame(true); }
+audio.addEventListener('seeked', () => { if (overrideT !== null && Math.abs(audio.currentTime - overrideT) < 0.6 && !audio.paused) overrideT = null; frame(true); });
+
+// ---------- painting the lake ----------
+const lakeCv = $('lake'), lakeCx = lakeCv.getContext('2d');
+let lakeImg = null;
+function paintLake(pos, glow){
+  if (!ICE) return;
+  const N = D.n_days, i0 = clamp(Math.floor(pos), 0, N - 1), i1 = Math.min(N - 1, i0 + 1), f = clamp(pos - i0, 0, 1);
+  const o = i0 * NP, p1 = i1 * NP, d32 = lakeImg.data;
+  for (let p = 0; p < NP; p++){
+    const m = MASK[p], q = p * 4;
+    if (m < 0){ d32[q] = LAND[0]; d32[q + 1] = LAND[1]; d32[q + 2] = LAND[2]; d32[q + 3] = 255; continue; }
+    let a = ICE[o + p], b = ICE[p1 + p]; if (a > 100) a = 0; if (b > 100) b = a;
+    const ice = lerp(a, b, f) / 100;
+    let base = DARK;
+    if (mode !== 'ice'){
+      let s = SST[o + p], s2 = SST[p1 + p]; if (s > 250) s = 60; if (s2 > 250) s2 = s;
+      const si = Math.round(lerp(s, s2, f)) * 3; base = [SST_LUT[si], SST_LUT[si + 1], SST_LUT[si + 2]];
+    }
+    let r = base[0], g = base[1], bl = base[2];
+    if (mode !== 'water' && ice > 0.02){
+      const k = clamp(Math.pow(ice, 0.75) * 1.05, 0, 1);
+      const ir = lerp(ICE_LO[0], ICE_HI[0], ice), ig = lerp(ICE_LO[1], ICE_HI[1], ice), ib = lerp(ICE_LO[2], ICE_HI[2], ice);
+      r = lerp(r, ir, k); g = lerp(g, ig, k); bl = lerp(bl, ib, k);
+    }
+    const gl = glow[m] * 0.32;
+    if (gl > 0){ r = lerp(r, FROST[0], gl); g = lerp(g, FROST[1], gl); bl = lerp(bl, FROST[2], gl); }
+    if (focus !== null && m !== focus){ r *= 0.5; g *= 0.5; bl *= 0.5; }
+    d32[q] = r; d32[q + 1] = g; d32[q + 2] = bl; d32[q + 3] = 255;
+  }
+  lakeCx.putImageData(lakeImg, 0, 0);
+}
+
+// ---------- overlay ----------
+const over = $('over'), oc = over.getContext('2d');
+let OW = 0, OH = 0, DPR = 1;
+function sizeOver(){
+  const r = $('mapbox').getBoundingClientRect(); DPR = Math.min(2, window.devicePixelRatio || 1);
+  over.width = Math.round(r.width * DPR); over.height = Math.round(r.height * DPR); OW = over.width; OH = over.height;
+  if (D){ buildEdges(r.width, r.height, DPR); }
+  drawTL(true); if (focus !== null){ const f = focus, p = pinned; focus = null; pinned = false; setFocus(f, p); } else frame(true);
+}
+const anchor = (i, W, H) => [ptX(D.regions[i].lon, W), ptY(D.regions[i].lat, H)];
+const hash = n => { const x = Math.sin(n * 12.9898) * 43758.5453; return x - Math.floor(x); };
+
+function drawArrow(c, x, y, ang, len, alpha, w){
+  const dx = Math.sin(ang), dy = -Math.cos(ang), x2 = x + dx * len, y2 = y + dy * len, h = Math.max(4, len * 0.28);
+  c.strokeStyle = `rgba(228,237,243,${alpha})`; c.lineWidth = w; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(x, y); c.lineTo(x2, y2);
+  c.moveTo(x2, y2); c.lineTo(x2 - dx * h + dy * h * 0.55, y2 - dy * h - dx * h * 0.55);
+  c.moveTo(x2, y2); c.lineTo(x2 - dx * h - dy * h * 0.55, y2 - dy * h + dx * h * 0.55); c.stroke();
+}
+
+function drawOver(t, pos, day, glow){
+  const c = oc, W = OW, H = OH, u = DPR;
+  c.clearRect(0, 0, W, H);
+  c.lineJoin = 'round';
+  if (edgeAll){ c.strokeStyle = 'rgba(228,237,243,0.20)'; c.lineWidth = 1 * u; c.stroke(edgeAll); }
+  if (focus !== null && edgeBy[focus]){ c.strokeStyle = css('--frost'); c.lineWidth = 2 * u; c.stroke(edgeBy[focus]); }
+  const N = D.n_days, i0 = clamp(Math.floor(pos), 0, N - 1), i1 = Math.min(N - 1, i0 + 1), f = clamp(pos - i0, 0, 1);
+  const rs = D.region_series;
+  D.regions.forEach((r, i) => {
+    const [ax, ay] = anchor(i, W, H), S = rs[r.id];
+    // wind
+    const ws = lerp(S.wind[i0], S.wind[i1], f), wd = lerp(S.wdir[i0], S.wdir[i0] + ((S.wdir[i1] - S.wdir[i0] + 540) % 360 - 180), f);
+    if (ws > 3){ drawArrow(c, ax - 2 * u, ay + 12 * u, (wd + 180) * Math.PI / 180, clamp(ws, 0, 18) * 2.1 * u, clamp(0.2 + (ws - 3) / 14, 0.2, 0.85), 1.4 * u); }
+    // snow and rain
+    const sn = lerp(S.snow[i0], S.snow[i1], f), rn = Math.max(0, lerp(S.precip[i0], S.precip[i1], f) - 0.7 * sn);
+    const nS = sn < 0.2 ? 0 : Math.min(16, Math.ceil(sn * 3 + 2)), nR = rn < 0.3 ? 0 : Math.min(14, Math.ceil(rn * 2 + 2));
+    for (let k = 0; k < nS; k++){
+      const ph = hash(i * 97 + k), fx = hash(i * 31 + k * 7), sway = RM ? 0 : Math.sin(t * 1.3 + k) * 3 * u;
+      const y = ((ph + (RM ? 0 : t * 0.22 * (0.6 + hash(k)))) % 1) * 46 * u - 20 * u;
+      c.fillStyle = 'rgba(240,248,253,0.75)'; c.beginPath(); c.arc(ax + (fx - 0.5) * 56 * u + sway, ay + y, 1.4 * u, 0, 6.3); c.fill();
+    }
+    for (let k = 0; k < nR; k++){
+      const ph = hash(i * 53 + k), fx = hash(i * 17 + k * 5), y = ((ph + (RM ? 0 : t * 0.9)) % 1) * 46 * u - 20 * u, x = ax + (fx - 0.5) * 56 * u;
+      c.strokeStyle = 'rgba(127,184,230,0.8)'; c.lineWidth = 1.2 * u; c.beginPath(); c.moveTo(x, ay + y); c.lineTo(x - 1.5 * u, ay + y + 6 * u); c.stroke();
+    }
+    // label and note
+    c.font = `${(W / u < 560 ? 9 : 11) * u}px ${css('--mono')}`; c.textAlign = 'center';
+    const lbl = r.name.replace(' and Nipigon', '').replace(' and south shore', '').replace(' and Sault', '').replace('Central basin', 'Central');
+    c.fillStyle = 'rgba(6,14,21,0.55)'; const tw = c.measureText(lbl).width;
+    c.fillRect(ax - tw / 2 - 3 * u, ay - 8 * u, tw + 6 * u, 15 * u);
+    c.fillStyle = focus === i ? css('--frost') : 'rgba(228,237,243,0.9)'; c.fillText(lbl, ax, ay + 3.5 * u);
+    // birds: a violet mark from the day they arrive
+    const b = D.birds && D.birds[r.id];
+    if (b){
+      const marks = [];
+      if (b.goose !== null && day >= b.goose) marks.push('g'); if (b.loon !== null && day >= b.loon) marks.push('l');
+      marks.forEach((m, k) => {
+        c.strokeStyle = css('--sym'); c.lineWidth = 1.6 * u; c.beginPath();
+        const bx = ax - 9 * u + k * 18 * u, by = ay + 18 * u;
+        c.moveTo(bx - 5 * u, by - 3 * u); c.quadraticCurveTo(bx - 2.5 * u, by - 6 * u, bx, by); c.quadraticCurveTo(bx + 2.5 * u, by - 6 * u, bx + 5 * u, by - 3 * u); c.stroke();
+      });
+    }
+  });
+  // events: rings from the region, sized by the change
+  for (const e of EV){
+    const age = t - e.t, dur = e.kind > 0 ? 1.7 : 2.4; if (age < 0 || age > dur) continue;
+    const p = age / dur, [ax, ay] = anchor(e.i, W, H), jx = (hash(e.n) - 0.5) * 34 * u, jy = (hash(e.n + 7) - 0.5) * 22 * u, sz = clamp(e.size / 12, 0.3, 1);
+    const rad = RM ? 26 * u : (10 + 52 * p * (0.6 + sz * 0.6)) * u;
+    if (e.kind > 0){
+      c.strokeStyle = `rgba(230,246,255,${(1 - p) * (0.5 + sz * 0.5)})`; c.lineWidth = 2.2 * u; c.beginPath(); c.arc(ax + jx, ay + jy, rad, 0, 6.3); c.stroke();
+    } else {
+      const g = c.createRadialGradient(ax + jx, ay + jy, 0, ax + jx, ay + jy, rad * 1.2);
+      g.addColorStop(0, `rgba(240,162,92,${(1 - p) * 0.35 * sz})`); g.addColorStop(1, 'rgba(240,162,92,0)'); c.fillStyle = g; c.beginPath(); c.arc(ax + jx, ay + jy, rad * 1.2, 0, 6.3); c.fill();
+      c.strokeStyle = `rgba(240,162,92,${(1 - p) * (0.5 + sz * 0.5)})`; c.lineWidth = 2.4 * u; c.beginPath(); c.arc(ax + jx, ay + jy, rad, 0, 6.3); c.stroke();
+    }
+  }
+  // the bird arriving: a violet ring
+  for (const b of BIRD){ const age = t - b.t; if (age < 0 || age > 2.4) continue; const p = age / 2.4, [ax, ay] = anchor(b.i, W, H);
+    c.strokeStyle = `rgba(185,163,240,${(1 - p) * 0.8})`; c.setLineDash([4 * u, 4 * u]); c.lineWidth = 1.6 * u; c.beginPath(); c.arc(ax, ay + 12 * u, (8 + 26 * p) * u, 0, 6.3); c.stroke(); c.setLineDash([]); }
+  // turnover: the lake as a whole passes 4 degrees C
+  for (const d of D.turnover_days){ const age = t - d * D.day_s; if (age < 0 || age > 4) continue; const p = age / 4;
+    c.strokeStyle = `rgba(240,162,92,${(1 - p) * 0.6})`; c.lineWidth = 3 * u; c.beginPath(); c.ellipse(W * 0.5, H * 0.52, W * (0.12 + 0.34 * p), H * (0.14 + 0.36 * p), 0, 0, 6.3); c.stroke();
+    c.fillStyle = `rgba(240,162,92,${(1 - p) * 0.9})`; c.font = `${12 * u}px ${css('--mono')}`; c.textAlign = 'center';
+    c.fillText('lake mean water passes 4 °C (D)', W * 0.5, H * 0.94); }
+}
+
+// ---------- timeline ----------
+const tl = $('tl'), tc = tl.getContext('2d');
+let tlStatic = null, tlBox = null;
+const TL = {left: 84, right: 10, top: 20, chartH: 120, gap: 14, rowH: 15, bottom: 22};
+function tlMetrics(){ const R = D.regions.length; return {H: TL.top + TL.chartH + TL.gap + R * TL.rowH + TL.bottom, W: tl.clientWidth}; }
+function xOfDay(d, W){ return TL.left + (W - TL.left - TL.right) * d / D.n_days; }
+function drawTL(rebuild){
+  if (!D) return;
+  const m = tlMetrics(), dpr = Math.min(2, window.devicePixelRatio || 1);
+  if (rebuild || !tlStatic || tlStatic.width !== Math.round(m.W * dpr)){
+    tl.style.height = m.H + 'px'; tl.width = Math.round(m.W * dpr); tl.height = Math.round(m.H * dpr);
+    const off = document.createElement('canvas'); off.width = tl.width; off.height = tl.height; const c = off.getContext('2d'); c.scale(dpr, dpr);
+    const W = m.W, N = D.n_days, y0 = TL.top, y1 = TL.top + TL.chartH, yv = v => y1 - v / 100 * TL.chartH;
+    c.font = `10.5px ${css('--mono')}`; c.textBaseline = 'middle';
+    c.strokeStyle = css('--line'); c.lineWidth = 1; c.fillStyle = css('--faint'); c.textAlign = 'right';
+    for (const v of [0, 25, 50, 75, 100]){ c.beginPath(); c.moveTo(TL.left, yv(v)); c.lineTo(W - TL.right, yv(v)); c.stroke(); c.fillText(v + '%', TL.left - 8, yv(v)); }
+    const band = (lo, hi, col) => { c.fillStyle = col; c.beginPath(); for (let d = 0; d < N; d++) c.lineTo(xOfDay(d + 0.5, W), yv(D.hist[hi][d])); for (let d = N - 1; d >= 0; d--) c.lineTo(xOfDay(d + 0.5, W), yv(D.hist[lo][d])); c.closePath(); c.fill(); };
+    band('min', 'max', 'rgba(207,234,247,0.09)'); band('p25', 'p75', 'rgba(207,234,247,0.17)');
+    c.strokeStyle = 'rgba(207,234,247,0.55)'; c.setLineDash([4, 4]); c.beginPath(); for (let d = 0; d < N; d++) c[d ? 'lineTo' : 'moveTo'](xOfDay(d + 0.5, W), yv(D.hist.med[d])); c.stroke(); c.setLineDash([]);
+    c.fillStyle = 'rgba(207,234,247,0.14)'; c.beginPath(); c.moveTo(xOfDay(0.5, W), y1); for (let d = 0; d < N; d++) c.lineTo(xOfDay(d + 0.5, W), yv(D.lake_ice[d])); c.lineTo(xOfDay(N - 0.5, W), y1); c.fill();
+    c.strokeStyle = css('--frost'); c.lineWidth = 2.2; c.beginPath(); for (let d = 0; d < N; d++) c[d ? 'lineTo' : 'moveTo'](xOfDay(d + 0.5, W), yv(D.lake_ice[d])); c.stroke();
+    // peak
+    const pk = D.dates.indexOf(D.cur_peak_day);
+    c.fillStyle = css('--frost'); c.beginPath(); c.arc(xOfDay(pk + 0.5, W), yv(D.lake_ice[pk]), 3.5, 0, 6.3); c.fill();
+    c.textAlign = 'left'; c.fillText(`peak ${D.cur_peak} % · ${fmtDate(D.cur_peak_day).replace(/, \d+/, '')}`, xOfDay(pk + 0.5, W) + 8, yv(D.lake_ice[pk]) - 6);
+    c.fillStyle = css('--faint'); c.textAlign = 'left'; c.fillText('2008–25 median (dashed), middle half and full range', TL.left + 6, y0 + 4);
+    // region strips
+    const sy = y1 + TL.gap; D.regions.forEach((r, i) => {
+      const yy = sy + i * TL.rowH, S = D.region_series[r.id];
+      for (let d = 0; d < N; d++){
+        const v = clamp(S.ice[d] / 100, 0, 1), col = [lerp(14, 240, Math.pow(v, 0.8)), lerp(30, 249, Math.pow(v, 0.8)), lerp(46, 254, Math.pow(v, 0.8))].map(Math.round);
+        c.fillStyle = `rgb(${col})`; const x = xOfDay(d, W); c.fillRect(x, yy, xOfDay(d + 1, W) - x + 0.6, TL.rowH - 2);
+      }
+      c.fillStyle = css('--muted'); c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(r.name.split(' ')[0].replace('Central', 'Central'), TL.left - 8, yy + TL.rowH / 2 - 1);
+      for (const [d, k] of (D.events[r.id] || [])){ c.fillStyle = k > 0 ? '#3a8fc0' : css('--thaw'); c.beginPath(); c.arc(xOfDay(d + 0.5, W), yy + TL.rowH / 2 - 1, 2.1, 0, 6.3); c.fill(); }
+    });
+    // months and movements
+    const ay = sy + D.regions.length * TL.rowH + 4; c.fillStyle = css('--faint'); c.textAlign = 'left'; c.textBaseline = 'top';
+    D.dates.forEach((s, d) => { if (s.endsWith('-01')){ c.fillText(MON[+s.slice(5, 7) - 1], xOfDay(d, W) + 2, ay); c.strokeStyle = css('--line2'); c.lineWidth = 1; c.beginPath(); c.moveTo(xOfDay(d, W), y1); c.lineTo(xOfDay(d, W), y1 + 4); c.stroke(); } });
+    c.setLineDash([3, 4]); c.strokeStyle = css('--line2'); D.movement_cuts_day.forEach((d, k) => { c.beginPath(); c.moveTo(xOfDay(d, W), y0); c.lineTo(xOfDay(d, W), sy + D.regions.length * TL.rowH); c.stroke(); }); c.setLineDash([]);
+    c.textBaseline = 'top'; c.fillStyle = css('--muted'); const edges = [0, ...D.movement_cuts_day, D.n_days];
+    D.movement_names.forEach((nm, k) => { c.textAlign = 'center'; c.fillText(['I','II','III','IV'][k], (xOfDay(edges[k], W) + xOfDay(edges[k + 1], W)) / 2, 2); });
+    tlStatic = off; tlBox = m;
+  }
+  drawTLHead();
+}
+let tlPos = 0;
+function drawTLHead(){
+  if (!tlStatic) return;
+  const dpr = tlStatic.width / tlBox.W, W = tlBox.W, H = tlBox.H;
+  tc.setTransform(1, 0, 0, 1, 0, 0); tc.clearRect(0, 0, tl.width, tl.height); tc.drawImage(tlStatic, 0, 0);
+  tc.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const x = xOfDay(tlPos, W); tc.strokeStyle = css('--text'); tc.lineWidth = 1.5; tc.beginPath(); tc.moveTo(x, TL.top - 6); tc.lineTo(x, H - TL.bottom + 4); tc.stroke();
+}
+function tlSeek(e){
+  const r = tl.getBoundingClientRect(), x = clamp(e.clientX - r.left, TL.left, r.width - TL.right);
+  setTime((x - TL.left) / (r.width - TL.left - TL.right) * D.n_days * D.day_s);
+}
+let dragging = false;
+tl.addEventListener('pointerdown', e => { dragging = true; tl.setPointerCapture(e.pointerId); tlSeek(e); });
+tl.addEventListener('pointermove', e => { if (dragging) tlSeek(e); });
+tl.addEventListener('pointerup', () => { dragging = false; });
+tl.addEventListener('pointercancel', () => { dragging = false; });
+
+// ---------- meters and rail ----------
+const LAYERS = [
+  ['ice', 'ice', 'R', ['ice']], ['events', 'events', 'D', ['pings', 'drops']], ['water', 'water', 'R', ['water']], ['turnover', 'turnover', 'D', ['turnover']],
+  ['air', 'air', 'R', ['organ']], ['sun', 'sun', 'D', ['choir']], ['wind', 'wind', 'R', ['wind']],
+  ['snow', 'snow', 'R', ['snow']], ['rain', 'rain', 'D', ['rain']], ['birds', 'birds', 'S', ['birds', 'birds_far']], ['ghost', 'ghost', 'D', ['ghost']]];
+const LTXT = {
+  ice: ['Region ice concentration', 'A bowed-glass tone per region, louder as the ice thickens'],
+  events: ['Day-to-day change in region ice', 'Freeze: a glass ping. Breakup: a low drop with a crack'],
+  water: ['Surface water temperature', 'Four low string voices, fuller as it warms; the ice quiets them'],
+  turnover: ['Lake-mean skin temperature crossing 4 °C', 'A soft sub drop on each crossing; a proxy for turnover, not a measurement of it'],
+  air: ['Air temperature, lake mean', 'An organ bed that adds ranks and brightens as it warms'],
+  sun: ['Day length at 47.6° N', 'A choir that swells with the day and opens as shortwave radiation grows'],
+  wind: ['Wind speed, windiest region', 'A filtered-noise bed that only rises in a gale'],
+  snow: ['Snowfall by region', 'Unpitched flakes, panned to the region'],
+  rain: ['Rain (precipitation less snow)', 'Harp notes on the region\'s pitch, two octaves under its ice'],
+  birds: ['First spring day per region, from the ice and temperature', 'Loon and goose recordings, panned to the region'],
+  ghost: ['The 2008–25 median lake ice', 'A quiet detuned glass tone; it drifts apart from the ice as this year departs from the median']};
+let LL = [], mrows = {};
+function buildMeters(){
+  LL = LAYERS.filter(l => D.layers.includes(l[0]) || (l[0] === 'turnover' && D.layers.includes('water')));
+  $('meters').innerHTML = LL.map(l => `<div class="m"><span class="n">${l[1]}</span><span class="chip ${l[2]}">${l[2]}</span><span class="bar"><i id="mb_${l[0]}"></i><span id="mt_${l[0]}"></span></span></div>`).join('');
+  $('layerTable').innerHTML = LL.map(l => `<tr><td>${l[1]}</td><td>${LTXT[l[0]][0]} <span class="chip ${l[2]}" style="display:inline-block;padding:0 5px">${l[2]}</span></td><td>${LTXT[l[0]][1]}</td></tr>`).join('');
+}
+function buildRail(){
+  const rail = $('rail'); [...rail.querySelectorAll('.rrow')].forEach(n => n.remove());
+  rail.insertAdjacentHTML('beforeend', D.regions.map((r, i) => `<div class="rrow" data-i="${i}" tabindex="0" role="button" aria-label="${r.name}: show its season"><i class="glow" id="gl${i}"></i><span class="nm">${r.name}<small>${noteName(r.ice_midi)} · ${Math.abs(r.lon).toFixed(1)}°W ${r.lat.toFixed(1)}°N</small></span><span class="v" id="ri${i}">–</span><span class="v" id="rw${i}">–</span><span class="b" id="rb${i}"></span></div>`).join(''));
+}
+const dbLevel = v => clamp((20 * Math.log10(v + 1e-9) + 60) / 54, 0, 1);
+
+// ---------- frame ----------
+let glow = [];
+function frame(force){
+  if (!D) return;
+  const t = clock(), N = D.n_days, ds = D.day_s, u = t / ds;
+  const day = clamp(Math.floor(u), 0, N - 1), pos = clamp(u - 0.5, 0, N - 1);
+  const envIce = D.env.ice || {}, ei = clamp(Math.floor(t * D.env_hz), 0, ((envIce[D.regions[0].id] || [0]).length) - 1);
+  const maxIce = D.maxIceEnv;
+  D.regions.forEach((r, i) => { glow[i] = Math.sqrt(clamp(((envIce[r.id] || [])[ei] || 0) / maxIce, 0, 1)); });
+  D.regions.forEach((r, i) => { $('gl' + i).style.opacity = (glow[i] * 0.18).toFixed(3); });
+  paintLake(pos, glow);
+  drawOver(t, pos, day, glow);
+  tlPos = clamp(u, 0, N); drawTLHead();
+  // meters
+  for (const l of LL){
+    const v = Math.max(...l[3].map(s => D.stem_env[s] ? D.stem_env[s][clamp(ei, 0, D.stem_env[s].length - 1)] : 0));
+    $('mb_' + l[0]).style.width = (100 * dbLevel(v)).toFixed(1) + '%';
+  }
+  if (day !== lastDay || force){
+    lastDay = day; $('date').textContent = fmtDate(D.dates[day]);
+    const rs = D.region_series, mean = k => D.regions.reduce((a, r) => a + rs[r.id][k][day], 0) / D.regions.length;
+    const mv = D.movement_cuts_day, mi = mv.filter(d => day >= d).length;
+    $('sub').innerHTML = `day ${day + 1} of ${N} · movement ${['I','II','III','IV'][mi]} · ${D.movement_names[mi].toLowerCase()}`;
+    D.regions.forEach((r, i) => { $('ri' + i).textContent = Math.round(rs[r.id].ice[day]) + '%'; $('rw' + i).textContent = rs[r.id].sst[day].toFixed(1) + '°';
+      const b = D.birds && D.birds[r.id]; $('rb' + i).textContent = b && ((b.loon !== null && day >= b.loon) || (b.goose !== null && day >= b.goose)) ? '⌒' : ''; });
+    let nF = 0, nB = 0; D.regions.forEach(r => (D.events[r.id] || []).forEach(e => { if (e[0] <= day){ e[1] > 0 ? nF++ : nB++; } }));
+    const windMax = Math.max(...D.regions.map(r => rs[r.id].wind[day])), snow = mean('snow'), rain = D.regions.reduce((a, r) => a + Math.max(0, rs[r.id].precip[day] - 0.7 * rs[r.id].snow[day]), 0) / D.regions.length;
+    const loons = D.regions.filter(r => D.birds && D.birds[r.id] && D.birds[r.id].loon !== null && day >= D.birds[r.id].loon).length;
+    const txt = {ice: `lake ${D.lake_ice[day].toFixed(0)}% · median ${D.hist.med[day].toFixed(0)}%`, events: `${nF} freeze · ${nB} breakup`, water: `mean ${mean('sst').toFixed(1)} °C`,
+      air: `${mean('tmean').toFixed(1)} °C`, sun: hm(D.daylen[day]), wind: `${windMax.toFixed(0)} m/s`, snow: `${snow.toFixed(1)} mm`, rain: `${rain.toFixed(1)} mm`,
+      birds: `loons in ${loons} of ${D.regions.length}`, ghost: `median ${D.hist.med[day].toFixed(0)}%`, turnover: `${D.turnover_days.filter(d => d <= day).length} of ${D.turnover_days.length} crossings`};
+    for (const l of LL) $('mt_' + l[0]).textContent = txt[l[0]];
+    if (focus !== null) drawSparkDots(day);
+  }
+  $('time').textContent = `${fmtT(t)} / ${fmtT(N * ds)}`;
+  if (!seeking) $('seek').value = Math.round(1000 * clamp(u / N, 0, 1));
+}
+
+// ---------- focus ----------
+function spark(svg, vals, lo, hi, col, unit){
+  const W = Math.max(160, svg.clientWidth || 320), H = 72, pad = 6, n = vals.length, y = v => H - pad - (H - 2 * pad) * (clamp(v, lo, hi) - lo) / (hi - lo), x = k => pad + (W - 2 * pad) * k / (n - 1);
+  const grid = [lo, (lo + hi) / 2, hi].map(v => `<line x1="0" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="#25404f"/><text x="${W - 2}" y="${y(v) < 12 ? y(v) + 10 : y(v) - 2}" fill="#56707f" font-size="10" text-anchor="end">${Math.round(v)}${unit}</text>`).join('');
+  const cuts = D.movement_cuts_day.map(d => `<line x1="${x(d)}" x2="${x(d)}" y1="0" y2="${H}" stroke="#25404f" stroke-dasharray="3 3"/>`).join('');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = grid + cuts + `<polyline fill="none" stroke="${col}" stroke-width="2" points="${vals.map((v, k) => x(k) + ',' + y(v)).join(' ')}"/><circle class="dot" r="4" fill="#fff"/>`;
+  svg._map = {x, y, vals};
+}
+function drawSparkDots(day){
+  for (const id of ['spI', 'spW']){ const s = $(id), d = s.querySelector('.dot'); if (s._map && d){ d.setAttribute('cx', s._map.x(day)); d.setAttribute('cy', s._map.y(s._map.vals[day])); } }
+}
+function setFocus(i, pin){
+  if (pin){ if (pinned && focus === i){ pinned = false; i = null; } else pinned = true; } else if (pinned) return;
+  focus = i;
+  [...$('rail').querySelectorAll('.rrow')].forEach((r, j) => r.classList.toggle('focus', j === i));
+    if (i === null){
+    $('spI').innerHTML = ''; $('spW').innerHTML = ''; $('spI')._map = $('spW')._map = null;
+    $('focusT').textContent = 'Hover or tap a region';
+    $('focusK').textContent = 'Its own year of ice cover and surface water temperature will appear here, with a dot at the day being played.';
+  } else {
+    const r = D.regions[i], S = D.region_series[r.id], on = S.ice.findIndex(v => v >= 10), off = S.ice.length - 1 - [...S.ice].reverse().findIndex(v => v >= 10), pk = S.ice.indexOf(Math.max(...S.ice));
+    spark($('spI'), S.ice, 0, 100, '#cfeaf7', '%'); spark($('spW'), S.sst, 0, 14, '#f0a25c', '°');
+    const ev = D.events[r.id] || [], nf = ev.filter(e => e[1] > 0).length, nb = ev.length - nf, b = D.birds && D.birds[r.id];
+    $('focusT').textContent = `${r.name} · ice voice ${noteName(r.ice_midi)} · water voice ${noteName(r.water_midi)} · left: ice cover (%), right: surface water (°C); dashed lines are the movement changes`;
+    $('focusK').textContent = on < 0 ? `ice never reaches 10 % · peak ${Math.round(S.ice[pk])} % on ${fmtDate(D.dates[pk])} · ${nf} freeze and ${nb} breakup events`
+      : `ice above 10 % from ${fmtDate(D.dates[on])} to ${fmtDate(D.dates[off])} · peak ${Math.round(S.ice[pk])} % on ${fmtDate(D.dates[pk])} · ${nf} freeze and ${nb} breakup events` + (b ? ` · symbolic geese ${b.goose !== null ? fmtDate(D.dates[b.goose]) : '–'}, loon ${b.loon !== null ? fmtDate(D.dates[b.loon]) : '–'}` : '');
+    drawSparkDots(lastDay < 0 ? 0 : lastDay);
+  }
+  frame(true);
+}
+$('rail').addEventListener('mouseover', e => { const r = e.target.closest('.rrow'); if (r) setFocus(+r.dataset.i, false); });
+$('rail').addEventListener('mouseleave', () => { if (!pinned) setFocus(null, false); });
+$('rail').addEventListener('click', e => { const r = e.target.closest('.rrow'); if (r) setFocus(+r.dataset.i, true); });
+$('rail').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset.i){ e.preventDefault(); setFocus(+e.target.dataset.i, true); } });
+function regionAt(e){
+  const r = over.getBoundingClientRect(), g = D.grid, x = Math.floor((e.clientX - r.left) / r.width * g.fw), y = Math.floor((e.clientY - r.top) / r.height * g.fh);
+  if (x < 0 || y < 0 || x >= g.fw || y >= g.fh) return null; const m = MASK[y * g.fw + x]; return m < 0 ? null : m;
+}
+over.addEventListener('mousemove', e => { if (D) setFocus(regionAt(e), false); });
+over.addEventListener('mouseleave', () => { if (!pinned) setFocus(null, false); });
+over.addEventListener('click', e => { if (!D) return; const i = regionAt(e); if (i !== null) setFocus(i, true); });
+over.addEventListener('keydown', e => { if (e.key === 'Escape'){ pinned = false; setFocus(null, false); } });
+
+// ---------- modes and legend ----------
+const LEG = {
+  both: () => `<span>water temperature</span><span class="ramp" style="background:linear-gradient(90deg,${LEGC.map(c => { const i = Math.round(c * 10) * 3; return `rgb(${SST_LUT[i]},${SST_LUT[i + 1]},${SST_LUT[i + 2]})`; }).join(',')})"></span><span>0 to 16 °C, colours stretched below 4 °C</span><span><i class="sw" style="background:#eef8fd"></i>ice, thicker is whiter</span>`,
+  ice: () => `<span>ice concentration</span><span class="ramp" style="background:linear-gradient(90deg,rgb(11,26,39),rgb(${ICE_LO}),rgb(${ICE_HI}))"></span><span>open water to full cover</span>`,
+  water: () => `<span>water temperature</span><span class="ramp" style="background:linear-gradient(90deg,${LEGC.map(c => { const i = Math.round(c * 10) * 3; return `rgb(${SST_LUT[i]},${SST_LUT[i + 1]},${SST_LUT[i + 2]})`; }).join(',')})"></span><span>0 to 16 °C, stretched below 4 °C, ice hidden</span>`};
+function setMode(m){
+  mode = m; [...$('modes').querySelectorAll('button')].forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m));
+  $('legend').innerHTML = LEG[m]() + '<span><i class="sw" style="background:#e6f6ff"></i>freeze ring</span><span><i class="sw" style="background:#f0a25c"></i>breakup ring</span><span><i class="sw" style="background:#b9a3f0"></i>bird (symbolic)</span>';
+  frame(true);
+}
+$('modes').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setMode(b.dataset.m); });
+
+// ---------- transport ----------
+let seeking = false;
+function loop(){ frame(false); if (!audio.paused) requestAnimationFrame(loop); }
+$('play').onclick = async () => {
+  if (audio.paused){
+    if (overrideT !== null){ try { audio.currentTime = overrideT; } catch (e) {} overrideT = null; }
+    try { await audio.play(); } catch (e) { $('caption').textContent = 'The audio could not start. Try pressing play again.'; return; }
+    $('play').textContent = 'Pause'; $('play').setAttribute('aria-label', 'Pause'); requestAnimationFrame(loop);
+  } else { overrideT = audio.currentTime; audio.pause(); $('play').textContent = 'Play'; $('play').setAttribute('aria-label', 'Play'); }
+};
+$('seek').oninput = () => { seeking = true; setTime(D.n_days * D.day_s * $('seek').value / 1000); };
+$('seek').onchange = () => { seeking = false; };
+audio.addEventListener('ended', () => { $('play').textContent = 'Play'; overrideT = null; });
+window.addEventListener('keydown', e => { if (e.code === 'Space' && !['BUTTON', 'SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)){ e.preventDefault(); $('play').click(); } });
+
+// ---------- load ----------
+const PNOTE = {
+  icecover_sup2526: 'Nine layers over the whole season at 1.5 seconds per day.',
+  icecover_sup2526__long: 'The same season at 3 seconds per day, cut into four movements that follow the ice: freeze-up, ice-in, long melt and open water. Each movement is also its own file in the project folder.',
+  icecover_sup2526__ghost: 'Adds a quiet second glass tone that follows the 2008 to 2025 median lake ice. It sits with the ice while this year is ordinary and pulls apart as this year departs from it.'};
+function loadPiece(name){
+  $('play').disabled = true; audio.pause(); $('play').textContent = 'Play'; $('play').setAttribute('aria-label', 'Play'); focus = null; pinned = false; lastDay = -1; overrideT = firstT; firstT = null;
+  fetch(`${name}.json`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(async d => {
+    D = d; audio.src = d.audio; buildMask();
+    lakeImg = lakeCx.createImageData(d.grid.fw, d.grid.fh);
+    ICE = await loadAtlas(d.grid.ice_atlas, d.n_days, d.grid); SST = await loadAtlas(d.grid.sst_atlas, d.n_days, d.grid);
+    D.maxIceEnv = Math.max(1, ...D.regions.map(r => Math.max(...((D.env.ice || {})[r.id] || [0]))));
+    EV = []; D.regions.forEach((r, i) => (D.events[r.id] || []).forEach(([dd, kind, size, off], k) => EV.push({t: (dd + (off || 0)) * D.day_s, i, kind, size, n: i * 500 + k})));
+    BIRD = []; D.regions.forEach((r, i) => { const b = D.birds && D.birds[r.id]; if (b) for (const k of ['loon', 'goose']) if (b[k] !== null && b[k] !== undefined) BIRD.push({t: b[k] * D.day_s, i}); });
+    buildMeters(); buildRail(); setMode(mode);
+    $('pieceNote').textContent = PNOTE[name] || '';
+    $('caption').textContent = `${fmtDate(d.start)} to ${fmtDate(d.end)} · ${d.n_days} days at ${d.day_s} s per day · ice, water and air are observations or reanalysis (R); events, day length and rain are derived (D); birds are symbolic (S)`;
+    $('tlCap').textContent = `Lake-wide ice peaked at ${d.cur_peak} % on ${fmtDate(d.cur_peak_day)}, with a collapse and refreeze in February. The record years of 2008–25 reached 95.7 %.`;
+    sizeOver();
+    const ft = params.get('focus'); if (ft){ const i = D.regions.findIndex(r => r.id === ft); if (i >= 0) setFocus(i, true); }
+    frame(true); $('play').disabled = false;
+  }).catch(e => { $('caption').textContent = `Could not load ${name}.json (${e.message}). Reload the page to try again.`; });
+}
+$('piece').addEventListener('change', e => loadPiece(e.target.value));
+if (params.get('piece')) $('piece').value = params.get('piece');
+if (params.get('mode')) mode = params.get('mode');
+let firstT = params.get('t') ? +params.get('t') : null;
+loadPiece($('piece').value);
+new ResizeObserver(() => { if (D) sizeOver(); }).observe($('mapbox'));
+new ResizeObserver(() => { if (D) drawTL(true); }).observe($('tl').parentElement);
+</script>

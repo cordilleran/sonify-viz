@@ -38,6 +38,7 @@ project:
     - meridian/meridian_ds2023__layer2-wide-long.mp3
     - meridian/meridian_ds2023.json
     - meridian/meridian_ds2023.mp3
+    - superior-ice/*
 
 website:
   title: "sonify-viz"
@@ -62,6 +63,8 @@ website:
         text: Climate Pair
       - href: meridian/index.html
         text: Meridian Chorus
+      - href: superior-ice/index.html
+        text: Superior Ice
       - href: tracks.qmd
         text: Tracks
       - href: glossary.qmd

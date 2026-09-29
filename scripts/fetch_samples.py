@@ -57,6 +57,10 @@ BIRDS = [
      "Sandhill Crane", "Okanagan flyway passage, April and September"),
     ("File:Riparia riparia - Sand Martin XC487832.mp3", "bank_swallow.mp3",
      "Bank Swallow (Sand Martin, European recording, same species)", "Grand Forks cutbank colonies, May-Aug"),
+    ("File:Gavia immer - Common Loon XC139388.mp3", "common_loon.mp3",
+     "Common Loon", "Lake Superior spring: loons return as the ice leaves (icecover piece)"),
+    ("File:Branta canadensis - Canada Goose XC127624.ogg", "canada_goose.ogg",
+     "Canada Goose", "early-returning geese on still-frozen lake ice (icecover piece)"),
 ]
 
 

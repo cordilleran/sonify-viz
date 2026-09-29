@@ -1,0 +1,114 @@
+[
+ {
+  "id": "west",
+  "name": "Western Arm",
+  "anchor": [
+   -91.3,
+   46.95
+  ],
+  "centroid": [
+   -90.993,
+   46.98
+  ],
+  "cells": 3965,
+  "share": 0.0809
+ },
+ {
+  "id": "nshore",
+  "name": "North Shore",
+  "anchor": [
+   -90.0,
+   47.6
+  ],
+  "centroid": [
+   -89.905,
+   47.381
+  ],
+  "cells": 6980,
+  "share": 0.1424
+ },
+ {
+  "id": "keweenaw",
+  "name": "Keweenaw and south shore",
+  "anchor": [
+   -88.3,
+   47.05
+  ],
+  "centroid": [
+   -88.128,
+   47.055
+  ],
+  "cells": 4179,
+  "share": 0.0853
+ },
+ {
+  "id": "royale",
+  "name": "Isle Royale",
+  "anchor": [
+   -88.6,
+   47.95
+  ],
+  "centroid": [
+   -88.505,
+   47.941
+  ],
+  "cells": 5844,
+  "share": 0.1193
+ },
+ {
+  "id": "thunder",
+  "name": "Thunder Bay and Nipigon",
+  "anchor": [
+   -88.9,
+   48.6
+  ],
+  "centroid": [
+   -88.39,
+   48.544
+  ],
+  "cells": 2269,
+  "share": 0.0463
+ },
+ {
+  "id": "central",
+  "name": "Central basin",
+  "anchor": [
+   -87.3,
+   47.6
+  ],
+  "centroid": [
+   -87.011,
+   47.509
+  ],
+  "cells": 10784,
+  "share": 0.2201
+ },
+ {
+  "id": "northeast",
+  "name": "Northeast (Pukaskwa)",
+  "anchor": [
+   -86.5,
+   48.6
+  ],
+  "centroid": [
+   -86.71,
+   48.336
+  ],
+  "cells": 5663,
+  "share": 0.1156
+ },
+ {
+  "id": "whitefish",
+  "name": "Whitefish Bay and Sault",
+  "anchor": [
+   -85.2,
+   46.8
+  ],
+  "centroid": [
+   -85.477,
+   47.122
+  ],
+  "cells": 9322,
+  "share": 0.1902
+ }
+]

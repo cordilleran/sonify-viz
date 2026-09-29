@@ -4,6 +4,8 @@ A learning workbench for turning environmental data into music and pictures. It 
 
 - **Water Year Rings:** two pieces built from one hydrologic year (October 1, 2023 to September 30, 2024) in southern British Columbia, the Granby River at Grand Forks and Okanagan Lake and River. River gauges, weather stations, satellite plant productivity and Wells Dam sockeye counts drive recorded acoustic instruments. A synced "tree ring" page shows the year filling in as you listen.
 - **Climate Pair:** two pieces on the global record from 1958 to 2025, one year per bar: CO₂, ocean heat, ENSO, the PDO or AMO, and storm tracks, heard from the Pacific and from the Atlantic. A year-ring spiral on the page draws each year as you hear it: ocean temperature as colour, ENSO as thickness, storms as sparks.
+- **Meridian Chorus:** one meridian (100° W) from pole to pole, a voice every 15 degrees of latitude, through one year from solstice to solstice. Day length sets each note; layer 2 adds air, sea and ice.
+- **Superior Ice Year:** Lake Superior's 2025-26 ice season, 1 November to 15 June, as eight regional voices on a map of the lake: ice, water temperature, air, sunlight, wind, snow, rain and birds.
 
 **Site:** <https://cordilleran.github.io/sonify-viz/>
 
@@ -21,7 +23,8 @@ A learning workbench for turning environmental data into music and pictures. It 
 | `tests/` | the engine's test suite (`pytest tests`, about a second, no data or samples needed); run on every push |
 | `renders.lock.json` | each track's version, seed and content hashes; `python scripts/renders.py verify` re-renders and compares |
 | `tracks/` | one card per published track (version, changelog, records, mapping, credits) and the album list; rendered into `tracks.qmd` by `scripts/export_cards.py` |
-| `data/parquet/` | the records as tidy parquet tables, with their data dictionaries (`*.data-dict.yaml`, [data-dict](https://data-dict.tidyverse.org/) format); the site's build validates the data against them |
+| `data/parquet/` | the records as tidy parquet tables, with their data dictionaries (`data-dict.yaml`, [data-dict](https://data-dict.tidyverse.org/) format); the site's build validates the data against them |
+| `meridian/`, `superior-ice/` | the Meridian Chorus and Superior Ice Year pages (one HTML file each, no framework), their data and audio |
 | `variants/`, `remixes/` | named variants of a track, and remixes of published tracks (see `CONTRIBUTING.md`) |
 
 ## Rebuild
