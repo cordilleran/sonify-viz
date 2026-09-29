@@ -403,6 +403,77 @@
    "variant": "long",
    "version": "0.2"
   },
+  "icecover-superior-ice:v1": {
+   "args": [
+    "--variant",
+    "v1"
+   ],
+   "code": {
+    "dsp_core.py": "d29ae14afe5f34d8d9ee1f889733705a9b4eeaba2746d3199923006d2ef12574",
+    "harmony.py": "6e2883b89b9c74fd303fb784732288761b3813dcde9d4424125277fa330a51be",
+    "icecover.py": "e76377cc84852666689929385a5f34f06d193c36f5e02706a840d4df6d5d0c79",
+    "records.py": "1833058e8c8312c45187ee777100eea62dceda42de9e2fde09857a8b9a76cf73",
+    "sampler.py": "669dc814a4d39a9f0634838def95aeb1aa4f4f7276ac85cfcc7a6c1c8311b17d",
+    "seasonal.py": "d4183072da6926df366ea19a6ffeaee358cb2a76f82229334e65d369006344d5",
+    "solar.py": "6341f24e8c7669588e16ef1d4cd258702b034109ffa9c65ed90aa29eb83fb5ae",
+    "synth.py": "1ad1c282fe61ec1233fac7ca29011ad9d7994db95bf460fe6870ad67bd7b4d2f",
+    "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
+   },
+   "data": {
+    "data/icecover/superior_daily.json": "cef4f1a34a2921f51bcad84eef728d4d107fdd5de1318561f16026de683d3b50",
+    "data/icecover/superior_regions.json": "f4285a7ef2487ce9a2ea4d82d017c4d7eec11e11d09dd065fd39017c217e9f0d"
+   },
+   "environment": {
+    "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm4 Copyright (c) 2000-2025 the FFmpeg developers",
+    "numpy": "2.5.3",
+    "python": "3.13.13",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+   },
+   "locked": "2026-09-29",
+   "outputs": {
+    "heavy/icecover/icecover_sup2526__v1.wav": "27861983eab7e84107816d4c66c324dd9f15af5717740a7659ea901c24b8c3ca",
+    "heavy/icecover/icecover_sup2526__v1_movement1.wav": "e3ed4bb294bfff6a6c0a29d34b232d385612b57290b4b603d6e9444b890c8c4c",
+    "heavy/icecover/icecover_sup2526__v1_movement2.wav": "76af8edf34a76620ccf63fb9a0afdde8ff72744a33e39ef797368bcbe999fe9c",
+    "heavy/icecover/icecover_sup2526__v1_movement3.wav": "4b05172be6f6eea8500628e4336900b6bed06ce268822cdd5cd10b5e9278a494",
+    "heavy/icecover/icecover_sup2526__v1_movement4.wav": "1f89cbbfb7ab0223dec76112a4391152e5c3fa6b25fa92ced01bb27da61b3a29",
+    "heavy/icecover/icecover_sup2526__v1_norm.wav": "e01c6ce41cce2c8be91bb1d9de78083cf0f4e179191f31d62954e495333f4992",
+    "heavy/icecover/icecover_sup2526__v1_stems/birds.flac": "2a75687551c35190de8153e604ccac7b6b7d2cd578d07de6fd27789739359dfa",
+    "heavy/icecover/icecover_sup2526__v1_stems/birds_far.flac": "e3b613a51c15d837f35f7eaf0f0d0689c2ca9ba381d74ada3f9af9c64610af3b",
+    "heavy/icecover/icecover_sup2526__v1_stems/choir.flac": "89a705ea0701f5e62c62c18fbb38814eb20159b5672065429575dbc441c0154d",
+    "heavy/icecover/icecover_sup2526__v1_stems/deep.flac": "b4fadd1f514d41e1fe6c108d0b5381cbdd86d75d972e1d836100362f9ac11b46",
+    "heavy/icecover/icecover_sup2526__v1_stems/drops.flac": "fc8824ea6f8e5ea3ba058ec9331e5650d2f0e9196ce29967b2ad8424aa673523",
+    "heavy/icecover/icecover_sup2526__v1_stems/drops_far.flac": "32096864c5914e412402430fef46a081c41c982112ce9d89201a5b2cabcdcc7d",
+    "heavy/icecover/icecover_sup2526__v1_stems/ghost.flac": "5d6a57eb8dc39c0e99d2c894b9b0a405e6363c9b59d36dbbad534dc0a297cc07",
+    "heavy/icecover/icecover_sup2526__v1_stems/ice.flac": "0511eea39ba76303f3c52c5707612901132c44f1c7b3935c1287bf737b251a56",
+    "heavy/icecover/icecover_sup2526__v1_stems/marker.flac": "aada03d74fbcb92f188f4f5cab44447b96d96d5ea3aa27bc55f9579c4a40af99",
+    "heavy/icecover/icecover_sup2526__v1_stems/organ.flac": "15c012685da57918df97a380fdba15d713ef56ee9b786a5dfd601c1de0ef2d1f",
+    "heavy/icecover/icecover_sup2526__v1_stems/pings.flac": "fdfac83b5f2457d9ecea643e40ef7f2f0fbb1eec5e3614e9f5c99994669eca18",
+    "heavy/icecover/icecover_sup2526__v1_stems/pings_far.flac": "3dd3203a3429428c9320ed014dd888653a34f56ae4a5f78850edff0f3cdd8677",
+    "heavy/icecover/icecover_sup2526__v1_stems/rain.flac": "c59c65eb1ebd8f5296615b3ba702de6853dff8d2fff94cbad89762848d30eb69",
+    "heavy/icecover/icecover_sup2526__v1_stems/snow.flac": "8b62365f2f575e99c8ebb739b53b00f41a52fc180c622f59f36e845f7577bb31",
+    "heavy/icecover/icecover_sup2526__v1_stems/turnover.flac": "3e95412728e5c78ced07d837cb77f8a869d70ce684af1391d6e9a48beed1793d",
+    "heavy/icecover/icecover_sup2526__v1_stems/water.flac": "bb92a9dde7a747095c7ad9b9ad5ce5d930cc9a5ee88530295033b8a02d07a5e3",
+    "heavy/icecover/icecover_sup2526__v1_stems/wind.flac": "988b94b91d9e5f4ed03b64c8043ed461b5421e5ca28d2016d18886e72ecaf922",
+    "light/icecover/icecover_sup2526__v1.mp3": "837c4a520d286b39c6f9c346909b38f0bccb3e95a429d1b12cc11cba4defc02c",
+    "light/icecover/icecover_sup2526__v1_movement1.mp3": "85f578dbe1c26d4c797dbf66bbb87db30b0687ecd4850f1c81062b87330791a7",
+    "light/icecover/icecover_sup2526__v1_movement2.mp3": "608dfa37a5db9dea961036dee5f19315580576878fe3129826f7f88e87a8023c",
+    "light/icecover/icecover_sup2526__v1_movement3.mp3": "d3661eec730f2f201d2baba51839c3a35a1de7d40c3f8e7fbe9b849cd152895e",
+    "light/icecover/icecover_sup2526__v1_movement4.mp3": "3f4efe6df6a96181bdd3d29e4878cf83ee979b7a44604ff5d11cfbcf71a90320",
+    "light/icecover/icecover_sup2526__v1_score.json": "5d6f98da6be289d6f8a12a3c39a715b2d040b0dd5e73050a911577ee7904c037",
+    "light/icecover/icecover_sup2526__v1_viz.json": "2a9d9ac2d1be0a571907f6dadaec8f760f4f0473756b5ff9e88a5996ba79cc13"
+   },
+   "samples": {
+    "files": 18,
+    "sha256": "6ca9c16cada43f64fd27a749c013219116856b9f28b232bb3a583bbead0dad37"
+   },
+   "script": "icecover.py",
+   "seeds": [
+    2026
+   ],
+   "variant": "v1",
+   "version": "1.0"
+  },
   "meridian-chorus-daylight": {
    "args": [],
    "code": {

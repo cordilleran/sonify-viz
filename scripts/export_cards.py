@@ -24,7 +24,8 @@ ROOT = Path(__file__).resolve().parent.parent
 TRACKS = ROOT / "tracks"
 LOCK = ROOT / "renders.lock.json"
 OUT = (ROOT / "site" if (ROOT / "site").is_dir() else ROOT) / "tracks.qmd"  # vault layout, or the repo's
-LISTEN = {"water-year": "listen.qmd?piece={name}", "climate-pair": "climate.qmd?piece={basin}"}
+LISTEN = {"water-year": "listen.qmd?piece={name}", "climate-pair": "climate.qmd?piece={basin}",
+          "meridian": "meridian.qmd", "superior-ice": "superior-ice.qmd"}
 
 
 def load_cards():
@@ -39,12 +40,32 @@ def check(cards, lock):
     for tid, c in cards.items():
         if tid != c["id"]:
             bad.append(f"{tid}.yaml has id {c['id']}")
-        e = lock["tracks"].get(c["id"])
+        e = lock["tracks"].get(c.get("lock", c["id"]))   # `lock`: a variant's lock id (ids with ':' can't be file names everywhere)
         if e is None:
             bad.append(f"{c['id']}: no entry in renders.lock.json")
         elif str(c["changelog"][-1]["version"]) != str(e["version"]):
             bad.append(f"{c['id']}: card says v{c['changelog'][-1]['version']}, lock says v{e['version']}")
     return bad
+
+
+def card_mp3(c):
+    """The site path of the MP3 a card describes."""
+    if c.get("site_mp3"):
+        return c["site_mp3"]
+    if c["album"] == "water-year":
+        return f"listen/{c['script'].replace('pilot_', '').replace('.py', '')}.mp3"
+    if c["album"] == "climate-pair":
+        return f"audio/climate_{c['args'][0]}_1958_2025.mp3"
+    return None
+
+
+def uncarded(root):
+    """-> MP3s the site plays that no track card describes (a publish check: every published track has a card)."""
+    root = Path(root)
+    claimed = {card_mp3(c) for c in load_cards()[1].values()}
+    played = [str(f.relative_to(root)) for d in ("listen", "audio", "meridian", "superior-ice") for f in sorted((root / d).glob("*.mp3"))
+              if not f.name.endswith("_rollcall.mp3")]   # orientation files (a legend in sound), not tracks
+    return [f for f in played if f not in claimed]
 
 
 def mapping_table(c):
@@ -66,6 +87,9 @@ def card_md(c, e, album):
     # hash the MP3 this site actually plays: the site copy the render wrote (Climate Pair), or the
     # companion's encode of the locked WAV (Water Year, written by export_companion.py)
     mp3 = next((h for k, h in e["outputs"].items() if k.startswith("site_audio/") and k.endswith(".mp3")), None)
+    if mp3 is None and c.get("site_mp3") and (ROOT / c["site_mp3"]).exists():   # a piece with its own page folder
+        import hashlib
+        mp3 = hashlib.sha256((ROOT / c["site_mp3"]).read_bytes()).hexdigest()
     if mp3 is None and (ROOT / "listen" / f"{name}.mp3").exists():
         import hashlib
         mp3 = hashlib.sha256((ROOT / "listen" / f"{name}.mp3").read_bytes()).hexdigest()
@@ -88,7 +112,7 @@ def card_md(c, e, album):
     L += ["**Reproduce.** " + f"`python scripts/{c['script']}{(' ' + args) if args else ''}` · seed{'s' if len(e['seeds']) > 1 else ''} "
           + ", ".join(str(s) for s in e["seeds"]) + f" · locked {e['locked']}"
           + (f" · SHA-256 of the MP3 on this site `{mp3[:16]}…`" if mp3 else "")
-          + f" · check it with `python scripts/renders.py verify {c['id']}`", ""]
+          + f" · check it with `python scripts/renders.py verify {c.get('lock', c['id'])}`", ""]
     L += ["**Credits.** " + "; ".join(c["credits"]) + ".", ""]
     lin = c.get("lineage") or {}
     bits = []
@@ -121,11 +145,17 @@ def render():
     for a in albums:
         L += [f"# {a['title']}", "", f"{a['about']} [The album's page]({a['page']}).", ""]
         for tid in a["tracks"]:
-            L.append(card_md(cards[tid], lock["tracks"][tid], a["id"]))
+            L.append(card_md(cards[tid], lock["tracks"][cards[tid].get("lock", tid)], a["id"]))
     return "\n".join(L) + "\n", sum(len(a["tracks"]) for a in albums)
 
 
 def main():
+    if "--check-published" in sys.argv:   # publish_site.sh: python export_cards.py --check-published REPO
+        bad = uncarded(sys.argv[sys.argv.index("--check-published") + 1])
+        if bad:
+            raise SystemExit("published audio with no track card (add one in tracks/):\n  " + "\n  ".join(bad))
+        print("every published MP3 has a track card")
+        return
     text, n = render()
     OUT.write_text(text)
     print(f"{OUT.relative_to(ROOT)}: {n} cards")

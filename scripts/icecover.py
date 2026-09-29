@@ -64,6 +64,17 @@ DEFAULTS = {
     "gains": {}, "mute": [],
     "movements": False,
     "seed": 2026,
+    # v1.0 options (2026-09-28, each chosen by ear from A/B pairs; the `v1` variant turns them on). The defaults
+    # reproduce v0.2 byte for byte, so its locked renders still verify.
+    "crackle": "v02",          # v02 | a: pan jitter, width by distance | c: a + distance gain 1/(r+eps)^q, a short delay and early reflections
+    "stagger": False,          # same-day events at least 80 ms apart, at most 4 a day
+    "tilt_db": 0.0,            # trim per step up the west-to-east pitch map (ice glass and pings), e.g. -0.5
+    "coda": "none",            # none | a: ghost holds a low floor after the data, long fade | c: a + other layers thin, end-of-data pulse
+    "drone": False,            # deep water near 4 C under the ice: a constant low hum (D), left alone at the end
+    "tail_s": 7.0,             # seconds after the last day
+    # v0.2 bug, found 2026-09-28: the ghost's phase summed in float32, so its pitch stepped (1792, 1536, then 2048 Hz
+    # instead of A6 = 1760 Hz) and froze to silence after ~350 s. True sums in float64. False only to reproduce v0.2.
+    "ghost_phase64": False,
 }
 
 LAYER_BUSES = {   # bus -> settings; a layer may feed several buses
@@ -80,9 +91,13 @@ LAYER_BUSES = {   # bus -> settings; a layer may feed several buses
     "birds": dict(gain=0.3, hp=300, send=0.55),
     "birds_far": dict(gain=0.3, hp=300, send=0.95),   # distant calls: darker, quieter, mostly reverb
     "ghost": dict(gain=0.3, hp=500, send=0.7),
+    "pings_far": dict(gain=0.75, hp=500, send=1.0),  # crackle (c): the wet share of distant events
+    "drops_far": dict(gain=0.4, hp=30, send=1.0),
+    "marker": dict(gain=0.5, hp=30, send=0.6),        # coda (c): the end-of-data pulse
+    "deep": dict(gain=0.5, hp=30, send=0.4),          # drone: deep water near 4 C
 }
 LAYER_TO_BUS = {"ice": ["ice"], "events": ["pings", "drops"], "water": ["water", "turnover"], "air": ["organ"], "sun": ["choir"],
-                "wind": ["wind"], "snow": ["snow"], "rain": ["rain"], "birds": ["birds", "birds_far"], "ghost": ["ghost"], "turnover": ["turnover"]}
+                "wind": ["wind"], "snow": ["snow"], "rain": ["rain"], "birds": ["birds", "birds_far"], "ghost": ["ghost", "marker"], "turnover": ["turnover"], "deep": ["deep"]}
 
 
 # -------------------------------------------------------------------- data --
@@ -148,9 +163,13 @@ def movement_days(lake, cur_peak_day, dates):
     return [on, peak, off]
 
 
-def ghost_carrier(f0, cents):
+def ghost_carrier(f0, cents, phase64=False):
     """A sine at f0 detuned by a time-varying number of cents. The phase is the running sum of the frequency;
-    f(t)*t would sweep the tone by t*f'(t), hundreds of hertz late in the piece."""
+    f(t)*t would sweep the tone by t*f'(t), hundreds of hertz late in the piece. The sum must be float64 (and is
+    wrapped per cycle): in float32 it loses the per-sample step within a minute (v0.2 bug, see DEFAULTS)."""
+    if phase64:
+        cyc = np.cumsum(f0 * 2 ** (np.asarray(cents, dtype=np.float64) / 1200) / SR)
+        return np.sin(2 * np.pi * (cyc % 1.0)).astype(np.float32)
     return np.sin(2 * np.pi * np.cumsum(f0 * 2 ** (cents / 1200)) / SR)
 
 
@@ -236,6 +255,22 @@ def distant(x, u):
     return (lowpass(x, 9000 - 7000 * u) * (1 - 0.55 * u)).astype(np.float32)
 
 
+def early_reflections(x, u, rng):
+    """Crackle (c): a distant event arrives late and diffuse. The direct sound is delayed up to 30 ms and a few
+    darker reflections follow within 90 ms, more and louder with distance u. -> stereo (n, 2)."""
+    pre = int(0.03 * u * SR)
+    n = len(x) + pre + int(0.1 * SR)
+    y = np.zeros((n, 2), dtype=np.float32)
+    y[pre:pre + len(x)] += np.stack([x, x], axis=1)
+    dark = lowpass(x, 4000 - 2500 * u)
+    for _ in range(2 + int(4 * u)):
+        k = pre + int(rng.uniform(0.012, 0.09) * SR)
+        g = 0.5 * u * rng.uniform(0.4, 1.0)
+        ch = rng.integers(2)
+        y[k:k + len(x), ch] += dark * g
+    return y
+
+
 def flake(vel, rng, dur=0.12):
     """One snowflake: a dry, unpitched high tick."""
     t = np.arange(int(dur * SR)) / SR
@@ -280,7 +315,7 @@ def main():
 
     D = load()
     N, ids, day_s = D["N"], D["ids"], float(P["day_s"])
-    tail = 7.0
+    tail = float(P["tail_s"])
     dur = N * day_s
     n = int((dur + tail) * SR)
     L = set(P["layers"])
@@ -302,6 +337,12 @@ def main():
     organ = Instrument("Keys/Organ/Quiet", glob="NT5_Man3Quiet_*.wav",
                        mapping=lambda nm: (int(nm.split("_")[2]) - 86, 1))
     used = {b for l in L for b in LAYER_TO_BUS.get(l, [])}
+    if P["crackle"] == "c" and "events" in L:
+        used |= {"pings_far", "drops_far"}
+    if P["coda"] != "c":
+        used.discard("marker")
+    if P["drone"]:
+        used.add("deep")
     B = {k: Bus(k, n, **kw) for k, kw in V.bus_settings({k: v for k, v in LAYER_BUSES.items() if k in used}, P).items()}
     span = dur + 1.0
     lake = D["lake_ice"]
@@ -309,6 +350,8 @@ def main():
     pan = D["pan"]
     tracks = {"ice": {}, "water": {}, "wind": {}}   # per-region loudness curves for the dashboard
     events_out, wt_r, turn = {}, {}, []
+    rng_v1 = np.random.default_rng(P["seed"] + 1)    # the v1 options draw here, so the main stream (and every other layer) is unchanged
+    onsets = {}                                      # stagger: day -> onset times (s) already placed
 
     # ---- per-region voices
     active = np.sum([R[i]["ice"] > P["glass_gate"][1] for i in ids], axis=0)
@@ -320,7 +363,8 @@ def main():
         ice_f = r["ice"] / 100.0
         lvl = ice_f ** 0.7 * smoothstep(r["ice"], lo, hi) * density
         if "ice" in L:
-            B["ice"].add(Y.stereo(glass(P["ice_pitch"][i], n, aud(lvl) * fade, rng) * 0.35, width=0.5), 0, pan=p)
+            tilt = 10 ** (P["tilt_db"] * i / 20)
+            B["ice"].add(Y.stereo(glass(P["ice_pitch"][i], n, aud(lvl) * fade, rng) * 0.35 * tilt, width=0.5), 0, pan=p)
             tracks["ice"][rid] = cur(lvl)
         if "events" in L:
             ev = detect_events(r["ice"], P["up_pp"], P["down_pp"], P["smooth_days"], P["gap_days"])
@@ -330,8 +374,37 @@ def main():
                 off = rng.uniform(0.0, 0.5)
                 events_out[rid].append([int(d), int(kind), round(mag, 1), round(float(off), 3)])   # off: the sub-day delay the sound is placed at
                 x = ping(P["ice_pitch"][i] + 12, vel, rng) if kind > 0 else drop(P["drop_pitch"][i], vel, rng)
-                x = distant(x, rng.uniform(0, 1))
-                B["pings" if kind > 0 else "drops"].add(Y.stereo(x, width=0.3), at(d, off), pan=p)
+                u = rng.uniform(0, 1)
+                x = distant(x, u)
+                if kind > 0:
+                    x = x * 10 ** (P["tilt_db"] * i / 20)
+                pos = at(d, off)
+                if P["stagger"]:
+                    placed = onsets.setdefault(d, [])
+                    if len(placed) >= 4:          # at most four events sound on one day; the rest are not played or shown
+                        events_out[rid].pop()
+                        continue
+                    t = pos / SR
+                    while any(abs(t - q) < 0.08 for q in placed):   # at least 80 ms between onsets on the same day
+                        t += 0.08
+                    placed.append(t)
+                    pos = int(t * SR)
+                    events_out[rid][-1][3] = round(t / day_s - d, 3)   # the page places the event where it is heard
+                if P["crackle"] == "v02":
+                    B["pings" if kind > 0 else "drops"].add(Y.stereo(x, width=0.3), pos, pan=p)
+                else:
+                    pj = float(np.clip(p + rng_v1.uniform(-0.15, 0.15), -1, 1))
+                    wd = 0.05 + 0.85 * u
+                    if P["crackle"] == "a":
+                        B["pings" if kind > 0 else "drops"].add(Y.stereo(x, width=wd), pos, pan=pj)
+                    else:
+                        dist = 1 + 3 * u                         # distance, 1 (near) .. 4 (far): a choice, not a physical scale
+                        g = (1.0 / (dist + 0.25)) ** 0.9 / (1.0 / 1.25) ** 0.9
+                        y = early_reflections(x, u, rng_v1) * g
+                        wet = 0.15 + 0.75 * u
+                        near_b, far_b = ("pings", "pings_far") if kind > 0 else ("drops", "drops_far")
+                        B[near_b].add(y * (1 - wet) * 1.6, pos, pan=pj)
+                        B[far_b].add(y * wet * 1.6, pos, pan=pj * 0.8)
         sst = warmth(r["sst"], *P["water_range"])
         lid_r = (1 - 0.85 * ice_f) * (0.35 + 0.65 * sst)
         wt_r[rid] = (sst, lid_r)
@@ -428,10 +501,41 @@ def main():
         med = D["hist"]["med"] / 100.0
         gap = np.abs(lake - D["hist"]["med"]) / 100.0
         f0 = float(Y.midi_hz(P["ghost_pitch"]))
-        lvl = aud(med ** 0.7) * fade
+        glv = med ** 0.7
+        if P["coda"] != "none":
+            # symbolic coda (S): after the median's last audible day the ghost holds a low floor through open water,
+            # then fades over the tail after the last day of data
+            floor = 0.2
+            last = int(np.flatnonzero(glv >= floor)[-1]) if (glv >= floor).any() else 0
+            glv = glv.copy()
+            glv[last:] = np.maximum(glv[last:], floor)
+            gl = aud(glv)
+            ta = np.arange(n) / SR
+            gfade = np.clip(1 - (ta - dur) / max(tail - 2.0, 1.0), 0, 1) ** 1.5   # fades out 2 s before the end of the tail
+            lvl = gl * np.minimum(1, ta / 2) * gfade
+        else:
+            lvl = aud(glv) * fade
         cents = aud(gap * 40.0)
-        x = ghost_carrier(f0, cents) * lvl * 0.3
+        x = ghost_carrier(f0, cents, P["ghost_phase64"]) * lvl * 0.3
         B["ghost"].add(Y.stereo(x, width=0.5), 0, pan=0.0)
+        if P["coda"] == "c":
+            B["marker"].add(Y.sub_note(P["water_pitch"][0], 3.0, vel=0.35, r=2.5, drive=1.1), int(dur * SR))   # the data end here
+    if P["drone"]:
+        # deep water sits near 4 C (the density maximum) under the ice all winter: known physics (D), not measured here
+        ta = np.arange(n) / SR
+        f = float(Y.midi_hz(26))
+        x = (np.sin(2 * np.pi * f * ta) + 0.35 * np.sin(2 * np.pi * 2 * f * ta + 1.0) + 0.3 * np.sin(2 * np.pi * (2 * f + 0.2) * ta)
+             + 0.12 * np.sin(2 * np.pi * 3 * f * ta))
+        env = np.minimum(1, np.minimum(ta / 6, (n / SR - ta) / 8))
+        B["deep"].add(Y.stereo((x * env * 0.05).astype(np.float32), width=0.2), 0, pan=0.0)
+
+    if P["coda"] == "c":
+        # the other layers thin over the open-water movement, so the ghost is what remains
+        c3 = movement_days(lake, D["cur_peak_day"], D["dates"])[2]
+        thin = to_audio(np.interp(tctl, (c3 * day_s, dur), (1.0, 0.3)), n)[:, None]
+        for k, b in B.items():
+            if k not in ("ghost", "marker", "deep"):
+                b.buf *= thin
 
     # ---- master: the room tightens and darkens as the lake freezes
     ice_env = aud(np.clip(lake / 60.0, 0, 1) * 0.8)

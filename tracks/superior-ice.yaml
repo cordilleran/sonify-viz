@@ -1,0 +1,63 @@
+id: superior-ice
+lock: icecover-superior-ice:v1
+site_mp3: superior-ice/icecover_sup2526__v1.mp3
+title: Superior Ice Year
+album: superior-ice
+script: icecover.py
+args: [--variant, v1]
+question: >
+  How does one winter of ice move across Lake Superior, region by region, and
+  how does it compare with the lake's recent ordinary year?
+place: >
+  Lake Superior (Gichigami), cut into eight regions from the Western Arm to
+  Whitefish Bay.
+territory: >
+  Anishinaabe territory, including Ojibwe nations with treaty rights there:
+  the Robinson-Superior Treaty of 1850, and the treaties of 1836, 1842 and 1854.
+  The acknowledgement on the piece's page is a draft, open to correction.
+year: {label: "2025-26", framing: ice season, from: 2025-11-01, to: 2026-06-15}
+records:
+  - Ice concentration, daily by region (NOAA GLERL and CoastWatch Great Lakes Node, GLSEA with NIC ice charts)
+  - Surface water temperature, daily by region (NOAA CoastWatch ACSPO GLSEA)
+  - Lake-average ice, 2008-2025 median (NOAA GLERL)
+  - Air temperature, wind, precipitation, snowfall and shortwave radiation (ERA5 via Open-Meteo, CC BY 4.0)
+mapping:
+  - {layer: ice, data: region ice concentration, sound: "a bowed-glass tone per region, D5 to F#6 west to east, louder as the ice thickens", tag: R}
+  - {layer: events, data: 3-day-smoothed daily change in region ice, sound: "freeze: a glass ping; breakup: a low drop and crack, each at a random distance (quieter, darker, later, wetter)", tag: D}
+  - {layer: water, data: region surface temperature, sound: four low string voices, fuller as it warms, quieted by ice, tag: R}
+  - {layer: turnover, data: lake-mean skin temperature crossing 4 °C, sound: a soft sub drop, tag: D}
+  - {layer: air, data: lake-mean air temperature, sound: an organ that adds ranks and brightens as it warms, tag: R}
+  - {layer: sun, data: day length at 47.6° N and shortwave radiation, sound: a choir that swells and opens from oo to ah, tag: D}
+  - {layer: wind, data: peak wind of the eight regions, sound: a filtered-noise bed gated by gales, tag: R}
+  - {layer: snow, data: region snowfall, sound: dry unpitched ticks, tag: R}
+  - {layer: rain, data: region liquid precipitation, sound: soft harp drops, tag: D}
+  - {layer: birds, data: timing from ice-off and warmth, sound: loon and goose recordings, near and far, tag: S}
+  - {layer: ghost, data: 2008-2025 median lake ice, sound: "a quiet detuned glass tone; after the data end it holds a low floor and fades (a symbolic coda), and a soft pulse marks the last day of data", tag: D}
+  - {layer: deep water, data: "deep water near 4 °C under the ice (known physics, not measured here)", sound: a constant low hum, left alone at the end, tag: D}
+harmony: >
+  D major pentatonic. Each region is a note, low in the west and high in the
+  east, panned by longitude, so the chord sounding at any moment is the ice
+  pattern on the map. Three seconds per day (11 min 46 s), cut into four
+  movements at ice-defined days: freeze-up, ice-in, long melt, open water.
+  Higher regions are trimmed 0.5 dB a step so the east doesn't sound louder.
+simulated:
+  - Bird timing is symbolic, from each region's ice-off and warmth; the calls are recordings, not observations.
+  - The ghost's coda after the last day of data is symbolic.
+limitations:
+  - Regions are wedges by distance from eight anchor points, not basins or depth zones.
+  - Water temperature is the satellite skin of the top millimetres, not the lake at depth.
+  - Air, wind and precipitation are ERA5 reanalysis at one point per region, not station observations.
+  - Freeze and breakup events are derived with fixed thresholds (4 points a day, 3 days apart).
+  - The ear does not read the map (a listening probe agreed); the page's picture carries space.
+credits:
+  - Graham Watt, the question, the lake, listening, and every design choice on the A/B bench
+  - Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code
+  - Loon and goose recordings, Jonathon Jongsma (CC BY-SA 3.0, Wikimedia Commons); instruments, VSCO 2 Community Edition (CC0)
+lineage:
+  parent: null
+  variants: [long, ghost, ice-only, beds, weather]
+  remixes: []
+changelog:
+  - {version: "0.1", date: 2026-09-28, change: First render.}
+  - {version: "0.2", date: 2026-09-28, change: "After a first listen: fewer, more distant birds; quieter, wetter events; a softer ghost."}
+  - {version: "1.0", date: 2026-09-29, change: "The long version as the main track, with the ghost and its coda, a deep-water hum, distance-modelled crackles, staggered events and the pitch-loudness tilt, chosen by GW on an A/B bench. Fixes a v0.2 bug in the ghost's pitch (summed at too low a precision, it stepped between wrong notes, mostly about 2.5 semitones sharp)."}

@@ -1,0 +1,20 @@
+---
+title: "Superior Ice Year"
+subtitle: "One winter of ice on Lake Superior, 2025–26, as music"
+toc: false
+page-layout: full
+---
+
+One ice season on Lake Superior, from 1 November to 15 June. The lake is cut into eight regions and each region is a voice: the west sings lowest and the east highest, so the chord you hear is the ice pattern on the map. Ice, water, air, sunlight, wind, snow, rain and birds each get their own instrument, and a quiet ghost tone follows the lake's median year. Press play, then tap a region to hear and see its own year. The piece also works [on its own, full screen](superior-ice/index.html). Its card, with every record and how to reproduce it, is on the [Tracks](tracks.qmd#superior-ice) page.
+
+<iframe class="companion" id="companion" src="superior-ice/index.html?embed" title="Superior Ice Year" loading="eager"></iframe>
+
+<script>
+// superior-ice.html?piece=icecover_sup2526 opens that render in the page.
+(() => { const p = new URLSearchParams(location.search).get('piece');
+  if (p && /^[a-z0-9_]+$/.test(p)) document.getElementById('companion').src = 'superior-ice/index.html?embed&piece=' + p; })();
+window.addEventListener('message', (e) => {
+  if (e.source !== document.getElementById('companion').contentWindow) return;   // only our own frame may resize it
+  if (e.data && typeof e.data.wyrHeight === 'number') document.getElementById('companion').style.height = (e.data.wyrHeight + 8) + 'px';
+});
+</script>

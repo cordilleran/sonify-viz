@@ -66,6 +66,7 @@ input[type=range]{flex:1;min-width:200px;accent-color:var(--frost)}
 .panel h2{margin:0;font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 #tl{width:100%;display:block;cursor:pointer;touch-action:none}
 .meters{display:grid;gap:5px}
+.floor{margin:18px 0;display:grid;gap:8px}.floor img{width:100%;height:auto;display:block;border-radius:4px}.floor figcaption{font-size:.85rem;color:var(--muted)}
 .m{display:grid;grid-template-columns:62px 22px 1fr;gap:8px;align-items:center;font:12px var(--mono)}
 .m .n{color:var(--text)}
 .chip{font:600 10px var(--mono);text-align:center;border-radius:4px;padding:1px 0;border:1px solid var(--line2)}
@@ -91,6 +92,9 @@ input[type=range]{flex:1;min-width:200px;accent-color:var(--frost)}
   .rhead{display:none}
 }
 @media (max-width:560px){ .rail{grid-template-columns:minmax(0,1fr)} .badge,.modes{position:static;display:block} .modes{display:flex;justify-content:flex-start;padding:4px 0 8px} .badge{padding-bottom:6px} .modes button{background:transparent} }
+/* embedded in the Quarto site (?embed): the site supplies the title, intro and footer */
+.embedded header h1,.embedded header > p,.embedded header .eyebrow,.embedded .foot{display:none}
+.embedded .wrap{padding-block:4px 48px}
 </style>
 <div class="wrap">
   <header>
@@ -101,11 +105,11 @@ input[type=range]{flex:1;min-width:200px;accent-color:var(--frost)}
 
   <div class="pick">
     <select id="piece" aria-label="Which render">
-      <option value="icecover_sup2526">the season · 5.8 minutes</option>
-      <option value="icecover_sup2526__long">the season, slowly · 11.6 minutes, four movements</option>
-      <option value="icecover_sup2526__ghost">with the ghost of the average year · 5.8 minutes</option>
+      <option value="icecover_sup2526__v1">the season, with the ghost year · 11.8 minutes, four movements (v1.0)</option>
+      <option value="icecover_sup2526">the season, shorter · 5.8 minutes (v0.2)</option>
     </select>
     <div class="k" id="pieceNote"></div>
+    <div><button id="roll" aria-label="Play the roll call: each region, then each layer, about 50 seconds">Roll call · 50 s</button> <span class="k" id="rollCue" aria-live="polite">Hear each region from west to east, then each layer on its own, before the piece.</span></div>
   </div>
   <div class="controls">
     <button id="play" aria-label="Play">Play</button>
@@ -161,8 +165,12 @@ input[type=range]{flex:1;min-width:200px;accent-color:var(--frost)}
     </table>
     <p><b>What this cannot tell you.</b> The regions are wedges cut by distance from eight anchor points, not lake basins or depth zones. Stereo position follows longitude (blended with rank so the three regions near 88° W are apart), so north and south at the same longitude sit in the same place in the stereo image; the map carries that difference. Freeze and breakup events are derived: a three-day smoothed change in a region's ice of four percentage points or more in a day, with at least three days between events. The 4 °C turnover marker uses lake-mean satellite skin temperature as a proxy; it is not a measurement of the lake overturning. Air temperature, wind, precipitation, snow and sunshine are ERA5 reanalysis at one point per region, not station observations. Water temperature is the satellite skin temperature of the top millimetres, not the lake at depth: under the ice, most of Superior sits near 4 °C all winter. It is used because it is the only daily, lake-wide, gridded water-temperature record, and it is the surface that freezes; sounding the water column would need a lake model such as NOAA's Great Lakes Coastal Forecasting System. Birds are symbolic (S): each region's loon and geese arrive on a date the data suggest, and the calls are recordings, not observations of migration.</p>
     <p><b>Places and territory.</b> This piece sonifies one winter on <b>Gichigami</b>, Lake Superior, in the territory of the Anishinaabe, including Ojibwe nations with treaty rights there: the Robinson-Superior Treaty of 1850 in Ontario, and the treaties of 1836, 1842 and 1854 in Michigan, Wisconsin and Minnesota. I am not from that place; I work from data, at a distance. I respect the people of the lake and the treaties that protect their rights, and I hold this acknowledgement as a draft, open to correction by those it concerns.</p>
+    <figure class="floor" id="floor">
+      <a href="superior_bathymetry_hillshade_4k.png"><img src="superior_bathymetry_hillshade.jpg" alt="Lake Superior's floor and surrounding land as a shaded relief map, pale winter blues deepening to navy in the deep eastern basin, with grey stone-coloured land around it" loading="lazy" width="2400" height="1243"></a>
+      <figcaption><b>The lake floor.</b> Lake Superior's bathymetry and the land around it, the ground the animation's ice moves over. Full resolution, 4096 × 2121 px: <a href="superior_bathymetry_hillshade_4k.png">PNG, 10 MB</a>. Data: NOAA NCEI Great Lakes Bathymetry, Lake Superior 3 arc-second grid (NOAA NGDC, GLERL and the Canadian Hydrographic Service), fetched by the script, not redistributed. Method: a hillshade lit from the northwest (azimuth 315°, altitude 45°), the cartographic convention, with 12× vertical exaggeration; depth coloured from pale to deep blue over 0 to 406 m, land in stone greys over 0 to 500 m, then desaturated to about 60 % and blended 20 % toward a winter white. Code: <a href="https://github.com/cordilleran/sonify-viz/blob/main/scripts/blender_prep_superior.py">blender_prep_superior.py</a> and <a href="https://github.com/cordilleran/sonify-viz/blob/main/scripts/superior_palette.py">superior_palette.py</a>. Image CC BY 4.0.</figcaption>
+    </figure>
     <p><b>Sources.</b> Ice and water data courtesy of NOAA: the Great Lakes Environmental Research Laboratory (GLERL) and the CoastWatch Great Lakes Node. Ice concentration: NOAA GLERL and CoastWatch Great Lakes Node, GLSEA analysis using NIC ice charts (public data), daily, block-averaged from about 1.4 km to 2.8 km cells. Surface water temperature: NOAA CoastWatch ACSPO GLSEA satellite analysis; gaps under cloud are filled by the analysis. Lake-average ice, 2008 to 2025: NOAA GLERL. Air temperature, wind, precipitation, snowfall and shortwave radiation: ERA5 reanalysis (Copernicus Climate Change Service, CC BY 4.0) via the Open-Meteo historical weather API. Day length is calculated at 47.6° N. Loon and Canada goose recordings: Jonathon Jongsma, CC BY-SA 3.0, through Wikimedia Commons. Orchestral samples: VSCO 2 Community Edition (CC0). The regions, events and sound mapping are described in the project's spec.</p>
-    <p><b>Versions.</b> 0.2 (28 September 2026), after a first listen: fewer bird calls, each heard at its own distance, from near to far across the water; the freeze pings and breakup cracks quieter, wetter and at varying distances; the ghost tone softer. 0.1 was the first render.</p>
+    <p><b>Versions.</b> 1.0 (29 September 2026) is the main track, with each choice picked by ear on an A/B bench: the ghost of the median year with a symbolic coda after the last day of data; a hum for the deep water that sits near 4 °C under the ice; freeze and breakup sounds placed at a distance (quieter, darker, a little later and wetter the farther away), spread in time so no more than four fall on one day; and eastern (higher) regions trimmed 0.5 dB a step so the east doesn't sound louder. 1.0 also fixes a 0.2 bug: the ghost's pitch was summed at too low a precision, so it stepped between wrong notes and, for most of the piece, played about two and a half semitones sharp (in the longer render it fell silent after about six minutes). 0.2 (28 September), after a first listen: fewer bird calls, each at its own distance; quieter, wetter events; a softer ghost. The shorter 0.2 render stays for a quicker listen. 0.1 was the first render.</p>
     <p class="caption" id="caption"></p>
   </div>
   <footer class="foot">Graham Watt &amp; Claude Code · <a href="../index.html">sonify-viz home</a> · <a href="../about.html">how this was made</a> · <a href="https://github.com/cordilleran/sonify-viz">source on GitHub</a> · code MPL 2.0</footer>
@@ -436,9 +444,9 @@ tl.addEventListener('pointercancel', () => { dragging = false; });
 
 // ---------- meters and rail ----------
 const LAYERS = [
-  ['ice', 'ice', 'R', ['ice']], ['events', 'events', 'D', ['pings', 'drops']], ['water', 'water', 'R', ['water']], ['turnover', 'turnover', 'D', ['turnover']],
+  ['ice', 'ice', 'R', ['ice']], ['events', 'events', 'D', ['pings', 'drops', 'pings_far', 'drops_far']], ['water', 'water', 'R', ['water']], ['turnover', 'turnover', 'D', ['turnover']],
   ['air', 'air', 'R', ['organ']], ['sun', 'sun', 'D', ['choir']], ['wind', 'wind', 'R', ['wind']],
-  ['snow', 'snow', 'R', ['snow']], ['rain', 'rain', 'D', ['rain']], ['birds', 'birds', 'S', ['birds', 'birds_far']], ['ghost', 'ghost', 'D', ['ghost']]];
+  ['snow', 'snow', 'R', ['snow']], ['rain', 'rain', 'D', ['rain']], ['birds', 'birds', 'S', ['birds', 'birds_far']], ['ghost', 'ghost', 'D', ['ghost', 'marker']], ['deep', 'deep water', 'D', ['deep']]];
 const LTXT = {
   ice: ['Region ice concentration', 'A bowed-glass tone per region, louder as the ice thickens'],
   events: ['Day-to-day change in region ice', 'Freeze: a glass ping. Breakup: a low drop with a crack'],
@@ -450,10 +458,11 @@ const LTXT = {
   snow: ['Snowfall by region', 'Unpitched flakes, panned to the region'],
   rain: ['Rain (precipitation less snow)', 'Harp notes on the region\'s pitch, two octaves under its ice'],
   birds: ['First spring day per region, from the ice and temperature', 'Loon and goose recordings, panned to the region'],
-  ghost: ['The 2008–25 median lake ice', 'A quiet detuned glass tone; it drifts apart from the ice as this year departs from the median']};
+  ghost: ['The 2008–25 median lake ice', 'A quiet detuned glass tone; it drifts apart from the ice as this year departs from the median. After the last day of data it holds a low floor and fades: a symbolic coda (S), marked by a soft low pulse'],
+  deep: ['Deep water near 4 °C under the ice (known physics, not measured here)', 'A constant low hum, present all season and left alone at the end']};
 let LL = [], mrows = {};
 function buildMeters(){
-  LL = LAYERS.filter(l => D.layers.includes(l[0]) || (l[0] === 'turnover' && D.layers.includes('water')));
+  LL = LAYERS.filter(l => D.layers.includes(l[0]) || (l[0] === 'turnover' && D.layers.includes('water')) || (l[0] === 'deep' && D.stem_env && D.stem_env.deep));
   $('meters').innerHTML = LL.map(l => `<div class="m"><span class="n">${l[1]}</span><span class="chip ${l[2]}">${l[2]}</span><span class="bar"><i id="mb_${l[0]}"></i><span id="mt_${l[0]}"></span></span></div>`).join('');
   $('layerTable').innerHTML = LL.map(l => `<tr><td>${l[1]}</td><td>${LTXT[l[0]][0]} <span class="chip ${l[2]}" style="display:inline-block;padding:0 5px">${l[2]}</span></td><td>${LTXT[l[0]][1]}</td></tr>`).join('');
 }
@@ -472,7 +481,7 @@ function frame(force){
   const envIce = D.env.ice || {}, ei = clamp(Math.floor(t * D.env_hz), 0, ((envIce[D.regions[0].id] || [0]).length) - 1);
   const maxIce = D.maxIceEnv;
   D.regions.forEach((r, i) => { glow[i] = Math.sqrt(clamp(((envIce[r.id] || [])[ei] || 0) / maxIce, 0, 1)); });
-  D.regions.forEach((r, i) => { $('gl' + i).style.opacity = (glow[i] * 0.18).toFixed(3); });
+  D.regions.forEach((r, i) => { const g = $('gl' + i); if (g) g.style.opacity = (glow[i] * 0.18).toFixed(3); });   // the list may not be built yet
   paintLake(pos, glow);
   drawOver(t, pos, day, glow);
   tlPos = clamp(u, 0, N); drawTLHead();
@@ -574,9 +583,8 @@ window.addEventListener('keydown', e => { if (e.code === 'Space' && !['BUTTON', 
 
 // ---------- load ----------
 const PNOTE = {
-  icecover_sup2526: 'Nine layers over the whole season at 1.5 seconds per day.',
-  icecover_sup2526__long: 'The same season at 3 seconds per day, cut into four movements that follow the ice: freeze-up, ice-in, long melt and open water. Each movement is also its own file in the project folder.',
-  icecover_sup2526__ghost: 'Adds a quiet second glass tone that follows the 2008 to 2025 median lake ice. It sits with the ice while this year is ordinary and pulls apart as this year departs from it.'};
+  icecover_sup2526__v1: 'Version 1.0, the main track: 3 seconds per day in four movements that follow the ice (freeze-up, ice-in, long melt, open water), with the ghost of the 2008 to 2025 median year, a deep-water hum, and a short coda after the data end.',
+  icecover_sup2526: 'The shorter version (0.2): nine layers over the whole season at 1.5 seconds per day.'};
 function loadPiece(name){
   $('play').disabled = true; audio.pause(); $('play').textContent = 'Play'; $('play').setAttribute('aria-label', 'Play'); focus = null; pinned = false; lastDay = -1; overrideT = firstT; firstT = null;
   fetch(`${name}.json`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(async d => {
@@ -596,10 +604,41 @@ function loadPiece(name){
   }).catch(e => { $('caption').textContent = `Could not load ${name}.json (${e.message}). Reload the page to try again.`; });
 }
 $('piece').addEventListener('change', e => loadPiece(e.target.value));
-if (params.get('piece')) $('piece').value = params.get('piece');
+if (params.get('piece') && [...$('piece').options].some(o => o.value === params.get('piece'))) $('piece').value = params.get('piece');   // links to retired renders fall back to the main track
 if (params.get('mode')) mode = params.get('mode');
 let firstT = params.get('t') ? +params.get('t') : null;
 loadPiece($('piece').value);
 new ResizeObserver(() => { if (D) sizeOver(); }).observe($('mapbox'));
 new ResizeObserver(() => { if (D) drawTL(true); }).observe($('tl').parentElement);
+</script>
+
+<script>
+// The roll call: a separate short file (never in the track). Each region sounds once from west to east at its own
+// pitch and pan, then each layer on its own; the caption follows the cues.
+(() => {
+  const btn = document.getElementById('roll'), cue = document.getElementById('rollCue'), main = document.getElementById('audio');
+  const rc = new Audio('icecover_rollcall.mp3'); let cues = [], idle = cue.textContent;
+  fetch('icecover_rollcall_cues.json').then(r => r.json()).then(d => { cues = d.cues; }).catch(() => {});
+  btn.addEventListener('click', () => {
+    if (!rc.paused) { rc.pause(); rc.currentTime = 0; btn.textContent = 'Roll call · 50 s'; cue.textContent = idle; return; }
+    if (!main.paused) document.getElementById('play').click();
+    rc.play().catch(() => {}); btn.textContent = 'Stop roll call';
+  });
+  rc.addEventListener('timeupdate', () => {
+    let c = null; for (const x of cues) if (x.t <= rc.currentTime + 0.05) c = x;
+    if (c) cue.textContent = c.kind === 'region' ? 'Region, west to east: ' + c.label : c.label;
+  });
+  rc.addEventListener('ended', () => { btn.textContent = 'Roll call · 50 s'; cue.textContent = idle; });
+})();
+</script>
+<script>
+// Embedded in the Quarto site (the wrapper page loads this with ?embed): hide the page's own title and footer,
+// and post the content height so the iframe grows to fit (no inner scrollbar). Harmless when not embedded.
+(() => {
+  if (!new URLSearchParams(location.search).has('embed')) return;
+  document.documentElement.classList.add('embedded');
+  const postHeight = () => { try { parent.postMessage({wyrHeight: document.documentElement.scrollHeight}, '*'); } catch (e) {} };
+  if (window.ResizeObserver) new ResizeObserver(postHeight).observe(document.body);
+  addEventListener('load', postHeight);
+})();
 </script>

@@ -198,3 +198,34 @@ def test_short_render_is_clean_and_seeded_deterministic(short_render):
     assert json.loads(score.read_text())["regions"] and json.loads(viz.read_text())["dates"] == D["dates"]
     ev = json.loads(viz.read_text())["events"]
     assert ev and all(len(e) == 4 and 0 <= e[3] <= 0.5 for r in ev.values() for e in r)   # each carries the offset the sound was placed at
+
+
+def test_ghost_pitch_holds_over_a_long_render():
+    """v1.0 fix: with the phase summed in float64 the ghost stays on A6 for the whole piece.
+    (In v0.2 the float32 sum stepped the pitch by up to a whole tone and froze after ~350 s.)"""
+    from sampler import SR
+    n = 400 * SR                  # past the ~350 s where the float32 sum froze
+    x = I.ghost_carrier(1760.0, np.zeros(n, np.float32), phase64=True)
+    for t in (100, 395):
+        s = x[t * SR:(t + 2) * SR] * np.hanning(2 * SR)
+        f = np.fft.rfftfreq(16 * SR, 1 / SR)[np.argmax(np.abs(np.fft.rfft(s, 16 * SR)))]
+        assert abs(f - 1760.0) < 0.5, (t, f)
+
+
+def test_early_reflections_grow_with_distance():
+    """Crackle (c): a far event arrives later, and more of its energy is in the reflections."""
+    rng = np.random.default_rng(1)
+    x = np.zeros(4800, np.float32)
+    x[0] = 1.0
+    near, far = I.early_reflections(x, 0.0, rng), I.early_reflections(x, 1.0, rng)
+    first = lambda y: int(np.flatnonzero(np.abs(y).sum(1) > 0.5)[0])
+    assert first(far) > first(near)
+    tail = lambda y: float(np.abs(y[first(y) + 100:]).sum())
+    assert tail(far) > tail(near)
+
+
+def test_v1_variant_uses_declared_parameters():
+    import yaml
+    spec = yaml.safe_load((ROOT / "variants" / "icecover.yaml").read_text())["v1"]
+    assert set(spec) - {"note"} <= set(I.DEFAULTS)
+    assert spec["ghost_phase64"] is True and spec["coda"] == "c" and spec["drone"] is True

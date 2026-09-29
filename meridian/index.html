@@ -75,6 +75,9 @@ input[type=range]{flex:1;min-width:200px;accent-color:var(--day)}
   .row .place small{display:none}
   .row .cov{min-width:0}
 }
+/* embedded in the Quarto site (?embed): the site supplies the title, intro and footer */
+.embedded header h1,.embedded header > p,.embedded header .eyebrow,.embedded .foot{display:none}
+.embedded .wrap{padding-block:4px 48px}
 </style>
 <div class="wrap">
   <header>
@@ -120,7 +123,7 @@ input[type=range]{flex:1;min-width:200px;accent-color:var(--day)}
     <p id="numbers"><b>The numbers</b> beside the bar are that day at each parallel: day length, and sunrise and sunset in local solar time (noon is 12:00 everywhere on the line). Everything here is calculated from the sun's geometry (D, derived); later layers will add measured weather, ocean and ice.</p>
     <p id="l2note" hidden><b>Layer 2</b> adds air, sea and ice, each on its own instrument so the chorus has room. The <b>sung voice</b> still carries the light. The <b>organ</b> is the air: on a cold day it plays one dark rank; on a warm day it adds the octave rank and opens up. A warm night also breathes fuller. The <b>strings</b> are the sea, an octave under each ocean parallel, heard day and night because the ocean doesn't sleep; warmer water sounds fuller. <b>Sea ice</b> is a lid on the sea voice, quieting it, and a high glass shimmer as loud as the ice is dense. The buttons recolour the ring by each layer. Air temperature is ERA5 reanalysis (D, modelled; Copernicus, CC BY 4.0, via Open-Meteo); sea surface temperature is NOAA OISST v2.1 (R); sea ice is the NOAA/NSIDC Climate Data Record v6 (R). Each value is the mean over the breath's block of days, at the grid cell nearest the parallel.</p>
     <p><b>Places and territory.</b> The land and ice voices stand on Inuit Nunangat (75°N), at the Nunavut–Manitoba boundary (60°N), in South Dakota (45°N), on the Edwards Plateau in Texas (30°N), and in Antarctica (75°S and 90°S). Acknowledgements of the peoples whose lands these are, in their own words where they publish them, are being prepared and will be added here.</p>
-    <p><b>Sources.</b> Daylight is calculated from solar geometry (Meeus, as in NOAA's solar calculator; checked against the JPL DE421 ephemeris). Air temperature: ERA5 reanalysis (Copernicus Climate Change Service, CC BY 4.0), via the Open-Meteo historical weather API. Sea surface temperature: NOAA OISST v2.1 (Reynolds et al. 2007; Huang et al. 2020), via NOAA CoastWatch ERDDAP. Sea ice: NOAA/NSIDC Sea Ice Concentration Climate Data Record, version 6, via NOAA CoastWatch ERDDAP. Each value is the mean over a breath's days at the grid cell nearest the parallel; the cell used and its distance are recorded in <code>data/meridian/</code>. The South Pole's air temperature is ERA5 standing in for the Amundsen–Scott station record.</p>
+    <p><b>Sources.</b> Daylight is calculated from solar geometry (Meeus, as in NOAA's solar calculator; checked against the JPL DE421 ephemeris). Air temperature: ERA5 reanalysis (Copernicus Climate Change Service, CC BY 4.0), via the Open-Meteo historical weather API. Sea surface temperature: NOAA OISST v2.1 (Reynolds et al. 2007; Huang et al. 2020), via NOAA CoastWatch ERDDAP. Sea ice: NOAA/NSIDC Sea Ice Concentration Climate Data Record, version 6, via NOAA CoastWatch ERDDAP. Each value is the mean over a breath's days at the grid cell nearest the parallel; the cell used and its distance are recorded in <code>data/meridian/</code>. The South Pole's air temperature is ERA5 standing in for the Amundsen–Scott station record. The audio is licensed CC BY 4.0.</p>
     <p class="caption" id="caption"></p>
   </div>
   <footer class="foot">Graham Watt &amp; Claude Code · <a href="../index.html">sonify-viz home</a> · <a href="../about.html">how this was made</a> · <a href="https://github.com/cordilleran/sonify-viz">source on GitHub</a> · code MPL 2.0</footer>
@@ -420,4 +423,16 @@ function loadPiece(name){
 $('piece').addEventListener('change', e => loadPiece(e.target.value));
 loadPiece(NAME);
 new ResizeObserver(() => sizeAll()).observe($('ring'));
+</script>
+
+<script>
+// Embedded in the Quarto site (the wrapper page loads this with ?embed): hide the page's own title and footer,
+// and post the content height so the iframe grows to fit (no inner scrollbar). Harmless when not embedded.
+(() => {
+  if (!new URLSearchParams(location.search).has('embed')) return;
+  document.documentElement.classList.add('embedded');
+  const postHeight = () => { try { parent.postMessage({wyrHeight: document.documentElement.scrollHeight}, '*'); } catch (e) {} };
+  if (window.ResizeObserver) new ResizeObserver(postHeight).observe(document.body);
+  addEventListener('load', postHeight);
+})();
 </script>

@@ -1,0 +1,36 @@
+id: superior-ice-short
+lock: icecover-superior-ice
+site_mp3: superior-ice/icecover_sup2526.mp3
+title: Superior Ice Year, shorter
+album: superior-ice
+script: icecover.py
+args: []
+question: >
+  The same winter of ice on Lake Superior, at 1.5 seconds per day, for a
+  shorter listen.
+place: >
+  Lake Superior (Gichigami), cut into eight regions from the Western Arm to
+  Whitefish Bay.
+territory: >
+  Anishinaabe territory; see the Superior Ice Year card.
+year: {label: "2025-26", framing: ice season, from: 2025-11-01, to: 2026-06-15}
+records:
+  - As Superior Ice Year, without the 2008-2025 median.
+mapping:
+  - {layer: all, data: as Superior Ice Year, sound: "the same nine layers, without the ghost, the coda, the deep-water hum or the v1 crackle and balance changes", tag: D}
+harmony: >
+  As Superior Ice Year, at 1.5 seconds per day (5 min 48 s), in one piece.
+limitations:
+  - As Superior Ice Year.
+  - This is the v0.2 render; the v1.0 changes are in the main track only.
+credits:
+  - Graham Watt, the question, the lake and listening
+  - Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code
+  - Loon and goose recordings, Jonathon Jongsma (CC BY-SA 3.0, Wikimedia Commons); instruments, VSCO 2 Community Edition (CC0)
+lineage:
+  parent: superior-ice
+  variants: []
+  remixes: []
+changelog:
+  - {version: "0.1", date: 2026-09-28, change: First render.}
+  - {version: "0.2", date: 2026-09-28, change: "After a first listen: fewer, more distant birds; quieter, wetter events."}

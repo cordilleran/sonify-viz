@@ -15,3 +15,15 @@ beds:
 weather:
   note: "Snow, rain, wind and birds only."
   layers: [wind, snow, rain, birds]
+v1:
+  note: "v1.0 candidate (GW's A/B picks, 2026-09-29): three seconds per day with movements, the ghost with its coda (the other layers thin over open water, a soft pulse marks the last day of data), a deep-water hum near 4 C, distance-modelled crackles, staggered events, the pitch-loudness tilt, and the ghost's phase fix."
+  day_s: 3.0
+  movements: true
+  layers: [ice, events, water, air, sun, wind, snow, rain, birds, ghost]
+  crackle: c
+  stagger: true
+  tilt_db: -0.5
+  coda: c
+  drone: true
+  tail_s: 25.0
+  ghost_phase64: true

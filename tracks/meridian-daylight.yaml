@@ -1,0 +1,41 @@
+id: meridian-daylight
+lock: meridian-chorus-daylight
+site_mp3: meridian/meridian_ds2023.mp3
+title: Meridian Chorus, daylight
+album: meridian
+script: meridian.py
+args: []
+question: >
+  What does a year of daylight sound like along one meridian, when every
+  voice's note lasts as long as its day?
+place: >
+  The 100th meridian west, thirteen voices one every 15 degrees from pole to pole.
+territory: >
+  See the Meridian Chorus card; acknowledgements are being prepared.
+year: {label: "2023-24", framing: solstice to solstice, from: 2023-12-22, to: 2024-12-21}
+records:
+  - Daylight and twilight, computed from solar geometry (solar.py); no measured records
+mapping:
+  - {layer: note, data: sun above -0.833° (sunrise to sunset), sound: "organ, strings and sung voice on the voice's pitch", tag: D}
+  - {layer: twilight, data: sun between -6° and -0.833°, sound: the note swells in and fades out, tag: D}
+  - {layer: vowel, data: the sun's altitude, sound: the sung voice opens from oo to ah, tag: D}
+  - {layer: in-breath, data: sun below the horizon, sound: "a faint filtered-noise inhale, peaking at midnight", tag: D}
+harmony: >
+  D major pentatonic, D at both poles and the equator, north above and south
+  below, D2 to D6. A week per 8-second breath (about 7 minutes). At the
+  equinoxes every voice is about twelve hours long; at the solstices one pole
+  holds its note through the whole breath while the other only breathes.
+limitations:
+  - Everything is computed from solar geometry; nothing is measured.
+  - Refraction is a standard constant; local horizons and weather are ignored.
+credits:
+  - Graham Watt, the question, the meridian, listening and direction
+  - Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code
+  - Instruments, VSCO 2 Community Edition (Versilian Studios, CC0); the sung voices are synthesized
+lineage:
+  parent: null
+  variants: [long, layer2-wide-long]
+  remixes: []
+changelog:
+  - {version: "0.1", date: 2026-09-27, change: First render.}
+  - {version: "0.2", date: 2026-09-27, change: "After a blind two-model review: an even daytime level at every latitude, the pentatonic chord restored, the poles' breathing fixed. Re-locked 2026-09-28 with unchanged audio."}

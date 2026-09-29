@@ -1,0 +1,49 @@
+id: meridian-layer2-wide-long
+lock: meridian-chorus-layer2:wide-long
+site_mp3: meridian/meridian_ds2023__layer2-wide-long.mp3
+title: Meridian Chorus, light, air, sea and ice
+album: meridian
+script: meridian.py
+args: [--variant, layer2-wide-long]
+question: >
+  What does one year sound like along a single line of longitude, from pole to
+  pole, when daylight, air, sea and ice each have a voice?
+place: >
+  The 100th meridian west, thirteen voices one every 15 degrees from the North
+  Pole to the South Pole, across land, ocean and ice.
+territory: >
+  The land and ice voices stand on Inuit Nunangat, at the Nunavut-Manitoba
+  boundary, in South Dakota, on the Edwards Plateau in Texas, and in
+  Antarctica. Acknowledgements are being prepared and are not yet on the page.
+year: {label: "2023-24", framing: solstice to solstice, from: 2023-12-22, to: 2024-12-21}
+records:
+  - Daylight and twilight, computed from solar geometry (solar.py)
+  - Daily maximum and minimum 2 m air temperature (ERA5 via Open-Meteo, CC BY 4.0)
+  - Sea surface temperature (NOAA OISST v2.1)
+  - Sea-ice concentration (NOAA/NSIDC Climate Data Record)
+mapping:
+  - {layer: light, data: sun above the horizon and through civil twilight, sound: "the sung voice, on the voice's pitch; it opens from oo to ah as the sun climbs", tag: D}
+  - {layer: air, data: daily maximum air temperature, sound: "the organ's registration: cold is one dark rank, warm adds the octave and opens the tone", tag: R}
+  - {layer: night air, data: daily minimum air temperature, sound: "the in-breath: a warm night adds a lower, fuller band", tag: R}
+  - {layer: sea, data: sea surface temperature at the ocean voices, sound: "contrabass and cello on a floor below the chorus, D1 to A3, day and night", tag: R}
+  - {layer: ice, data: sea-ice concentration at the four polar voices, sound: a lid on the sea voice and a high glass shimmer, tag: R}
+harmony: >
+  D major pentatonic on thirteen distinct notes, D4 to A6 for the sky choir and
+  D1 to A3 for the sea, so no two voices share a pitch. North sings on the left
+  and south on the right. Three days per breath (about 16 minutes), in four
+  movements; every voice centres on the same solar noon, so the chorus breathes
+  together.
+limitations:
+  - Air temperature is reanalysis at one point per voice, not a station.
+  - Each breath plays the mean over its block of days.
+  - The ear hears the season's shape, not the value at any one parallel.
+credits:
+  - Graham Watt, the question, the meridian, listening and direction
+  - Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code
+  - Instruments, VSCO 2 Community Edition (Versilian Studios, CC0); the sung voices are synthesized
+lineage:
+  parent: meridian-daylight
+  variants: []
+  remixes: []
+changelog:
+  - {version: "0.1", date: 2026-09-28, change: "First published version (layer 2.1: sea on its own floor, by hemisphere)."}

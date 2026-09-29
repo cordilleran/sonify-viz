@@ -8,10 +8,19 @@ climate_*_check.png figures are licensed under CC BY-NC-SA 4.0
 (https://creativecommons.org/licenses/by-nc-sa/4.0/), because they derive in
 part from the WDC-SILSO sunspot series, which is CC BY-NC 4.0.
 
-Superior Ice Year: the rendered audio in superior-ice/ (icecover_sup2526*.mp3)
+Superior Ice Year: the rendered audio in superior-ice/ (icecover_*.mp3, including the roll call)
 is licensed under CC BY-SA 4.0, because it incorporates CC BY-SA loon and goose
 recordings from Wikimedia Commons. Ice and water data courtesy of NOAA GLERL
-and the NOAA CoastWatch Great Lakes Node (public data).
+and the NOAA CoastWatch Great Lakes Node (public data). The lake-floor figure
+(superior-ice/superior_bathymetry_hillshade*) is licensed under CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/); it is drawn from NOAA NCEI
+Great Lakes Bathymetry (NOAA NGDC, GLERL and the Canadian Hydrographic Service).
+
+Meridian Chorus: the rendered audio in meridian/ (meridian_ds2023*.mp3) is
+licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Its
+inputs carry no share-alike or non-commercial terms: ERA5 via Open-Meteo (CC BY
+4.0), NOAA OISST v2.1 and the NOAA/NSIDC sea-ice CDR (US government), VSCO 2 CE
+samples (CC0); the sung voices are synthesized.
 
 The Water Year Rings audio is CC BY-SA because it incorporates CC BY-SA bird recordings from
 Wikimedia Commons; each recording's author and licence is listed in

@@ -23,3 +23,10 @@ def test_every_card_has_what_a_card_promises():
 def test_tracks_page_is_current():
     text, _ = EX.render()
     assert EX.OUT.read_text() == text, "run scripts/export_cards.py"
+
+
+def test_every_published_mp3_has_a_card():
+    import pytest
+    if (EX.ROOT / "site").is_dir():   # the vault holds unpublished renders too; the check is for the published repo
+        pytest.skip("vault layout: publish_site.sh runs this check on the repo")
+    assert EX.uncarded(EX.ROOT) == [], "a page plays audio that no track card describes"

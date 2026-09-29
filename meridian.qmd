@@ -1,0 +1,17 @@
+---
+title: "Meridian Chorus"
+subtitle: "Thirteen voices on one meridian, pole to pole, through one year"
+toc: false
+page-layout: full
+---
+
+Thirteen voices stand on the 100th meridian west, one every 15 degrees from the North Pole to the South Pole, and sing through one year from solstice to solstice. Each breath is one day: a voice sounds while its sun is up and only breathes while it is down, and in the fuller version air, sea and ice each add their own voice. The piece also works [on its own, full screen](meridian/index.html). Its cards are on the [Tracks](tracks.qmd#meridian-chorus) page.
+
+<iframe class="companion" id="companion" src="meridian/index.html?embed" title="Meridian Chorus" loading="eager"></iframe>
+
+<script>
+window.addEventListener('message', (e) => {
+  if (e.source !== document.getElementById('companion').contentWindow) return;   // only our own frame may resize it
+  if (e.data && typeof e.data.wyrHeight === 'number') document.getElementById('companion').style.height = (e.data.wyrHeight + 8) + 'px';
+});
+</script>

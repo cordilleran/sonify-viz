@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "icecover"
 SRC = W.LIGHT_OUT / "icecover"
 OUT = ROOT / "superior-ice"
-PUBLISHED = ["icecover_sup2526", "icecover_sup2526__long", "icecover_sup2526__ghost"]
+PUBLISHED = ["icecover_sup2526__v1", "icecover_sup2526"]   # v1.0 main track (29 Sep 2026) and the shorter v0.2; long and ghost retired from the page
 
 
 def build_mask(meta):

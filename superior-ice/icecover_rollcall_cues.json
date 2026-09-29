@@ -1,0 +1,113 @@
+{
+ "duration_s": 51.8,
+ "cues": [
+  {
+   "t": 0.8,
+   "kind": "region",
+   "label": "Western Arm",
+   "pan": -0.7
+  },
+  {
+   "t": 2.3,
+   "kind": "region",
+   "label": "North Shore",
+   "pan": -0.46
+  },
+  {
+   "t": 3.8,
+   "kind": "region",
+   "label": "Isle Royale",
+   "pan": -0.18
+  },
+  {
+   "t": 5.3,
+   "kind": "region",
+   "label": "Thunder Bay and Nipigon",
+   "pan": -0.07
+  },
+  {
+   "t": 6.8,
+   "kind": "region",
+   "label": "Keweenaw and south shore",
+   "pan": 0.06
+  },
+  {
+   "t": 8.3,
+   "kind": "region",
+   "label": "Central basin",
+   "pan": 0.31
+  },
+  {
+   "t": 9.8,
+   "kind": "region",
+   "label": "Northeast (Pukaskwa)",
+   "pan": 0.44
+  },
+  {
+   "t": 11.3,
+   "kind": "region",
+   "label": "Whitefish Bay and Sault",
+   "pan": 0.7
+  },
+  {
+   "t": 13.8,
+   "kind": "layer",
+   "label": "Ice: a bowed-glass tone per region, louder as the ice thickens"
+  },
+  {
+   "t": 16.8,
+   "kind": "layer",
+   "label": "Freeze: a glass ping and tick"
+  },
+  {
+   "t": 19.8,
+   "kind": "layer",
+   "label": "Breakup: a low drop and a crack"
+  },
+  {
+   "t": 22.8,
+   "kind": "layer",
+   "label": "Open water: low strings, fuller as it warms"
+  },
+  {
+   "t": 25.8,
+   "kind": "layer",
+   "label": "Air temperature: the organ, brighter when warm"
+  },
+  {
+   "t": 28.8,
+   "kind": "layer",
+   "label": "Daylight: the choir, opening from oo to ah"
+  },
+  {
+   "t": 31.8,
+   "kind": "layer",
+   "label": "Wind: filtered noise, gated by gales"
+  },
+  {
+   "t": 34.8,
+   "kind": "layer",
+   "label": "Snow: dry high ticks"
+  },
+  {
+   "t": 37.8,
+   "kind": "layer",
+   "label": "Rain: soft harp drops"
+  },
+  {
+   "t": 40.8,
+   "kind": "layer",
+   "label": "Birds: loon and goose, timed from ice-off and warmth"
+  },
+  {
+   "t": 43.8,
+   "kind": "layer",
+   "label": "Ghost: the 2008-2025 median ice, a quiet detuned glass"
+  },
+  {
+   "t": 47.3,
+   "kind": "end",
+   "label": "End of the roll call"
+  }
+ ]
+}

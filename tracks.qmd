@@ -233,3 +233,188 @@ Every step from record to sound, with its bounds: [the mapping dictionary](dicti
 - v2.0 (2026-09-25): First published version. Ocean heat content (IAP) and Arctic sea ice (NSIDC) were added; storm levels rebalanced so the rise is heard.
 - v1.0 (2026-09-25): First render, not published.
 
+# Meridian Chorus
+
+Thirteen voices on the 100th meridian west, pole to pole, singing one year of daylight, air, sea and ice. [The album's page](meridian.qmd).
+
+## Meridian Chorus, light, air, sea and ice {#meridian-layer2-wide-long}
+
+**v0.1** · 2023-24 (solstice to solstice, 2023-12-22 to 2024-12-21) · [listen](meridian.qmd)
+
+*What does one year sound like along a single line of longitude, from pole to pole, when daylight, air, sea and ice each have a voice?*
+
+**Place.** The 100th meridian west, thirteen voices one every 15 degrees from the North Pole to the South Pole, across land, ocean and ice.
+
+**Territory.** The land and ice voices stand on Inuit Nunangat, at the Nunavut-Manitoba boundary, in South Dakota, on the Edwards Plateau in Texas, and in Antarctica. Acknowledgements are being prepared and are not yet on the page.
+
+**Records.**
+
+- Daylight and twilight, computed from solar geometry (solar.py)
+- Daily maximum and minimum 2 m air temperature (ERA5 via Open-Meteo, CC BY 4.0)
+- Sea surface temperature (NOAA OISST v2.1)
+- Sea-ice concentration (NOAA/NSIDC Climate Data Record)
+
+| Layer | Data | What you hear | |
+|---|---|---|---|
+| light | sun above the horizon and through civil twilight | the sung voice, on the voice's pitch; it opens from oo to ah as the sun climbs | <span class="src D">D</span> |
+| air | daily maximum air temperature | the organ's registration: cold is one dark rank, warm adds the octave and opens the tone | <span class="src R">R</span> |
+| night air | daily minimum air temperature | the in-breath: a warm night adds a lower, fuller band | <span class="src R">R</span> |
+| sea | sea surface temperature at the ocean voices | contrabass and cello on a floor below the chorus, D1 to A3, day and night | <span class="src R">R</span> |
+| ice | sea-ice concentration at the four polar voices | a lid on the sea voice and a high glass shimmer | <span class="src R">R</span> |
+
+**Harmony.** D major pentatonic on thirteen distinct notes, D4 to A6 for the sky choir and D1 to A3 for the sea, so no two voices share a pitch. North sings on the left and south on the right. Three days per breath (about 16 minutes), in four movements; every voice centres on the same solar noon, so the chorus breathes together.
+
+**Be careful about.**
+
+- Air temperature is reanalysis at one point per voice, not a station.
+- Each breath plays the mean over its block of days.
+- The ear hears the season's shape, not the value at any one parallel.
+
+**Reproduce.** `python scripts/meridian.py --variant layer2-wide-long` · seed 2023 · locked 2026-09-28 · SHA-256 of the MP3 on this site `4cddbaa4110b7f0f…` · check it with `python scripts/renders.py verify meridian-chorus-layer2:wide-long`
+
+**Credits.** Graham Watt, the question, the meridian, listening and direction; Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code; Instruments, VSCO 2 Community Edition (Versilian Studios, CC0); the sung voices are synthesized.
+
+**Lineage.** remix of meridian-daylight.
+
+**Changelog.**
+
+- v0.1 (2026-09-28): First published version (layer 2.1: sea on its own floor, by hemisphere).
+
+## Meridian Chorus, daylight {#meridian-daylight}
+
+**v0.2** · 2023-24 (solstice to solstice, 2023-12-22 to 2024-12-21) · [listen](meridian.qmd)
+
+*What does a year of daylight sound like along one meridian, when every voice's note lasts as long as its day?*
+
+**Place.** The 100th meridian west, thirteen voices one every 15 degrees from pole to pole.
+
+**Territory.** See the Meridian Chorus card; acknowledgements are being prepared.
+
+**Records.**
+
+- Daylight and twilight, computed from solar geometry (solar.py); no measured records
+
+| Layer | Data | What you hear | |
+|---|---|---|---|
+| note | sun above -0.833° (sunrise to sunset) | organ, strings and sung voice on the voice's pitch | <span class="src D">D</span> |
+| twilight | sun between -6° and -0.833° | the note swells in and fades out | <span class="src D">D</span> |
+| vowel | the sun's altitude | the sung voice opens from oo to ah | <span class="src D">D</span> |
+| in-breath | sun below the horizon | a faint filtered-noise inhale, peaking at midnight | <span class="src D">D</span> |
+
+**Harmony.** D major pentatonic, D at both poles and the equator, north above and south below, D2 to D6. A week per 8-second breath (about 7 minutes). At the equinoxes every voice is about twelve hours long; at the solstices one pole holds its note through the whole breath while the other only breathes.
+
+**Be careful about.**
+
+- Everything is computed from solar geometry; nothing is measured.
+- Refraction is a standard constant; local horizons and weather are ignored.
+
+**Reproduce.** `python scripts/meridian.py` · seed 2023 · locked 2026-09-28 · SHA-256 of the MP3 on this site `1431374a3ae741e3…` · check it with `python scripts/renders.py verify meridian-chorus-daylight`
+
+**Credits.** Graham Watt, the question, the meridian, listening and direction; Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code; Instruments, VSCO 2 Community Edition (Versilian Studios, CC0); the sung voices are synthesized.
+
+**Lineage.** variants: `long`, `layer2-wide-long`.
+
+**Changelog.**
+
+- v0.2 (2026-09-27): After a blind two-model review: an even daytime level at every latitude, the pentatonic chord restored, the poles' breathing fixed. Re-locked 2026-09-28 with unchanged audio.
+- v0.1 (2026-09-27): First render.
+
+# Superior Ice Year
+
+One winter of ice on Lake Superior, 2025-26, heard region by region from west to east. [The album's page](superior-ice.qmd).
+
+## Superior Ice Year {#superior-ice}
+
+**v1.0** · 2025-26 (ice season, 2025-11-01 to 2026-06-15) · [listen](superior-ice.qmd)
+
+*How does one winter of ice move across Lake Superior, region by region, and how does it compare with the lake's recent ordinary year?*
+
+**Place.** Lake Superior (Gichigami), cut into eight regions from the Western Arm to Whitefish Bay.
+
+**Territory.** Anishinaabe territory, including Ojibwe nations with treaty rights there: the Robinson-Superior Treaty of 1850, and the treaties of 1836, 1842 and 1854. The acknowledgement on the piece's page is a draft, open to correction.
+
+**Records.**
+
+- Ice concentration, daily by region (NOAA GLERL and CoastWatch Great Lakes Node, GLSEA with NIC ice charts)
+- Surface water temperature, daily by region (NOAA CoastWatch ACSPO GLSEA)
+- Lake-average ice, 2008-2025 median (NOAA GLERL)
+- Air temperature, wind, precipitation, snowfall and shortwave radiation (ERA5 via Open-Meteo, CC BY 4.0)
+
+| Layer | Data | What you hear | |
+|---|---|---|---|
+| ice | region ice concentration | a bowed-glass tone per region, D5 to F#6 west to east, louder as the ice thickens | <span class="src R">R</span> |
+| events | 3-day-smoothed daily change in region ice | freeze: a glass ping; breakup: a low drop and crack, each at a random distance (quieter, darker, later, wetter) | <span class="src D">D</span> |
+| water | region surface temperature | four low string voices | <span class="src R">R</span> |
+| turnover | lake-mean skin temperature crossing 4 °C | a soft sub drop | <span class="src D">D</span> |
+| air | lake-mean air temperature | an organ that adds ranks and brightens as it warms | <span class="src R">R</span> |
+| sun | day length at 47.6° N and shortwave radiation | a choir that swells and opens from oo to ah | <span class="src D">D</span> |
+| wind | peak wind of the eight regions | a filtered-noise bed gated by gales | <span class="src R">R</span> |
+| snow | region snowfall | dry unpitched ticks | <span class="src R">R</span> |
+| rain | region liquid precipitation | soft harp drops | <span class="src D">D</span> |
+| birds | timing from ice-off and warmth | loon and goose recordings | <span class="src S">S</span> |
+| ghost | 2008-2025 median lake ice | a quiet detuned glass tone; after the data end it holds a low floor and fades (a symbolic coda), and a soft pulse marks the last day of data | <span class="src D">D</span> |
+| deep water | deep water near 4 °C under the ice (known physics, not measured here) | a constant low hum | <span class="src D">D</span> |
+
+**Harmony.** D major pentatonic. Each region is a note, low in the west and high in the east, panned by longitude, so the chord sounding at any moment is the ice pattern on the map. Three seconds per day (11 min 46 s), cut into four movements at ice-defined days: freeze-up, ice-in, long melt, open water. Higher regions are trimmed 0.5 dB a step so the east doesn't sound louder.
+
+**Simulated, not observed.**
+
+- Bird timing is symbolic, from each region's ice-off and warmth; the calls are recordings, not observations.
+- The ghost's coda after the last day of data is symbolic.
+
+**Be careful about.**
+
+- Regions are wedges by distance from eight anchor points, not basins or depth zones.
+- Water temperature is the satellite skin of the top millimetres, not the lake at depth.
+- Air, wind and precipitation are ERA5 reanalysis at one point per region, not station observations.
+- Freeze and breakup events are derived with fixed thresholds (4 points a day, 3 days apart).
+- The ear does not read the map (a listening probe agreed); the page's picture carries space.
+
+**Reproduce.** `python scripts/icecover.py --variant v1` · seed 2026 · locked 2026-09-29 · SHA-256 of the MP3 on this site `837c4a520d286b39…` · check it with `python scripts/renders.py verify icecover-superior-ice:v1`
+
+**Credits.** Graham Watt, the question, the lake, listening, and every design choice on the A/B bench; Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code; Loon and goose recordings, Jonathon Jongsma (CC BY-SA 3.0, Wikimedia Commons); instruments, VSCO 2 Community Edition (CC0).
+
+**Lineage.** variants: `long`, `ghost`, `ice-only`, `beds`, `weather`.
+
+**Changelog.**
+
+- v1.0 (2026-09-29): The long version as the main track, with the ghost and its coda, a deep-water hum, distance-modelled crackles, staggered events and the pitch-loudness tilt, chosen by GW on an A/B bench. Fixes a v0.2 bug in the ghost's pitch (summed at too low a precision, it stepped between wrong notes, mostly about 2.5 semitones sharp).
+- v0.2 (2026-09-28): After a first listen: fewer, more distant birds; quieter, wetter events; a softer ghost.
+- v0.1 (2026-09-28): First render.
+
+## Superior Ice Year, shorter {#superior-ice-short}
+
+**v0.2** · 2025-26 (ice season, 2025-11-01 to 2026-06-15) · [listen](superior-ice.qmd)
+
+*The same winter of ice on Lake Superior, at 1.5 seconds per day, for a shorter listen.*
+
+**Place.** Lake Superior (Gichigami), cut into eight regions from the Western Arm to Whitefish Bay.
+
+**Territory.** Anishinaabe territory; see the Superior Ice Year card.
+
+**Records.**
+
+- As Superior Ice Year, without the 2008-2025 median.
+
+| Layer | Data | What you hear | |
+|---|---|---|---|
+| all | as Superior Ice Year | the same nine layers, without the ghost, the coda, the deep-water hum or the v1 crackle and balance changes | <span class="src D">D</span> |
+
+**Harmony.** As Superior Ice Year, at 1.5 seconds per day (5 min 48 s), in one piece.
+
+**Be careful about.**
+
+- As Superior Ice Year.
+- This is the v0.2 render; the v1.0 changes are in the main track only.
+
+**Reproduce.** `python scripts/icecover.py` · seed 2026 · locked 2026-09-28 · SHA-256 of the MP3 on this site `d1a4ca0ae26d7641…` · check it with `python scripts/renders.py verify icecover-superior-ice`
+
+**Credits.** Graham Watt, the question, the lake and listening; Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code; Loon and goose recordings, Jonathon Jongsma (CC BY-SA 3.0, Wikimedia Commons); instruments, VSCO 2 Community Edition (CC0).
+
+**Lineage.** remix of superior-ice.
+
+**Changelog.**
+
+- v0.2 (2026-09-28): After a first listen: fewer, more distant birds; quieter, wetter events.
+- v0.1 (2026-09-28): First render.
+

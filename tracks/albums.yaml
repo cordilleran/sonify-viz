@@ -9,3 +9,13 @@
   page: climate.qmd
   about: Sixty-eight years of the global climate record, one year per bar, heard from the Pacific and from the Atlantic.
   tracks: [climate-pair-pacific, climate-pair-atlantic]
+- id: meridian
+  title: Meridian Chorus
+  page: meridian.qmd
+  about: Thirteen voices on the 100th meridian west, pole to pole, singing one year of daylight, air, sea and ice.
+  tracks: [meridian-layer2-wide-long, meridian-daylight]
+- id: superior-ice
+  title: Superior Ice Year
+  page: superior-ice.qmd
+  about: One winter of ice on Lake Superior, 2025-26, heard region by region from west to east.
+  tracks: [superior-ice, superior-ice-short]
