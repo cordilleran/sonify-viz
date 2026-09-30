@@ -188,6 +188,7 @@ header p{margin:0;max-width:68ch;color:var(--muted)}
   </main>
   <footer class="foot">Graham Watt &amp; Claude Code · <a href="../index.html">sonify-viz home</a> · <a href="../about.html">how this was made</a> · <a href="https://github.com/cordilleran/sonify-viz">source on GitHub</a> · code MPL 2.0</footer>
 </div>
+<div class="sr-only" id="srLive" role="status" aria-live="polite"></div>
 <audio id="audio" preload="auto"></audio>
 <script>
 const $ = id => document.getElementById(id);
@@ -548,6 +549,8 @@ function spark(svg, vals, lo, hi, col, unit){
 function drawSparkDots(day){
   for (const id of ['spI', 'spW']){ const s = $(id), d = s.querySelector('.dot'); if (s._map && d){ d.setAttribute('cx', s._map.x(day)); d.setAttribute('cy', s._map.y(s._map.vals[day])); } }
 }
+// One polite announcement when a region is pinned or released, and never during playback.
+const announce = msg => { const l = $('srLive'); l.textContent = ''; setTimeout(() => { l.textContent = msg; }, 60); };
 function setFocus(i, pin){
   if (pin){ if (pinned && focus === i){ pinned = false; i = null; } else pinned = true; } else if (pinned) return;
   focus = i;
@@ -566,6 +569,7 @@ function setFocus(i, pin){
     drawSparkDots(lastDay < 0 ? 0 : lastDay);
   }
   frame(true);
+  if (pin) announce(i === null ? 'Region released.' : `${D.regions[i].name} pinned. ${$('focusK').textContent}`);
 }
 $('rail').addEventListener('mouseover', e => { const r = e.target.closest('.rrow'); if (r) setFocus(+r.dataset.i, false); });
 $('rail').addEventListener('mouseleave', () => { if (!pinned) setFocus(null, false); });
@@ -578,7 +582,7 @@ function regionAt(e){
 over.addEventListener('mousemove', e => { if (D) setFocus(regionAt(e), false); });
 over.addEventListener('mouseleave', () => { if (!pinned) setFocus(null, false); });
 over.addEventListener('click', e => { if (!D) return; const i = regionAt(e); if (i !== null) setFocus(i, true); });
-window.addEventListener('keydown', e => { if (e.key === 'Escape' && pinned){ pinned = false; setFocus(null, false); } });   // Escape lets go from anywhere, not only the map
+window.addEventListener('keydown', e => { if (e.key === 'Escape' && pinned){ pinned = false; setFocus(null, false); announce('Region released.'); } });   // Escape lets go from anywhere, not only the map
 
 // ---------- modes and legend ----------
 const LEG = {

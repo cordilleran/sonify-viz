@@ -112,6 +112,7 @@ canvas{display:block;width:100%;height:100%}
   </main>
   <footer class="foot">Graham Watt &amp; Claude Code · <a href="../index.html">sonify-viz home</a> · <a href="../about.html">how this was made</a> · <a href="https://github.com/cordilleran/sonify-viz">source on GitHub</a> · code MPL 2.0</footer>
 </div>
+<div class="sr-only" id="srLive" role="status" aria-live="polite"></div>
 <audio id="audio" preload="auto"></audio>
 <script>
 const $ = id => document.getElementById(id);
@@ -285,6 +286,8 @@ function sizeAll(){
 
 let lastBreath = -1, focus = null, pinned = false;
 function latName(l){ return l > 0 ? l + '°N' : l < 0 ? -l + '°S' : '0°'; }
+// One polite announcement when a region is pinned or released, and never during playback.
+const announce = msg => { const l = $('srLive'); l.textContent = ''; setTimeout(() => { l.textContent = msg; }, 60); };
 function setFocus(i, pin){
   if (pin){ if (pinned && focus === i){ pinned = false; i = null; } else pinned = true; }
   else if (pinned) return;
@@ -293,6 +296,7 @@ function setFocus(i, pin){
   $('focus').hidden = i === null;
   if (i !== null) drawSpark(i);
   frame(true);
+  if (pin) announce(i === null ? 'Voice released.' : `${$('focusT').textContent.split(' · ').slice(0, 2).join(', ')} pinned. ${$('focusK').textContent}`);
 }
 // the focus curve: the ring's current layer for one voice, on that layer's scale
 function sparkSeries(i){
@@ -390,7 +394,7 @@ function ringBand(e){
 }
 $('ring').addEventListener('mousemove', e => { if (D) setFocus(ringBand(e), false); });
 $('ring').addEventListener('mouseleave', () => { if (!pinned) setFocus(null, false); });
-window.addEventListener('keydown', e => { if (e.key === 'Escape' && pinned){ pinned = false; setFocus(null, false); } });   // Escape lets go, as on Superior Ice
+window.addEventListener('keydown', e => { if (e.key === 'Escape' && pinned){ pinned = false; setFocus(null, false); announce('Voice released.'); } });   // Escape lets go, as on Superior Ice
 $('ring').addEventListener('click', e => { if (!D) return; const i = ringBand(e); if (i !== null) setFocus(i, true); });
 const H1 = document.querySelector('h1').textContent, NUMBERS = $('numbers').innerHTML;
 function loadPiece(name){
