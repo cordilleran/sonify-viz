@@ -10,6 +10,24 @@ Text fixes for the `climate_daily` findings were made in `data/parquet/data-dict
 
 - **DD-01 was partly documented.** I wrote that the dictionary did not say Summerland lacks rain and snow. The table's `details` did say something ("flagged missing on 3,116 of 5,479 days"), which I missed because I read column descriptions and not the table note. It was misleading rather than absent: it read as if the other 2,363 days had values. By station, Summerland has **no** rain or snow value on any day (3,116 flagged M, 2,363 empty with no flag). The note now says so. DD-02, DD-03, DD-04 and DD-09 were confirmed and fixed for `climate_daily`. The other findings (DD-05 to DD-08, DD-10 to DD-14) are unchanged and not yet applied.
 
+## Round 3 update (30 September 2026, later still)
+
+Graham approved field additions, unified spellings and edits to the mapping dictionaries. Status of every finding:
+
+| ID | Status |
+|---|---|
+| DD-01, 02, 03, 04, 09 | Fixed in round 2 (`climate_daily` wording) |
+| DD-07 | Fixed: units on `pan`, `ice_frac`, `warmth_day`, `warmth_night` |
+| DD-08 | Fixed: descriptions for the four tables |
+| DD-10 | Fixed: descriptions for 20 more columns (the "19" above was a miscount; 20 were fixed, and the round 2 pass had already covered five in `climate_daily`) |
+| DD-11 | Fixed: `percent` → `%` (14), `degrees C` → `°C` (7), bare `ppm` → `ppm (µmol per mol of dry air)` (2). Descriptive units and the `(WGS 84)` notes are unchanged. |
+| DD-14 | Fixed: `range` on `modis_gpp.pixel` and the four Meridian `lat` columns (the validator accepts a range on an ID column and checks the data against it) |
+| DD-12 | Left as it is. The two record sets carry a date and the mapping sets a semantic version; the difference looks deliberate. |
+| DD-13 | Left as it is. Adding `relationships` and `glossary` blocks is content work, not a fix. |
+| DD-05, DD-06 | Not done. Dictionaries for the Superior Ice, Meridian and storm source JSON need new parquet tables and a build step, which belongs in the kit spec. |
+
+`dev/dictionary/dd_lint.py` now checks rules 1 to 5 in its docstring and passes on the edited dictionaries. Run against the originals on `main` it reports 56 problems, so it also detects a sync that restores an old copy. The ten `dictionary/*.html` pages were regenerated with `data-dict render`; the original YAML from `main` reproduced each committed page byte for byte first, so the page changes come only from the edits.
+
 ## TL;DR
 
 - **The dictionaries are already strong.** All 10 validate against their data (`data-dict validate-data`), 179 of 236 columns state a range, 121 state units, and the Water Year and Climate Pair notes explain their own nulls in plain words ("Empty for lake-level-only days").
