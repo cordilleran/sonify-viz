@@ -610,6 +610,11 @@ $('play').onclick = async () => {
 };
 $('seek').oninput = () => { seeking = true; setTime(total() * $('seek').value / 1000); };
 $('seek').onchange = () => { seeking = false; };
+// The seek bar's spoken value is the date and time already on screen. It is refreshed on focus, on seek and on pause, never on each animation frame, so nothing is announced during playback.
+const seekText = () => { const t = e => e.innerText.replace(/\s*\n\s*/g, ', ').trim();
+  $('seek').setAttribute('aria-valuetext', [t($('date')), $('sub') ? t($('sub')) : '', t($('time'))].filter(Boolean).join(', ').replace(' / ', ' of ')); };
+['focus', 'change'].forEach(ev => $('seek').addEventListener(ev, seekText));
+audio.addEventListener('seeked', seekText); audio.addEventListener('pause', seekText);
 audio.addEventListener('ended', () => { $('play').textContent = 'Play'; overrideT = null; });
 window.addEventListener('keydown', e => { if (e.code === 'Space' && !['BUTTON', 'SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)){ e.preventDefault(); $('play').click(); } });
 
