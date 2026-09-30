@@ -16,6 +16,7 @@ version:
 tables:
 - name: voices
   label: The thirteen voices
+  description: "One row per voice: the 13 latitudes on 100 degrees W from the North Pole to the South Pole, with the surface under each and its pitch."
   source:
     parquet: voices.parquet
   columns:
