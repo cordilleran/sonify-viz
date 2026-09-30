@@ -16,11 +16,13 @@ version:
 tables:
 - name: voices
   label: The thirteen voices
+  description: "One row per voice: the 13 latitudes on 100 degrees W from the North Pole to the South Pole, with the surface under each and its pitch."
   source:
     parquet: voices.parquet
   columns:
   - name: lat
     type: number(id)
+    range: [-90, 90]
     constraints:
     - primary_key
     description: >-
@@ -41,6 +43,7 @@ tables:
     - 90
   - name: place
     type: string
+    description: "The place under the voice, from the North Pole to the South Pole, for example Edwards Plateau, Texas."
     examples:
     - Bathurst Island, Nunavut
     - Edwards Plateau, Texas
@@ -95,6 +98,7 @@ tables:
     - 2024-12-23
   - name: lat
     type: number(id)
+    range: [-90, 90]
     constraints:
     - required
     - foreign_key

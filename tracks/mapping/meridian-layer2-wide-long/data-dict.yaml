@@ -16,11 +16,13 @@ version:
 tables:
 - name: voices
   label: The thirteen voices
+  description: "One row per voice: the 13 latitudes on 100 degrees W from the North Pole to the South Pole, with the surface under each, its pitch, and the pitch of its sea voice where it has one."
   source:
     parquet: voices.parquet
   columns:
   - name: lat
     type: number(id)
+    range: [-90, 90]
     constraints:
     - primary_key
     description: >-
@@ -41,6 +43,7 @@ tables:
     - 90
   - name: place
     type: string
+    description: "The place under the voice, from the North Pole to the South Pole, for example Edwards Plateau, Texas."
     examples:
     - Bathurst Island, Nunavut
     - Edwards Plateau, Texas
@@ -102,6 +105,7 @@ tables:
     - 2024-12-20
   - name: lat
     type: number(id)
+    range: [-90, 90]
     constraints:
     - required
     - foreign_key
@@ -161,7 +165,7 @@ tables:
     - 89.99
   - name: air_max_c
     type: number(quantity)
-    units: degrees C
+    units: °C
     description: >-
       Daily maximum air temperature, averaged over the breath's days (D: ERA5 reanalysis via Open-Meteo, CC BY 4.0).
       Colours the organ by day.
@@ -170,7 +174,7 @@ tables:
     - 38.3
   - name: air_min_c
     type: number(quantity)
-    units: degrees C
+    units: °C
     description: >-
       Daily minimum air temperature, averaged the same way (D: ERA5). Colours the organ by night.
     range:
@@ -178,7 +182,7 @@ tables:
     - 30.0
   - name: sst_c
     type: number(quantity)
-    units: degrees C
+    units: °C
     description: >-
       Sea surface temperature at the voice's ocean cell (R, NOAA OISST v2.1); empty for land voices. The sea sings
       on its own floor, warmest highest. Empty in 488 of 1586 rows.
@@ -187,6 +191,7 @@ tables:
     - 31.44
   - name: ice_frac
     type: number(quantity)
+    units: "0 to 1 (fraction covered)"
     description: >-
       Sea ice concentration, 0 to 1 (R, NOAA/NSIDC sea ice CDR v6); empty where there is no sea. Ice quiets the
       sea voice. Empty in 1098 of 1586 rows.
@@ -195,6 +200,7 @@ tables:
     - 1.0
   - name: warmth_day
     type: number(quantity)
+    units: "0 to 1 (position on a fixed scale)"
     description: >-
       The organ's day warmth, 0 to 1: the day air on a fixed scale from -40 to 35 degrees C (D).
     range:
@@ -202,6 +208,7 @@ tables:
     - 1.0
   - name: warmth_night
     type: number(quantity)
+    units: "0 to 1 (position on a fixed scale)"
     description: The organ's night warmth, 0 to 1, from the night air (D).
     range:
     - 0.0

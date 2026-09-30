@@ -26,11 +26,13 @@ version:
 
 tables:
   - name: years
+    description: "One row per calendar year, 1958 to 2025 (68 rows): where the year sits in the audio, the mode and chords chosen for it, and the records it read."
     source:
       parquet: years.parquet
     columns:
       - name: year
         type: number(ordinal)
+        description: "The calendar year this bar plays, 1958 to 2025 (one year per bar)."
         constraints: [primary_key]
         range: [1958, 2025]
       - name: bar
@@ -79,7 +81,7 @@ tables:
         range: [2, 6]
       - name: co2_ppm
         type: number(quantity)
-        units: ppm
+        units: ppm (µmol per mol of dry air)
         constraints: [required]
         description: >
           (R) The year's mean of deseasonalized CO2 at Mauna Loa (gaps

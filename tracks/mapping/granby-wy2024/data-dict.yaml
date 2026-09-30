@@ -34,6 +34,7 @@ tables:
     columns:
       - name: date
         type: date
+        description: "The calendar day, from October 1, 2023 to September 30, 2024."
         constraints: [primary_key]
         range: [2023-10-01, 2024-09-30]
       - name: bar
@@ -180,6 +181,7 @@ tables:
     columns:
       - name: bar
         type: number(id)
+        description: "The bar number, from 0 to 121 (122 bars of three days)."
         constraints: [primary_key]
         examples: [0, 30, 61, 91, 121]
       - name: t

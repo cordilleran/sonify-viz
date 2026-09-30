@@ -1,4 +1,5 @@
 <!doctype html>
+<html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Superior Ice Year</title>
@@ -12,6 +13,7 @@
 }
 .wrap{max-width:1280px;margin:0 auto;padding:28px 16px 64px;overflow-x:clip;display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
 .wrap > *{min-width:0}
+main{display:contents} /* a landmark for assistive tech; children stay in the .wrap grid */
 header{display:grid;gap:12px}
 header p{margin:0;max-width:68ch;color:var(--muted)}
 .pick{display:grid;gap:6px}
@@ -107,6 +109,7 @@ header p{margin:0;max-width:68ch;color:var(--muted)}
     <h1>Superior Ice Year</h1>
     <p>One ice season on Lake Superior, from 1 November to 15 June, played as music. The lake is cut into eight regions and each region is a voice: the west sings lowest and the east highest, so the chord you hear is the ice pattern on the map. Ice, water, air, sunlight, wind, snow, rain and birds each get their own instrument.</p>
   </header>
+  <main>
 
   <div class="pick">
     <select id="piece" aria-label="Which render">
@@ -132,7 +135,7 @@ header p{margin:0;max-width:68ch;color:var(--muted)}
       <div class="mapbox" id="mapbox">
         <canvas id="pic" aria-hidden="true"></canvas>
         <canvas id="lake" width="285" height="100" aria-hidden="true"></canvas>
-        <canvas id="over" tabindex="0" aria-label="Map of Lake Superior with eight regions; the day's ice and water temperature, coloured by season position. Hover or tap a region for its story."></canvas>
+        <canvas id="over" role="img" aria-label="Map of Lake Superior with eight regions; the day's ice and water temperature, coloured by season position. Hover or tap a region for its story. The list of regions below the map has the same information and works from the keyboard."></canvas>
         <div class="wipe" id="wipe"><span class="wl l">◂ as measured</span><span class="wl r">as rendered ▸</span><div class="grip" id="grip" tabindex="0" role="slider" aria-label="Divide the picture from the data as measured" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">⇔</div></div>
       </div>
       <div class="legend" id="legend"></div>
@@ -168,7 +171,7 @@ header p{margin:0;max-width:68ch;color:var(--muted)}
     <p><b>The heat strip</b> under the map is the whole season at once: one row per region, west at the top, coloured by ice. The dots are the freeze and breakup events that trigger the pings and drops. Click it to move through the season.</p>
     <p><b>Tap or hover</b> a region, on the map or in the list, to see its own year of ice and water temperature; tap it again to let go.</p>
     <table class="notes-t" aria-label="Layers">
-      <thead><tr><th>Layer</th><th>Data</th><th>Sound</th><th></th></tr></thead>
+      <thead><tr><th>Layer</th><th>Data</th><th>Sound</th><th aria-hidden="true"></th></tr></thead>
       <tbody id="layerTable"></tbody>
     </table>
     <p><b>What this cannot tell you.</b> The regions are wedges cut by distance from eight anchor points, not lake basins or depth zones. Stereo position follows longitude (blended with rank so the three regions near 88° W are apart), so north and south at the same longitude sit in the same place in the stereo image; the map carries that difference. Freeze and breakup events are derived: a three-day smoothed change in a region's ice of four percentage points or more in a day, with at least three days between events. The 4 °C turnover marker uses lake-mean satellite skin temperature as a proxy; it is not a measurement of the lake overturning. Air temperature, wind, precipitation, snow and sunshine are ERA5 reanalysis at one point per region, not station observations. Water temperature is the satellite skin temperature of the top millimetres, not the lake at depth: under the ice, most of Superior sits near 4 °C all winter. It is used because it is the only daily, lake-wide, gridded water-temperature record, and it is the surface that freezes; sounding the water column would need a lake model such as NOAA's Great Lakes Coastal Forecasting System. Birds are symbolic (S): each region's loon and geese arrive on a date the data suggest, and the calls are recordings, not observations of migration.</p>
@@ -182,8 +185,10 @@ header p{margin:0;max-width:68ch;color:var(--muted)}
     <p><b>Versions.</b> 1.1 (29 September 2026) changes the picture only, not the music: the map becomes one Blender render per day, cross-faded, with the data as measured behind a line you drag, overlays you turn on and off, a depth legend, and a seek bar that runs through the coda. 1.0 (29 September 2026) is the main track, with each choice picked by ear on an A/B bench: the ghost of the median year with a symbolic coda after the last day of data; a hum for the deep water that sits near 4 °C under the ice; freeze and breakup sounds placed at a distance (quieter, darker, a little later and wetter the farther away), spread in time so no more than four fall on one day; and eastern (higher) regions trimmed 0.5 dB a step so the east doesn't sound louder. 1.0 also fixes a 0.2 bug: the ghost's pitch was summed at too low a precision, so it stepped between wrong notes and, for most of the piece, played about two and a half semitones sharp (in the longer render it fell silent after about six minutes). 0.2 (28 September), after a first listen: fewer bird calls, each at its own distance; quieter, wetter events; a softer ghost. The shorter 0.2 render stays for a quicker listen. 0.1 was the first render.</p>
     <p class="caption" id="caption"></p>
   </div>
+  </main>
   <footer class="foot">Graham Watt &amp; Claude Code · <a href="../index.html">sonify-viz home</a> · <a href="../about.html">how this was made</a> · <a href="https://github.com/cordilleran/sonify-viz">source on GitHub</a> · code MPL 2.0</footer>
 </div>
+<div class="sr-only" id="srLive" role="status" aria-live="polite"></div>
 <audio id="audio" preload="auto"></audio>
 <script>
 const $ = id => document.getElementById(id);
@@ -489,7 +494,10 @@ function buildMeters(){
 }
 function buildRail(){
   const rail = $('rail'); [...rail.querySelectorAll('.rrow')].forEach(n => n.remove());
-  rail.insertAdjacentHTML('beforeend', D.regions.map((r, i) => `<div class="rrow" data-i="${i}" tabindex="0" role="button" aria-label="${r.name}: show its season"><i class="glow" id="gl${i}"></i><span class="nm">${r.name}<small>${noteName(r.ice_midi)} · ${Math.abs(r.lon).toFixed(1)}°W ${r.lat.toFixed(1)}°N</small></span><span class="v" id="ri${i}">–</span><span class="v" id="rw${i}">–</span><span class="b" id="rb${i}"></span></div>`).join(''));
+  // Each row's spoken values, in text outside the rail so the rail's layout is untouched. Refreshed once a day, never announced.
+  const old = $('srRegions'); if (old) old.remove();
+  document.querySelector('main').insertAdjacentHTML('beforeend', `<div class="sr-only" id="srRegions">${D.regions.map((r, i) => `<span id="sr${i}"></span>`).join('')}</div>`);
+  rail.insertAdjacentHTML('beforeend', D.regions.map((r, i) => `<div class="rrow" data-i="${i}" tabindex="0" role="button" aria-label="${r.name}: show its season" aria-describedby="sr${i}"><i class="glow" id="gl${i}"></i><span class="nm">${r.name}<small>${noteName(r.ice_midi)} · ${Math.abs(r.lon).toFixed(1)}°W ${r.lat.toFixed(1)}°N</small></span><span class="v" id="ri${i}">–</span><span class="v" id="rw${i}">–</span><span class="b" id="rb${i}"></span></div>`).join(''));
 }
 const dbLevel = v => clamp((20 * Math.log10(v + 1e-9) + 60) / 54, 0, 1);
 
@@ -518,7 +526,8 @@ function frame(force){
     const mv = D.movement_cuts_day, mi = mv.filter(d => day >= d).length;
     $('sub').innerHTML = `day ${day + 1} of ${N} · movement ${['I','II','III','IV'][mi]} · ${D.movement_names[mi].toLowerCase()}`;
     D.regions.forEach((r, i) => { $('ri' + i).textContent = Math.round(rs[r.id].ice[day]) + '%'; $('rw' + i).textContent = rs[r.id].sst[day].toFixed(1) + '°';
-      const b = D.birds && D.birds[r.id]; $('rb' + i).textContent = b && ((b.loon !== null && day >= b.loon) || (b.goose !== null && day >= b.goose)) ? '⌒' : ''; });
+      const b = D.birds && D.birds[r.id], birds = !!(b && ((b.loon !== null && day >= b.loon) || (b.goose !== null && day >= b.goose))); $('rb' + i).textContent = birds ? '⌒' : '';
+      const sr = $('sr' + i); if (sr) sr.textContent = `ice ${Math.round(rs[r.id].ice[day])} percent, water ${rs[r.id].sst[day].toFixed(1)} degrees Celsius` + (birds ? ', symbolic birds have arrived' : ''); });
     let nF = 0, nB = 0; D.regions.forEach(r => (D.events[r.id] || []).forEach(e => { if (e[0] <= day){ e[1] > 0 ? nF++ : nB++; } }));
     const windMax = Math.max(...D.regions.map(r => rs[r.id].wind[day])), snow = mean('snow'), rain = D.regions.reduce((a, r) => a + Math.max(0, rs[r.id].precip[day] - 0.7 * rs[r.id].snow[day]), 0) / D.regions.length;
     const loons = D.regions.filter(r => D.birds && D.birds[r.id] && D.birds[r.id].loon !== null && day >= D.birds[r.id].loon).length;
@@ -544,6 +553,8 @@ function spark(svg, vals, lo, hi, col, unit){
 function drawSparkDots(day){
   for (const id of ['spI', 'spW']){ const s = $(id), d = s.querySelector('.dot'); if (s._map && d){ d.setAttribute('cx', s._map.x(day)); d.setAttribute('cy', s._map.y(s._map.vals[day])); } }
 }
+// One polite announcement when a region is pinned or released, and never during playback.
+const announce = msg => { const l = $('srLive'); l.textContent = ''; setTimeout(() => { l.textContent = msg; }, 60); };
 function setFocus(i, pin){
   if (pin){ if (pinned && focus === i){ pinned = false; i = null; } else pinned = true; } else if (pinned) return;
   focus = i;
@@ -562,6 +573,7 @@ function setFocus(i, pin){
     drawSparkDots(lastDay < 0 ? 0 : lastDay);
   }
   frame(true);
+  if (pin) announce(i === null ? 'Region released.' : `${D.regions[i].name} pinned. ${$('focusK').textContent}`);
 }
 $('rail').addEventListener('mouseover', e => { const r = e.target.closest('.rrow'); if (r) setFocus(+r.dataset.i, false); });
 $('rail').addEventListener('mouseleave', () => { if (!pinned) setFocus(null, false); });
@@ -574,7 +586,7 @@ function regionAt(e){
 over.addEventListener('mousemove', e => { if (D) setFocus(regionAt(e), false); });
 over.addEventListener('mouseleave', () => { if (!pinned) setFocus(null, false); });
 over.addEventListener('click', e => { if (!D) return; const i = regionAt(e); if (i !== null) setFocus(i, true); });
-window.addEventListener('keydown', e => { if (e.key === 'Escape' && pinned){ pinned = false; setFocus(null, false); } });   // Escape lets go from anywhere, not only the map
+window.addEventListener('keydown', e => { if (e.key === 'Escape' && pinned){ pinned = false; setFocus(null, false); announce('Region released.'); } });   // Escape lets go from anywhere, not only the map
 
 // ---------- modes and legend ----------
 const LEG = {
@@ -606,6 +618,11 @@ $('play').onclick = async () => {
 };
 $('seek').oninput = () => { seeking = true; setTime(total() * $('seek').value / 1000); };
 $('seek').onchange = () => { seeking = false; };
+// The seek bar's spoken value is the date and time already on screen. It is refreshed on focus, on seek and on pause, never on each animation frame, so nothing is announced during playback.
+const seekText = () => { const t = e => e.innerText.replace(/\s*\n\s*/g, ', ').trim();
+  $('seek').setAttribute('aria-valuetext', [t($('date')), $('sub') ? t($('sub')) : '', t($('time'))].filter(Boolean).join(', ').replace(' / ', ' of ')); };
+['focus', 'change'].forEach(ev => $('seek').addEventListener(ev, seekText));
+audio.addEventListener('seeked', seekText); audio.addEventListener('pause', seekText);
 audio.addEventListener('ended', () => { $('play').textContent = 'Play'; overrideT = null; });
 window.addEventListener('keydown', e => { if (e.code === 'Space' && !['BUTTON', 'SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)){ e.preventDefault(); $('play').click(); } });
 

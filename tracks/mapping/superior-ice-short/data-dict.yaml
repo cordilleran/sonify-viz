@@ -43,6 +43,7 @@ tables:
       whitefish: Whitefish Bay and Sault
   - name: name
     type: string
+    description: "The region's full name, as shown on the page; id is its short key."
     examples:
     - Central basin
     - Isle Royale
@@ -63,6 +64,7 @@ tables:
     - 48.544
   - name: pan
     type: number(quantity)
+    units: "-1 to 1 (left to right)"
     description: >-
       Stereo position, -1 left to 1 right: longitude blended with west-to-east rank.
     range:
@@ -109,6 +111,7 @@ tables:
   columns:
   - name: date
     type: date
+    description: "The calendar day, from 1 November 2025 to 15 June 2026 (227 days)."
     constraints:
     - required
     range:
@@ -147,7 +150,7 @@ tables:
       whitefish: Whitefish Bay and Sault
   - name: ice_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: >-
       Ice concentration, mean over the region's cells (R). Sets the region's bowed-glass ice voice, louder as the
       ice thickens.
@@ -156,7 +159,7 @@ tables:
     - 93.8
   - name: sst_c
     type: number(quantity)
-    units: degrees C
+    units: °C
     description: >-
       Satellite surface water temperature, mean over the region's open-water cells (R): the top millimetres, not
       the lake at depth. Feeds the low string voices, fuller as it warms; the ice quiets them.
@@ -165,7 +168,7 @@ tables:
     - 11.3
   - name: air_mean_c
     type: number(quantity)
-    units: degrees C
+    units: °C
     description: >-
       Daily mean air temperature (R, ERA5). The lake mean drives the organ bed, which adds ranks and brightens as
       it warms.
@@ -213,6 +216,7 @@ tables:
   columns:
   - name: date
     type: date
+    description: "The calendar day, from 1 November 2025 to 15 June 2026 (227 days)."
     constraints:
     - primary_key
     range:
@@ -220,6 +224,7 @@ tables:
     - 2026-06-15
   - name: day
     type: number(ordinal)
+    description: "The day's number within the season, from 0 (1 November 2025) to 226 (15 June 2026)."
     constraints:
     - required
     range:
@@ -243,14 +248,14 @@ tables:
     - 4
   - name: lake_ice_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: Lake-average ice concentration, NOAA GLERL (R).
     range:
     - 0.0
     - 62.6
   - name: hist_min_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: >-
       The 2008 to 2025 minimum of lake-average ice on this date (D, from NOAA GLERL).
     range:
@@ -258,7 +263,7 @@ tables:
     - 4.2
   - name: hist_p25_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: >-
       The 2008 to 2025 25th percentile of lake-average ice on this date (D, from NOAA GLERL).
     range:
@@ -266,7 +271,7 @@ tables:
     - 13.7
   - name: hist_med_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: >-
       The 2008 to 2025 median of lake-average ice on this date (D, from NOAA GLERL). Drawn on the page; this version
       has no ghost tone.
@@ -275,7 +280,7 @@ tables:
     - 23.6
   - name: hist_p75_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: >-
       The 2008 to 2025 75th percentile of lake-average ice on this date (D, from NOAA GLERL).
     range:
@@ -283,7 +288,7 @@ tables:
     - 72.2
   - name: hist_max_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: >-
       The 2008 to 2025 maximum of lake-average ice on this date (D, from NOAA GLERL).
     range:

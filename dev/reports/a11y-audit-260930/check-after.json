@@ -1,0 +1,122 @@
+{
+ "superior-ice|standalone|1280": {
+  "rules": {
+   "color-contrast": 21
+  },
+  "tabStops": 27
+ },
+ "superior-ice|standalone|390": {
+  "rules": {
+   "color-contrast": 21
+  },
+  "tabStops": 27
+ },
+ "superior-ice|embed|1280": {
+  "rules": {
+   "color-contrast": 20,
+   "page-has-heading-one": 1
+  },
+  "tabStops": 24
+ },
+ "superior-ice|embed|390": {
+  "rules": {
+   "color-contrast": 20,
+   "page-has-heading-one": 1
+  },
+  "tabStops": 24
+ },
+ "superior-ice|iframe|1280": {
+  "rules": {
+   "color-contrast": 20,
+   "page-has-heading-one": 1
+  },
+  "tabStops": 24
+ },
+ "superior-ice|iframe|390": {
+  "rules": {
+   "color-contrast": 20,
+   "page-has-heading-one": 1
+  },
+  "tabStops": 24
+ },
+ "meridian|standalone|1280": {
+  "rules": {
+   "color-contrast": 16
+  },
+  "tabStops": 23
+ },
+ "meridian|standalone|390": {
+  "rules": {
+   "color-contrast": 3
+  },
+  "tabStops": 23
+ },
+ "meridian|embed|1280": {
+  "rules": {
+   "color-contrast": 15,
+   "page-has-heading-one": 1
+  },
+  "tabStops": 20
+ },
+ "meridian|embed|390": {
+  "rules": {
+   "color-contrast": 2,
+   "page-has-heading-one": 1
+  },
+  "tabStops": 20
+ },
+ "meridian|iframe|1280": {
+  "rules": {
+   "color-contrast": 15,
+   "page-has-heading-one": 1
+  },
+  "tabStops": 20
+ },
+ "meridian|iframe|390": {
+  "rules": {
+   "color-contrast": 2,
+   "page-has-heading-one": 1
+  },
+  "tabStops": 20
+ },
+ "listen|standalone|1280": {
+  "rules": {
+   "color-contrast": 4
+  },
+  "tabStops": 34
+ },
+ "listen|standalone|390": {
+  "rules": {
+   "color-contrast": 4
+  },
+  "tabStops": 34
+ },
+ "listen|embed|1280": {
+  "rules": {
+   "color-contrast": 4,
+   "page-has-heading-one": 1
+  },
+  "tabStops": 34
+ },
+ "listen|embed|390": {
+  "rules": {
+   "color-contrast": 4,
+   "page-has-heading-one": 1
+  },
+  "tabStops": 34
+ },
+ "listen|iframe|1280": {
+  "rules": {
+   "color-contrast": 4,
+   "page-has-heading-one": 1
+  },
+  "tabStops": 34
+ },
+ "listen|iframe|390": {
+  "rules": {
+   "color-contrast": 4,
+   "page-has-heading-one": 1
+  },
+  "tabStops": 34
+ }
+}
