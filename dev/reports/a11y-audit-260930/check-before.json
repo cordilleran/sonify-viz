@@ -1,0 +1,185 @@
+{
+ "superior-ice|standalone|1280": {
+  "rules": {
+   "color-contrast": 21,
+   "empty-table-header": 1,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "region": 14
+  },
+  "tabStops": 28
+ },
+ "superior-ice|standalone|390": {
+  "rules": {
+   "color-contrast": 21,
+   "empty-table-header": 1,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "region": 14
+  },
+  "tabStops": 28
+ },
+ "superior-ice|embed|1280": {
+  "rules": {
+   "color-contrast": 20,
+   "empty-table-header": 1,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "page-has-heading-one": 1,
+   "region": 14
+  },
+  "tabStops": 25
+ },
+ "superior-ice|embed|390": {
+  "rules": {
+   "color-contrast": 20,
+   "empty-table-header": 1,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "page-has-heading-one": 1,
+   "region": 14
+  },
+  "tabStops": 25
+ },
+ "superior-ice|iframe|1280": {
+  "rules": {
+   "color-contrast": 20,
+   "empty-table-header": 1,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "page-has-heading-one": 1,
+   "region": 14
+  },
+  "tabStops": 25
+ },
+ "superior-ice|iframe|390": {
+  "rules": {
+   "color-contrast": 20,
+   "empty-table-header": 1,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "page-has-heading-one": 1,
+   "region": 14
+  },
+  "tabStops": 25
+ },
+ "meridian|standalone|1280": {
+  "rules": {
+   "color-contrast": 16,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "region": 7
+  },
+  "tabStops": 23
+ },
+ "meridian|standalone|390": {
+  "rules": {
+   "color-contrast": 3,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "region": 7
+  },
+  "tabStops": 23
+ },
+ "meridian|embed|1280": {
+  "rules": {
+   "color-contrast": 15,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "page-has-heading-one": 1,
+   "region": 7
+  },
+  "tabStops": 20
+ },
+ "meridian|embed|390": {
+  "rules": {
+   "color-contrast": 2,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "page-has-heading-one": 1,
+   "region": 7
+  },
+  "tabStops": 20
+ },
+ "meridian|iframe|1280": {
+  "rules": {
+   "color-contrast": 15,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "page-has-heading-one": 1,
+   "region": 7
+  },
+  "tabStops": 20
+ },
+ "meridian|iframe|390": {
+  "rules": {
+   "color-contrast": 2,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "page-has-heading-one": 1,
+   "region": 7
+  },
+  "tabStops": 20
+ },
+ "listen|standalone|1280": {
+  "rules": {
+   "color-contrast": 4,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "region": 15
+  },
+  "tabStops": 33
+ },
+ "listen|standalone|390": {
+  "rules": {
+   "color-contrast": 4,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "region": 15,
+   "scrollable-region-focusable": 2
+  },
+  "tabStops": 34
+ },
+ "listen|embed|1280": {
+  "rules": {
+   "color-contrast": 4,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "page-has-heading-one": 1,
+   "region": 15
+  },
+  "tabStops": 33
+ },
+ "listen|embed|390": {
+  "rules": {
+   "color-contrast": 4,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "page-has-heading-one": 1,
+   "region": 15,
+   "scrollable-region-focusable": 2
+  },
+  "tabStops": 34
+ },
+ "listen|iframe|1280": {
+  "rules": {
+   "color-contrast": 4,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "page-has-heading-one": 1,
+   "region": 15
+  },
+  "tabStops": 33
+ },
+ "listen|iframe|390": {
+  "rules": {
+   "color-contrast": 4,
+   "html-has-lang": 1,
+   "landmark-one-main": 1,
+   "page-has-heading-one": 1,
+   "region": 15,
+   "scrollable-region-focusable": 2
+  },
+  "tabStops": 34
+ }
+}

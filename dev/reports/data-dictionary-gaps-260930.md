@@ -4,6 +4,12 @@ Scope: the 10 `data-dict.yaml` files (26 tables, 236 columns) at commit `5ecf835
 
 Authorship: written by Claude (a cloud session). Every count below comes from `dev/dictionary/dd_audit.py` and two follow-up queries, described under "Method". The audit script over-reports on nulls (it looks for keywords), so I checked each flagged column by hand before listing it.
 
+## Round 2 update (30 September 2026, later the same day)
+
+Text fixes for the `climate_daily` findings were made in `data/parquet/data-dict.yaml` (wording only, validated). One correction to this review:
+
+- **DD-01 was partly documented.** I wrote that the dictionary did not say Summerland lacks rain and snow. The table's `details` did say something ("flagged missing on 3,116 of 5,479 days"), which I missed because I read column descriptions and not the table note. It was misleading rather than absent: it read as if the other 2,363 days had values. By station, Summerland has **no** rain or snow value on any day (3,116 flagged M, 2,363 empty with no flag). The note now says so. DD-02, DD-03, DD-04 and DD-09 were confirmed and fixed for `climate_daily`. The other findings (DD-05 to DD-08, DD-10 to DD-14) are unchanged and not yet applied.
+
 ## TL;DR
 
 - **The dictionaries are already strong.** All 10 validate against their data (`data-dict validate-data`), 179 of 236 columns state a range, 121 state units, and the Water Year and Climate Pair notes explain their own nulls in plain words ("Empty for lake-level-only days").

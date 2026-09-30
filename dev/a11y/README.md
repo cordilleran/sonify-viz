@@ -11,6 +11,8 @@ node axe.js      # axe-core at 1280 and 390 px; writes axe-results.json
 node walk.js     # keyboard tab order, reflow at 640 and 320 px, forced-colours screenshots
 node probe.js    # contrast pairs, slider values, canvas labels
 node tree.js     # accessibility tree of the Superior Ice page and its live regions
+node check.js after   # axe + tab-stop count for every piece, standalone, ?embed and inside an iframe (wrapper.html); writes check-<label>.json
+node shots.js out/ [superior-ice,meridian,listen]   # full-page screenshots, then: python compare_shots.py dirA dirB (0 px differ = no visual change)
 ```
 
 Outputs are written to the current folder (`axe-results.json`, `*_forced.png`, `si_region.png`); do not commit the screenshots.
