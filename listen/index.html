@@ -14,6 +14,7 @@
 }
 body{margin:0;background:var(--ground);color:var(--text);font:15px/1.55 var(--body);}
 .wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:28px 64px;display:grid;gap:40px}
+main{display:contents} /* a landmark for assistive tech; children stay in the .wrap grid */
 h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;letter-spacing:.005em}
 .eyebrow{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 header{display:grid;gap:14px}
@@ -126,6 +127,7 @@ section > h2{font-size:28px}
       <button class="piece" id="p-okanagan" data-name="okanagan_wy2024" aria-pressed="false">Okanagan <small>F · 64 bpm · 7:50</small></button>
     </div>
   </header>
+  <main>
 
   <div class="stage">
     <div class="ringbox"><canvas id="ring" aria-label="Water year ring chart; hover a ring for its value that day, click to jump to that date"></canvas><div class="tip" id="rtip" aria-hidden="true"></div></div>
@@ -184,6 +186,7 @@ section > h2{font-size:28px}
     <p>Hydrometric: Water Survey of Canada daily means via the ECCC GeoMet OGC API. The Granby ice record is WSC's "Ice Conditions" data flag. Climate: ECCC daily climate (Billings; Summerland CS). Plant productivity: MODIS MOD17A2HGF 8-day gross primary productivity via the ORNL DAAC subset service. Sockeye and water temperature: Wells Dam adult counts, Columbia Basin Research DART. Bird timing uses typical regional arrival windows, not observations.</p>
     <p>Instruments: VSCO 2 Community Edition (Versilian Studios, CC0): upright piano, harp, string sections, contrabass, flute, marimba, glockenspiel, hand percussion. Birds, via Wikimedia Commons: Swainson's thrush (Niels Krabbe, CC BY-SA 4.0); American dipper (NPS &amp; MSU Acoustic Atlas / Jennifer Jerrett, public domain); western meadowlark and sandhill crane (Jonathon Jongsma, CC BY-SA); bank swallow (Pascal Christe, CC BY-SA 4.0).</p>
   </section>
+  </main>
 </div>
 
 <script>

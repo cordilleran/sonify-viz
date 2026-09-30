@@ -13,6 +13,7 @@
 }
 .wrap{max-width:1240px;margin:0 auto;padding:28px 16px 64px;overflow-x:clip;display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
 .wrap > *{min-width:0}
+main{display:contents} /* a landmark for assistive tech; children stay in the .wrap grid */
 header{display:grid;gap:12px}
 header p{margin:0;max-width:66ch;color:var(--muted)}
 .stage{display:grid;grid-template-columns:minmax(280px,560px) 64px minmax(0,1fr);gap:14px;align-items:start}
@@ -66,6 +67,7 @@ canvas{display:block;width:100%;height:100%}
     <h1>One meridian, one year of light</h1>
     <p id="blurb">Thirteen voices stand on one meridian, from the North Pole to the South Pole, and sing through one year from solstice to solstice. Each breath is one day, midnight to midnight: a voice sounds while its sun is up, swells in through twilight, and only breathes while its sun is down. Everyone on a meridian shares solar noon, so every note centres on the same instant.</p>
   </header>
+  <main>
 
   <div class="pick">
     <select id="piece" aria-label="Which render">
@@ -107,6 +109,7 @@ canvas{display:block;width:100%;height:100%}
     <p><b>Sources.</b> Daylight is calculated from solar geometry (Meeus, as in NOAA's solar calculator; checked against the JPL DE421 ephemeris). Air temperature: ERA5 reanalysis (Copernicus Climate Change Service, CC BY 4.0), via the Open-Meteo historical weather API. Sea surface temperature: NOAA OISST v2.1 (Reynolds et al. 2007; Huang et al. 2020), via NOAA CoastWatch ERDDAP. Sea ice: NOAA/NSIDC Sea Ice Concentration Climate Data Record, version 6, via NOAA CoastWatch ERDDAP. Each value is the mean over a breath's days at the grid cell nearest the parallel; the cell used and its distance are recorded in <code>data/meridian/</code>. The South Pole's air temperature is ERA5 standing in for the Amundsen–Scott station record. The audio is licensed CC BY 4.0.</p>
     <p class="caption" id="caption"></p>
   </div>
+  </main>
   <footer class="foot">Graham Watt &amp; Claude Code · <a href="../index.html">sonify-viz home</a> · <a href="../about.html">how this was made</a> · <a href="https://github.com/cordilleran/sonify-viz">source on GitHub</a> · code MPL 2.0</footer>
 </div>
 <audio id="audio" preload="auto"></audio>

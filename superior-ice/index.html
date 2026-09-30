@@ -13,6 +13,7 @@
 }
 .wrap{max-width:1280px;margin:0 auto;padding:28px 16px 64px;overflow-x:clip;display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
 .wrap > *{min-width:0}
+main{display:contents} /* a landmark for assistive tech; children stay in the .wrap grid */
 header{display:grid;gap:12px}
 header p{margin:0;max-width:68ch;color:var(--muted)}
 .pick{display:grid;gap:6px}
@@ -108,6 +109,7 @@ header p{margin:0;max-width:68ch;color:var(--muted)}
     <h1>Superior Ice Year</h1>
     <p>One ice season on Lake Superior, from 1 November to 15 June, played as music. The lake is cut into eight regions and each region is a voice: the west sings lowest and the east highest, so the chord you hear is the ice pattern on the map. Ice, water, air, sunlight, wind, snow, rain and birds each get their own instrument.</p>
   </header>
+  <main>
 
   <div class="pick">
     <select id="piece" aria-label="Which render">
@@ -183,6 +185,7 @@ header p{margin:0;max-width:68ch;color:var(--muted)}
     <p><b>Versions.</b> 1.1 (29 September 2026) changes the picture only, not the music: the map becomes one Blender render per day, cross-faded, with the data as measured behind a line you drag, overlays you turn on and off, a depth legend, and a seek bar that runs through the coda. 1.0 (29 September 2026) is the main track, with each choice picked by ear on an A/B bench: the ghost of the median year with a symbolic coda after the last day of data; a hum for the deep water that sits near 4 °C under the ice; freeze and breakup sounds placed at a distance (quieter, darker, a little later and wetter the farther away), spread in time so no more than four fall on one day; and eastern (higher) regions trimmed 0.5 dB a step so the east doesn't sound louder. 1.0 also fixes a 0.2 bug: the ghost's pitch was summed at too low a precision, so it stepped between wrong notes and, for most of the piece, played about two and a half semitones sharp (in the longer render it fell silent after about six minutes). 0.2 (28 September), after a first listen: fewer bird calls, each at its own distance; quieter, wetter events; a softer ghost. The shorter 0.2 render stays for a quicker listen. 0.1 was the first render.</p>
     <p class="caption" id="caption"></p>
   </div>
+  </main>
   <footer class="foot">Graham Watt &amp; Claude Code · <a href="../index.html">sonify-viz home</a> · <a href="../about.html">how this was made</a> · <a href="https://github.com/cordilleran/sonify-viz">source on GitHub</a> · code MPL 2.0</footer>
 </div>
 <audio id="audio" preload="auto"></audio>
