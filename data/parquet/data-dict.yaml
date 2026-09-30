@@ -271,6 +271,7 @@ tables:
         range: [2015-01-01, 2024-12-26]
       - name: pixel
         type: number(id)
+        range: [0, 24]
         constraints: [required]
         description: Position of the pixel in the 5 by 5 block, 0 to 24.
         todo: Confirm the order the ORNL subset service returns pixels in (the pieces average them, so it doesn't matter to the audio).

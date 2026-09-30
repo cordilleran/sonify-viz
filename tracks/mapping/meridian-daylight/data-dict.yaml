@@ -22,6 +22,7 @@ tables:
   columns:
   - name: lat
     type: number(id)
+    range: [-90, 90]
     constraints:
     - primary_key
     description: >-
@@ -97,6 +98,7 @@ tables:
     - 2024-12-23
   - name: lat
     type: number(id)
+    range: [-90, 90]
     constraints:
     - required
     - foreign_key
