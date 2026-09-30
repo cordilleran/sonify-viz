@@ -1,0 +1,14 @@
+const {chromium}=require('playwright-core');
+(async()=>{const b=await chromium.launch({executablePath:(process.env.CHROME||'/opt/pw-browsers/chromium'),args:['--no-sandbox']});
+const c=await b.newContext({viewport:{width:1280,height:1000}});const pg=await c.newPage();
+pg.on('response',r=>r.status()>=400&&console.log('HTTP',r.status(),r.url()));
+await pg.goto('http://localhost:8765/superior-ice/index.html?t=120',{waitUntil:'networkidle'});await pg.waitForTimeout(2000);
+console.log(await pg.locator('body').ariaSnapshot());
+console.log('\n--- live regions:',await pg.evaluate(()=>[...document.querySelectorAll('[aria-live],[role=status],[role=alert]')].map(e=>e.id+': "'+e.textContent.trim().slice(0,90)+'"')));
+console.log('--- empty-name links:',await pg.evaluate(()=>[...document.querySelectorAll('a')].filter(a=>!(a.textContent.trim()||a.getAttribute('aria-label')||a.title)).map(a=>a.outerHTML.slice(0,200))));
+console.log('--- th empty:',await pg.evaluate(()=>[...document.querySelectorAll('th')].filter(t=>!t.textContent.trim()).map(t=>t.outerHTML)));
+await pg.keyboard.press('Tab');
+await pg.locator('.rrow').first().focus();await pg.keyboard.press('Enter');await pg.waitForTimeout(800);
+console.log('\n--- after Enter on region 1, what text appeared:',await pg.evaluate(()=>{const e=document.querySelector('#story,.story,#focusStory,#detail,.detail');return e?e.id+' '+e.className+': '+e.textContent.trim().slice(0,400):'(no story element found)'}));
+await pg.screenshot({path:'si_region.png',fullPage:false});
+await b.close();})();

@@ -1,0 +1,407 @@
+{
+ "superior-ice/index.html@1280": {
+  "errs": [
+   "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "reqfail http://localhost:8765/superior-ice/icecover_sup2526__v1.mp3"
+  ],
+  "violations": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "tags": [
+     "wcag143"
+    ],
+    "nodes": 21,
+    "ex": [
+     ".lk ::   Element has insufficient color contrast of 3.71 (foreground color: #56707f, background color: #060e15, font size: 7.9pt (10.5px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "button[data-k=\"labels\"] ::   Element has insufficient color contrast of 3.71 (foreground color: #56707f, background color: #060e15, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "button[data-k=\"weather\"] ::   Element has insufficient color contrast of 3.71 (foreground color: #56707f, background color: #060e15, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+    ]
+   },
+   {
+    "id": "empty-table-header",
+    "impact": "minor",
+    "help": "Table header text should not be empty",
+    "tags": [],
+    "nodes": 1,
+    "ex": [
+     "th:nth-child(4) ::   Element does not have text that is visible to screen readers"
+    ]
+   },
+   {
+    "id": "html-has-lang",
+    "impact": "serious",
+    "help": "<html> element must have a lang attribute",
+    "tags": [
+     "wcag311"
+    ],
+    "nodes": 1,
+    "ex": [
+     "html ::   The <html> element does not have a lang attribute"
+    ]
+   },
+   {
+    "id": "landmark-one-main",
+    "impact": "moderate",
+    "help": "Document should have one main landmark",
+    "tags": [],
+    "nodes": 1,
+    "ex": [
+     "html ::   Document does not have a main landmark"
+    ]
+   },
+   {
+    "id": "region",
+    "impact": "moderate",
+    "help": "All page content should be contained by landmarks",
+    "tags": [],
+    "nodes": 14,
+    "ex": [
+     "#piece ::   Some page content is not contained by landmarks",
+     "#pieceNote ::   Some page content is not contained by landmarks",
+     "#seek ::   Some page content is not contained by landmarks"
+    ]
+   }
+  ],
+  "incomplete": [
+   {
+    "id": "aria-prohibited-attr",
+    "nodes": 2
+   },
+   {
+    "id": "color-contrast",
+    "nodes": 10
+   }
+  ]
+ },
+ "superior-ice/index.html@390": {
+  "errs": [
+   "reqfail http://localhost:8765/superior-ice/icecover_sup2526__v1.mp3"
+  ],
+  "violations": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "tags": [
+     "wcag143"
+    ],
+    "nodes": 21,
+    "ex": [
+     ".lk ::   Element has insufficient color contrast of 3.71 (foreground color: #56707f, background color: #060e15, font size: 7.9pt (10.5px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "button[data-k=\"labels\"] ::   Element has insufficient color contrast of 3.71 (foreground color: #56707f, background color: #060e15, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "button[data-k=\"weather\"] ::   Element has insufficient color contrast of 3.71 (foreground color: #56707f, background color: #060e15, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+    ]
+   },
+   {
+    "id": "empty-table-header",
+    "impact": "minor",
+    "help": "Table header text should not be empty",
+    "tags": [],
+    "nodes": 1,
+    "ex": [
+     "th:nth-child(4) ::   Element does not have text that is visible to screen readers"
+    ]
+   },
+   {
+    "id": "html-has-lang",
+    "impact": "serious",
+    "help": "<html> element must have a lang attribute",
+    "tags": [
+     "wcag311"
+    ],
+    "nodes": 1,
+    "ex": [
+     "html ::   The <html> element does not have a lang attribute"
+    ]
+   },
+   {
+    "id": "landmark-one-main",
+    "impact": "moderate",
+    "help": "Document should have one main landmark",
+    "tags": [],
+    "nodes": 1,
+    "ex": [
+     "html ::   Document does not have a main landmark"
+    ]
+   },
+   {
+    "id": "region",
+    "impact": "moderate",
+    "help": "All page content should be contained by landmarks",
+    "tags": [],
+    "nodes": 14,
+    "ex": [
+     "#piece ::   Some page content is not contained by landmarks",
+     "#pieceNote ::   Some page content is not contained by landmarks",
+     "#seek ::   Some page content is not contained by landmarks"
+    ]
+   }
+  ],
+  "incomplete": [
+   {
+    "id": "aria-prohibited-attr",
+    "nodes": 2
+   }
+  ]
+ },
+ "meridian/index.html@1280": {
+  "errs": [
+   "reqfail http://localhost:8765/meridian/meridian_ds2023__layer2-wide-long.mp3"
+  ],
+  "violations": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "tags": [
+     "wcag143"
+    ],
+    "nodes": 16,
+    "ex": [
+     "#legend ::   Element has insufficient color contrast of 3.33 (foreground color: #5b6878, background color: #0b1119, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "div[data-i=\"0\"] > .place > small ::   Element has insufficient color contrast of 3.33 (foreground color: #5b6878, background color: #0b1119, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "div[data-i=\"1\"] > .place > small ::   Element has insufficient color contrast of 3.33 (foreground color: #5b6878, background color: #0b1119, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+    ]
+   },
+   {
+    "id": "html-has-lang",
+    "impact": "serious",
+    "help": "<html> element must have a lang attribute",
+    "tags": [
+     "wcag311"
+    ],
+    "nodes": 1,
+    "ex": [
+     "html ::   The <html> element does not have a lang attribute"
+    ]
+   },
+   {
+    "id": "landmark-one-main",
+    "impact": "moderate",
+    "help": "Document should have one main landmark",
+    "tags": [],
+    "nodes": 1,
+    "ex": [
+     "html ::   Document does not have a main landmark"
+    ]
+   },
+   {
+    "id": "region",
+    "impact": "moderate",
+    "help": "All page content should be contained by landmarks",
+    "tags": [],
+    "nodes": 7,
+    "ex": [
+     ".pick ::   Some page content is not contained by landmarks",
+     "#seek ::   Some page content is not contained by landmarks",
+     "#time ::   Some page content is not contained by landmarks"
+    ]
+   }
+  ],
+  "incomplete": [
+   {
+    "id": "color-contrast",
+    "nodes": 2
+   }
+  ]
+ },
+ "meridian/index.html@390": {
+  "errs": [
+   "reqfail http://localhost:8765/meridian/meridian_ds2023__layer2-wide-long.mp3"
+  ],
+  "violations": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "tags": [
+     "wcag143"
+    ],
+    "nodes": 3,
+    "ex": [
+     "#legend ::   Element has insufficient color contrast of 3.33 (foreground color: #5b6878, background color: #0b1119, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "#caption ::   Element has insufficient color contrast of 3.33 (foreground color: #5b6878, background color: #0b1119, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "footer ::   Element has insufficient color contrast of 3.33 (foreground color: #5b6878, background color: #0b1119, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+    ]
+   },
+   {
+    "id": "html-has-lang",
+    "impact": "serious",
+    "help": "<html> element must have a lang attribute",
+    "tags": [
+     "wcag311"
+    ],
+    "nodes": 1,
+    "ex": [
+     "html ::   The <html> element does not have a lang attribute"
+    ]
+   },
+   {
+    "id": "landmark-one-main",
+    "impact": "moderate",
+    "help": "Document should have one main landmark",
+    "tags": [],
+    "nodes": 1,
+    "ex": [
+     "html ::   Document does not have a main landmark"
+    ]
+   },
+   {
+    "id": "region",
+    "impact": "moderate",
+    "help": "All page content should be contained by landmarks",
+    "tags": [],
+    "nodes": 7,
+    "ex": [
+     ".pick ::   Some page content is not contained by landmarks",
+     "#seek ::   Some page content is not contained by landmarks",
+     "#time ::   Some page content is not contained by landmarks"
+    ]
+   }
+  ],
+  "incomplete": [
+   {
+    "id": "color-contrast",
+    "nodes": 2
+   }
+  ]
+ },
+ "listen/index.html@1280": {
+  "errs": [
+   "reqfail http://localhost:8765/listen/granby_wy2024.mp3"
+  ],
+  "violations": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "tags": [
+     "wcag143"
+    ],
+    "nodes": 4,
+    "ex": [
+     ".dnote ::   Element has insufficient color contrast of 3.64 (foreground color: #5d7374, background color: #0c1618, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "#mode-0 > .name ::   Element has insufficient color contrast of 2.31 (foreground color: #455455, background color: #0c1618, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "#mode-0 > .n:nth-child(3) ::   Element has insufficient color contrast of 2.31 (foreground color: #455455, background color: #0c1618, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+    ]
+   },
+   {
+    "id": "html-has-lang",
+    "impact": "serious",
+    "help": "<html> element must have a lang attribute",
+    "tags": [
+     "wcag311"
+    ],
+    "nodes": 1,
+    "ex": [
+     "html ::   The <html> element does not have a lang attribute"
+    ]
+   },
+   {
+    "id": "landmark-one-main",
+    "impact": "moderate",
+    "help": "Document should have one main landmark",
+    "tags": [],
+    "nodes": 1,
+    "ex": [
+     "html ::   Document does not have a main landmark"
+    ]
+   },
+   {
+    "id": "region",
+    "impact": "moderate",
+    "help": "All page content should be contained by landmarks",
+    "tags": [],
+    "nodes": 15,
+    "ex": [
+     "#ring ::   Some page content is not contained by landmarks",
+     ".piece-title ::   Some page content is not contained by landmarks",
+     "#pblurb ::   Some page content is not contained by landmarks"
+    ]
+   }
+  ],
+  "incomplete": [
+   {
+    "id": "color-contrast",
+    "nodes": 5
+   }
+  ]
+ },
+ "listen/index.html@390": {
+  "errs": [
+   "reqfail http://localhost:8765/listen/granby_wy2024.mp3"
+  ],
+  "violations": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "tags": [
+     "wcag143"
+    ],
+    "nodes": 4,
+    "ex": [
+     ".dnote ::   Element has insufficient color contrast of 3.64 (foreground color: #5d7374, background color: #0c1618, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "#mode-0 > .name ::   Element has insufficient color contrast of 2.31 (foreground color: #455455, background color: #0c1618, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "#mode-0 > .n:nth-child(3) ::   Element has insufficient color contrast of 2.31 (foreground color: #455455, background color: #0c1618, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+    ]
+   },
+   {
+    "id": "html-has-lang",
+    "impact": "serious",
+    "help": "<html> element must have a lang attribute",
+    "tags": [
+     "wcag311"
+    ],
+    "nodes": 1,
+    "ex": [
+     "html ::   The <html> element does not have a lang attribute"
+    ]
+   },
+   {
+    "id": "landmark-one-main",
+    "impact": "moderate",
+    "help": "Document should have one main landmark",
+    "tags": [],
+    "nodes": 1,
+    "ex": [
+     "html ::   Document does not have a main landmark"
+    ]
+   },
+   {
+    "id": "region",
+    "impact": "moderate",
+    "help": "All page content should be contained by landmarks",
+    "tags": [],
+    "nodes": 15,
+    "ex": [
+     "#ring ::   Some page content is not contained by landmarks",
+     ".piece-title ::   Some page content is not contained by landmarks",
+     "#pblurb ::   Some page content is not contained by landmarks"
+    ]
+   },
+   {
+    "id": "scrollable-region-focusable",
+    "impact": "serious",
+    "help": "Scrollable region must have keyboard access",
+    "tags": [
+     "wcag211",
+     "wcag213"
+    ],
+    "nodes": 2,
+    "ex": [
+     ".scorebox ::   Element should have focusable content |   Element should be focusable",
+     ".tablebox ::   Element should have focusable content |   Element should be focusable"
+    ]
+   }
+  ],
+  "incomplete": [
+   {
+    "id": "color-contrast",
+    "nodes": 18
+   }
+  ]
+ }
+}
