@@ -150,7 +150,7 @@ tables:
       whitefish: Whitefish Bay and Sault
   - name: ice_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: >-
       Ice concentration, mean over the region's cells (R). Sets the region's bowed-glass ice voice, louder as the
       ice thickens.
@@ -159,7 +159,7 @@ tables:
     - 93.8
   - name: sst_c
     type: number(quantity)
-    units: degrees C
+    units: °C
     description: >-
       Satellite surface water temperature, mean over the region's open-water cells (R): the top millimetres, not
       the lake at depth. Feeds the low string voices, fuller as it warms; the ice quiets them.
@@ -168,7 +168,7 @@ tables:
     - 11.3
   - name: air_mean_c
     type: number(quantity)
-    units: degrees C
+    units: °C
     description: >-
       Daily mean air temperature (R, ERA5). The lake mean drives the organ bed, which adds ranks and brightens as
       it warms.
@@ -248,14 +248,14 @@ tables:
     - 4
   - name: lake_ice_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: Lake-average ice concentration, NOAA GLERL (R).
     range:
     - 0.0
     - 62.6
   - name: hist_min_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: >-
       The 2008 to 2025 minimum of lake-average ice on this date (D, from NOAA GLERL).
     range:
@@ -263,7 +263,7 @@ tables:
     - 4.2
   - name: hist_p25_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: >-
       The 2008 to 2025 25th percentile of lake-average ice on this date (D, from NOAA GLERL).
     range:
@@ -271,7 +271,7 @@ tables:
     - 13.7
   - name: hist_med_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: >-
       The 2008 to 2025 median of lake-average ice on this date (D, from NOAA GLERL). Drawn on the page; this version
       has no ghost tone.
@@ -280,7 +280,7 @@ tables:
     - 23.6
   - name: hist_p75_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: >-
       The 2008 to 2025 75th percentile of lake-average ice on this date (D, from NOAA GLERL).
     range:
@@ -288,7 +288,7 @@ tables:
     - 72.2
   - name: hist_max_pct
     type: number(quantity)
-    units: percent
+    units: "%"
     description: >-
       The 2008 to 2025 maximum of lake-average ice on this date (D, from NOAA GLERL).
     range:

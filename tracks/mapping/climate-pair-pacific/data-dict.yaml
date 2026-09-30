@@ -81,7 +81,7 @@ tables:
         range: [2, 6]
       - name: co2_ppm
         type: number(quantity)
-        units: ppm
+        units: ppm (µmol per mol of dry air)
         constraints: [required]
         description: >
           (R) The year's mean of deseasonalized CO2 at Mauna Loa (gaps
