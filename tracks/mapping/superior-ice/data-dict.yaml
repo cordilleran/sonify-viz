@@ -64,6 +64,7 @@ tables:
     - 48.544
   - name: pan
     type: number(quantity)
+    units: "-1 to 1 (left to right)"
     description: >-
       Stereo position, -1 left to 1 right: longitude blended with west-to-east rank.
     range:

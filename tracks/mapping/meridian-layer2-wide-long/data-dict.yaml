@@ -189,6 +189,7 @@ tables:
     - 31.44
   - name: ice_frac
     type: number(quantity)
+    units: "0 to 1 (fraction covered)"
     description: >-
       Sea ice concentration, 0 to 1 (R, NOAA/NSIDC sea ice CDR v6); empty where there is no sea. Ice quiets the
       sea voice. Empty in 1098 of 1586 rows.
@@ -197,6 +198,7 @@ tables:
     - 1.0
   - name: warmth_day
     type: number(quantity)
+    units: "0 to 1 (position on a fixed scale)"
     description: >-
       The organ's day warmth, 0 to 1: the day air on a fixed scale from -40 to 35 degrees C (D).
     range:
@@ -204,6 +206,7 @@ tables:
     - 1.0
   - name: warmth_night
     type: number(quantity)
+    units: "0 to 1 (position on a fixed scale)"
     description: The organ's night warmth, 0 to 1, from the night air (D).
     range:
     - 0.0
