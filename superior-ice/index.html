@@ -496,7 +496,7 @@ function buildRail(){
   const rail = $('rail'); [...rail.querySelectorAll('.rrow')].forEach(n => n.remove());
   // Each row's spoken values, in text outside the rail so the rail's layout is untouched. Refreshed once a day, never announced.
   const old = $('srRegions'); if (old) old.remove();
-  $('srLive').insertAdjacentHTML('beforebegin', `<div class="sr-only" id="srRegions">${D.regions.map((r, i) => `<span id="sr${i}"></span>`).join('')}</div>`);
+  document.querySelector('main').insertAdjacentHTML('beforeend', `<div class="sr-only" id="srRegions">${D.regions.map((r, i) => `<span id="sr${i}"></span>`).join('')}</div>`);
   rail.insertAdjacentHTML('beforeend', D.regions.map((r, i) => `<div class="rrow" data-i="${i}" tabindex="0" role="button" aria-label="${r.name}: show its season" aria-describedby="sr${i}"><i class="glow" id="gl${i}"></i><span class="nm">${r.name}<small>${noteName(r.ice_midi)} · ${Math.abs(r.lon).toFixed(1)}°W ${r.lat.toFixed(1)}°N</small></span><span class="v" id="ri${i}">–</span><span class="v" id="rw${i}">–</span><span class="b" id="rb${i}"></span></div>`).join(''));
 }
 const dbLevel = v => clamp((20 * Math.log10(v + 1e-9) + 60) / 54, 0, 1);
