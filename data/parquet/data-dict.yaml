@@ -133,10 +133,14 @@ tables:
       each value's data flag.
     details: >
       Billings (STN_ID 1100) serves the Granby piece; Summerland CS (979)
-      serves the Okanagan piece. Summerland's separate rain and snow values
-      are flagged missing on 3,116 of 5,479 days, so the Okanagan piece splits
-      total precipitation into rain and snow by temperature instead (a
-      derived value, tagged D on the listening page).
+      serves the Okanagan piece. Some values are empty. An empty value with a
+      flag of M was reported missing; an empty value with no flag was not
+      reported at all. Summerland has no separate rain or snow value on any
+      of its 5,479 days (3,116 flagged missing, 2,363 with no flag), so the
+      Okanagan piece splits total precipitation into rain and snow by
+      temperature instead (a derived value, tagged D on the listening page).
+      Billings reports no relative humidity on any day. Each column's
+      description gives its counts of empty values.
     source:
       parquet: climate_daily.parquet
     columns:
@@ -158,65 +162,85 @@ tables:
       - name: mean_temperature
         type: number(quantity)
         units: °C
+        description: "Daily mean temperature. Empty on 715 of Billings' 5,479 days and 34 of Summerland's."
         range: [-24.3, 35.3]
       - name: min_temperature
         type: number(quantity)
         units: °C
+        description: "Daily minimum temperature. Empty on 712 of Billings' 5,479 days and 21 of Summerland's."
         range: [-28, 26.4]
       - name: max_temperature
         type: number(quantity)
         units: °C
+        description: "Daily maximum temperature. Empty on 715 of Billings' 5,479 days and 33 of Summerland's."
         range: [-20.5, 44.7]
       - name: total_precipitation
         type: number(quantity)
         units: mm
-        description: Rain plus the water equivalent of snow.
+        description: "Rain plus the water equivalent of snow. Empty on 718 of Billings' 5,479 days and 470 of Summerland's."
         range: [0, 45.4]
       - name: total_rain
         type: number(quantity)
         units: mm
+        description: >
+          Daily rainfall. Summerland has no value on any day (see the table
+          note); Billings is empty on 718 of 5,479 days. A trace amount is
+          recorded as 0 and flagged T.
         range: [0, 45.4]
       - name: total_snow
         type: number(quantity)
         units: cm
-        description: Depth of new snowfall.
+        description: >
+          Depth of new snowfall. Summerland has no value on any day (see the
+          table note); Billings is empty on 718 of 5,479 days.
         range: [0, 21.4]
       - name: snow_on_ground
         type: number(quantity)
         units: cm
         description: >
           Depth of snow on the ground. The Granby piece darkens and shortens
-          its reverb as this rises (snow absorbs sound).
+          its reverb as this rises (snow absorbs sound). Empty on 710 of
+          Billings' 5,479 days; Summerland reports it on only 535 days and is
+          empty on the other 4,944.
         range: [0, 56]
       - name: min_rel_humidity
         type: number(quantity)
         units: "%"
-        description: The day's minimum relative humidity (Summerland only).
+        description: >
+          The day's minimum relative humidity (Summerland only). Billings
+          reports none on any day; Summerland is empty on 1,657 of 5,479 days.
         range: [7, 96]
       - name: mean_temperature_flag
         type: enum
-        description: ECCC data flag for mean_temperature; empty when there is none.
+        description: ECCC data flag for mean_temperature; empty when there is none. An empty value with no flag means the day was not reported.
         values: {E: Estimated, M: Missing}
       - name: min_temperature_flag
         type: enum
+        description: ECCC data flag for min_temperature; empty when there is none. An empty value with no flag means the day was not reported.
         values: {E: Estimated, M: Missing}
       - name: max_temperature_flag
         type: enum
+        description: ECCC data flag for max_temperature; empty when there is none. An empty value with no flag means the day was not reported.
         values: {E: Estimated, M: Missing}
       - name: total_precipitation_flag
         type: enum
+        description: ECCC data flag for total_precipitation; empty when there is none. An empty value with no flag means the day was not reported.
         values: {E: Estimated, M: Missing, T: "Trace: precipitation too small to measure, recorded as 0"}
       - name: total_rain_flag
         type: enum
+        description: ECCC data flag for total_rain; empty when there is none. An empty value with no flag means the day was not reported.
         values: {M: Missing, T: "Trace: recorded as 0"}
       - name: total_snow_flag
         type: enum
+        description: ECCC data flag for total_snow; empty when there is none. An empty value with no flag means the day was not reported.
         values: {M: Missing, T: "Trace: recorded as 0"}
       - name: snow_on_ground_flag
         type: enum
+        description: ECCC data flag for snow_on_ground; empty when there is none. An empty value with no flag means the day was not reported.
         values: {M: Missing, T: "Trace: recorded as 0"}
       - name: min_rel_humidity_flag
         type: enum
+        description: ECCC data flag for min_rel_humidity; empty when there is none. An empty value with no flag means the day was not reported.
         values: {M: Missing}
 
   - name: modis_gpp
