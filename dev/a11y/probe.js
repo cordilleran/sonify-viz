@@ -18,5 +18,4 @@ const before=await pg.evaluate(()=>document.getElementById('focusT')?.textConten
 await pg.locator('#over').focus();for(const k of ['ArrowRight','ArrowDown','Enter']){await pg.keyboard.press(k);}
 const after=await pg.evaluate(()=>document.getElementById('focusT')?.textContent);
 console.log('\ncanvas#over arrow/enter changes focus text?',before!==after);
-console.log('hover-only handlers on #over:',await pg.evaluate(()=>'see source'));
 await b.close();})();

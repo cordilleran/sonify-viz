@@ -525,9 +525,10 @@ function frame(force){
     const rs = D.region_series, mean = k => D.regions.reduce((a, r) => a + rs[r.id][k][day], 0) / D.regions.length;
     const mv = D.movement_cuts_day, mi = mv.filter(d => day >= d).length;
     $('sub').innerHTML = `day ${day + 1} of ${N} · movement ${['I','II','III','IV'][mi]} · ${D.movement_names[mi].toLowerCase()}`;
-    D.regions.forEach((r, i) => { $('ri' + i).textContent = Math.round(rs[r.id].ice[day]) + '%'; $('rw' + i).textContent = rs[r.id].sst[day].toFixed(1) + '°';
+    D.regions.forEach((r, i) => { if (!$('ri' + i)) return;   // the audio's durationchange can fire before the region rows are built
+      $('ri' + i).textContent = Math.round(rs[r.id].ice[day]) + '%'; $('rw' + i).textContent = rs[r.id].sst[day].toFixed(1) + '°';
       const b = D.birds && D.birds[r.id], birds = !!(b && ((b.loon !== null && day >= b.loon) || (b.goose !== null && day >= b.goose))); $('rb' + i).textContent = birds ? '⌒' : '';
-      const sr = $('sr' + i); if (sr) sr.textContent = `ice ${Math.round(rs[r.id].ice[day])} percent, water ${rs[r.id].sst[day].toFixed(1)} degrees Celsius` + (birds ? ', symbolic birds have arrived' : ''); });
+      const sr = $('sr' + i); if (sr) sr.textContent = `ice ${Math.round(rs[r.id].ice[day])} percent, water ${(Math.round(rs[r.id].sst[day] * 10) / 10 + 0).toFixed(1)} degrees Celsius` + (birds ? ', symbolic birds have arrived' : ''); });
     let nF = 0, nB = 0; D.regions.forEach(r => (D.events[r.id] || []).forEach(e => { if (e[0] <= day){ e[1] > 0 ? nF++ : nB++; } }));
     const windMax = Math.max(...D.regions.map(r => rs[r.id].wind[day])), snow = mean('snow'), rain = D.regions.reduce((a, r) => a + Math.max(0, rs[r.id].precip[day] - 0.7 * rs[r.id].snow[day]), 0) / D.regions.length;
     const loons = D.regions.filter(r => D.birds && D.birds[r.id] && D.birds[r.id].loon !== null && day >= D.birds[r.id].loon).length;
@@ -624,7 +625,7 @@ const seekText = () => { const t = e => e.innerText.replace(/\s*\n\s*/g, ', ').t
 ['focus', 'change'].forEach(ev => $('seek').addEventListener(ev, seekText));
 audio.addEventListener('seeked', seekText); audio.addEventListener('pause', seekText);
 audio.addEventListener('ended', () => { $('play').textContent = 'Play'; overrideT = null; });
-window.addEventListener('keydown', e => { if (e.code === 'Space' && !['BUTTON', 'SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)){ e.preventDefault(); $('play').click(); } });
+window.addEventListener('keydown', e => { if (e.code === 'Space' && !e.defaultPrevented && !['BUTTON', 'SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName)){ e.preventDefault(); $('play').click(); } });
 
 // ---------- load ----------
 const PNOTE = {

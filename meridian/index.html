@@ -360,8 +360,8 @@ function frame(force){
         const C = D.covariates[String(D.voices[i].lat)], deg = x => `${x < 0 ? '−' : ''}${Math.abs(x).toFixed(0)}°`;
         const sea = [C.sst_c ? `sea ${C.sst_c[k].toFixed(1)}°` : '', C.ice_frac ? `ice ${Math.round(100 * C.ice_frac[k])}%` : ''].filter(Boolean).join(' · ');
         rows[i].querySelector('.cov').innerHTML = `air ${deg(C.air_max_c[k])} / ${deg(C.air_min_c[k])}<small>${sea || '&nbsp;'}</small>`;
-        const say = x => `${x < 0 ? 'minus ' : ''}${Math.abs(x).toFixed(0)}`;
-        said += `, air high ${say(C.air_max_c[k])} low ${say(C.air_min_c[k])} degrees Celsius` + (C.sst_c ? `, sea ${C.sst_c[k] < 0 ? 'minus ' : ''}${Math.abs(C.sst_c[k]).toFixed(1)} degrees Celsius` : '') + (C.ice_frac ? `, ice ${Math.round(100 * C.ice_frac[k])} percent` : '');
+        const say = x => { const r = Math.round(x); return r < 0 ? `minus ${-r}` : `${r}`; };
+        said += `, air high ${say(C.air_max_c[k])} low ${say(C.air_min_c[k])} degrees Celsius` + (C.sst_c ? `, sea ${(Math.round(C.sst_c[k] * 10) / 10 + 0).toFixed(1)} degrees Celsius` : '') + (C.ice_frac ? `, ice ${Math.round(100 * C.ice_frac[k])} percent` : '');
       }
       const sr = $('sr' + i); if (sr) sr.textContent = said;
     });
@@ -386,8 +386,7 @@ $('seek').onchange = () => { seeking = false; };
 const seekText = () => { const t = e => e.innerText.replace(/\s*\n\s*/g, ', ').trim();
   $('seek').setAttribute('aria-valuetext', [t($('date')), $('sub') ? t($('sub')) : '', t($('time'))].filter(Boolean).join(', ').replace(' / ', ' of ')); };
 ['focus', 'change'].forEach(ev => $('seek').addEventListener(ev, seekText));
-audio.addEventListener('seeked', seekText); audio.addEventListener('pause', seekText);
-audio.addEventListener('seeked', () => frame(true));
+audio.addEventListener('seeked', () => frame(true)); audio.addEventListener('seeked', seekText); audio.addEventListener('pause', seekText);
 audio.addEventListener('ended', () => { $('play').textContent = 'Play'; });
 
 $('rows').addEventListener('mouseover', e => { const r = e.target.closest('.row'); if (r) setFocus(+r.dataset.i, false); });

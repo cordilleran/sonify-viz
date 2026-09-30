@@ -63,7 +63,8 @@ Priority: **A** = would mislead a reader or a re-user of the data; **B** = missi
 
 | Column | Billings (1100) empty | Summerland (979) empty |
 |---|---|---|
-| mean and max temperature | 715 (13%) | 34 (1%) |
+| mean temperature | 715 (13%) | 34 (1%) |
+| max temperature | 715 (13%) | 33 (1%) |
 | total precipitation | 718 (13%) | 470 (9%) |
 | total rain, total snow | 718 (13%) | 5,479 (100%) |
 | snow on ground | 710 (13%) | 4,944 (90%) |

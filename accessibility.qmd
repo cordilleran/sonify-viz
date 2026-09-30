@@ -34,7 +34,7 @@ This site is about hearing data, so it should work for people who cannot see the
 These are the problems the audit found that mattered most. Each has a written fix that changes nothing about how the piece looks or sounds with a mouse. They take effect when the updated pages are published.
 
 - **Region values were silent.** Each region button on Superior Ice Year and Meridian Chorus announced only its name. The fix adds a spoken description, for example "ice 3 percent, water 3.6 degrees Celsius", read when the button is focused.
-- **The position bar read a number.** A screen reader said "170" for a place in the season. It now says the date and time, for example "Dec 11, 2025, day 41 of 227".
+- **The position bar read a number.** A screen reader said "170" for a place in the season. It now says the date and the position on the piece: the day number and movement on Superior Ice Year, for example "day 41 of 227", and the elapsed time. The exact words differ by piece.
 - **Pinning a region gave no feedback.** Pinning or releasing a region now makes one polite announcement. Nothing is announced while the piece plays.
 - **The Water Year score had no name,** and on a phone its scrolling box could not be reached from the keyboard. Both are fixed, and the label now points to the text versions of the same information.
 - **Smaller structural fixes:** the pages now declare their language, have a main landmark, and no longer stop Tab on a map that only responds to a mouse.

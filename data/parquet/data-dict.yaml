@@ -136,13 +136,14 @@ tables:
     details: >
       Billings (STN_ID 1100) serves the Granby piece; Summerland CS (979)
       serves the Okanagan piece. Some values are empty. An empty value with a
-      flag of M was reported missing; an empty value with no flag was not
-      reported at all. Summerland has no separate rain or snow value on any
+      flag of M was reported missing; an empty value with no flag has no
+      value and no flag in the file. Summerland has no separate rain or snow value on any
       of its 5,479 days (3,116 flagged missing, 2,363 with no flag), so the
       Okanagan piece splits total precipitation into rain and snow by
       temperature instead (a derived value, tagged D on the listening page).
-      Billings reports no relative humidity on any day. Each column's
-      description gives its counts of empty values.
+      Billings reports no relative humidity on any day. Each data column's
+      description gives its counts of empty values; the flag columns say
+      what an empty flag means.
     source:
       parquet: climate_daily.parquet
     columns:
@@ -214,35 +215,35 @@ tables:
         range: [7, 96]
       - name: mean_temperature_flag
         type: enum
-        description: ECCC data flag for mean_temperature; empty when there is none. An empty value with no flag means the day was not reported.
+        description: ECCC data flag for mean_temperature; empty when there is none. An empty value with no flag means the file has no value and no flag for that day.
         values: {E: Estimated, M: Missing}
       - name: min_temperature_flag
         type: enum
-        description: ECCC data flag for min_temperature; empty when there is none. An empty value with no flag means the day was not reported.
+        description: ECCC data flag for min_temperature; empty when there is none. An empty value with no flag means the file has no value and no flag for that day.
         values: {E: Estimated, M: Missing}
       - name: max_temperature_flag
         type: enum
-        description: ECCC data flag for max_temperature; empty when there is none. An empty value with no flag means the day was not reported.
+        description: ECCC data flag for max_temperature; empty when there is none. An empty value with no flag means the file has no value and no flag for that day.
         values: {E: Estimated, M: Missing}
       - name: total_precipitation_flag
         type: enum
-        description: ECCC data flag for total_precipitation; empty when there is none. An empty value with no flag means the day was not reported.
+        description: ECCC data flag for total_precipitation; empty when there is none. An empty value with no flag means the file has no value and no flag for that day.
         values: {E: Estimated, M: Missing, T: "Trace: precipitation too small to measure, recorded as 0"}
       - name: total_rain_flag
         type: enum
-        description: ECCC data flag for total_rain; empty when there is none. An empty value with no flag means the day was not reported.
+        description: ECCC data flag for total_rain; empty when there is none. An empty value with no flag means the file has no value and no flag for that day.
         values: {M: Missing, T: "Trace: recorded as 0"}
       - name: total_snow_flag
         type: enum
-        description: ECCC data flag for total_snow; empty when there is none. An empty value with no flag means the day was not reported.
+        description: ECCC data flag for total_snow; empty when there is none. An empty value with no flag means the file has no value and no flag for that day.
         values: {M: Missing, T: "Trace: recorded as 0"}
       - name: snow_on_ground_flag
         type: enum
-        description: ECCC data flag for snow_on_ground; empty when there is none. An empty value with no flag means the day was not reported.
+        description: ECCC data flag for snow_on_ground; empty when there is none. An empty value with no flag means the file has no value and no flag for that day.
         values: {M: Missing, T: "Trace: recorded as 0"}
       - name: min_rel_humidity_flag
         type: enum
-        description: ECCC data flag for min_rel_humidity; empty when there is none. An empty value with no flag means the day was not reported.
+        description: ECCC data flag for min_rel_humidity; empty when there is none. An empty value with no flag means the file has no value and no flag for that day.
         values: {M: Missing}
 
   - name: modis_gpp
