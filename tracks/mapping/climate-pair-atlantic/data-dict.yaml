@@ -26,7 +26,6 @@ version:
 
 tables:
   - name: years
-    description: "One row per calendar year, 1958 to 2025 (68 rows): where the year sits in the audio, the mode and chords chosen for it, and the records it read."
     source:
       parquet: years.parquet
     columns:

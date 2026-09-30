@@ -17,6 +17,7 @@ project:
     - tracks.qmd
     - glossary.qmd
     - about.qmd
+    - accessibility.qmd
   resources:
     - listen/index.html
     # listed one by one: Quarto doesn't expand wildcards inside symlinked folders
@@ -80,7 +81,7 @@ website:
         href: https://github.com/cordilleran/sonify-viz
         aria-label: Source code on GitHub
   page-footer:
-    left: "Graham Watt & Claude Code · [how this was made](about.qmd) · [source on GitHub](https://github.com/cordilleran/sonify-viz)"
+    left: "Graham Watt & Claude Code · [how this was made](about.qmd) · [accessibility](accessibility.qmd) · [source on GitHub](https://github.com/cordilleran/sonify-viz)"
     right: "Code MPL 2.0 · audio: see each piece · data per source"
 
 format:

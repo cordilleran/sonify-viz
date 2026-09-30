@@ -3,7 +3,7 @@
   python dev/dictionary/dd_lint.py
 
 Rules (2026-09-30):
-  1. every table has a description;
+  1. every table has a description (a single-table dictionary may carry it at the top level);
   2. every column except an enum has a description;
   3. every number(quantity) column has units and a range;
   4. units use one spelling: '%' (not 'percent'), '°C' (not 'degrees C'), and a described 'ppm (...)' (not bare 'ppm');
@@ -24,7 +24,8 @@ for f in FILES:
     base = os.path.dirname(os.path.join(ROOT, f))
     for t in d["tables"]:
         where = f"{f.replace('/data-dict.yaml', '')} :: {t['name']}"
-        if "description" not in t:
+        # a single-table dictionary carries its description at the top level (validator rule S16)
+        if "description" not in t and not (len(d["tables"]) == 1 and d.get("description")):
             problems.append(f"{where}: table has no description")
         tab = pq.read_table(os.path.join(base, t["source"]["parquet"]))
         for c in t["columns"]:
