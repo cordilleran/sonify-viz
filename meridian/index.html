@@ -272,7 +272,10 @@ function layoutRows(){
 }
 
 function buildRows(){
-  $('rows').innerHTML = D.voices.map((v, i) => `<div class="row" data-i="${i}" tabindex="0" role="button" aria-label="${latName(v.lat)} ${v.place}: show its year"><span class="lat">${v.lat > 0 ? v.lat + '°N' : v.lat < 0 ? -v.lat + '°S' : '0°'}</span>
+  // Each row's spoken values, in text outside the list so its layout is untouched. Refreshed once a breath, never announced.
+  const old = $('srRegions'); if (old) old.remove();
+  $('srLive').insertAdjacentHTML('beforebegin', `<div class="sr-only" id="srRegions">${D.voices.map((v, i) => `<span id="sr${i}"></span>`).join('')}</div>`);
+  $('rows').innerHTML = D.voices.map((v, i) => `<div class="row" data-i="${i}" tabindex="0" role="button" aria-label="${latName(v.lat)} ${v.place}: show its year" aria-describedby="sr${i}"><span class="lat">${v.lat > 0 ? v.lat + '°N' : v.lat < 0 ? -v.lat + '°S' : '0°'}</span>
     <span class="place">${v.place}<small>${v.surface}</small></span><span class="val"><span class="dl">–</span><small class="rs"></small></span><span class="cov"></span></div>`).join('');
 }
 
@@ -350,12 +353,17 @@ function frame(force){
     $('sub').innerHTML = `breath ${k + 1} of ${nb}<br>sun overhead at ${Math.abs(b.declination).toFixed(1)}°${b.declination >= 0 ? 'N' : 'S'}`;
     b.voices.forEach((v, i) => {
       rows[i].querySelector('.dl').textContent = dur(v[0]);
-      rows[i].querySelector('.rs').textContent = v[2] === null ? (v[0] > 12 ? 'sun never sets' : 'sun never rises') : `${hm(v[2])}–${hm(v[3])}`;
+      const sun = v[2] === null ? (v[0] > 12 ? 'sun never sets' : 'sun never rises') : `${hm(v[2])}–${hm(v[3])}`;
+      rows[i].querySelector('.rs').textContent = sun;
+      let said = `day length ${dur(v[0]).replace(/(\d+)h (\d+)m/, '$1 hours $2 minutes')}, ` + (v[2] === null ? sun : `sun up ${hm(v[2])} to ${hm(v[3])} solar time`);
       if (D.covariates){
         const C = D.covariates[String(D.voices[i].lat)], deg = x => `${x < 0 ? '−' : ''}${Math.abs(x).toFixed(0)}°`;
         const sea = [C.sst_c ? `sea ${C.sst_c[k].toFixed(1)}°` : '', C.ice_frac ? `ice ${Math.round(100 * C.ice_frac[k])}%` : ''].filter(Boolean).join(' · ');
         rows[i].querySelector('.cov').innerHTML = `air ${deg(C.air_max_c[k])} / ${deg(C.air_min_c[k])}<small>${sea || '&nbsp;'}</small>`;
+        const say = x => `${x < 0 ? 'minus ' : ''}${Math.abs(x).toFixed(0)}`;
+        said += `, air high ${say(C.air_max_c[k])} low ${say(C.air_min_c[k])} degrees Celsius` + (C.sst_c ? `, sea ${C.sst_c[k] < 0 ? 'minus ' : ''}${Math.abs(C.sst_c[k]).toFixed(1)} degrees Celsius` : '') + (C.ice_frac ? `, ice ${Math.round(100 * C.ice_frac[k])} percent` : '');
       }
+      const sr = $('sr' + i); if (sr) sr.textContent = said;
     });
   }
   const hour = hourFrac * 24;
