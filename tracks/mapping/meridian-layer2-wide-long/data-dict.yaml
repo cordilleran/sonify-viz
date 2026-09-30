@@ -42,6 +42,7 @@ tables:
     - 90
   - name: place
     type: string
+    description: "The place under the voice, from the North Pole to the South Pole, for example Edwards Plateau, Texas."
     examples:
     - Bathurst Island, Nunavut
     - Edwards Plateau, Texas

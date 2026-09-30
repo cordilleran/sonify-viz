@@ -32,6 +32,7 @@ tables:
     columns:
       - name: year
         type: number(ordinal)
+        description: "The calendar year this bar plays, 1958 to 2025 (one year per bar)."
         constraints: [primary_key]
         range: [1958, 2025]
       - name: bar

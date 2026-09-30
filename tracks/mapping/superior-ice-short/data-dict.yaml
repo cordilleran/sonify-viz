@@ -43,6 +43,7 @@ tables:
       whitefish: Whitefish Bay and Sault
   - name: name
     type: string
+    description: "The region's full name, as shown on the page; id is its short key."
     examples:
     - Central basin
     - Isle Royale
@@ -109,6 +110,7 @@ tables:
   columns:
   - name: date
     type: date
+    description: "The calendar day, from 1 November 2025 to 15 June 2026 (227 days)."
     constraints:
     - required
     range:
@@ -213,6 +215,7 @@ tables:
   columns:
   - name: date
     type: date
+    description: "The calendar day, from 1 November 2025 to 15 June 2026 (227 days)."
     constraints:
     - primary_key
     range:
@@ -220,6 +223,7 @@ tables:
     - 2026-06-15
   - name: day
     type: number(ordinal)
+    description: "The day's number within the season, from 0 (1 November 2025) to 226 (15 June 2026)."
     constraints:
     - required
     range:

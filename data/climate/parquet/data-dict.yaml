@@ -226,6 +226,7 @@ tables:
         range: [1963-03-17, 2022-01-15]
       - name: name
         type: string
+        description: "The volcano and its country or region, for example Pinatubo, Philippines."
         constraints: [required]
         examples: ["Agung, Bali", "El Chichon, Mexico", "Pinatubo, Philippines", "Hunga Tonga-Hunga Ha'apai"]
       - name: vei
@@ -266,6 +267,7 @@ tables:
     columns:
       - name: year
         type: number(ordinal)
+        description: "The calendar year the peak belongs to, 1929 to 2026."
         constraints: [primary_key]
         range: [1929, 2026]
       - name: max_daily_m3s
