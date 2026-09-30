@@ -158,7 +158,7 @@ section > h2{font-size:28px}
   <section>
     <h2>The score</h2>
     <p class="lede">Data on top, sound underneath. Each blue lane is a record; each orange lane is how loud that instrument group plays at that moment. When a record moves, its instrument should move with it. Click anywhere to jump there.</p>
-    <div class="scorebox"><canvas id="score"></canvas><div class="tip" id="stip" aria-hidden="true"></div></div>
+    <div class="scorebox" role="region" tabindex="0" aria-label="The score, scrolls sideways on a narrow screen"><canvas id="score" role="img" aria-label="The score: one blue lane for each record and one orange lane for the loudness of the instrument that plays from it, across the water year. Hover or click a lane to read it on any day. The values table beside the ring and the list of events further down the page give the same information as text."></canvas><div class="tip" id="stip" aria-hidden="true"></div></div>
   </section>
 
   <div class="cols">
@@ -178,7 +178,7 @@ section > h2{font-size:28px}
   <section>
     <h2>What drives what</h2>
     <p class="lede">Rings run from the centre outward in this order. <span class="src R">R</span> retrieved measurements. <span class="src D">D</span> derived from measurements or the calendar. <span class="src S">S</span> simulated timing. The simulated layers are modelled from temperature and season, not observed.</p>
-    <div class="tablebox"><table class="maptable"><thead><tr><th>Record</th><th>Source</th><th>What you hear</th></tr></thead><tbody id="map"></tbody></table></div>
+    <div class="tablebox" role="region" tabindex="0" aria-label="What drives what, scrolls sideways on a narrow screen"><table class="maptable"><thead><tr><th>Record</th><th>Source</th><th>What you hear</th></tr></thead><tbody id="map"></tbody></table></div>
   </section>
 
   <section class="credits">
