@@ -1,0 +1,62 @@
+---
+title: "Accessibility"
+subtitle: "What we tested, what works, what we are fixing and what we have not checked"
+toc: true
+---
+
+::: {.eyebrow}
+Written by Claude Code, the AI agent that did the testing, for Graham Watt · audit of 30 September 2026
+:::
+
+This site is about hearing data, so it should work for people who cannot see the pictures, cannot hear the sound, or cannot use a mouse. We have started checking that. This page says what we did, what we found and what we have not done.
+
+## In brief
+
+- **We audited three of the pieces on 30 September 2026:** Superior Ice Year, Meridian Chorus and Water Year Rings, each on its own page. The measure was the Web Content Accessibility Guidelines (WCAG) 2.2, level AA. **The audit was partial, and we do not claim that the site conforms.**
+- **Working with a keyboard is in good shape.** Every control can be reached and used without a mouse, focus never gets stuck, and the pages fit a 320-pixel-wide screen without sideways scrolling.
+- **The larger gap is meaning.** A person using a screen reader could operate the pieces but learned little of what the pictures show. We have written fixes for the most serious problems of this kind; they are listed below.
+- **Two things are still open** because they change how a piece looks or reads, so they are decisions for Graham: some small grey text is too faint on the dark backgrounds, and there is no written account of each season for someone who wants the story without the picture or the sound.
+- **We have not tested with a screen reader, on Safari, or on a phone,** and we did not test the rest of this site. The list is under [What we have not checked](#what-we-have-not-checked).
+
+## What works
+
+- **Keyboard.** On the three pieces we counted 23 to 34 stops in the Tab order, in a sensible order, and each shows a focus outline (we checked that one is set, not how easy it is to see). Space plays and pauses. Escape lets go of a region you have pinned.
+- **Names and roles.** Controls have names a screen reader can read, including the play button, the position slider, the overlay toggles and the picture-and-data comparison handle.
+- **Zoom and small screens.** At 640 and 320 pixels wide, nothing scrolls sideways on any of the three pieces.
+- **Alternatives to the pictures that already existed.**
+    - Superior Ice Year has a table saying what each instrument means, a 50-second audio "roll call" with live captions that names every region and layer, and a lake-floor figure with a full written description.
+    - Water Year Rings has a values table that follows the playhead and a list of the season's events you can jump to.
+    - The Climate Pair page labels its charts and lets you step through the timeline with the arrow keys. We read its code but did not run it in this audit.
+- **Colour modes.** We looked at the top of Superior Ice Year in a forced-colours mode and it stayed readable.
+
+## What we are fixing
+
+These are the problems the audit found that mattered most. Each has a written fix that changes nothing about how the piece looks or sounds with a mouse. They take effect when the updated pages are published.
+
+- **Region values were silent.** Each region button on Superior Ice Year and Meridian Chorus announced only its name. The fix adds a spoken description, for example "ice 3 percent, water 3.6 degrees Celsius", read when the button is focused.
+- **The position bar read a number.** A screen reader said "170" for a place in the season. It now says the date and time, for example "Dec 11, 2025, day 41 of 227".
+- **Pinning a region gave no feedback.** Pinning or releasing a region now makes one polite announcement. Nothing is announced while the piece plays.
+- **The Water Year score had no name,** and on a phone its scrolling box could not be reached from the keyboard. Both are fixed, and the label now points to the text versions of the same information.
+- **Smaller structural fixes:** the pages now declare their language, have a main landmark, and no longer stop Tab on a map that only responds to a mouse.
+
+## What is still open
+
+- **Small text is too faint in places.** Six colour pairs on the dark backgrounds fall below the 4.5-to-1 contrast that WCAG asks for. Changing them alters the palettes, so Graham will decide from a side-by-side comparison.
+- **No written account of each season.** The pieces describe the instruments and the data, but nothing tells the story of the year in words. Writing one belongs in the site's voice, so it waits for Graham.
+
+## What we have not checked
+
+- **No screen reader was used** (NVDA, JAWS, VoiceOver or TalkBack). When we say something is "announced", we mean it appears in the browser's accessibility tree, which is what screen readers read from. It is not the same as hearing it.
+- **No Safari, no Firefox and no real phone.** The soft region edges on Superior Ice Year need a recent Safari, and we have not seen them on one.
+- **Most of this site.** We did not test the home page, the Tracks, Glossary, Methods and About pages, the Climate Pair page as it appears on the site, the data dictionary pages, the menu or the footer. We also did not test how the pieces behave inside their frames on the site, beyond the checks we could run on the standalone pages.
+- **Colour alone.** We have not simulated colour-blindness on the maps, spirals and heat strips, so we do not know whether anything depends on telling colours apart.
+- **The sound.** We did not check captions or transcripts for the audio itself, and no one who is blind or deaf has reviewed the pieces.
+- **Tools find only part of the problem.** The automated checks found a fraction of the issues above. Most came from reading the page structure and the code.
+
+## How we tested
+
+On 30 September 2026 we opened each piece in Chromium 141 through Playwright 1.63 and ran the axe-core 4.13 accessibility checker at desktop and phone widths, both on the page alone and inside a frame like the one this site uses. We walked the Tab order by script, resized to 640 and 320 pixels, and read the browser's accessibility tree. The scripts and the full report are in the repository, so anyone can repeat the checks: see the [audit report](https://github.com/cordilleran/sonify-viz/blob/main/dev/reports/a11y-audit-260930.md), which lists each finding with the evidence and what we suggest.
+
+## Tell us about a problem
+
+If something on this site does not work for you, please [open an issue on GitHub](https://github.com/cordilleran/sonify-viz/issues/new?template=bug.yml). Say which page you were on, what you were trying to do, and what technology you use (a screen reader and browser, for example). You do not need to know the technical cause. We would especially like to hear from people who use a screen reader, magnification, voice control or a switch.
