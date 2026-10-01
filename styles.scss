@@ -36,6 +36,10 @@ h1, h2, h3 { text-wrap: balance; letter-spacing: .005em; }
 h1.title { font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 1; }
 .quarto-title .subtitle { color: $muted; }
 .navbar { border-bottom: 1px solid $line; }
+// one site width: the navbar and the full-width pages share it, so the brand lines up with the content
+$site-width: 1240px;
+.navbar .navbar-container { max-width: $site-width; margin-inline: auto; width: 100%; }
+body.fullcontent #quarto-content > main.content { max-width: $site-width; margin-inline: auto; width: 100%; }
 .navbar-title { font-family: "Gloock", Georgia, serif; font-weight: 400; }
 table { font-size: .92rem; }
 table th { font-family: "JetBrains Mono", monospace; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: $muted; }

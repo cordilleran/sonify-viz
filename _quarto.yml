@@ -60,22 +60,25 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - text: Water Year Rings
+      - text: Pieces
         menu:
+          # nav:pieces start
           - href: water-year.qmd
-            text: The pieces
+            text: "Water Year Rings"
+          - href: climate.qmd
+            text: "Climate Pair"
+          - href: meridian.qmd
+            text: "Meridian Chorus"
+          - href: superior-ice.qmd
+            text: "Superior Ice Year"
+          - href: regimes.qmd
+            text: "Flow Regimes"
+          - text: "---"
           - href: listen.qmd
-            text: Listen with the visual
+            text: "Water Year: listen with the visual"
           - href: methods.qmd
-            text: Methods & code
-      - href: climate.qmd
-        text: Climate Pair
-      - href: meridian.qmd
-        text: Meridian Chorus
-      - href: superior-ice.qmd
-        text: Superior Ice
-      - href: regimes.qmd
-        text: Flow Regimes
+            text: "Methods & code"
+          # nav:pieces end
       - href: tracks.qmd
         text: Tracks
       - href: glossary.qmd
@@ -92,6 +95,12 @@ website:
 
 format:
   html:
+    # no left sidebar: take its empty column away so the body sits under the navbar, not right of centre
+    grid:
+      sidebar-width: 0px
+      body-width: 900px
+      margin-width: 260px
+      gutter-width: 1.5rem
     theme: [darkly, styles.scss]
     highlight-style: nord
     toc: true
