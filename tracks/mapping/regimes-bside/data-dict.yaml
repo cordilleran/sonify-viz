@@ -1,0 +1,328 @@
+$version: 0.1.0
+$learn_more: https://data-dict.tidyverse.org/
+name: regimes-bside-mapping
+label: Interior Flow, B-side - mapping
+description: 'How the B-side turns four exemplar water years of interior British Columbia into a drum-led piece, as three
+  tables: the four year voices, each year week by week, and what each bar did. A week is a bar, 52 bars make a pass, and
+  each pass adds one voice.'
+details: Copied by scripts/export_mapping.py from the score JSON of the locked render (renders.lock.json), and only if its
+  SHA-256 matches the lock. The values are the piece's own, not recomputed (scripts/regimes_bside.py). Flow, snow water
+  equivalent and air temperature are regional medians over the 61 catchments with at least 36 complete water years and BEC
+  cover, from the Borealis catchment-mean forcing set (Kovacek, CC BY-SA 4.0, doi 10.5683/SP3/65FXAS) (R, then D). The four
+  years are exemplars of a four-group clustering (D). Everything the lead, filter, mode and breakdown do is derived (D);
+  the sub's note is a fixed calendar plan.
+origin: ../../../scripts/export_mapping.py
+version:
+  number: 1.0.0
+tables:
+- name: voices
+  label: The four year voices
+  description: 'One row per voice: the exemplar year it reads, its drum, its cycle length, where it sits in the stereo image,
+    the pass it enters and how many hits it plays in the piece (D).'
+  source:
+    parquet: voices.parquet
+  columns:
+  - name: year
+    type: number(ordinal)
+    constraints:
+    - primary_key
+    description: 'The water year (October to September) this voice reads: 1988, 1995, 2012 or 2018.'
+    range:
+    - 1988
+    - 2018
+  - name: regime
+    type: enum
+    constraints:
+    - required
+    description: The kind of year this one stands for, from the four-group clustering of the 42 water years 1981 to 2022
+      (D).
+    values:
+      dry: Dry year
+      normal: Near normal
+      late, big, wet: Late, big, wet freshet
+      early, dry summer: Early freshet and a dry summer
+  - name: kind
+    type: enum
+    constraints:
+    - required
+    description: The instrument that plays this year.
+    values:
+      timpani: Timpani
+      conga: Conga
+      logdrum: Log drum (wood)
+      shaker: Shaker and triangle
+  - name: cycle_steps
+    type: number(quantity)
+    constraints:
+    - required
+    units: steps
+    description: Length of the voice's repeating pattern in sixteenth-note steps, against a 16-step bar.
+    range:
+    - 3
+    - 9
+  - name: pan
+    type: number(quantity)
+    constraints:
+    - required
+    units: -1 to 1 (left to right)
+    description: Stereo position, -1 left to 1 right.
+    range:
+    - -0.35
+    - 0.4
+  - name: entry_pass
+    type: number(ordinal)
+    constraints:
+    - required
+    description: The pass in which the voice first plays (one voice enters per pass).
+    range:
+    - 1
+    - 4
+  - name: hits
+    type: number(quantity)
+    constraints:
+    - required
+    units: hits
+    description: Hits the voice plays over the whole piece.
+    range:
+    - 779
+    - 1359
+- name: weeks
+  label: Each year, week by week
+  description: 'One row per voice and week of the water year (52 weeks from 1 October): the regional median flow, snowpack
+    and air temperature the voice reads (R, then the median across catchments, D).'
+  source:
+    parquet: weeks.parquet
+  columns:
+  - name: year
+    type: number(ordinal)
+    constraints:
+    - required
+    description: 'The water year (October to September) this voice reads: 1988, 1995, 2012 or 2018.'
+    range:
+    - 1988
+    - 2018
+  - name: week
+    type: number(ordinal)
+    constraints:
+    - required
+    description: Week of the water year, from 0 (the week of 1 October) to 51.
+    range:
+    - 0
+    - 51
+  - name: flow_rel
+    type: number(quantity)
+    constraints:
+    - required
+    units: times the catchment's own mean
+    description: Regional median of weekly mean flow, each catchment scaled by its own long-term mean, so 1 is an ordinary
+      week for that river. Sets the voice's hit density and loudness through a log curve.
+    range:
+    - 0.0986
+    - 7.7326
+  - name: swe_rel
+    type: number(quantity)
+    constraints:
+    - required
+    units: fraction of mean annual peak
+    description: Regional median snow water equivalent, each catchment scaled by its own mean annual peak. Sets the filter
+      and, as its weekly fall, the lead.
+    range:
+    - 0.0021
+    - 1.2104
+  - name: temp_c
+    type: number(quantity)
+    constraints:
+    - required
+    units: degrees C
+    description: Regional median of daily mean air temperature (the mean of maximum and minimum). Above 10 degrees C the
+      lead uses B natural.
+    range:
+    - -17.09
+    - 19.43
+- name: bars
+  label: What each bar did
+  description: 'One row per bar (a week of the water year; 52 bars a pass, five passes and a 4-bar coda): which voices were
+    sounding and how many of their cycle''s steps they played, the covariates averaged over those voices, and what the lead,
+    the filter, the mode and the sub did (D).'
+  source:
+    parquet: bars.parquet
+  columns:
+  - name: bar
+    type: number(ordinal)
+    constraints:
+    - primary_key
+    description: Bar number, from 1.
+    range:
+    - 1
+    - 264
+  - name: pass
+    type: number(ordinal)
+    constraints:
+    - required
+    description: Pass 1 to 5 is one water year each; 6 is the coda.
+    range:
+    - 1
+    - 6
+  - name: week
+    type: number(ordinal)
+    constraints:
+    - required
+    description: The week of the water year this bar reads.
+    range:
+    - 0
+    - 51
+  - name: t
+    type: number(quantity)
+    constraints:
+    - required
+    units: seconds
+    description: When the bar starts in the audio.
+    range:
+    - 2.0
+    - 511.032
+  - name: voices_sounding
+    type: number(ordinal)
+    constraints:
+    - required
+    description: How many year voices have entered (0 in the coda).
+    range:
+    - 0
+    - 4
+  - name: k_1988
+    type: number(quantity)
+    units: hits per cycle
+    description: Hits in the 1988 voice's Euclidean pattern this bar (of its cycle length), set by that week's flow. Empty
+      until the voice enters, and in the coda.
+    range:
+    - 0
+    - 8
+  - name: k_1995
+    type: number(quantity)
+    units: hits per cycle
+    description: Hits in the 1995 voice's Euclidean pattern this bar (of its cycle length), set by that week's flow. Empty
+      until the voice enters, and in the coda.
+    range:
+    - 0
+    - 6
+  - name: k_2012
+    type: number(quantity)
+    units: hits per cycle
+    description: Hits in the 2012 voice's Euclidean pattern this bar (of its cycle length), set by that week's flow. Empty
+      until the voice enters, and in the coda.
+    range:
+    - 0
+    - 4
+  - name: k_2018
+    type: number(quantity)
+    units: hits per cycle
+    description: Hits in the 2018 voice's Euclidean pattern this bar (of its cycle length), set by that week's flow. Empty
+      until the voice enters, and in the coda.
+    range:
+    - 0
+    - 3
+  - name: rot_1988
+    type: number(quantity)
+    units: steps
+    description: 'Steps the 1988 voice''s pattern is rotated this bar: it grows with the pass and slowly within a pass.
+      Empty until the voice enters.'
+    range:
+    - 0
+    - 8
+  - name: rot_1995
+    type: number(quantity)
+    units: steps
+    description: 'Steps the 1995 voice''s pattern is rotated this bar: it grows with the pass and slowly within a pass.
+      Empty until the voice enters.'
+    range:
+    - 0
+    - 6
+  - name: rot_2012
+    type: number(quantity)
+    units: steps
+    description: 'Steps the 2012 voice''s pattern is rotated this bar: it grows with the pass and slowly within a pass.
+      Empty until the voice enters.'
+    range:
+    - 0
+    - 4
+  - name: rot_2018
+    type: number(quantity)
+    units: steps
+    description: 'Steps the 2018 voice''s pattern is rotated this bar: it grows with the pass and slowly within a pass.
+      Empty until the voice enters.'
+    range:
+    - 0
+    - 2
+  - name: swe_rel
+    type: number(quantity)
+    constraints:
+    - required
+    units: fraction of mean annual peak
+    description: Snow water equivalent averaged over the voices sounding, which sets the filter cutoff.
+    range:
+    - 0.0
+    - 0.973
+  - name: melt
+    type: number(quantity)
+    constraints:
+    - required
+    units: 0 to 1
+    description: Snowmelt this week, the fall in snow water equivalent from the week before, scaled to 0 to 1 (a fall of
+      0.12 or more is 1). Sets the lead's density.
+    range:
+    - 0.0
+    - 0.741
+  - name: temp_c
+    type: number(quantity)
+    constraints:
+    - required
+    units: degrees C
+    description: Air temperature averaged over the voices sounding.
+    range:
+    - -17.1
+    - 16.2
+  - name: mode
+    type: enum
+    constraints:
+    - required
+    description: Warm weeks (above 10 degrees C) use B natural, otherwise B flat.
+    values:
+      Dorian: 'B natural: warmer'
+      Aeolian: 'B flat: darker'
+  - name: pedal
+    type: enum
+    constraints:
+    - required
+    description: The note of the sub pedal. It changes at fixed bars of each pass (D, then C from bar 27, then B flat from
+      bar 40), not from the data; only its level follows the flow floor.
+    values:
+      D: D
+      C: C
+      Bb: B flat
+  - name: breakdown
+    type: boolean
+    description: 'True when the kick and clap drop out: from week 38 (late June), when the sounding voices'' mean level
+      is below 0.40. It happens in every pass.'
+  - name: lead_k
+    type: number(quantity)
+    constraints:
+    - required
+    units: hits per cycle
+    description: Notes per 7-step cycle in the harp and marimba lead (0 is silent). The harp sounds only when snow is melting,
+      from the middle of pass 3; a marimba doubles it from pass 4.
+    range:
+    - 0
+    - 3
+  - name: cutoff_hz
+    type: number(quantity)
+    constraints:
+    - required
+    units: Hz
+    description: 'Low-pass cutoff on the hats, shaker and lead (the lead''s is 1.3 times this, within 3 to 16 kHz): lower
+      when there is more snow.'
+    range:
+    - 4274
+    - 14000
+relationships:
+- join: weeks.year = voices.year
+  cardinality: many-to-one
+  description: Each voice reads 52 weeks.

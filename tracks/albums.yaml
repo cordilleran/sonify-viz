@@ -19,3 +19,8 @@
   page: superior-ice.qmd
   about: One winter of ice on Lake Superior, 2025-26, heard region by region from west to east.
   tracks: [superior-ice, superior-ice-short]
+- id: flow-regimes
+  title: Flow Regimes
+  page: regimes.qmd
+  about: Four very different water years of interior British Columbia, each a drum voice, entering one at a time.
+  tracks: [regimes-bside]

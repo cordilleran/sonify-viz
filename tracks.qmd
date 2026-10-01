@@ -427,3 +427,56 @@ Every step from record to sound, with its bounds: [the mapping dictionary](dicti
 - v0.2 (2026-09-28): After a first listen: fewer, more distant birds; quieter, wetter events.
 - v0.1 (2026-09-28): First render.
 
+# Flow Regimes
+
+Four very different water years of interior British Columbia, each a drum voice, entering one at a time. [The album's page](regimes.qmd).
+
+## Interior Flow, B-side {#regimes-bside}
+
+**v1.0** · WY1988, 1995, 2012, 2018 (four exemplar water years drawn from 1987 to 2018 (not contiguous), 1987-10-01 to 2018-09-30) · [listen](regimes.qmd?piece=bside_regimes)
+
+*What do four very different water years of interior British Columbia sound like when each one is a drum voice, entering one at a time over the same year of snow, melt and warmth?*
+
+**Place.** Interior British Columbia: regional weekly medians over the 61 catchments that have at least 36 complete water years (WY1981 to 2022) and BEC cover (58 to 61 report in each of the four years), from the Borealis catchment-mean forcing set. The four years are the exemplars of a four-group clustering of the 42 years.
+
+**Records.**
+
+- Streamflow (Water Survey of Canada) and Daymet catchment-mean snow water equivalent and air temperature, from the Borealis dataset (Kovacek, CC BY-SA 4.0, doi 10.5683/SP3/65FXAS), version 2 of 2025-12-02 (R, regional weekly medians, D)
+- The four years are k=4 exemplars chosen by Ward clustering on freshet timing, volume, late-summer flow and peak snow (D)
+- Instruments, VSCO 2 Community Edition (CC0)
+
+| Layer | Data | What you hear | |
+|---|---|---|---|
+| year voices | each exemplar year's weekly regional flow, relative to each catchment's own mean | timpani (1988, 9-step cycle), conga (1995, 7), log drum (2012, 5), shaker and triangle (2018, 3); a Euclidean pattern whose density and loudness follow the flow, one voice entering per pass | <span class="src D">D</span> |
+| lead | weekly fall in snow water equivalent (snowmelt) | a harp on a 7-step cell (from pass 3) and a marimba doubling it three steps ahead (from pass 4), denser in faster melt, so they sound only in melt weeks | <span class="src D">D</span> |
+| filter | snow water equivalent | a low-pass on the hats, shaker and lead: dull under deep snow, open at melt | <span class="src D">D</span> |
+| mode | weekly air temperature | B natural (Dorian) above 10 °C, B flat (Aeolian) below | <span class="src D">D</span> |
+| sub | flow floor (lowest weekly flow of the last six weeks) | a sine pedal whose level follows the floor; its note (D, C, B flat) changes at fixed bars | <span class="src D">D</span> |
+| breakdown | mean level of the sounding voices, from week 38 (late June) | kick and clap drop out in low-flow bars from week 38 (late June) | <span class="src D">D</span> |
+
+Every step from record to sound, with its bounds: [the mapping dictionary](dictionary/regimes-bside-mapping.html) (tables in `tracks/mapping/regimes-bside/`).
+
+**Harmony.** A held D pedal; the lead stays in D Aeolian, with B natural (D Dorian) in warm weeks. 124 beats per minute, 16 steps a bar, swing 0.56, a week to a bar, five passes of 52 bars and a 4-bar coda (8 min 42 s). The year voices loop on 9, 7, 5 and 3 steps against the bar and rotate a little every pass.
+
+**Simulated, not observed.**
+
+- The idiom (odd-length Euclidean cycles against a steady 4/4, swing, micro-timing, additive entries, a filter as form) is evoked from a description of a style, not taken from any record; no melody, sample or voice comes from any recording.
+
+**Be careful about.**
+
+- The lead is silent until the first melt of pass 3 (4:17), so the piece is percussion and sub for its first four minutes; the marimba doubling joins in pass 4.
+- The breakdown happens in every pass, so it marks the season more than the year; the sub's note changes at fixed bars, not at the freshet.
+- Snow and temperature are averaged over the voices that have entered, so the filter in pass 1 follows 1988 alone.
+- The years form a continuum more than four clean groups (silhouette about 0.3 at every k from 3 to 7); four is a working choice, not a finding.
+- The weekly series are regional medians, so they hide the spread between catchments and the elevation effect, which explains freshet timing better than the BEC zone.
+- Claude Code cannot hear; levels were set by measurement (active level against the mix) and Graham has listened. Whose land the catchments are on is not yet mapped; the territory note is pending.
+- The scripts that derive data/regimes/weekly.json from the Borealis files and the BEC map are not yet in this repository; the weekly table itself is.
+
+**Reproduce.** `python scripts/regimes_bside.py` · seed 124 · locked 2026-09-30 · SHA-256 of the MP3 on this site `26d46a6c69e95eb3…` · check it with `python scripts/renders.py verify regimes-bside`
+
+**Credits.** Graham Watt, the question, the region and direction; Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code; Data, Borealis (Kovacek, CC BY-SA 4.0); instruments, VSCO 2 Community Edition (CC0).
+
+**Changelog.**
+
+- v1.0 (2026-09-30): First published render.
+

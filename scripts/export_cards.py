@@ -26,7 +26,7 @@ TRACKS = ROOT / "tracks"
 LOCK = ROOT / "renders.lock.json"
 OUT = (ROOT / "site" if (ROOT / "site").is_dir() else ROOT) / "tracks.qmd"  # vault layout, or the repo's
 LISTEN = {"water-year": "listen.qmd?piece={name}", "climate-pair": "climate.qmd?piece={basin}",
-          "meridian": "meridian.qmd", "superior-ice": "superior-ice.qmd"}
+          "meridian": "meridian.qmd", "superior-ice": "superior-ice.qmd", "flow-regimes": "regimes.qmd"}
 
 
 def load_cards():
@@ -64,7 +64,7 @@ def uncarded(root):
     """-> MP3s the site plays that no track card describes (a publish check: every published track has a card)."""
     root = Path(root)
     claimed = {card_mp3(c) for c in load_cards()[1].values()}
-    played = [str(f.relative_to(root)) for d in ("listen", "audio", "meridian", "superior-ice") for f in sorted((root / d).glob("*.mp3"))
+    played = [str(f.relative_to(root)) for d in ("listen", "audio", "meridian", "superior-ice", "flow-regimes") for f in sorted((root / d).glob("*.mp3"))
               if not f.name.endswith("_rollcall.mp3")]   # orientation files (a legend in sound), not tracks
     return [f for f in played if f not in claimed]
 

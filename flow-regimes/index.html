@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Interior Flow, B-side</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+/* Dark-first: a late-night record sleeve. Four year colours read on both grounds; ochre for drought, blue for melt. */
+:root{
+  --ground:#0b1411; --surface:#111d18; --line:#223a30; --line2:#35574a;
+  --text:#e6efe9; --muted:#9bb3a6; --faint:#8aa597;
+  --melt:#7fd0ea; --ochre:#f0a864; --ok:#8ad6a7;
+  --c0:#f0a864; --c1:#e5705a; --c2:#8ad6a7; --c3:#7fb6ee;
+  --focus:var(--melt); --accent:var(--melt);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --ground:#f0f3ef; --surface:#ffffff; --line:#c9d6cd; --line2:#93a898;
+  --text:#14231c; --muted:#4b6257; --faint:#5a7266;
+  --melt:#1c6f8c; --ochre:#a9601a; --ok:#2c7a4f;
+  --c0:#a9601a; --c1:#b23a25; --c2:#2c7a4f; --c3:#1f5fa8; color-scheme:light}}
+:root[data-theme="light"]{
+  --ground:#f0f3ef; --surface:#ffffff; --line:#c9d6cd; --line2:#93a898;
+  --text:#14231c; --muted:#4b6257; --faint:#5a7266;
+  --melt:#1c6f8c; --ochre:#a9601a; --ok:#2c7a4f;
+  --c0:#a9601a; --c1:#b23a25; --c2:#2c7a4f; --c3:#1f5fa8; color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--text);font:16px/1.55 var(--body);margin:0}
+.page{max-width:1100px;margin:0 auto;padding-inline:16px;padding-block:24px 64px;display:grid;gap:22px}
+h2{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance}
+h1{font-size:clamp(34px,5.5vw,56px)}
+h2{font-size:1.15rem}
+p{margin:0;max-width:70ch}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:.82rem}
+.top{display:grid;gap:8px}
+.deck{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ground);border-bottom:1px solid var(--line);padding-block:10px;display:grid;gap:8px}
+audio{width:100%}
+.read{display:flex;flex-wrap:wrap;gap:6px 18px;font:.8rem var(--mono);color:var(--muted)}
+.read b{color:var(--text);font-weight:600}
+.chip{border:1px solid var(--line2);border-radius:4px;padding:2px 8px}
+.chip.on{border-color:var(--ochre);color:var(--ochre)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px;display:grid;gap:10px;min-width:0;align-content:start}
+canvas{width:100%;display:block}
+.passes{display:flex;flex-wrap:wrap;gap:6px}
+.pass{font:.75rem var(--mono);border:1px solid var(--line2);border-radius:4px;padding:5px 9px;color:var(--faint)}
+.pass.on{color:var(--text);border-color:var(--melt);background:color-mix(in srgb,var(--melt) 14%,transparent)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.88rem;min-width:560px}
+th,td{border-bottom:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+th{font:600 .72rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.sw{display:inline-block;width:.8em;height:.8em;border-radius:50%;margin-right:.4em;vertical-align:-1px}
+.note{border-left:3px solid var(--ochre);padding:8px 12px;font-size:.92rem;color:var(--muted)}
+</style>
+
+<main class="page">
+<header class="top">
+  <span class="eyebrow"><a href="../regimes.html">sonify-viz</a> · Flow regimes · v1.0 · 2026-09-30</span>
+  <h1>Interior Flow, B-side</h1>
+  <p class="muted">An extended, drum-led piece from interior British Columbia streamflow. Four water years (a dry, a normal, a late-and-big and an early one with a dry summer) enter one pass at a time as drum voices, each reading its own hydrograph, so their freshets drift in and out of phase. A best guess at a London post-minimal feel: static D pedal, odd-length drum cycles across a steady 4/4, swing, and a slow filter as form. Claude cannot hear it; this page shows what the sound is reading.</p>
+</header>
+
+<div class="deck" id="deck">
+  <audio id="au" src="bside_regimes.mp3" controls preload="metadata" aria-label="Interior Flow, B-side, 8 minutes 42 seconds"></audio>
+  <p class="sr-only" id="say" role="status"></p>
+  <div class="passes" id="passes" aria-label="Form"></div>
+  <div class="read" id="read" aria-live="off"></div>
+</div>
+
+<div class="grid">
+  <section class="card"><h2>Four years, one water year</h2>
+    <canvas id="hy" role="img" aria-label="Four weekly hydrographs, one per regime year, with a moving cursor"></canvas>
+    <p class="muted mono">Flow relative to each catchment's own mean, log scale, regional median. Dim strips have not entered yet. The tick marks the week half the year's water has passed.</p></section>
+  <section class="card"><h2>Drum cycles</h2>
+    <canvas id="rg" role="img" aria-label="Concentric rings for the four drum cycles of 9, 7, 5 and 3 steps and the 16-step bar"></canvas>
+    <p class="muted mono">Outer ring: the 16-step bar. Inner rings: cycles of 9, 7, 5 and 3 steps, filled where the flow-set pattern sounds. The marker walks one step per sixteenth, so each cycle lands somewhere new each bar.</p></section>
+</div>
+
+<section class="card"><h2>Snow, melt and temperature (the regional covariates)</h2>
+  <canvas id="cv" role="img" aria-label="Snow water equivalent, melt rate and air temperature across the current pass"></canvas>
+  <p class="muted mono">Snowpack sets the filter on the shaker, hats and lead (dull under snow); the drums and sub are not filtered. Melt rate sets the lead's density. Warm weeks (above 10 °C) turn B flat to B natural.</p></section>
+
+<section class="card"><h2>The form, in words</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Starts</th><th>Pass</th><th>What changes</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">0:02</td><td>1</td><td>Timpani on a 9-step cycle (WY1988, the dry year), with the sub pedal, kick, claps and hats.</td></tr>
+      <tr><td class="mono">1:43</td><td>2</td><td>The conga joins on a 7-step cycle (WY1995, near normal). Every pattern now starts from a different step.</td></tr>
+      <tr><td class="mono">3:23</td><td>3</td><td>The log drum joins on a 5-step cycle (WY2012, late, big, wet). At 4:17 the first snowmelt of the pass wakes the harp.</td></tr>
+      <tr><td class="mono">5:04</td><td>4</td><td>The shaker and triangle join on a 3-step cycle (WY2018, early, dry summer), with river crackle. The marimba now doubles the harp.</td></tr>
+      <tr><td class="mono">6:45</td><td>5</td><td>All four years, each shifted again against the bar.</td></tr>
+      <tr><td class="mono">8:25</td><td>coda</td><td>One conga a bar, fading, over the sub.</td></tr>
+    </tbody></table></div>
+  <p class="muted mono">Each pass is one water year, October to September, a week to a bar (52 bars, about 100 seconds), at 124 beats per minute. The picture above shows the same thing as it plays.</p></section>
+
+<section class="card"><h2>What reads what</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Sound</th><th>Data</th><th>Rule</th></tr></thead>
+    <tbody>
+      <tr><td><span class="sw" style="background:var(--c0)"></span>Timpani, cycle 9</td><td>WY1988, dry</td><td>Euclid(k, 9), k from log flow; entry pass 1</td></tr>
+      <tr><td><span class="sw" style="background:var(--c1)"></span>Conga, cycle 7</td><td>WY1995, near normal</td><td>same rule; entry pass 2</td></tr>
+      <tr><td><span class="sw" style="background:var(--c2)"></span>Log drum, cycle 5</td><td>WY2012, late, big, wet</td><td>same rule; entry pass 3</td></tr>
+      <tr><td><span class="sw" style="background:var(--c3)"></span>Shaker and triangle, cycle 3</td><td>WY2018, early, dry summer</td><td>same rule; entry pass 4 (a 3:4 cross-rhythm)</td></tr>
+      <tr><td>Kick and clap</td><td>mean level of sounding voices</td><td>drop out from week 38 (late June) in bars below a level (a breakdown; it happens in every pass, so it marks the season more than the year)</td></tr>
+      <tr><td>Harp (from pass 3) and marimba (from pass 4), cell of 7</td><td>snowmelt rate</td><td>Euclid density, so it sounds only in melt weeks: the harp is first heard at 4:17, in pass 3. From pass 4 a marimba reads the same pattern three steps ahead, an octave down</td></tr>
+      <tr><td>Sub pedal</td><td>flow floor (6-week minimum)</td><td>sine on D, then C, then B flat, at fixed bars of each pass (a calendar plan)</td></tr>
+    </tbody></table></div>
+  <p class="note">Data: catchment-mean Daymet forcing and Water Survey of Canada flow, via the Borealis dataset (Kovacek, CC BY-SA 4.0, doi 10.5683/SP3/65FXAS), interior-BC catchments, WY1988, 1995, 2012, 2018 regional medians. Samples: VSCO 2 Community Edition (CC0). The piece evokes an idiom and takes no melody, sample or voice from any record. Whose land these catchments are on is not yet mapped here; the territory acknowledgement is pending, as for Meridian Chorus.</p>
+</section>
+<p class="foot">Graham Watt, the question and direction · Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code. Claude Code cannot hear audio: levels were set by measurement, and Graham has listened. Audio CC BY-SA 4.0 (<a href="../LICENSE-media">LICENSE-media</a>). <a href="../regimes.html">About this piece, its card and its limits</a>.</p>
+</main>
+
+<script>
+(async () => {
+  "use strict";
+  const $ = s => document.querySelector(s);
+  const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;   // no pulse on the rings if asked
+  const au = $("#au");
+  let S;
+  try { S = await (await fetch("bside_score.json")).json(); } catch (e) { $("#read").textContent = "Score data did not load."; return; }
+  const V = S.voices, BARS = S.bars, STEP = S.bar_s / 16, LEAD = S.lead_s;
+  const PASSES = ["1 · 1988 dry", "2 · + 1995", "3 · + 2012", "4 · + 2018", "5 · out of phase", "coda"];
+  const passBox = $("#passes"); PASSES.forEach((p, i) => { const d = document.createElement("span"); d.className = "pass"; d.textContent = p; passBox.append(d); });
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const eu = (k, n) => k > 0 ? Array.from({ length: n }, (_, i) => Math.floor((i + 1) * k / n) !== Math.floor(i * k / n)) : Array(n).fill(false);
+  const wkLabel = w => { const d = new Date(2001, 9, 1 + 7 * w); return d.toLocaleString("en", { month: "short", day: "numeric" }); };
+  const com = V.map(v => { const tot = v.flow.reduce((a, b) => a + b, 0); let c = 0; for (let i = 0; i < 52; i++) { c += v.flow[i]; if (c >= tot / 2) return i; } return 51; });
+
+  function fit(cv, h) { const r = cv.getBoundingClientRect(); const dpr = window.devicePixelRatio || 1; const w = Math.max(240, Math.round(r.width)); const c = cv.getContext("2d"); if (cv.width !== w * dpr || cv.height !== h * dpr) { cv.width = w * dpr; cv.height = h * dpr; cv.style.height = h + "px"; } c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h); return [c, w, h]; }
+  const cvs = { hy: $("#hy"), rg: $("#rg"), cv: $("#cv") };
+
+  function state() {
+    const t = au.currentTime || 0, ab = Math.max(0, Math.min(BARS.length - 1, Math.floor((t - LEAD) / S.bar_s)));
+    const sf = Math.max(0, (t - LEAD) / STEP);
+    return { t, ab, bar: BARS[ab], sf };
+  }
+
+  function drawHy(st) {
+    const [c, W, H] = fit(cvs.hy, 250); const rowH = H / 4, pad = 4;
+    V.forEach((v, i) => {
+      const y0 = i * rowH, col = css("--c" + i), active = st.bar.pass_ >= i + 1;
+      c.globalAlpha = active ? 1 : 0.28;
+      c.fillStyle = col; c.font = "600 11px " + css("--mono");
+      c.fillText(`WY${v.year} · ${v.regime} · ${v.kind} ${v.N}`, 4, y0 + 13);
+      const x = w => 4 + (W - 8) * w / 51, y = f => y0 + rowH - pad - (rowH - 24) * Math.min(1, Math.max(0, (Math.log2(Math.max(f, 0.05)) + 4.3) / 7.3));
+      c.beginPath(); c.moveTo(x(0), y0 + rowH - pad);
+      v.flow.forEach((f, w) => c.lineTo(x(w), y(f)));
+      c.lineTo(x(51), y0 + rowH - pad); c.closePath();
+      c.fillStyle = col; c.globalAlpha = (active ? 0.25 : 0.1); c.fill();
+      c.globalAlpha = active ? 1 : 0.35; c.strokeStyle = col; c.lineWidth = 1.6; c.beginPath(); v.flow.forEach((f, w) => w ? c.lineTo(x(w), y(f)) : c.moveTo(x(w), y(f))); c.stroke();
+      c.globalAlpha = active ? 0.9 : 0.3; c.strokeStyle = css("--text"); c.lineWidth = 1; c.beginPath(); c.moveTo(x(com[i]), y0 + rowH - pad); c.lineTo(x(com[i]), y0 + rowH - pad - 9); c.stroke();
+      c.globalAlpha = 1;
+      c.strokeStyle = css("--line"); c.beginPath(); c.moveTo(0, y0 + rowH); c.lineTo(W, y0 + rowH); c.stroke();
+    });
+    const cx = 4 + (W - 8) * st.bar.week / 51;
+    c.strokeStyle = css("--melt"); c.lineWidth = 1.5; c.beginPath(); c.moveTo(cx, 0); c.lineTo(cx, H); c.stroke();
+    c.fillStyle = css("--faint"); c.font = "10px " + css("--mono");
+    ["Oct", "Jan", "Apr", "Jul", "Sep"].forEach((m, i) => c.fillText(m, 4 + (W - 8) * [0, 13, 26, 39, 51][i] / 51, H - 1));
+  }
+
+  function drawRings(st) {
+    const [c, W, H0] = fit(cvs.rg, Math.min(420, Math.max(300, cvs.rg.getBoundingClientRect().width)));
+    const H = H0, cx = W / 2, cy = H / 2, R = Math.min(W, H) / 2 - 10;
+    const radii = [R * 0.72, R * 0.56, R * 0.40, R * 0.25];
+    const g = Math.floor(st.sf), frac = st.sf - g, playing = !au.paused;
+    // bar ring
+    const s16 = g % 16;
+    for (let i = 0; i < 16; i++) {
+      const a = -Math.PI / 2 + 2 * Math.PI * i / 16, x = cx + R * Math.cos(a), y = cy + R * Math.sin(a);
+      const beat = i % 4 === 0, here = i === s16;
+      c.beginPath(); c.arc(x, y, beat ? 6 : 3.5, 0, 7);
+      c.fillStyle = here ? css("--melt") : beat ? css("--muted") : css("--line2"); c.fill();
+    }
+    if (st.bar.brk) { c.fillStyle = css("--ochre"); c.font = "600 11px " + css("--mono"); c.textAlign = "center"; c.fillText("kick dropped: drought break", cx, cy + R + 1 - 4); c.textAlign = "left"; }
+    V.forEach((v, i) => {
+      const r = radii[i], N = v.N, active = st.bar.pass_ >= i + 1 && st.bar.pass_ <= 5, col = css("--c" + i);
+      const k = active ? (st.bar.k[i] || 0) : 0, rot = active ? (st.bar.rot[i] || 0) : 0;
+      const pat = eu(k, N), pos = (g + rot) % N;
+      c.strokeStyle = css("--line"); c.lineWidth = 1; c.beginPath(); c.arc(cx, cy, r, 0, 7); c.stroke();
+      for (let n = 0; n < N; n++) {
+        const a = -Math.PI / 2 + 2 * Math.PI * n / N, x = cx + r * Math.cos(a), y = cy + r * Math.sin(a), on = pat[n];
+        const hit = active && n === pos && on;
+        const glow = hit && !RM ? (1 - frac) : 0;
+        c.beginPath(); c.arc(x, y, 6 + 6 * glow, 0, 7);
+        if (on && active) { c.fillStyle = col; c.globalAlpha = 0.55 + 0.45 * glow; c.fill(); c.globalAlpha = 1; }
+        else { c.strokeStyle = active ? col : css("--line2"); c.globalAlpha = active ? 0.6 : 0.35; c.lineWidth = 1.2; c.stroke(); c.globalAlpha = 1; }
+        if (active && n === pos) { c.beginPath(); c.arc(x, y, 10, 0, 7); c.strokeStyle = css("--text"); c.lineWidth = 1.2; c.stroke(); }
+      }
+    });
+    c.fillStyle = css("--text"); c.font = "600 13px " + css("--mono"); c.textAlign = "center";
+    c.fillText(st.bar.pass_ <= 5 ? `pass ${st.bar.pass_}` : "coda", cx, cy - 2);
+    c.fillStyle = css("--muted"); c.font = "11px " + css("--mono"); c.fillText(wkLabel(st.bar.week), cx, cy + 14); c.textAlign = "left";
+  }
+
+  function drawCov(st) {
+    const [c, W, H] = fit(cvs.cv, 190);
+    const p = st.bar.pass_, bars = BARS.filter(b => b.pass_ === (p > 5 ? 5 : p));
+    const x = i => 6 + (W - 12) * i / 51, yS = v => H - 18 - (H - 34) * Math.min(1, v / 1.2), yT = v => H - 18 - (H - 34) * Math.min(1, Math.max(0, (v + 12) / 34));
+    c.beginPath(); c.moveTo(x(0), H - 18); bars.forEach((b, i) => c.lineTo(x(i), yS(b.swe))); c.lineTo(x(bars.length - 1), H - 18); c.closePath();
+    c.fillStyle = css("--melt"); c.globalAlpha = 0.22; c.fill(); c.globalAlpha = 1;
+    bars.forEach((b, i) => { const h = (H - 34) * b.melt * 0.8; c.fillStyle = css("--melt"); c.fillRect(x(i) - 2.5, H - 18 - h, 5, h); });
+    c.strokeStyle = css("--ochre"); c.lineWidth = 1.6; c.beginPath(); bars.forEach((b, i) => i ? c.lineTo(x(i), yT(b.temp)) : c.moveTo(x(i), yT(b.temp))); c.stroke();
+    const t10 = yT(10); c.setLineDash([3, 4]); c.strokeStyle = css("--faint"); c.beginPath(); c.moveTo(0, t10); c.lineTo(W, t10); c.stroke(); c.setLineDash([]);
+    c.fillStyle = css("--faint"); c.font = "10px " + css("--mono"); c.fillText("10 °C", W - 34, t10 - 3);
+    const cxp = x(Math.min(st.bar.week, 51)); c.strokeStyle = css("--text"); c.lineWidth = 1.2; c.beginPath(); c.moveTo(cxp, 0); c.lineTo(cxp, H - 18); c.stroke();
+    c.fillStyle = css("--melt"); c.font = "600 10px " + css("--mono"); c.fillText("snow (area)  melt (bars)", 6, 12);
+    c.fillStyle = css("--ochre"); c.fillText("air temperature (line)", 6 + 170, 12);
+    c.fillStyle = css("--faint"); ["Oct", "Jan", "Apr", "Jul", "Sep"].forEach((m, i) => c.fillText(m, x([0, 13, 26, 39, 51][i]), H - 4));
+  }
+
+  let lastPass = 0, lastRead = "";
+  function readout(st) {
+    const b = st.bar, m = Math.floor(st.t / 60), s = Math.floor(st.t % 60);
+    const html = `<span>time <b>${m}:${String(s).padStart(2, "0")}</b></span><span>week <b>${wkLabel(b.week)}</b></span><span>pedal <b>${b.root}</b></span><span>mode <b>${b.mode}</b></span><span>snow <b>${(b.swe * 100).toFixed(0)}%</b></span><span>filter <b>${(b.cutoff / 1000).toFixed(1)} kHz</b></span><span>lead k <b>${b.lead_k}</b></span><span class="chip ${b.brk ? "on" : ""}">kick ${b.brk ? "dropped" : "on"}</span>`; if (html !== lastRead) { lastRead = html; $("#read").innerHTML = html; }
+    [...passBox.children].forEach((d, i) => d.classList.toggle("on", i + 1 === b.pass_));
+    if (b.pass_ !== lastPass) { lastPass = b.pass_; if (!au.paused) $("#say").textContent = PASSES[b.pass_ - 1] ? "Pass " + PASSES[b.pass_ - 1] : ""; }
+  }
+
+  let last = -1;
+  function frame() {
+    const st = state(); readout(st);
+    if (!au.paused || st.ab !== last || last < 0) { drawHy(st); drawRings(st); drawCov(st); last = st.ab; }
+    requestAnimationFrame(frame);
+  }
+  ["seeked", "loadedmetadata", "play", "pause"].forEach(e => au.addEventListener(e, () => { last = -1; }));
+  new ResizeObserver(() => { last = -1; }).observe(document.body);
+  frame();
+})();
+// Embedded in the Quarto site (the wrapper page loads this with ?embed): hide the page's own title and footer,
+// and post the content height so the iframe grows to fit. Harmless when not embedded.
+(() => {
+  if (!new URLSearchParams(location.search).has('embed')) return;
+  document.documentElement.classList.add('embedded');
+  const postHeight = () => { try { parent.postMessage({wyrHeight: document.documentElement.scrollHeight}, '*'); } catch (e) {} };
+  if (window.ResizeObserver) new ResizeObserver(postHeight).observe(document.body);
+  addEventListener('load', postHeight);
+})();
+</script>

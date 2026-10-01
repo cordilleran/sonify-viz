@@ -135,6 +135,33 @@ def superior_ice(track):
         "events": table(ev, [("region", s_), ("day", i32), ("kind", s_), ("size_pp", f), ("offset_days", f), ("t", f)])}
 
 
+def regimes_bside(track):
+    """The score of the locked B-side: the four year voices, their weekly series, and what each bar did."""
+    sc, version = locked_score(track)
+    f, i32, s_ = pa.float64(), pa.int32(), pa.string()
+    yrs = [v["year"] for v in sc["voices"]]
+    vs = [{"year": v["year"], "regime": v["regime"], "kind": v["kind"], "cycle_steps": v["N"], "pan": v["pan"],
+           "entry_pass": i + 1, "hits": v["nhits"]} for i, v in enumerate(sc["voices"])]
+    wk = [{"year": v["year"], "week": w, "flow_rel": v["flow"][w], "swe_rel": v["swe"][w], "temp_c": v["temp"][w]}
+          for v in sc["voices"] for w in range(52)]
+    bars = []
+    for b in sc["bars"]:
+        r = {"bar": b["ab"] + 1, "pass": b["pass_"], "week": b["week"], "t": round(sc["lead_s"] + b["ab"] * sc["bar_s"], 3),
+             "voices_sounding": len(b["k"]), "swe_rel": b["swe"], "melt": b["melt"], "temp_c": b["temp"], "mode": b["mode"],
+             "pedal": b["root"], "breakdown": bool(b["brk"]), "lead_k": b["lead_k"], "cutoff_hz": b["cutoff"]}
+        for i, y in enumerate(yrs):
+            r[f"k_{y}"] = b["k"][i] if i < len(b["k"]) else None
+            r[f"rot_{y}"] = b["rot"][i] if i < len(b["rot"]) else None
+        bars.append(r)
+    return version, {
+        "voices": table(vs, [("year", i32), ("regime", s_), ("kind", s_), ("cycle_steps", i32), ("pan", f), ("entry_pass", i32), ("hits", i32)]),
+        "weeks": table(wk, [("year", i32), ("week", i32), ("flow_rel", f), ("swe_rel", f), ("temp_c", f)]),
+        "bars": table(bars, [("bar", i32), ("pass", i32), ("week", i32), ("t", f), ("voices_sounding", i32)] +
+                      [(f"k_{y}", i32) for y in yrs] + [(f"rot_{y}", i32) for y in yrs] +
+                      [("swe_rel", f), ("melt", f), ("temp_c", f), ("mode", s_), ("pedal", s_), ("breakdown", pa.bool_()),
+                       ("lead_k", i32), ("cutoff_hz", i32)])}
+
+
 # mapping folder -> (locked track, exporter)
 TRACKS = {"granby-wy2024": ("granby-wy2024", water_year), "okanagan-wy2024": ("okanagan-wy2024", water_year),
           "climate-pair-pacific": ("climate-pair-pacific", climate_pair),
@@ -142,7 +169,8 @@ TRACKS = {"granby-wy2024": ("granby-wy2024", water_year), "okanagan-wy2024": ("o
           "meridian-layer2-wide-long": ("meridian-chorus-layer2:wide-long", meridian),
           "meridian-daylight": ("meridian-chorus-daylight", meridian),
           "superior-ice": ("icecover-superior-ice:v1", superior_ice),
-          "superior-ice-short": ("icecover-superior-ice", superior_ice)}
+          "superior-ice-short": ("icecover-superior-ice", superior_ice),
+          "regimes-bside": ("regimes-bside", regimes_bside)}
 
 
 def main():

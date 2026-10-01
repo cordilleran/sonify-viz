@@ -36,6 +36,9 @@ Thirteen voices on the 100th meridian, one every 15 degrees from the North Pole 
 ### [Superior Ice Year](superior-ice.qmd)
 One ice season on Lake Superior, Gichigami, from 1 November 2025 to 15 June 2026. The lake is cut into eight regions and each is a voice, west lowest and east highest, so the chord is the ice pattern on the map. Water, air, sunlight, wind, snow, rain and birds each add an instrument, a quiet ghost tone follows the median year of 2008 to 2025, and freeze and breakup sound as glass pings and low drops. About 12 minutes in four movements; a 6-minute version is kept beside it.
 
+### [Flow Regimes](regimes.qmd)
+Four water years of interior British Columbia, sorted by when the freshet comes and how dry the summer gets, each given a drum voice that reads its own year's river. They enter one at a time over the same October-to-September cycle, on cycles of 9, 7, 5 and 3 steps against a steady beat, while snowpack opens a filter and snowmelt wakes a harp and marimba. Nine minutes, drum-led, an evocation of a style rather than a copy of any record.
+
 Every track has a card with its version, its records, what drives each sound, what to be careful about, and how to check it byte for byte: see [Tracks](tracks.qmd).
 
 ## The code

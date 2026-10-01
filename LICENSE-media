@@ -42,3 +42,10 @@ its provider's terms. Hydrometric and climate data contain information licensed
 under the Open Government Licence - Canada.
 
 The code (everything else) is under the Mozilla Public License 2.0; see LICENSE.
+
+Flow Regimes: the rendered audio in flow-regimes/ (bside_regimes.mp3) and the score JSON beside it, and the
+derived weekly table in data/regimes/weekly.json, the mapping tables in tracks/mapping/regimes-bside/ and the dictionary page rendered from them, are licensed under CC BY-SA 4.0
+(https://creativecommons.org/licenses/by-sa/4.0/), because they derive from the Borealis catchment-mean forcing
+dataset (Kovacek, doi 10.5683/SP3/65FXAS, CC BY-SA 4.0), which carries Water Survey of Canada streamflow and Daymet
+climate. Attribution: cite that dataset. VSCO 2 CE samples are CC0. The piece evokes a style and takes no melody,
+sample or voice from any recording.

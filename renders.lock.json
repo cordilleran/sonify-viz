@@ -687,6 +687,45 @@
     1997
    ],
    "version": "1.0"
+  },
+  "regimes-bside": {
+   "args": [],
+   "code": {
+    "dsp_core.py": "d29ae14afe5f34d8d9ee1f889733705a9b4eeaba2746d3199923006d2ef12574",
+    "harmony.py": "6e2883b89b9c74fd303fb784732288761b3813dcde9d4424125277fa330a51be",
+    "records.py": "1833058e8c8312c45187ee777100eea62dceda42de9e2fde09857a8b9a76cf73",
+    "regimes_bside.py": "5a4ddefcc81e8791a35e0d96c67c5f8a06a378c13036c922602430358de0be3e",
+    "sampler.py": "669dc814a4d39a9f0634838def95aeb1aa4f4f7276ac85cfcc7a6c1c8311b17d",
+    "seasonal.py": "d4183072da6926df366ea19a6ffeaee358cb2a76f82229334e65d369006344d5",
+    "solar.py": "6341f24e8c7669588e16ef1d4cd258702b034109ffa9c65ed90aa29eb83fb5ae",
+    "synth.py": "1ad1c282fe61ec1233fac7ca29011ad9d7994db95bf460fe6870ad67bd7b4d2f",
+    "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
+   },
+   "data": {
+    "data/regimes/weekly.json": "542de12656184e91d53ae4c2a7b0690a6b5df62edabfe0539fb338a74edb7fe2"
+   },
+   "environment": {
+    "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm4 Copyright (c) 2000-2025 the FFmpeg developers",
+    "numpy": "2.5.3",
+    "python": "3.13.13",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+   },
+   "locked": "2026-09-30",
+   "outputs": {
+    "heavy/regimes/bside_regimes.wav": "b9be2d39f1b5c7fa2a5896567dc74dc26c3140b16750ecd42c2c7220b36e209f",
+    "light/regimes/bside_regimes.mp3": "26d46a6c69e95eb32533ed83a2aaf79c03ee0db3637bd1743109f1ba80719b04",
+    "light/regimes/bside_score.json": "9cb83c16688c231825b127831d531e78e6177af63f4d8a761dac3ae3a453d1e3"
+   },
+   "samples": {
+    "files": 37,
+    "sha256": "8c7e3fc13a124ff114255e9a627ba19ee07b931e14c8ecf20f61daaa0b592ba5"
+   },
+   "script": "regimes_bside.py",
+   "seeds": [
+    124
+   ],
+   "version": "1.0"
   }
  }
 }

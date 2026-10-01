@@ -14,6 +14,7 @@ project:
     - climate.qmd
     - meridian.qmd
     - superior-ice.qmd
+    - regimes.qmd
     - tracks.qmd
     - glossary.qmd
     - about.qmd
@@ -43,6 +44,9 @@ project:
     - meridian/meridian_ds2023.mp3
     - superior-ice/*
     - superior-ice/days/*
+    - flow-regimes/index.html
+    - flow-regimes/bside_regimes.mp3
+    - flow-regimes/bside_score.json
     - shared/*
 
 website:
@@ -70,6 +74,8 @@ website:
         text: Meridian Chorus
       - href: superior-ice.qmd
         text: Superior Ice
+      - href: regimes.qmd
+        text: Flow Regimes
       - href: tracks.qmd
         text: Tracks
       - href: glossary.qmd

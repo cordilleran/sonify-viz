@@ -24,7 +24,7 @@ A learning workbench for turning environmental data into music and pictures. It 
 | `renders.lock.json` | each track's version, seed and content hashes; `python scripts/renders.py verify` re-renders and compares |
 | `tracks/` | one card per published track (version, changelog, records, mapping, credits) and the album list; rendered into `tracks.qmd` by `scripts/export_cards.py` |
 | `data/parquet/` | the records as tidy parquet tables, with their data dictionaries (`data-dict.yaml`, [data-dict](https://data-dict.tidyverse.org/) format); the site's build validates the data against them |
-| `meridian/`, `superior-ice/` | the Meridian Chorus and Superior Ice Year pages (one HTML file each, no framework), their data and audio; `meridian.qmd` and `superior-ice.qmd` frame them in the site |
+| `meridian/`, `superior-ice/`, `flow-regimes/` | the Meridian Chorus, Superior Ice Year and Flow Regimes pages (one HTML file each, no framework), their data and audio; `meridian.qmd`, `superior-ice.qmd` and `regimes.qmd` frame them in the site |
 | `variants/`, `remixes/` | named variants of a track, and remixes of published tracks (see `CONTRIBUTING.md`) |
 
 ## Rebuild
