@@ -1,0 +1,32 @@
+---
+title: "Arctic Round"
+subtitle: "Forty-eight years of Arctic sea ice, one ice year per bar"
+toc: false
+page-layout: full
+---
+
+Arctic Round is a set of pieces on one record: the satellite record of Arctic sea ice, October 1978 to September 2026, with one ice year (October to September) in every bar. The pieces share the record and the clock and differ in what they let you hear.
+
+| Piece | What it is | Status |
+|---|---|---|
+| [The Wheel](#the-wheel) | A variant for cello and organ: eight notes in a fixed order, and the ice decides how many sound. About 13 minutes. | Published, v1.0 |
+| The Round | The main piece. It will carry the warming record, which The Wheel leaves out. | In preparation |
+
+## The Wheel
+
+Eight organ notes turn in the same order at the same pace, one note a week, for 48 ice years. Each week the total sea ice extent decides how many of the eight can sound: all eight in a full March, six in a 1980s September, two at the 2012 record low. A cello's register follows ice volume, a low bass note holds while the ice is thick, and open water adds the organ's upper octave and a brighter room. The map shows the ice on the same clock.
+
+It also works [on its own, full screen](arctic-bside/index.html). Its card, with every record, what to be careful about and how to reproduce it, is on the [Tracks](tracks.qmd#arctic-wheel) page.
+
+<iframe class="companion" id="companion" src="arctic-bside/index.html?embed" title="The Wheel" loading="eager"></iframe>
+
+## The Round
+
+The main piece is not yet published. This page will hold it, and any later variants, when they are ready.
+
+<script>
+window.addEventListener('message', (e) => {
+  if (e.source !== document.getElementById('companion').contentWindow) return;   // only our own frame may resize it
+  if (e.data && typeof e.data.wyrHeight === 'number') document.getElementById('companion').style.height = (e.data.wyrHeight + 8) + 'px';
+});
+</script>

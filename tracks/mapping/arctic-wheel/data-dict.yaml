@@ -1,0 +1,82 @@
+$version: 0.1.0
+$learn_more: https://data-dict.tidyverse.org/
+name: arctic-wheel-mapping
+label: The Wheel (a variant on Arctic Round) - mapping
+description: 'How The Wheel turns 48 ice years of Arctic sea ice into an eight-note organ wheel, a cello and a bass, as one
+  table with one row per ice year (1 October to 30 September, one 16-second bar): how many of the eight organ notes sounded, the
+  mean ice volume, the bass level and the cello register the bar starts on.'
+details: Copied by scripts/export_mapping.py from the score JSON of the locked render (renders.lock.json), and only if its
+  SHA-256 matches the lock. The values are the piece's own, not recomputed (scripts/arctic_bside.py). The number of organ
+  notes follows total sea ice extent from the NSIDC Sea Ice Index, Version 4 (R, then D). The cello's register and the bass
+  follow ice volume from PIOMAS v2.1, which is a model (M); only the ice year's mean volume appears here, and the monthly
+  series is not republished. The week-by-week values the picture draws are in arctic-bside/assets/bside_state.json.
+origin: ../../../scripts/export_mapping.py
+version:
+  number: 1.0.0
+tables:
+- name: years
+  source:
+    parquet: years.parquet
+  columns:
+  - name: ice_year
+    type: number(ordinal)
+    constraints:
+    - primary_key
+    description: The ice year, named for the year it ends in (ice year 1979 runs from 1 October 1978 to 30 September 1979).
+    range:
+    - 1979
+    - 2026
+  - name: organ_notes_march
+    type: number(quantity)
+    constraints:
+    - required
+    units: notes
+    description: Organ notes sounding (of eight) in week 22 of the bar (early March), from the smoothed weekly extent (D).
+    range:
+    - 7
+    - 8
+  - name: organ_notes_sept
+    type: number(quantity)
+    constraints:
+    - required
+    units: notes
+    description: Organ notes sounding (of eight) in week 49 of the bar (mid-September) (D).
+    range:
+    - 2
+    - 6
+  - name: min_notes
+    type: number(quantity)
+    constraints:
+    - required
+    units: notes
+    description: The fewest organ notes sounding in any week of the bar (D).
+    range:
+    - 2
+    - 6
+  - name: vol_mean_1000km3
+    type: number(quantity)
+    constraints:
+    - required
+    units: thousand km3
+    description: Mean sea ice volume over the ice year, from PIOMAS v2.1 (M, a model). March to September 2026 repeats 2025.
+    range:
+    - 12.6
+    - 27.2
+  - name: bass_gate
+    type: number(quantity)
+    constraints:
+    - required
+    units: 0 to 1
+    description: Level of the C2 bass pedal, 0 (silent) at a mean volume of 14 thousand km3 or less, 1 (full) at 24 or more (M).
+    range:
+    - 0.0
+    - 1.0
+  - name: cello_index_start
+    type: number(ordinal)
+    constraints:
+    - required
+    description: 'Register of the bar''s first cello note, an index into the nine pitches E flat 2, F2, G2, C3, G3, C4, E flat 4, G4, C5:
+      0 is the lowest (thick ice) and 8 the highest (thin ice) (M).'
+    range:
+    - 0
+    - 8

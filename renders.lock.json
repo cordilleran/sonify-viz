@@ -1,5 +1,51 @@
 {
  "tracks": {
+  "arctic-wheel": {
+   "args": [
+    "--set",
+    "organ_gain=6.5",
+    "--set",
+    "bass_gain=1.1",
+    "--set",
+    "name=arctic_bside_v2"
+   ],
+   "code": {
+    "arctic_bside.py": "e095cc1d206dd32e6dbc56376c814459539ee262c962059ddb8e32f7533c913a",
+    "dsp_core.py": "d29ae14afe5f34d8d9ee1f889733705a9b4eeaba2746d3199923006d2ef12574",
+    "harmony.py": "6e2883b89b9c74fd303fb784732288761b3813dcde9d4424125277fa330a51be",
+    "records.py": "1833058e8c8312c45187ee777100eea62dceda42de9e2fde09857a8b9a76cf73",
+    "sampler.py": "669dc814a4d39a9f0634838def95aeb1aa4f4f7276ac85cfcc7a6c1c8311b17d",
+    "seasonal.py": "d4183072da6926df366ea19a6ffeaee358cb2a76f82229334e65d369006344d5",
+    "solar.py": "6341f24e8c7669588e16ef1d4cd258702b034109ffa9c65ed90aa29eb83fb5ae",
+    "synth.py": "1ad1c282fe61ec1233fac7ca29011ad9d7994db95bf460fe6870ad67bd7b4d2f",
+    "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
+   },
+   "data": {
+    "data/arctic/arctic_daily.json": "5823329cee8f391c44b1525fe015a623241bccadfc6e68b0342ea255cda0f138"
+   },
+   "environment": {
+    "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm4 Copyright (c) 2000-2025 the FFmpeg developers",
+    "numpy": "2.5.3",
+    "python": "3.13.13",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+   },
+   "locked": "2026-10-10",
+   "outputs": {
+    "heavy/arctic/arctic_bside_v2.wav": "d94ccf09fed2ee40dceca731ca37e735a3e25fa19998c612781187e725f9476d",
+    "light/arctic/arctic_bside_v2.mp3": "db431d72105f462fe379d08aa131bef1ae0c67e7d7c10c116597fdd1eee5838c",
+    "light/arctic/arctic_bside_v2_score.json": "e9c45e23812b32114abbf9b184f9b94a5114cdb06a668b27c3d1dc8ca36732cd"
+   },
+   "samples": {
+    "files": 22,
+    "sha256": "a9e94fad4e9f98b1b9caac5e09fbf6737f496349ec3a002250e5d95504bfcd97"
+   },
+   "script": "arctic_bside.py",
+   "seeds": [
+    2026
+   ],
+   "version": "1.0"
+  },
   "climate-pair-atlantic": {
    "args": [
     "atlantic"

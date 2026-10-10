@@ -49,3 +49,12 @@ derived weekly table in data/regimes/weekly.json, the mapping tables in tracks/m
 dataset (Kovacek, doi 10.5683/SP3/65FXAS, CC BY-SA 4.0), which carries Water Survey of Canada streamflow and Daymet
 climate. Attribution: cite that dataset. VSCO 2 CE samples are CC0. The piece evokes a style and takes no melody,
 sample or voice from any recording.
+
+The Wheel (a variant on Arctic Round): the rendered audio in arctic-bside/assets/ (arctic_bside_v2.mp3) and its score JSON, and the picture's derived files beside
+it (terrain_3411.png, glacier_mask.png, ice_weekly.txt, ice_extremes.txt, ice_meta.json, bside_state.json, arctic_page_min.json, arctic_land.json), are licensed
+under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/). Nothing forces ShareAlike (the samples are CC0); it matches the site's other pieces.
+Exception to note: arctic_land.json is derived from ERA5 through Open-Meteo's free API, which is for non-commercial use; regenerate it under a commercial
+Open-Meteo plan before any commercial reuse. Credit the sources: NSIDC Sea Ice Index v4 (doi 10.7265/a98x-0f50), GEBCO_2025 Grid (doi
+10.5285/37c52e96-24ea-67ce-e063-7086abc05f29; not for navigation), PIOMAS v2.1 (Zhang and Rothrock 2003; Schweiger et al. 2011), Open-Meteo.com and the
+Copernicus Climate Change Service (ERA5), Natural Earth (public domain). Each dataset remains under its provider's terms. The PIOMAS series itself is not
+redistributed. VSCO 2 CE samples are CC0.

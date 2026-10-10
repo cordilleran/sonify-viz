@@ -1,0 +1,51 @@
+id: arctic-wheel
+lock: arctic-wheel
+site_mp3: arctic-bside/assets/arctic_bside_v2.mp3
+title: The Wheel (a variant on Arctic Round)
+album: arctic-round
+script: arctic_bside.py
+args: ["--set", "organ_gain=6.5", "--set", "bass_gain=1.1", "--set", "name=arctic_bside_v2"]
+question: >
+  If eight organ notes turn in the same order at the same pace for 48 years, and the Arctic sea ice decides each
+  week how many of them can sound, what does the loss of the ice sound like?
+place: >
+  The Arctic Ocean and its marginal seas: the Northern Hemisphere sea ice of the satellite record, taken as one
+  total. Sea ice is part of the homeland of Inuit and of other Indigenous peoples of the Arctic; this piece uses no
+  Inuit knowledge and no Inuit data, and the piece's page carries the acknowledgement.
+year: {label: "Ice years 1979 to 2026", framing: "48 ice years, each from 1 October to 30 September, one bar each", from: 1978-10-01, to: 2026-09-30}
+records:
+  - Sea ice extent, daily, NSIDC Sea Ice Index, Version 4 (G02135; Fetterer and others, doi 10.7265/a98x-0f50) (R; before mid-1987 every other day, and 2 December 1987 to 13 January 1988 is filled by interpolation)
+  - Sea ice volume, monthly, PIOMAS v2.1, Polar Science Center, University of Washington (Zhang and Rothrock 2003; Schweiger and others 2011) (M, a model; fetched by the script and not republished here)
+  - Instruments, VSCO 2 Community Edition (CC0)
+mapping:
+  - {layer: organ wheel, data: "total sea ice extent, weekly, smoothed over three weeks", sound: "eight notes (C3 G3 C4 E♭4 F4 G4 B♭4 C5), one a week in a fixed order; extent sets how many sound (8, 7, 6 and 2 notes at 17.5, 12, 7.2 and 3.4 M km²); the highest and lowest drop out first, and a dropped note is a rest", tag: D}
+  - {layer: organ upper octave, data: "open water, 1 − extent / 17.5 M km²", sound: "each sounding note gains its upper octave once extent is below about 9.6 M km², louder as the water opens", tag: D}
+  - {layer: cello, data: "ice volume (PIOMAS), sampled six times a year", sound: "one bowed note every two months; thick ice is low (from E♭2), thin ice is high (to C5)", tag: M}
+  - {layer: bass, data: "the ice year's mean volume", sound: "a C2 pedal, full above 24 thousand km³ and silent below 14", tag: M}
+  - {layer: swell, data: total extent, sound: "the cello and bass rise and fall with the year's ice, down to 15 % of full level at the lowest extent", tag: D}
+  - {layer: room, data: total extent, sound: "the reverb moves from a dry, dark room (ice) to a wide, bright one (open water)", tag: D}
+  - {layer: rubato, data: "week-to-week change in extent", sound: "weeks press up to 8 % in freeze-up and drag up to 10 % in melt; every bar stays exactly 16 seconds", tag: D}
+harmony: >
+  C minor pentatonic throughout (C, E♭, F, G, B♭), which has no semitone and no tritone, so any subset of the
+  wheel is consonant. 48 bars of 16 seconds, 52 pulses a bar, and a 7-second coda of six October days in which the
+  wheel restarts thin and the cello holds an open fifth (G4 and D5), unresolved; 13 min 19 s with the tail.
+simulated:
+  - Ice volume is a model (PIOMAS), not a measurement; the cello and the bass follow it.
+  - PIOMAS for March to September 2026 repeats 2025, so the 2026 cello register and bass follow that extension.
+limitations:
+  - The wheel follows the total extent, not particular seas; no note stands for a region.
+  - Warming is not in this piece; temperature and CO2 belong to the Round, the main piece of the pair, which is not yet published.
+  - "The number of notes is a chosen piecewise scale of extent, not a physical threshold; a note is silent or sounding, so small changes within a step are not heard in the organ."
+  - Extent is smoothed over three weeks and volume over two months, so daily noise and short events are not played.
+  - Claude Code cannot hear; levels were set by measurement and Graham has listened.
+  - The engine's data file (which holds the PIOMAS series) is not in this repository; `fetch_arctic.py` rebuilds it, so the lock's data hash can only be checked after that step.
+credits:
+  - Graham Watt, the question, the form (a minimalist round) and direction
+  - Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code
+  - Data, NSIDC Sea Ice Index v4 and PIOMAS v2.1; instruments, VSCO 2 Community Edition (CC0)
+lineage:
+  parent: null
+  variants: []
+  remixes: []
+changelog:
+  - {version: "1.0", date: 2026-10-10, change: "First published render (take 3)."}

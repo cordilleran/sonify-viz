@@ -480,3 +480,57 @@ Every step from record to sound, with its bounds: [the mapping dictionary](dicti
 
 - v1.0 (2026-09-30): First published render.
 
+# Arctic Round
+
+Forty-eight years of Arctic sea ice, one ice year per bar, as a set of pieces. The Wheel, a variant, is published first; the Round, the main piece, is in preparation. [The album's page](arctic-round.qmd).
+
+## The Wheel (a variant on Arctic Round) {#arctic-wheel}
+
+**v1.0** · Ice years 1979 to 2026 (48 ice years, each from 1 October to 30 September, one bar each, 1978-10-01 to 2026-09-30) · [listen](arctic-round.qmd?piece=arctic_bside_v2)
+
+*If eight organ notes turn in the same order at the same pace for 48 years, and the Arctic sea ice decides each week how many of them can sound, what does the loss of the ice sound like?*
+
+**Place.** The Arctic Ocean and its marginal seas: the Northern Hemisphere sea ice of the satellite record, taken as one total. Sea ice is part of the homeland of Inuit and of other Indigenous peoples of the Arctic; this piece uses no Inuit knowledge and no Inuit data, and the piece's page carries the acknowledgement.
+
+**Records.**
+
+- Sea ice extent, daily, NSIDC Sea Ice Index, Version 4 (G02135; Fetterer and others, doi 10.7265/a98x-0f50) (R; before mid-1987 every other day, and 2 December 1987 to 13 January 1988 is filled by interpolation)
+- Sea ice volume, monthly, PIOMAS v2.1, Polar Science Center, University of Washington (Zhang and Rothrock 2003; Schweiger and others 2011) (M, a model; fetched by the script and not republished here)
+- Instruments, VSCO 2 Community Edition (CC0)
+
+| Layer | Data | What you hear | |
+|---|---|---|---|
+| organ wheel | total sea ice extent, weekly, smoothed over three weeks | eight notes (C3 G3 C4 E♭4 F4 G4 B♭4 C5), one a week in a fixed order; extent sets how many sound (8, 7, 6 and 2 notes at 17.5, 12, 7.2 and 3.4 M km²); the highest and lowest drop out first, and a dropped note is a rest | <span class="src D">D</span> |
+| organ upper octave | open water, 1 − extent / 17.5 M km² | each sounding note gains its upper octave once extent is below about 9.6 M km², louder as the water opens | <span class="src D">D</span> |
+| cello | ice volume (PIOMAS), sampled six times a year | one bowed note every two months; thick ice is low (from E♭2), thin ice is high (to C5) | <span class="src M">M</span> |
+| bass | the ice year's mean volume | a C2 pedal, full above 24 thousand km³ and silent below 14 | <span class="src M">M</span> |
+| swell | total extent | the cello and bass rise and fall with the year's ice, down to 15 % of full level at the lowest extent | <span class="src D">D</span> |
+| room | total extent | the reverb moves from a dry, dark room (ice) to a wide, bright one (open water) | <span class="src D">D</span> |
+| rubato | week-to-week change in extent | weeks press up to 8 % in freeze-up and drag up to 10 % in melt; every bar stays exactly 16 seconds | <span class="src D">D</span> |
+
+Every step from record to sound, with its bounds: [the mapping dictionary](dictionary/arctic-wheel-mapping.html) (tables in `tracks/mapping/arctic-wheel/`).
+
+**Harmony.** C minor pentatonic throughout (C, E♭, F, G, B♭), which has no semitone and no tritone, so any subset of the wheel is consonant. 48 bars of 16 seconds, 52 pulses a bar, and a 7-second coda of six October days in which the wheel restarts thin and the cello holds an open fifth (G4 and D5), unresolved; 13 min 19 s with the tail.
+
+**Simulated, not observed.**
+
+- Ice volume is a model (PIOMAS), not a measurement; the cello and the bass follow it.
+- PIOMAS for March to September 2026 repeats 2025, so the 2026 cello register and bass follow that extension.
+
+**Be careful about.**
+
+- The wheel follows the total extent, not particular seas; no note stands for a region.
+- Warming is not in this piece; temperature and CO2 belong to the Round, the main piece of the pair, which is not yet published.
+- The number of notes is a chosen piecewise scale of extent, not a physical threshold; a note is silent or sounding, so small changes within a step are not heard in the organ.
+- Extent is smoothed over three weeks and volume over two months, so daily noise and short events are not played.
+- Claude Code cannot hear; levels were set by measurement and Graham has listened.
+- The engine's data file (which holds the PIOMAS series) is not in this repository; `fetch_arctic.py` rebuilds it, so the lock's data hash can only be checked after that step.
+
+**Reproduce.** `python scripts/arctic_bside.py --set organ_gain=6.5 --set bass_gain=1.1 --set name=arctic_bside_v2` · seed 2026 · locked 2026-10-10 · SHA-256 of the MP3 on this site `db431d72105f462f…` · check it with `python scripts/renders.py verify arctic-wheel`
+
+**Credits.** Graham Watt, the question, the form (a minimalist round) and direction; Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code; Data, NSIDC Sea Ice Index v4 and PIOMAS v2.1; instruments, VSCO 2 Community Edition (CC0).
+
+**Changelog.**
+
+- v1.0 (2026-10-10): First published render (take 3).
+

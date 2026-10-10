@@ -15,6 +15,7 @@ project:
     - meridian.qmd
     - superior-ice.qmd
     - regimes.qmd
+    - arctic-round.qmd
     - tracks.qmd
     - glossary.qmd
     - about.qmd
@@ -47,6 +48,20 @@ project:
     - flow-regimes/index.html
     - flow-regimes/bside_regimes.mp3
     - flow-regimes/bside_score.json
+    - arctic-bside/index.html
+    - arctic-bside/README.md
+    - arctic-bside/vendor/d3.min.js
+    - arctic-bside/vendor/d3-LICENSE.txt
+    - arctic-bside/assets/arctic_bside_v2.mp3
+    - arctic-bside/assets/arctic_bside_v2_score.json
+    - arctic-bside/assets/arctic_land.json
+    - arctic-bside/assets/arctic_page_min.json
+    - arctic-bside/assets/bside_state.json
+    - arctic-bside/assets/glacier_mask.png
+    - arctic-bside/assets/ice_extremes.txt
+    - arctic-bside/assets/ice_meta.json
+    - arctic-bside/assets/ice_weekly.txt
+    - arctic-bside/assets/terrain_3411.png
     - shared/*
 
 website:
@@ -73,6 +88,8 @@ website:
             text: "Superior Ice Year"
           - href: regimes.qmd
             text: "Flow Regimes"
+          - href: arctic-round.qmd
+            text: "Arctic Round"
           - text: "---"
           - href: listen.qmd
             text: "Water Year: listen with the visual"

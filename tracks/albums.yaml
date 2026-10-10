@@ -24,3 +24,8 @@
   page: regimes.qmd
   about: Four very different water years of interior British Columbia, each a drum voice, entering one at a time.
   tracks: [regimes-bside]
+- id: arctic-round
+  title: Arctic Round
+  page: arctic-round.qmd
+  about: Forty-eight years of Arctic sea ice, one ice year per bar, as a set of pieces. The Wheel, a variant, is published first; the Round, the main piece, is in preparation.
+  tracks: [arctic-wheel]

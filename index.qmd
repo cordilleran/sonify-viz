@@ -39,6 +39,9 @@ One ice season on Lake Superior, Gichigami, from 1 November 2025 to 15 June 2026
 ### [Flow Regimes](regimes.qmd)
 Four water years of interior British Columbia, sorted by when the freshet comes and how dry the summer gets, each given a drum voice that reads its own year's river. They enter one at a time over the same October-to-September cycle, on cycles of 9, 7, 5 and 3 steps against a steady beat, while snowpack opens a filter and snowmelt wakes a harp and marimba. Nine minutes, drum-led, an evocation of a style rather than a copy of any record.
 
+### [Arctic Round](arctic-round.qmd)
+Forty-eight years of Arctic sea ice, October 1978 to September 2026, one ice year per bar, as a set of pieces. **The Wheel**, a variant, is ready first: eight organ notes turn in a fixed order, one a week, and the total ice extent decides how many can sound, eight in a full March and two at the 2012 record low. A cello follows ice volume, open water brightens the room, and a map of the ice runs on the same clock. Thirteen minutes, cello and organ. The Round, the main piece, is in preparation.
+
 Every track has a card with its version, its records, what drives each sound, what to be careful about, and how to check it byte for byte: see [Tracks](tracks.qmd).
 
 ## The code

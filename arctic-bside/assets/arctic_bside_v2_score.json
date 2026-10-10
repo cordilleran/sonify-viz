@@ -1,0 +1,511 @@
+{
+ "name": "arctic_bside_v2",
+ "params": {
+  "bar_s": 16.0,
+  "tail_s": 24.0,
+  "coda_s": 7.0,
+  "seed": 2026,
+  "name": "arctic_bside_v2",
+  "y0": 1979,
+  "y1": 2026,
+  "rubato": true,
+  "bass": true,
+  "organ_gain": 6.5,
+  "cello_gain": 1.3,
+  "bass_gain": 1.1,
+  "cello_attack_s": 1.1,
+  "swell": true,
+  "openwater_octave": true,
+  "ext_range": [
+   3.4,
+   16.0
+  ],
+  "vol_range": [
+   4.0,
+   32.0
+  ],
+  "bass_gate": [
+   14.0,
+   24.0
+  ]
+ },
+ "constants": {
+  "wheel_ext": [
+   7.2,
+   12.0,
+   17.5
+  ],
+  "open_water_ref": 17.5,
+  "open_water_from": 0.45,
+  "swell_ext": [
+   3.4,
+   16.5
+  ],
+  "swell_level": [
+   0.15,
+   1.0
+  ],
+  "ice_env_ref": 16.0,
+  "rubato_press": 0.08,
+  "rubato_drag": 0.1
+ },
+ "bars": 48,
+ "duration_s": 799.0,
+ "organ_events": 2069,
+ "years": [
+  {
+   "ice_year": 1979,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 6,
+   "min_notes": 6,
+   "vol_mean_1000km3": 27.2,
+   "bass_gate": 1.0,
+   "cello_index_start": 1
+  },
+  {
+   "ice_year": 1980,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 6,
+   "min_notes": 6,
+   "vol_mean_1000km3": 24.8,
+   "bass_gate": 1.0,
+   "cello_index_start": 4
+  },
+  {
+   "ice_year": 1981,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 6,
+   "min_notes": 6,
+   "vol_mean_1000km3": 23.1,
+   "bass_gate": 0.91,
+   "cello_index_start": 4
+  },
+  {
+   "ice_year": 1982,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 6,
+   "min_notes": 6,
+   "vol_mean_1000km3": 21.3,
+   "bass_gate": 0.73,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1983,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 6,
+   "min_notes": 6,
+   "vol_mean_1000km3": 23.0,
+   "bass_gate": 0.9,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1984,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 23.1,
+   "bass_gate": 0.91,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1985,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 23.0,
+   "bass_gate": 0.9,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1986,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 6,
+   "min_notes": 6,
+   "vol_mean_1000km3": 23.5,
+   "bass_gate": 0.95,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1987,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 6,
+   "min_notes": 6,
+   "vol_mean_1000km3": 24.3,
+   "bass_gate": 1.0,
+   "cello_index_start": 4
+  },
+  {
+   "ice_year": 1988,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 6,
+   "min_notes": 6,
+   "vol_mean_1000km3": 23.6,
+   "bass_gate": 0.96,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1989,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 6,
+   "min_notes": 6,
+   "vol_mean_1000km3": 23.2,
+   "bass_gate": 0.92,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1990,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 22.5,
+   "bass_gate": 0.85,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1991,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 22.7,
+   "bass_gate": 0.87,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1992,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 6,
+   "min_notes": 6,
+   "vol_mean_1000km3": 22.6,
+   "bass_gate": 0.86,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1993,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 22.5,
+   "bass_gate": 0.85,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1994,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 6,
+   "min_notes": 6,
+   "vol_mean_1000km3": 22.0,
+   "bass_gate": 0.8,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1995,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 21.1,
+   "bass_gate": 0.71,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1996,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 6,
+   "min_notes": 5,
+   "vol_mean_1000km3": 20.4,
+   "bass_gate": 0.64,
+   "cello_index_start": 6
+  },
+  {
+   "ice_year": 1997,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 21.8,
+   "bass_gate": 0.78,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1998,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 21.3,
+   "bass_gate": 0.73,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 1999,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 20.5,
+   "bass_gate": 0.65,
+   "cello_index_start": 6
+  },
+  {
+   "ice_year": 2000,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 19.7,
+   "bass_gate": 0.57,
+   "cello_index_start": 6
+  },
+  {
+   "ice_year": 2001,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 19.9,
+   "bass_gate": 0.59,
+   "cello_index_start": 6
+  },
+  {
+   "ice_year": 2002,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 4,
+   "min_notes": 4,
+   "vol_mean_1000km3": 19.9,
+   "bass_gate": 0.59,
+   "cello_index_start": 5
+  },
+  {
+   "ice_year": 2003,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 19.2,
+   "bass_gate": 0.52,
+   "cello_index_start": 6
+  },
+  {
+   "ice_year": 2004,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 18.4,
+   "bass_gate": 0.44,
+   "cello_index_start": 6
+  },
+  {
+   "ice_year": 2005,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 4,
+   "min_notes": 4,
+   "vol_mean_1000km3": 18.2,
+   "bass_gate": 0.42,
+   "cello_index_start": 6
+  },
+  {
+   "ice_year": 2006,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 5,
+   "min_notes": 5,
+   "vol_mean_1000km3": 17.4,
+   "bass_gate": 0.34,
+   "cello_index_start": 6
+  },
+  {
+   "ice_year": 2007,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 15.9,
+   "bass_gate": 0.19,
+   "cello_index_start": 6
+  },
+  {
+   "ice_year": 2008,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 16.3,
+   "bass_gate": 0.23,
+   "cello_index_start": 7
+  },
+  {
+   "ice_year": 2009,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 4,
+   "min_notes": 4,
+   "vol_mean_1000km3": 16.3,
+   "bass_gate": 0.23,
+   "cello_index_start": 7
+  },
+  {
+   "ice_year": 2010,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 14.8,
+   "bass_gate": 0.08,
+   "cello_index_start": 7
+  },
+  {
+   "ice_year": 2011,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 13.7,
+   "bass_gate": 0.0,
+   "cello_index_start": 8
+  },
+  {
+   "ice_year": 2012,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 2,
+   "min_notes": 2,
+   "vol_mean_1000km3": 13.7,
+   "bass_gate": 0.0,
+   "cello_index_start": 8
+  },
+  {
+   "ice_year": 2013,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 4,
+   "min_notes": 3,
+   "vol_mean_1000km3": 13.9,
+   "bass_gate": 0.0,
+   "cello_index_start": 8
+  },
+  {
+   "ice_year": 2014,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 4,
+   "min_notes": 4,
+   "vol_mean_1000km3": 14.9,
+   "bass_gate": 0.09,
+   "cello_index_start": 7
+  },
+  {
+   "ice_year": 2015,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 15.6,
+   "bass_gate": 0.16,
+   "cello_index_start": 7
+  },
+  {
+   "ice_year": 2016,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 14.2,
+   "bass_gate": 0.02,
+   "cello_index_start": 7
+  },
+  {
+   "ice_year": 2017,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 12.6,
+   "bass_gate": 0.0,
+   "cello_index_start": 8
+  },
+  {
+   "ice_year": 2018,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 13.8,
+   "bass_gate": 0.0,
+   "cello_index_start": 8
+  },
+  {
+   "ice_year": 2019,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 13.6,
+   "bass_gate": 0.0,
+   "cello_index_start": 8
+  },
+  {
+   "ice_year": 2020,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 13.6,
+   "bass_gate": 0.0,
+   "cello_index_start": 8
+  },
+  {
+   "ice_year": 2021,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 4,
+   "min_notes": 3,
+   "vol_mean_1000km3": 13.4,
+   "bass_gate": 0.0,
+   "cello_index_start": 8
+  },
+  {
+   "ice_year": 2022,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 4,
+   "min_notes": 4,
+   "vol_mean_1000km3": 14.2,
+   "bass_gate": 0.02,
+   "cello_index_start": 8
+  },
+  {
+   "ice_year": 2023,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 14.2,
+   "bass_gate": 0.02,
+   "cello_index_start": 7
+  },
+  {
+   "ice_year": 2024,
+   "organ_notes_march": 8,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 13.8,
+   "bass_gate": 0.0,
+   "cello_index_start": 8
+  },
+  {
+   "ice_year": 2025,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 12.9,
+   "bass_gate": 0.0,
+   "cello_index_start": 8
+  },
+  {
+   "ice_year": 2026,
+   "organ_notes_march": 7,
+   "organ_notes_sept": 3,
+   "min_notes": 3,
+   "vol_mean_1000km3": 12.7,
+   "bass_gate": 0.0,
+   "cello_index_start": 8
+  }
+ ],
+ "wheel": [
+  48,
+  55,
+  60,
+  63,
+  65,
+  67,
+  70,
+  72
+ ],
+ "cello_pitches": [
+  39,
+  41,
+  43,
+  48,
+  55,
+  60,
+  63,
+  67,
+  72
+ ],
+ "provenance": "extent: NSIDC Sea Ice Index v4 (R); volume: PIOMAS (M), Mar-Sep 2026 repeat 2025 (extended, flagged); see fetch_arctic.py"
+}

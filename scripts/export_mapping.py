@@ -162,6 +162,14 @@ def regimes_bside(track):
                        ("lead_k", i32), ("cutoff_hz", i32)])}
 
 
+def arctic_wheel(track):
+    """The score of the locked take of The Wheel: what each ice year did (the weekly detail is in arctic-bside/assets/bside_state.json)."""
+    sc, version = locked_score(track)
+    f, i32 = pa.float64(), pa.int32()
+    return version, {"years": table(sc["years"], [("ice_year", i32), ("organ_notes_march", i32), ("organ_notes_sept", i32), ("min_notes", i32),
+                                                  ("vol_mean_1000km3", f), ("bass_gate", f), ("cello_index_start", i32)])}
+
+
 # mapping folder -> (locked track, exporter)
 TRACKS = {"granby-wy2024": ("granby-wy2024", water_year), "okanagan-wy2024": ("okanagan-wy2024", water_year),
           "climate-pair-pacific": ("climate-pair-pacific", climate_pair),
@@ -170,7 +178,7 @@ TRACKS = {"granby-wy2024": ("granby-wy2024", water_year), "okanagan-wy2024": ("o
           "meridian-daylight": ("meridian-chorus-daylight", meridian),
           "superior-ice": ("icecover-superior-ice:v1", superior_ice),
           "superior-ice-short": ("icecover-superior-ice", superior_ice),
-          "regimes-bside": ("regimes-bside", regimes_bside)}
+          "regimes-bside": ("regimes-bside", regimes_bside), "arctic-wheel": ("arctic-wheel", arctic_wheel)}
 
 
 def main():

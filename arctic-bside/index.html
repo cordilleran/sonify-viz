@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Wheel</title>
+<link rel="stylesheet" href="../listen/fonts/fonts.css">
+<style>
+:root{color-scheme:dark;--ground:#060e15;--surface:#0c1822;--line:#172a38;--line2:#25404f;--text:#e4edf3;--muted:#9bb0be;--faint:#7a94a4;--frost:#cfeaf7;--amber:#ffd27a;--max:#f3e6a3;
+--display:"Gloock","Iowan Old Style",Georgia,serif;--body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font:15px/1.5 var(--body)}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 16px 56px;display:grid;gap:14px}
+h1{font:400 clamp(30px,5vw,52px)/1 var(--display);margin:0}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.stage{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:820px){.stage{grid-template-columns:minmax(0,1fr)}.left{position:relative;top:auto}}
+.mapbox{position:relative;border:1px solid var(--line);border-radius:12px;background:#08141d;overflow:hidden;aspect-ratio:1}
+.mapbox canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.left{position:sticky;top:12px;display:grid;gap:10px}
+.caption{padding:2px 4px}
+.cdate{font:400 clamp(22px,3.4vw,34px)/1.1 var(--display);font-variant-numeric:tabular-nums}
+.csub{font:12px/1.5 var(--mono);color:var(--muted);margin-top:2px}
+.cnote{font:15px/1.5 var(--body);color:var(--amber);min-height:3.1em;margin:8px 0 0;max-width:62ch}
+.sr{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.side{display:grid;gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.panel canvas{width:100%;height:auto;display:block}
+.panel h2{font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:2px 0 6px}
+.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+button,select{appearance:none;border:1px solid var(--line2);background:transparent;color:var(--text);padding:8px 16px;border-radius:999px;font:14px var(--body);cursor:pointer}
+button:hover,select:hover{border-color:var(--frost)} button[aria-pressed=true]{border-color:var(--frost);color:var(--frost)}
+select{background:var(--surface);font:13px var(--mono)}
+button:focus-visible,input:focus-visible,select:focus-visible,canvas:focus-visible{outline:2px solid var(--frost);outline-offset:3px}
+input[type=range]{flex:1;min-width:180px;accent-color:var(--frost)}
+.time{font:13px var(--mono);color:var(--muted)}
+.toggles{display:flex;gap:6px;flex-wrap:wrap}
+.toggles button{padding:9px 13px;font:12px var(--mono)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font:11px/1.4 var(--mono);color:var(--faint)}
+.legend i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px}
+.notes{font:12px/1.6 var(--body);color:var(--faint);max-width:90ch}
+.notes b{color:var(--muted)} details.notes summary{cursor:pointer;font-size:14px} details.notes p{margin:8px 0 0} .notes a{color:var(--frost)}
+.load{font:13px var(--mono);color:var(--muted)}
+.readout{font:12px/1.5 var(--mono);color:var(--muted);margin:6px 2px 0}
+.panel p.cap{font:12px/1.5 var(--body);color:var(--faint);margin:6px 2px 0}
+.embedded #head{display:none} .embedded .wrap{padding-top:4px} .embedded .left{position:relative;top:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div id="head"><div class="eyebrow" id="eyebrow">Sonification Workbench · private picture test · M2</div><h1 id="h1">Arctic Round</h1></div>
+<div class="controls">
+ <select id="piece" aria-label="Piece"></select>
+ <button id="play" type="button">Play</button>
+ <input id="seek" type="range" min="0" max="1000" step="2" value="0" aria-label="Position in the piece" aria-valuetext="0:00">
+ <span class="time" id="clock">0:00</span>
+</div>
+<div class="toggles" role="group" aria-label="Map options">
+ <button type="button" data-t="proj" aria-pressed="false">Equal-area</button>
+ <button type="button" data-t="terrain" aria-pressed="true">Hillshade and sea floor</button>
+ <button type="button" data-t="land" aria-pressed="true">Land: snow, green, melt</button>
+ <button type="button" data-t="lines" aria-pressed="true">Year's max and min</button>
+</div>
+<div class="load" id="load" role="status">Loading data…</div>
+<div class="stage">
+ <div class="left"><div class="mapbox"><canvas id="map" width="760" height="760" role="img" aria-label="Map of Arctic sea ice, drawn from the satellite record and following the music. A dashed circle at the pole marks the area the satellite does not see, drawn as ice. The caption below gives the date, ice year and extent."></canvas></div>
+  <div class="caption"><div class="cdate" id="date">—</div><div class="csub" id="sub"></div><p class="cnote" id="cnote" role="status" aria-live="polite"></p></div>
+  <div class="legend"><span><i style="background:#f3e6a3;opacity:.6"></i>edge of this year's maximum ice</span><span><i style="background:#f3e6a3"></i>edge of this year's minimum</span><span><i style="background:#fff"></i>sea ice concentration: 15, 50, 80, 95 %</span><span><i style="background:none;border-top:2px dashed #5d7f96;height:0"></i>dashed circle at the pole: not seen by the satellite, drawn as ice</span></div></div>
+<div class="sr" id="yearLive" role="status" aria-live="polite"></div>
+ <div class="side">
+  <div class="panel" id="wheelPanel" hidden><h2>The wheel: eight organ notes</h2><canvas id="wheel" width="520" height="330" role="img" aria-label="The eight-note wheel. Each note lights as it sounds; notes the ice can no longer hold are drawn as empty rings. The line under the wheel says how many are in play."></canvas><div class="readout" id="wheelRead" role="status" aria-live="off"></div>
+   <p class="cap">The order and pace never change: one note a week, a full turn every eight weeks. As the total ice shrinks, the highest and lowest notes (top) fall silent first and the middle notes (bottom) hold longest. Dashed rings are silent notes. Pale halos are the upper octave that open water adds.</p></div>
+  <div class="panel" id="voicePanel" hidden><h2>Thickness is body, open water is light</h2><canvas id="voices" width="520" height="210" role="img" aria-label="Cello register from ice volume, bass level and string swell"></canvas><div class="readout" id="voiceRead"></div>
+   <p class="cap">Cello: thick ice is low and warm, thin ice is high and bare. The bass sounds while the year's mean ice volume (a model) is above 14 thousand km³. Open water is heard in the organ, not the cello.</p></div>
+  <div class="panel"><h2>Each ring is one ice year</h2><canvas id="ring" width="520" height="470" role="img" aria-label="Ring clock: total ice extent through each ice year"></canvas></div>
+  <div class="panel" id="stripPanel"><h2>The same year in three records</h2><canvas id="strip" width="520" height="250" role="img" aria-label="Carbon dioxide at Barrow, global ocean temperature anomaly and Arctic air temperature anomaly, 1979 to 2025"></canvas></div>
+ </div>
+</div>
+<div id="notesB" hidden>
+<details class="notes" id="how"><summary><b>How it's made</b></summary>
+<p><b>One bar is one ice year.</b> Each bar is 16 seconds, October to September, 48 bars from 1979 to 2026, and every week of ice is one pulse.</p>
+<p><b>The wheel.</b> Eight organ notes turn in the same order at the same pace, one note a week: C, G, C, E&#9837;, F, G, B&#9837;, C. They come from a minor pentatonic scale, which has no semitones and no tritone (the harshest intervals), so whichever notes are left, none of them clash in that way.</p>
+<p><b>The ice decides how many can sound.</b> In a full March all eight; in the 1980s Septembers, six; in the 2012 record low, two. A note that drops out is a rest, not a quieter note, so the loop keeps its length and pace, and the notes that remain keep the pitch and touch they had in 1979. The highest and lowest go first and the middle ones hold longest, so the loop gets a gap that grows and the range narrows toward the middle. The loss follows the ice as a whole, not particular seas.</p>
+<p><b>The cello is thickness.</b> It plays one note every two months, and its register follows ice volume (from a model): thick ice is low and warm, thin ice is high and bare, so over the record it climbs. Each note swells in with a bow instead of a strike.</p>
+<p><b>The bass is the floor.</b> A low C sits under everything while the ice is thick, and it is gone by the 2020s. The cello and bass also rise and fall with each year's extent.</p>
+<p><b>Open water is light.</b> When the sea opens, the organ gains its upper octave and the room grows wider and brighter. Thinning and opening are told apart: the cello says how thick the ice is; the organ and the room say how much water is open.</p>
+<p><b>Time bends a little.</b> Weeks press slightly in freeze-up and drag in melt, but every bar is exactly 16 seconds. After the last bar come six October days of refreeze: the wheel restarts thin, the cello holds an open fifth, and it is left unresolved. The method is that of process music, except that the process here is subtraction.</p>
+</details>
+<p class="notes"><b>What this picture tells, and what it does not.</b> The wheel and the voices panel are drawn from the rules that made the sound. The number of organ notes follows total ice extent, a satellite record (R). The cello's register and the bass follow ice volume, which is a model (M). <b>Warming is not in this piece</b>; the Round, the main piece of the pair, will carry it. Land snow, green and melt are a model (M) run at <span class="npts">29</span> points, about 650 km apart: they show the timing of the seasons, not local detail, and are not a satellite product. Days with no satellite grid repeat the nearest one. <b>The disc at the pole is not measured.</b> The satellites' orbits do not pass over the pole, so each sensor leaves a round area unseen: about 600 km in radius until August 1987, about 305 km until the end of 2007, about 95 km until the end of 2024 and about 140 km since (measured from the grids used here). The map draws it as full ice inside a dashed circle, and NSIDC's extent figures count it as ice too. The disc shrinks in 1987 and 2008 because the sensors changed, not the ice. The extent record starts on 26 October 1978, so the first weeks of the 1979 bar repeat that day's value. Before mid-1987 extent was recorded every other day, and there are no data from 2 December 1987 to 13 January 1988; those days are interpolated.</p>
+<p class="notes" id="ack"><b>Acknowledgement.</b> This piece is made from public satellite and climate records of the Arctic Ocean and its sea ice. Sea ice is part of the homeland of Inuit and of other Indigenous peoples of the Arctic. The Inuit Circumpolar Council's <a href="https://www.inuitcircumpolar.com/declaration/2026-iqaluit-declaration/">2026 Iqaluit Declaration</a> reaffirms "our right to our ancestral homelands across Inuit Nunaat", and its 2018 Utqiaġvik Declaration affirmed Inuit rights across "lands, waters, ice, air space and resources". This piece uses no Inuit knowledge and no Inuit data, and the Inuit Circumpolar Council and SIKU have not reviewed it. Inuit-led work on sea ice, such as <a href="https://siku.org">SIKU</a>, is the place to learn from people who live with and travel on the ice.</p>
+<p class="notes"><b>Data and credits.</b> <b>Sea ice (R):</b> NSIDC Sea Ice Index, Version 4 (G02135), Fetterer, Knowles, Meier, Savoie, Windnagel and Stafford, doi:10.7265/a98x-0f50; weekly concentration grids at half resolution and in 5 % steps, each year's maximum and minimum grids at the full 25 km in 5 % steps, and the daily total extent. Derived by us; NSIDC has not reviewed this. <b>Ice volume (M):</b> PIOMAS v2.1, Polar Science Center, University of Washington (Zhang and Rothrock 2003; Schweiger et al. 2011, doi:10.1029/2011JC007084). The picture's files carry only each year's mean volume and the cello's register steps; the series is not republished and is available from the Polar Science Center. PIOMAS for March to September 2026 repeats 2025, so the 2026 cello register and bass follow that extension. <b>Terrain (R):</b> GEBCO Bathymetric Compilation Group 2025, The GEBCO_2025 Grid, doi:10.5285/37c52e96-24ea-67ce-e063-7086abc05f29; not for navigation, and GEBCO does not endorse this page. <b>Land snow, green and melt (M):</b> weather data by <a href="https://open-meteo.com">Open-Meteo.com</a> (CC BY 4.0, non-commercial use), generated using Copernicus Climate Change Service information 2026 (ERA5; Hersbach et al. 2020). Contains modified Copernicus Climate Change Service information 2026. Neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus information or data it contains. <b>Glaciated areas and coastlines:</b> Natural Earth (public domain). <b>Sound:</b> pipe organ and cello from VSCO 2 CE, Versilian Studios (CC0). <b>Drawing library:</b> d3 7.9.0, Mike Bostock (ISC). <b>Licence.</b> The audio and the picture's derived files are CC BY-SA 4.0; the code is MPL-2.0. The land layer file (<code>arctic_land.json</code>) comes from Open-Meteo's free API, which is for non-commercial use: to reuse it commercially, regenerate it under a commercial plan. Each dataset above keeps its provider's terms. <b>Made by</b> Claude Code (Sonnet 5.5) and reviewed by GW.</p>
+</div>
+<p class="notes" id="notesA"><b>What is measured and what is modelled.</b> Sea ice: NSIDC Sea Ice Index v4 concentration grids, one every 7 days (R); the pole hole is drawn as ice and is not measured; days with no grid repeat the nearest one. Land height and sea depth: GEBCO_2025 Grid (R, a compiled terrain model; not for navigation; GEBCO does not endorse this page). Land snow, green and meltwater: a <b>model</b> (M) run on ERA5 air temperature and snowfall at <span class="npts">29</span> points, about 650 km apart, then blended: it shows the timing of the seasons, not local detail, and it is not a satellite vegetation product. Greening is kept faint on purpose and is left off permanent ice (Natural Earth glaciated areas, public domain; small glaciers are missing from it). Rings and strip: NSIDC extent, NOAA Barrow CO2, NOAA ocean temperature, NASA GISTEMP (64 to 90 N); 2026 is partial. Sound: VSCO 2 CE samples and synthesis. Claude Code (Sonnet 5.5) built this; GW has not reviewed it.</p>
+</div>
+<audio id="audio" preload="none"></audio>
+<script src="vendor/d3.min.js"></script>
+<script>
+const A = {"terrain": "assets/terrain_3411.png", "glacier_mask": "assets/glacier_mask.png", "ice_meta": "assets/ice_meta.json", "ice_weekly": "assets/ice_weekly.txt", "ice_extremes": "assets/ice_extremes.txt", "arctic_land": "assets/arctic_land.json", "arctic_daily": "assets/arctic_page_min.json", "bside_state": "assets/bside_state.json", "bside_v2": "assets/arctic_bside_v2.mp3"}, MODE = "bside";   // MODE: "both" (selector) or "bside" (the wheel picture)
+const W120 = 120, SZ = 240, C0 = 34, R0 = 114, PER = 52;
+const $ = id => document.getElementById(id);
+const FAM = {m: "'JetBrains Mono',monospace", b: "'Atkinson Hyperlegible',sans-serif", d: "Gloock,Georgia,serif"};
+// canvas text is sized in canvas pixels; when a 520-wide canvas is shown narrower (a phone), the type is scaled up so it stays readable
+const setF = (g, px, fam = "m", wt = "") => { const k = Math.min(g.canvas.id === "voices" ? 1.3 : 1.45, Math.max(1, g.canvas.width / (g.canvas.clientWidth || g.canvas.width))); g.font = `${wt} ${Math.round(px * k * 10) / 10}px ${FAM[fam]}`.trim(); };
+const getJ = url => fetch(url).then(r => { if (!r.ok) throw new Error(r.status + " for " + url); return r.json(); });
+// main is the shared app's second piece; the B-side build deletes it at load and never touches the CO2 strip
+const PIECES = {main: {label: "Main piece, filled (10 s a bar)", audio: A.round_full_filled, bar: 10}, bside: {label: "B-side, take 3 (16 s a bar)", audio: A.bside_v2, bar: 16}};
+const MOV = [[1979, "I  Fullness"], [1996, "II  Thinning"], [2007, "III  The break"], [2013, "IV  The new regime"]];
+const FORCE_T = new URLSearchParams(location.search).has('t') ? +new URLSearchParams(location.search).get('t') : null;   // for stills and tests only
+let BS = null, PT = null, PS = null, PNN = null, POW = null, GLC = null, TER = null, ICE = null, EXT = null, META = null, DLY = null, LAND = null, piece = MODE === "bside" ? "bside" : "main", proj = new URLSearchParams(location.search).get("proj") === "laea" ? "laea" : "stereo", showT = true, showL = true, showLines = true;
+const ctx = $("map").getContext("2d", {willReadFrequently: true}), S = 760, sc = S / SZ;
+const R_E = 6378137, K0 = (1 + Math.sin(70 * Math.PI / 180)) / 2, X0 = -3850000, Y0 = 5850000, CELL = 25000;
+
+// ---------- projections: grid cell (col,row of the NSIDC 304 x 448 grid) <-> screen ----------
+function cellToLonLat(c, r) { const X = X0 + c * CELL, Y = Y0 - r * CELL, rho = Math.hypot(X, Y);
+  return [-45 + Math.atan2(X, -Y) * 180 / Math.PI, 90 - 2 * Math.atan(rho / (2 * R_E * K0)) * 180 / Math.PI]; }
+function lonLatToCell(lon, lat) { const rho = 2 * R_E * K0 * Math.tan(Math.PI / 4 - lat * Math.PI / 360), a = (lon + 45) * Math.PI / 180;
+  return [(rho * Math.sin(a) - X0) / CELL, (Y0 + rho * Math.cos(a)) / CELL]; }
+const LAEA = d3.geoAzimuthalEqualArea().rotate([45, -90]).scale(S / 2 / (2 * Math.sin(28 * Math.PI / 360))).translate([S / 2, S / 2]).clipAngle(100);
+function cellToScreen(c, r) { if (proj === "stereo") return [S / 2 + (c - 154) * sc, S / 2 + (r - 234) * sc];
+  const ll = cellToLonLat(c, r); return LAEA(ll) || [NaN, NaN]; }
+function screenToCell(x, y) { if (proj === "stereo") return [154 + (x - S / 2) / sc, 234 + (y - S / 2) / sc];
+  const ll = LAEA.invert([x, y]); return ll ? lonLatToCell(ll[0], ll[1]) : [NaN, NaN]; }
+const geo = (off, k) => d3.geoTransform({point(x, y) { const p = cellToScreen(off[0] + x * k, off[1] + y * k); this.stream.point(p[0], p[1]); }});
+
+// ---------- base map: terrain, built once per projection ----------
+let baseCanvas = null, landCanvas = null, baseFor = "", lut = null, lutFor = "";
+const ramp = (stops, v) => { for (let i = 1; i < stops.length; i++) if (v <= stops[i][0]) { const a = stops[i - 1], b = stops[i], u = (v - a[0]) / (b[0] - a[0]);
+  return [0, 1, 2].map(j => a[1][j] + (b[1][j] - a[1][j]) * u); } return stops[stops.length - 1][1]; };
+const SEA = [[0, [52, 104, 128]], [200, [36, 82, 110]], [1000, [22, 56, 84]], [3000, [14, 38, 62]], [5800, [8, 24, 42]]];
+const LND = [[0, [74, 82, 72]], [300, [88, 94, 80]], [1000, [108, 106, 96]], [2000, [140, 140, 134]], [3300, [218, 224, 228]]];
+const isGlacier = k => GLC && GLC[k] > 127;   // k indexes the terrain RGBA array; the mask has the same layout
+function buildBase() {
+  const key = proj + showT; if (baseFor === key) return; baseFor = key;
+  const cv = document.createElement("canvas"); cv.width = cv.height = S; const g = cv.getContext("2d"), im = g.createImageData(S, S), d = im.data, T = TER, tw = T.w, th = T.h;
+  const cl = document.createElement("canvas"); cl.width = cl.height = S; const gl = cl.getContext("2d"), iml = gl.createImageData(S, S), dl = iml.data;
+  for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
+    const o = (y * S + x) * 4, [c, r] = screenToCell(x + .5, y + .5), inside = Math.hypot(x + .5 - S / 2, y + .5 - S / 2) < S / 2 - 1;
+    if (!inside || !(c >= 0 && c < 304 && r >= 0 && r < 448)) { d[o + 3] = 0; continue; }
+    const k = (Math.min(th - 1, Math.floor(r * 4)) * tw + Math.min(tw - 1, Math.floor(c * 4))) * 4, hs = T.d[k] / 255, dep = T.d[k + 1], hgt = T.d[k + 2];
+    let col; const sh = showT ? 0.55 + 0.9 * hs : 1;
+    if (hgt > 0) { col = isGlacier(k) ? [222, 230, 237] : ramp(LND, (hgt - 1) / 254 * 3500); dl[o] = Math.min(255, col[0] * sh); dl[o + 1] = Math.min(255, col[1] * sh); dl[o + 2] = Math.min(255, col[2] * sh); dl[o + 3] = 255; d[o] = 11; d[o + 1] = 22; d[o + 2] = 32; d[o + 3] = 255; }
+    else { col = ramp(SEA, (dep - 1) / 254 * 6000); d[o] = Math.min(255, col[0] * sh); d[o + 1] = Math.min(255, col[1] * sh); d[o + 2] = Math.min(255, col[2] * sh); d[o + 3] = 255; }
+  }
+  g.putImageData(im, 0, 0); gl.putImageData(iml, 0, 0); baseCanvas = cv; landCanvas = cl;
+}
+// ---------- land wash: snow, green, melt glint from the model's points (LAND.points), blended on a coarse grid ----------
+let wash = null, washCtx = null, WN = 190, lutX = null, lutY = null;
+function buildLut() {
+  const key = proj; if (lutFor === key) return; lutFor = key; WN = 190; lut = new Int8Array(WN * WN).fill(-1); lutX = new Float32Array(WN * WN); lutY = new Float32Array(WN * WN);
+  const cs = SZ / GC, cl = v => Math.min(GC - 1, Math.max(0, v));
+  for (let y = 0; y < WN; y++) for (let x = 0; x < WN; x++) { const sx = (x + .5) * S / WN, sy = (y + .5) * S / WN;
+    if (Math.hypot(sx - S / 2, sy - S / 2) > S / 2 - 2) continue; const [c, r] = screenToCell(sx, sy);
+    if (!(c >= 0 && c < 304 && r >= 0 && r < 448)) continue;
+    const k = (Math.floor(r * 4) * TER.w + Math.floor(c * 4)) * 4; if (TER.d[k + 2] === 0 || isGlacier(k)) continue;
+    lut[y * WN + x] = 0; lutX[y * WN + x] = cl((c - C0) / cs - .5); lutY[y * WN + x] = cl((r - R0) / cs - .5); }
+  wash = document.createElement("canvas"); wash.width = wash.height = WN; washCtx = wash.getContext("2d");
+}
+let IDW = null; const GC = 48;
+function buildIDW() { const cs = SZ / GC, n = LAND.points.length; IDW = new Float32Array(GC * GC * n);
+  for (let j = 0; j < GC; j++) for (let i = 0; i < GC; i++) { const c = C0 + (i + .5) * cs, r = R0 + (j + .5) * cs; let s = 0; const o = (j * GC + i) * n;
+    for (let p = 0; p < n; p++) { const dd = Math.hypot(LAND.points[p].col - c, LAND.points[p].row - r) + 8; IDW[o + p] = 1 / (dd * dd); s += IDW[o + p]; }
+    for (let p = 0; p < n; p++) IDW[o + p] /= s; } }
+function drawWash(day) {
+  if (!showL || !LAND) return; buildLut(); if (!IDW) buildIDW();
+  const n = LAND.points.length, f = Math.min(LAND.n_steps - 1, Math.floor(day / LAND.step_days)), fs = new Float32Array(GC * GC * 3);
+  const v = LAND.points.map(p => [p._s[f] / 255 * 300, p._g[f] / 255, p._m[f] / 255]);
+  for (let q = 0; q < GC * GC; q++) { let a = 0, b = 0, c = 0; for (let p = 0; p < n; p++) { const w = IDW[q * n + p]; a += w * v[p][0]; b += w * v[p][1]; c += w * v[p][2]; } fs[q * 3] = a; fs[q * 3 + 1] = b; fs[q * 3 + 2] = c; }
+  const im = washCtx.createImageData(WN, WN), d = im.data;
+  for (let k = 0; k < WN * WN; k++) { if (lut[k] < 0) continue; const x0 = lutX[k] | 0, y0 = lutY[k] | 0, x1 = Math.min(GC - 1, x0 + 1), y1 = Math.min(GC - 1, y0 + 1), fx = lutX[k] - x0, fy = lutY[k] - y0;
+    const bl = ch => (fs[(y0 * GC + x0) * 3 + ch] * (1 - fx) + fs[(y0 * GC + x1) * 3 + ch] * fx) * (1 - fy) + (fs[(y1 * GC + x0) * 3 + ch] * (1 - fx) + fs[(y1 * GC + x1) * 3 + ch] * fx) * fy;
+    const snow = Math.min(1, bl(0) / 50), green = bl(1), glint = bl(2);
+    let R = 0, G = 0, B = 0, Aa = 0;
+    if (green > 0.03) { Aa = 0.30 * Math.min(1, green * 1.3); R = 96; G = 138; B = 86; }
+    if (snow > 0.02) { const a2 = 0.78 * snow; R = (R * Aa * (1 - a2) + 238 * a2) / Math.max(1e-6, Aa * (1 - a2) + a2); G = (G * Aa * (1 - a2) + 244 * a2) / Math.max(1e-6, Aa * (1 - a2) + a2); B = (B * Aa * (1 - a2) + 250 * a2) / Math.max(1e-6, Aa * (1 - a2) + a2); Aa = Aa * (1 - a2) + a2; }
+    if (glint > 0.04) { const a3 = 0.55 * Math.min(1, glint * 1.3); const t = Aa * (1 - a3) + a3; R = (R * Aa * (1 - a3) + 150 * a3) / t; G = (G * Aa * (1 - a3) + 215 * a3) / t; B = (B * Aa * (1 - a3) + 255 * a3) / t; Aa = t; }
+    d[k * 4] = R; d[k * 4 + 1] = G; d[k * 4 + 2] = B; d[k * 4 + 3] = Aa * 255; }
+  washCtx.putImageData(im, 0, 0); ctx.imageSmoothingEnabled = true; ctx.drawImage(wash, 0, 0, S, S);
+}
+// ---------- ice: nested contour bands from the weekly frame, and the year's max/min edges ----------
+const TH = [15, 50, 80, 95], COLS = ["rgba(190,215,235,.34)", "rgba(205,225,242,.46)", "rgba(228,240,251,.62)", "rgba(252,254,255,.82)"];
+function frameVals(f) { const v = new Float64Array(W120 * W120), b = ICE.subarray(f * W120 * W120, (f + 1) * W120 * W120); for (let i = 0; i < v.length; i++) v[i] = b[i] === 255 ? 0 : b[i] * 5; return v; }
+function drawIce(f) { const path = d3.geoPath(geo([C0, R0], 2), ctx); d3.contours().size([W120, W120]).smooth(true).thresholds(TH)(frameVals(f)).forEach((g, i) => { ctx.beginPath(); path(g); ctx.fillStyle = COLS[i]; ctx.fill(); }); }
+function extremeVals(yi, which) { const v = new Float64Array(SZ * SZ), b = EXT.subarray((yi * 2 + which) * SZ * SZ, (yi * 2 + which + 1) * SZ * SZ); for (let i = 0; i < v.length; i++) v[i] = b[i] === 255 ? 0 : b[i] * 5; return v; }
+let lineCache = {};
+function drawLines(yi, dateStr) {
+  if (!showLines) return; const ex = META.extremes[String(META.years[yi])]; if (!ex) return; const path = d3.geoPath(geo([C0, R0], 1), ctx);
+  [[0, "rgba(243,230,163,.45)", 1.1, [5, 4]], [1, "rgba(243,230,163,.8)", 1.4, []]].forEach(([w, col, lw, dash]) => { if (dateStr < ex[w]) return;
+    const key = yi + "_" + w; if (!lineCache[key]) lineCache[key] = d3.contours().size([SZ, SZ]).smooth(true).thresholds([15])(extremeVals(yi, w))[0];
+    ctx.beginPath(); path(lineCache[key]); ctx.setLineDash(dash); ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.stroke(); ctx.setLineDash([]); }); }
+// The pole hole: polar-orbiting satellites do not pass over the pole, so each sensor leaves a disc unmeasured. Radii (km) measured from the NSIDC grids used here, by first frame date.
+const HOLE = [["1978-10-01", 598], ["1987-08-26", 305], ["2008-01-07", 94], ["2025-01-07", 138]];
+function drawPoleHole(dateStr) { const rk = HOLE.filter(h => dateStr >= h[0]).pop()[1] / (CELL / 1000); ctx.beginPath();
+  for (let a = 0; a <= 360; a += 5) { const p = cellToScreen(154 + rk * Math.cos(a * Math.PI / 180), 234 + rk * Math.sin(a * Math.PI / 180)); a ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); }
+  ctx.setLineDash([3, 4]); ctx.strokeStyle = "rgba(40,70,95,.85)"; ctx.lineWidth = 1.2; ctx.stroke(); ctx.setLineDash([]); }
+function drawGraticule() { ctx.strokeStyle = "rgba(160,200,225,.13)"; ctx.lineWidth = 1; for (const lat of [70, 80]) { ctx.beginPath(); for (let a = 0; a <= 360; a += 3) { const [c, r] = lonLatToCell(a - 180, lat), p = cellToScreen(c, r); a ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); } ctx.stroke(); } }
+// ---------- ring clock and strip ----------
+const rc = $("ring").getContext("2d"), sc2 = $("strip").getContext("2d");
+let RING = null, STRIP = null, REC = {};
+function prep() {
+  const tot = DLY.total, dates = DLY.dates, D0 = new Date(dates[0] + "T00:00:00Z"); RING = {};
+  for (let y = 1979; y <= 2026; y++) { const o0 = Date.UTC(y - 1, 9, 1), pts = []; for (let k = 0; k < 365; k += 3) { const i = Math.round((o0 + k * 864e5 - D0) / 864e5); if (i >= 0 && i < tot.length) pts.push([k, tot[i]]); } RING[y] = pts; }
+  const ann = (obj, y) => { const v = Object.entries(obj).filter(([k]) => k.startsWith(y)).map(e => e[1]); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+  const Y = Array.from({length: 47}, (_, i) => 1979 + i);
+  STRIP = {Y, co2: Y.map(y => ann(DLY.co2_brw_ppm, y)), sst: Y.map(y => ann(DLY.sst_global_anom_c, y)), arc: Y.map(y => DLY.gistemp[y] ? DLY.gistemp[y].arctic : null)};
+  let best = null, bestY = null;   // record-low Septembers from the daily total
+  const sepm = {}; dates.forEach((d, i) => { const m = +d.slice(5, 7), y = +d.slice(0, 4); if (m === 9) (sepm[y] = sepm[y] || []).push(tot[i]); });
+  Object.keys(sepm).map(Number).sort().forEach(y => { const m = sepm[y].reduce((a, b) => a + b, 0) / sepm[y].length; if (best !== null && m < best - 1e-9) REC[y] = [best - m, m, bestY]; if (best === null || m < best) { best = m; bestY = y; } });
+}
+function drawRing(yi, k, frac) {
+  const g = rc, W = 520, H = 470, cx = W / 2, cy = H / 2 - 2, r0 = 18, rs = e => r0 + e * 11.4; g.clearRect(0, 0, W, H);
+  g.strokeStyle = "#17313f"; g.lineWidth = 1; g.fillStyle = "#7a94a4"; setF(g, 11); g.textAlign = "left";
+  [4, 8, 12, 16].forEach(e => { g.beginPath(); g.arc(cx, cy, rs(e), 0, 2 * Math.PI); g.stroke(); });
+  g.textAlign = "center"; [["Oct", 0], ["Jan", 92], ["Apr", 182], ["Jul", 274]].forEach(([m, d]) => { const a = d / 365 * 2 * Math.PI; g.textBaseline = "middle"; g.fillText(m, cx + (rs(16) + 20) * Math.sin(a), cy - (rs(16) + 20) * Math.cos(a)); g.textBaseline = "alphabetic"; });
+  const year = META.years[yi];
+  for (let y = 1979; y <= year; y++) { const pts = RING[y], cur = y === year, lim = cur ? frac * 365 : 365, f = (y - 1979) / 47; g.beginPath(); let started = false;
+    pts.forEach(([d, e]) => { if (d > lim) return; const a = d / 365 * 2 * Math.PI, rr = rs(e), px = cx + rr * Math.sin(a), py = cy - rr * Math.cos(a); started ? g.lineTo(px, py) : g.moveTo(px, py); started = true; });
+    if (!cur) g.closePath(); g.strokeStyle = cur ? "#ffd27a" : `rgba(${Math.round(140 + 60 * f)},${Math.round(190 - 60 * f)},${Math.round(225 - 90 * f)},.3)`; g.lineWidth = cur ? 2.4 : 0.9; g.stroke();
+    if (cur) { const e = pts.reduce((p, q) => Math.abs(q[0] - lim) < Math.abs(p[0] - lim) ? q : p), a = e[0] / 365 * 2 * Math.PI; g.beginPath(); g.arc(cx + rs(e[1]) * Math.sin(a), cy - rs(e[1]) * Math.cos(a), 5, 0, 7); g.fillStyle = "#fff"; g.fill(); } }
+  setF(g, 11); g.textAlign = "left"; g.lineJoin = "round"; g.strokeStyle = "#0c1822"; g.lineWidth = 4;   // scale labels last, on a dark halo, so the year lines do not cross them out
+  [4, 8, 12, 16].forEach(e => { const t = e + " M km²"; g.strokeText(t, cx + 5, cy - rs(e) + 14); g.fillStyle = "#9bb0be"; g.fillText(t, cx + 5, cy - rs(e) + 14); });
+}
+function drawStrip(year) {
+  const g = sc2, W = 520, H = 250; g.clearRect(0, 0, W, H); const rows = [["CO2 at Barrow", STRIP.co2, "ppm", 0], ["Global ocean temperature anomaly", STRIP.sst, "C", 1], ["Arctic air temperature anomaly (64 to 90 N)", STRIP.arc, "C", 1]];
+  rows.forEach(([lab, data, unit, dp], r) => { const y0 = 24 + r * 80, h = 44, vals = data.filter(v => v !== null), lo = Math.min(...vals), hi = Math.max(...vals);
+    g.fillStyle = "#7a94a4"; setF(g, 12, "b"); g.textAlign = "left"; g.fillText(lab, 4, y0 - 8);
+    g.strokeStyle = "#9fc3da"; g.lineWidth = 1.5; g.beginPath(); let st = false; data.forEach((v, i) => { if (v === null) return; const px = 4 + i / 46 * (W - 8), py = y0 + h - (v - lo) / (hi - lo) * h; st ? g.lineTo(px, py) : g.moveTo(px, py); st = true; }); g.stroke();
+    const i = Math.min(46, year - 1979), v = data[i]; if (v !== null) { g.fillStyle = "#ffd27a"; g.beginPath(); g.arc(4 + i / 46 * (W - 8), y0 + h - (v - lo) / (hi - lo) * h, 4, 0, 7); g.fill(); g.fillStyle = "#e4edf3"; g.textAlign = "right"; g.fillText(v.toFixed(dp) + " " + unit, W - 4, y0 - 8); } });
+}
+// ---------- the wheel and the voices (B-side only) ----------
+const NOTE = m => ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"][m % 12] + (Math.floor(m / 12) - 1);
+function buildPulses() { const per = BS.per, n = BS.bars.length; PT = new Float32Array(n * per + BS.coda.pulses); PS = new Uint8Array(PT.length); PNN = new Uint8Array(PT.length); POW = new Float32Array(PT.length);
+  BS.bars.forEach((B, b) => B.edges.slice(0, per).forEach((e, w) => { const i = b * per + w; PT[i] = (b + e) * BS.bar_s; PS[i] = i % 8; PNN[i] = B.nn[w]; POW[i] = B.ow[w]; }));
+  for (let k = 0; k < BS.coda.pulses; k++) { const i = n * per + k; PT[i] = n * BS.bar_s + k * BS.coda.pulse_s; PS[i] = i % 8; PNN[i] = BS.coda.n; POW[i] = 0.3; } }
+const activeSet = n => { const st = (8 - n) >> 1; return s => s >= st && s < st + n; };
+function pulseAt(t) { let lo = 0, hi = PT.length - 1; while (lo < hi) { const m = (lo + hi + 1) >> 1; if (PT[m] <= t) lo = m; else hi = m - 1; } return lo; }
+const wc = $("wheel").getContext("2d"), vc = $("voices").getContext("2d");
+function drawWheel(s) {
+  const g = wc, W = 520, H = 330, cx = W / 2, cy = H / 2 + 4, R = 118; g.clearRect(0, 0, W, H);
+  const i0 = pulseAt(s.t), n = PNN[i0], act = activeSet(n), ow = POW[i0];
+  const ang = k => Math.PI / 2 + (k - 3.5) * Math.PI / 4, pos = k => [cx + R * Math.cos(ang(k)), cy + R * Math.sin(ang(k))];
+  g.strokeStyle = "#17313f"; g.lineWidth = 1; g.beginPath(); g.arc(cx, cy, R, 0, 7); g.stroke();
+  g.fillStyle = "#7a94a4"; setF(g, 11); g.textAlign = "center"; g.fillText("first to fall silent", cx, cy - R - 22); g.fillText("last to hold", cx, cy + R + 36);
+  // last few pulses, newest brightest
+  const glow = new Float32Array(8); for (let j = 0; j < 6; j++) { const i = i0 - j; if (i < 0) break; const sl = PS[i]; if (!activeSet(PNN[i])(sl)) continue; const age = s.t - PT[i]; if (age < 0 || age > 1.6) continue; glow[sl] = Math.max(glow[sl], Math.exp(-age / 0.45)); }
+  for (let k = 0; k < 8; k++) { const [x, y] = pos(k), on = act(k), gl = glow[k], r = 21;
+    if (on && ow > 0.45) { const a = Math.pow((ow - 0.45) / 0.55, 1.2) * 0.8; g.beginPath(); g.arc(x, y, r + 9, 0, 7); g.strokeStyle = `rgba(160,225,255,${0.15 + 0.6 * a})`; g.lineWidth = 2; g.stroke(); }
+    g.beginPath(); g.arc(x, y, r, 0, 7);
+    if (on) { g.fillStyle = `rgba(${Math.round(120 + 135 * gl)},${Math.round(165 + 70 * gl)},${Math.round(190 + 45 * gl)},${0.22 + 0.78 * gl})`; g.fill(); g.strokeStyle = "#9fc3da"; g.lineWidth = 1.5; g.setLineDash([]); g.stroke(); }
+    else { g.strokeStyle = "#3d5c6d"; g.lineWidth = 1.2; g.setLineDash([3, 4]); g.stroke(); g.setLineDash([]); }
+    g.fillStyle = on ? (gl > .5 ? "#06141d" : "#e4edf3") : "#7a94a4"; setF(g, 12, "m", "600"); g.textAlign = "center"; g.fillText(NOTE(BS.wheel[k]), x, y + 4); }
+  const [px, py] = pos(PS[i0]); if (act(PS[i0])) { g.beginPath(); g.moveTo(cx + (px - cx) * .5, cy + (py - cy) * .5); g.lineTo(cx + (px - cx) * .8, cy + (py - cy) * .8); g.strokeStyle = "rgba(255,210,122,.8)"; g.lineWidth = 2; g.stroke(); }
+  g.fillStyle = "#ffd27a"; setF(g, 30, "d", "400"); g.textAlign = "center"; g.fillText(n + " of 8", cx, cy + 4); g.fillStyle = "#9bb0be"; setF(g, 11); g.fillText("notes in play", cx, cy + 22);
+  const t = n + " of 8 notes in play · upper octave " + Math.round(ow > .45 ? Math.pow((ow - .45) / .55, 1.2) * 80 : 0) + " % in"; if ($("wheelRead").textContent !== t) $("wheelRead").textContent = t; }
+function drawVoices(s) {
+  const g = vc, W = 520, H = 210; g.clearRect(0, 0, W, H); const B = BS.bars[s.b], inBars = !s.coda, wk = s.k;
+  // cello ladder: nine registers, low notes low
+  const lx = 60, top = 30, bot = 194, step = (bot - top) / 8, ry = i => bot - i * step;   // register index as in the take: 0 = Eb2 (thick ice, low and warm) up to 8 = C5 (thin ice, high and bare)
+  g.fillStyle = "#7a94a4"; setF(g, 11); g.textAlign = "left"; g.fillText("CELLO", 4, 10);
+  for (let i = 0; i <= 8; i++) { const y = ry(i); g.strokeStyle = "#17313f"; g.lineWidth = 1; g.beginPath(); g.moveTo(lx, y); g.lineTo(lx + 150, y); g.stroke(); g.fillStyle = "#7a94a4"; g.textAlign = "right"; g.fillText(NOTE(BS.cello_pitches[i]), lx - 6, y + 4); }
+  const seg = BS.bar_s / 6, tb = s.t - s.b * BS.bar_s;
+  if (inBars) { const marks = B.cello.map((c, k) => [k, c[0]]); marks.forEach(([k, idx]) => { g.beginPath(); g.arc(lx + 12 + k * 24, ry(idx), 3, 0, 7); g.fillStyle = "rgba(159,195,218,.35)"; g.fill(); });
+    for (let k = 0; k < 6; k++) { const age = tb - k * seg; if (age < 0 || age > seg * 1.25 + 0.4) continue; const env = age < 1.1 ? age / 1.1 : Math.max(0, 1 - (age - 1.1) / (seg * 1.25 - 1.1)); const y = ry(B.cello[k][0]); g.beginPath(); g.arc(lx + 12 + k * 24, y, 4 + 7 * env, 0, 7); g.fillStyle = `rgba(255,210,122,${0.15 + 0.75 * env})`; g.fill(); } }
+  else { g.beginPath(); g.arc(lx + 76, ry(7), 8, 0, 7); g.fillStyle = "rgba(255,210,122,.85)"; g.fill(); g.fillStyle = "#9bb0be"; g.textAlign = "left"; g.fillText(BS.coda.cello.map(NOTE).join(" and ") + " held", lx + 90, ry(7) + 4); }
+  // bass gate and swell meters
+  const sw = inBars ? B.swell[wk] : BS.bars[BS.bars.length - 1].swell[PER - 1], gate = inBars ? B.gate : 0, mx = 232, mw = 284;   // the engine holds the last bar's swell through the coda
+  const meter = (y, lab, v, col, note) => { g.fillStyle = "#7a94a4"; setF(g, 11); g.textAlign = "left"; g.fillText(lab, mx, y); g.fillStyle = "#12273a"; g.fillRect(mx, y + 6, mw, 12); g.fillStyle = col; g.fillRect(mx, y + 6, mw * Math.max(0, Math.min(1, v)), 12); g.fillStyle = "#9bb0be"; g.textAlign = "right"; g.fillText(note, mx + mw, y); };
+  meter(18, "BASS (volume above 14)", gate * sw, "#7f9bd0", gate > 0 ? Math.round(gate * 100) + " % open" : "silent");
+  meter(70, "SWELL (ice extent)", sw, "#9fc3da", Math.round(sw * 100) + " %");
+  meter(122, "VOLUME (model)", inBars ? (B.vol - 4) / 28 : 0, "#d8b86c", inBars ? B.vol.toFixed(1) + " thousand km³" : "");
+  const t = inBars ? `ice year ${B.y} · cello ${B.cello.map(c => NOTE(BS.cello_pitches[c[0]])).join(" ")} · volume ${B.vol} thousand km³ · bass ${gate > 0 ? Math.round(gate * 100) + " % open" : "silent"}` : "coda: open fifth held, no bass"; if ($("voiceRead").textContent !== t) $("voiceRead").textContent = t; }
+// ---------- the clock ----------
+const audio = $("audio"); let lastKey = "", lastSig = "", lastYear = null, lastVText = "", vt = 0, audioOn = MODE !== "bside";   // in the B-side the 19 MB audio loads on first Play or seek; vt is the clock until then
+const curT = () => FORCE_T !== null ? FORCE_T : (audioOn && audio.readyState > 0 ? audio.currentTime : vt);
+function state() { const P = PIECES[piece], t = curT(), bars = t / P.bar, b = Math.min(47, Math.floor(bars)); let frac = Math.min(1, bars - b), k = Math.min(PER - 1, Math.floor(frac * PER)), cf = frac;
+  if (piece === "bside" && BS) { const e = BS.bars[b].edges; k = 0; while (k < PER - 1 && frac >= e[k + 1]) k++; cf = (k + (frac - e[k]) / (e[k + 1] - e[k])) / PER; }   // the week follows the rubato, so the map turns with the pulse
+  return {t, b, frac, cf, k, coda: bars >= 48}; }
+const HOLD_S = 7;   // a record-low caption stays at least this many seconds of the piece
+function eventNote(b, k) {   // the dynamic caption: a record-low September is announced from the first week of September (week 48 of its ice year) and held
+  const hold = Math.ceil(HOLD_S / (PIECES[piece].bar / PER)), wk = b * PER + k;
+  for (let i = b; i >= Math.max(0, b - Math.ceil(hold / PER)); i--) { const y = META.years[i], r = REC[y], st = i * PER + 48;
+    if (r && wk >= st && wk < st + hold) return `New record low September, ${y}: ${r[1].toFixed(2)} million km², ${r[0].toFixed(2)} below the old record of ${r[2]}.`; }
+  return ""; }
+function render() {
+  if (!ICE || !TER || !STRIP || (MODE === 'bside' && !BS)) return; const s = state(), f = s.b * PER + s.k, year = META.years[s.b], key = f + proj + showT + showL + showLines;
+  const sig = key + "|" + Math.round(s.t * 30); if (sig === lastSig) return; lastSig = sig;   // nothing moves while paused
+  let ext = null, mv = MOV.filter(m => year >= m[0]).pop(); const mvt = MODE === "bside" ? "" : ` · ${mv[1].trim()}`;   // the movements belong to the main piece
+  if (key !== lastKey) { lastKey = key; buildBase(); ctx.clearRect(0, 0, S, S); ctx.save(); ctx.beginPath(); ctx.arc(S / 2, S / 2, S / 2 - 1, 0, 7); ctx.clip(); ctx.drawImage(baseCanvas, 0, 0);
+    const dd = (new Date(Date.UTC(year - 1, 9, 1)).getTime() + s.k * 7 * 864e5);
+    drawGraticule(); drawIce(f); drawPoleHole(new Date(dd).toISOString().slice(0, 10)); drawLines(s.b, new Date(dd).toISOString().slice(0, 10)); ctx.drawImage(landCanvas, 0, 0); drawWash(Math.round((dd - Date.UTC(1978, 9, 1)) / 864e5)); ctx.restore();
+    const iso = new Date(dd).toISOString().slice(0, 10), ti = DLY.dates.indexOf(META.frame_dates[f]); ext = ti >= 0 ? DLY.total[ti] : null;
+    $("date").textContent = (s.coda ? "Early October 2026" : iso);
+    $("sub").textContent = `Ice year ${year} (Oct ${year - 1} to Sep ${year})` + mvt + (ext !== null ? ` · extent ${ext.toFixed(1)} million km²` : ""); }
+  if (year !== lastYear) { lastYear = year; $("yearLive").textContent = `Ice year ${year}${MODE === "bside" ? "" : ", " + mv[1].trim()}.` + (ext !== null ? ` Extent ${ext.toFixed(1)} million square kilometres.` : ""); }
+  drawRing(s.b, s.k, s.coda ? 1 : s.cf); if (MODE !== "bside") drawStrip(year); else { drawWheel(s); drawVoices(s); }
+  const note = s.coda ? "" : eventNote(s.b, s.k); if ($("cnote").textContent !== note) $("cnote").textContent = note;
+  const clk = Math.floor(s.t / 60) + ":" + String(Math.floor(s.t % 60)).padStart(2, "0"); $("clock").textContent = clk;
+  if (!seeking) { const dur = audio.duration || DUR; $("seek").value = s.t / dur * 1000; const vtxt = `${clk}, ice year ${year}`; if (vtxt !== lastVText) { lastVText = vtxt; $("seek").setAttribute("aria-valuetext", vtxt); } }
+}
+let seeking = false; (function loop() { try { render(); } catch (e) { $("load").textContent = "The picture could not be drawn (" + e.message + ")."; console.error(e); } requestAnimationFrame(loop); })();
+let DUR = 800;   // seconds, replaced by the real length once the audio's metadata arrives (the B-side state file carries the rendered length)
+function ensureAudio() { if (audioOn) return; audioOn = true; audio.preload = "auto"; audio.src = PIECES[piece].audio; audio.load(); $("load").textContent = "Loading the audio…"; }
+audio.addEventListener("loadedmetadata", () => { DUR = audio.duration; if (vt > 0) audio.currentTime = vt; });
+audio.addEventListener("progress", () => { if (audio.duration && audio.buffered.length && audio.buffered.end(audio.buffered.length - 1) < audio.duration - 1) $("load").textContent = "Loading the audio… " + Math.round(audio.buffered.end(audio.buffered.length - 1) / audio.duration * 100) + " %"; else if (audio.duration) $("load").textContent = ""; });
+audio.addEventListener("canplay", () => { $("load").textContent = ""; });
+audio.addEventListener("play", () => { $("play").textContent = "Pause"; });
+audio.addEventListener("pause", () => { $("play").textContent = "Play"; });
+audio.addEventListener("error", () => { $("play").textContent = "Play"; $("load").textContent = "The audio could not be loaded or played. Check the connection and try Play again."; vt = curT(); audioOn = false; });
+$("play").onclick = () => { if (audio.paused) { ensureAudio(); audio.play().catch(e => { if (e.name !== "AbortError") $("load").textContent = "Playback did not start (" + e.name + "). Press Play again."; }); } else audio.pause(); };
+$("seek").addEventListener("input", e => { seeking = true; const t = e.target.value / 1000 * (audio.duration || DUR); if (audioOn && audio.readyState > 0) audio.currentTime = t; else vt = t;   /* before the audio loads, the position waits in vt */ lastKey = ""; lastSig = ""; });
+$("seek").addEventListener("change", () => { seeking = false; });
+addEventListener("keydown", e => { if (e.code === "Space" && !/BUTTON|SELECT|INPUT/.test(document.activeElement.tagName)) { e.preventDefault(); $("play").click(); } });
+$("piece").onchange = e => { piece = e.target.value; const was = !audio.paused; audio.src = PIECES[piece].audio; lastKey = lastSig = ""; if (was) audio.play(); };
+document.querySelectorAll(".toggles button").forEach(b => b.onclick = () => { const t = b.dataset.t, on = b.getAttribute("aria-pressed") !== "true"; b.setAttribute("aria-pressed", on);
+  if (t === "proj") { proj = on ? "laea" : "stereo"; baseFor = lutFor = ""; } if (t === "terrain") { showT = on; baseFor = ""; } if (t === "land") showL = on; if (t === "lines") showLines = on; lastKey = lastSig = ""; });
+// ---------- load ----------
+async function gz(url) { const r = await fetch(url); if (!r.ok) throw new Error(r.status + " for " + url); const txt = (await r.text()).trim(), bin = Uint8Array.from(atob(txt), c => c.charCodeAt(0)); const ds = new Response(new Blob([bin]).stream().pipeThrough(new DecompressionStream("gzip"))); return new Uint8Array(await ds.arrayBuffer()); }
+const loadImg = url => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error('image ' + url)); i.src = url; });
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+(async () => {
+  if (MODE === 'bside') { delete PIECES.main; $('piece').hidden = true; $('wheelPanel').hidden = $('voicePanel').hidden = false; $('stripPanel').hidden = true; $('notesA').hidden = true; $('notesB').hidden = false; $('h1').textContent = 'The Wheel'; $('eyebrow').textContent = 'Arctic Round · a variant on the Round'; document.title = 'The Wheel'; }
+  for (const [k, p] of Object.entries(PIECES)) { const o = document.createElement("option"); o.value = k; o.textContent = p.label; $("piece").appendChild(o); }
+  try {
+    const bsP = MODE === 'bside' ? getJ(A.bside_state) : null; const [meta, daily, land, ice, ext] = await Promise.all([getJ(A.ice_meta), getJ(A.arctic_daily), getJ(A.arctic_land), gz(A.ice_weekly), gz(A.ice_extremes)]);
+    if (bsP) { BS = await bsP; buildPulses(); } META = meta; DLY = daily; LAND = land; ICE = ice; EXT = ext; LAND.points.forEach(p => { p._s = b64(p.snow); p._g = b64(p.green); p._m = b64(p.glint); });
+    const img = await loadImg(A.terrain); const cv = document.createElement("canvas"); cv.width = img.width; cv.height = img.height; const g = cv.getContext("2d", {willReadFrequently: true});
+    g.drawImage(img, 0, 0); TER = {w: img.width, h: img.height, d: g.getImageData(0, 0, img.width, img.height).data};
+    const gi = await loadImg(A.glacier_mask); g.clearRect(0, 0, cv.width, cv.height); g.drawImage(gi, 0, 0, img.width, img.height); GLC = g.getImageData(0, 0, img.width, img.height).data; prep();
+    if (MODE !== "bside") { audio.preload = "auto"; audio.src = PIECES[piece].audio; } else DUR = BS.duration_s; document.querySelectorAll(".npts").forEach(e => e.textContent = LAND.points.length); document.querySelector("[data-t=proj]").setAttribute("aria-pressed", proj === "laea"); $("load").textContent = ""; lastKey = lastSig = "";
+  } catch (e) { $("load").textContent = "Could not load the data (" + e.message + ")."; }
+})();
+// Embedded in the Quarto site (the wrapper page loads this with ?embed): hide the page's own title and post the content height so the frame grows to fit.
+(() => { if (!new URLSearchParams(location.search).has("embed")) return; document.documentElement.classList.add("embedded");
+  const post = () => { try { parent.postMessage({wyrHeight: document.documentElement.scrollHeight}, "*"); } catch (e) {} };
+  if (window.ResizeObserver) new ResizeObserver(post).observe(document.body); addEventListener("load", post); })();
+</script>
+
+</body>
+</html>
