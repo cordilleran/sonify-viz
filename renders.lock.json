@@ -160,6 +160,51 @@
    ],
    "version": "2.0"
   },
+  "godbout-groove": {
+   "args": [
+    "data/meteogram/aifs_godbout_gwpoint_20261016.json",
+    "groove-v1-2-godbout",
+    "--bars",
+    "61"
+   ],
+   "code": {
+    "dsp_core.py": "d29ae14afe5f34d8d9ee1f889733705a9b4eeaba2746d3199923006d2ef12574",
+    "harmony.py": "6e2883b89b9c74fd303fb784732288761b3813dcde9d4424125277fa330a51be",
+    "meteogram_groove.py": "0b48ccb101d6298624e74c383296682022640a9edb7d1a1928c78f945c696dad",
+    "meteogram_kit.py": "c43f989670760a23c859847da6bf1ffb941625a9aaf46e5b806d98df739f19c4",
+    "records.py": "1833058e8c8312c45187ee777100eea62dceda42de9e2fde09857a8b9a76cf73",
+    "sampler.py": "669dc814a4d39a9f0634838def95aeb1aa4f4f7276ac85cfcc7a6c1c8311b17d",
+    "seasonal.py": "d4183072da6926df366ea19a6ffeaee358cb2a76f82229334e65d369006344d5",
+    "solar.py": "6341f24e8c7669588e16ef1d4cd258702b034109ffa9c65ed90aa29eb83fb5ae",
+    "synth.py": "1ad1c282fe61ec1233fac7ca29011ad9d7994db95bf460fe6870ad67bd7b4d2f",
+    "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
+   },
+   "data": {
+    "data/meteogram/aifs_godbout_gwpoint_20261016.json": "e111e92da74067881257a25c321cba7549b00a16223e9863cfd784c431ca7d9c"
+   },
+   "environment": {
+    "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm5 Copyright (c) 2000-2025 the FFmpeg developers",
+    "numpy": "2.5.3",
+    "python": "3.13.13",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+   },
+   "locked": "2026-10-16",
+   "outputs": {
+    "heavy/meteogram/groove-v1-2-godbout.wav": "08f763dc486cfcc80c25a1cf9ecc630cdcfb89326b1dad9a9eb7a4398359712a",
+    "light/meteogram/groove-v1-2-godbout.mp3": "7b430260b8b4cf8d77d9c07f08a04ae533d0a7f27bf1df87c0029b3899296750",
+    "light/meteogram/groove-v1-2-godbout_score.json": "c66b4638b559fb10f35af257a979bd9dac1aa2046754d747c78f17c63e2dcbe3"
+   },
+   "samples": {
+    "files": 290,
+    "sha256": "554a7f4787e48310aff3fff6e62740524e68d2d66bafbcf2c66a47e2bd253960"
+   },
+   "script": "meteogram_groove.py",
+   "seeds": [
+    1016
+   ],
+   "version": "1.0"
+  },
   "granby-wy2024": {
    "args": [],
    "code": {

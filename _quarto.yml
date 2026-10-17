@@ -16,6 +16,7 @@ project:
     - superior-ice.qmd
     - regimes.qmd
     - arctic-round.qmd
+    - godbout.qmd
     - tracks.qmd
     - glossary.qmd
     - about.qmd
@@ -48,6 +49,9 @@ project:
     - flow-regimes/index.html
     - flow-regimes/bside_regimes.mp3
     - flow-regimes/bside_score.json
+    - godbout/index.html
+    - godbout/godbout_groove_v1_1.mp3
+    - godbout/godbout_banner_1600.jpg
     - arctic-bside/index.html
     - arctic-bside/README.md
     - arctic-bside/vendor/d3.min.js
@@ -90,6 +94,8 @@ website:
             text: "Flow Regimes"
           - href: arctic-round.qmd
             text: "Arctic Round"
+          - href: godbout.qmd
+            text: "Godbout Outlook"
           - text: "---"
           - href: listen.qmd
             text: "Water Year: listen with the visual"

@@ -33,7 +33,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 LOCK = ROOT / "renders.lock.json"
-ENGINE = ["dsp_core.py", "timegrid.py", "harmony.py", "records.py", "seasonal.py", "sampler.py", "synth.py", "solar.py"]
+ENGINE = ["dsp_core.py", "timegrid.py", "harmony.py", "records.py", "seasonal.py", "sampler.py", "synth.py", "solar.py", "meteogram_kit.py"]
 PY = sys.executable
 
 # Run SCRIPT with an audit hook that logs every file it opens for reading.

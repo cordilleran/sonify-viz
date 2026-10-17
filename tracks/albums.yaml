@@ -29,3 +29,8 @@
   page: arctic-round.qmd
   about: Forty-eight years of Arctic sea ice, one ice year per bar, as a set of pieces. The Wheel, a variant, is published first; the Round, the main piece, is in preparation.
   tracks: [arctic-wheel]
+- id: godbout
+  title: Godbout Outlook
+  page: godbout.qmd
+  about: A 15-day weather forecast for Godbout, Quebec, one bar for every six hours, played as a groove.
+  tracks: [godbout-groove]

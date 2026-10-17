@@ -1,0 +1,202 @@
+$version: 0.1.0
+$learn_more: https://data-dict.tidyverse.org/
+name: godbout-groove-mapping
+label: Godbout Outlook - mapping
+description: >-
+  How Godbout Outlook turns a 15-day ECMWF AIFS forecast for the north shore of the St Lawrence into a groove, as
+  one table with one row per six-hour step (one bar of 16 steps at 126 bpm): what the forecast gave the bar and
+  what the groove did with it.
+details: >-
+  Copied by scripts/export_mapping.py from the score JSON of the locked render (renders.lock.json), and only if
+  its SHA-256 matches the lock. The values are the piece's own (scripts/meteogram_groove.py), read from the saved
+  point series data/meteogram/aifs_godbout_gwpoint_20261016.json, extracted from ECMWF's open data by scripts/fetch_aifs_open.py:
+  ECMWF AIFS Single, run of 16 October 2026 12 UTC, CC BY 4.0, point 49.21 N 68.14 W. Every value is a model forecast.
+  The four-bar lead-in and wrap-out carry no data and have no rows. The night hand drums are drawn from seeded per-step
+  probabilities (more likely with stronger 10 m wind, fewer in sunshine or rain), so their individual hits are not
+  columns.
+origin: ../../../scripts/export_mapping.py
+version:
+  number: 1.0.0
+tables:
+- name: bars
+  label: The 61 bars
+  source:
+    parquet: bars.parquet
+  columns:
+  - name: bar
+    type: number(ordinal)
+    constraints:
+    - primary_key
+    description: 'The bar, 0 to 60: one per six-hour step of the forecast.'
+    range:
+    - 0
+    - 60
+  - name: start_s
+    type: number(quantity)
+    units: seconds
+    description: >-
+      Where the bar starts in the audio, in seconds; the four-bar lead-in comes first.
+    range:
+    - 7.619
+    - 121.905
+  - name: time_local
+    type: string
+    description: >-
+      The forecast time stamp as the series labels it: the clock in a fixed UTC-5, not UTC. Rain and sun are totals
+      or means over the six hours before it.
+    examples:
+    - 2026-10-16 07:00
+    - 2026-10-16 13:00
+    - 2026-10-16 19:00
+  - name: temp_c
+    type: number(quantity)
+    units: degrees C
+    description: >-
+      2 m air temperature (R, ECMWF AIFS). 3 C or warmer plays D Dorian, colder D Aeolian.
+    range:
+    - -1.3
+    - 10.6
+  - name: dewpoint_c
+    type: number(quantity)
+    units: degrees C
+    description: >-
+      2 m dew point (R). Its gap to the temperature sets the harp's loudness.
+    range:
+    - -7.0
+    - 7.5
+  - name: cloud_pct
+    type: number(quantity)
+    units: percent
+    description: >-
+      Cloud cover (R). From 20 percent it sounds the violin pad on every second bar.
+    range:
+    - 0
+    - 100
+  - name: pressure_hpa
+    type: number(quantity)
+    units: hPa
+    description: >-
+      Sea-level pressure (R). Its level drifts the chord loop up to two scale degrees.
+    range:
+    - 999.5
+    - 1032.6
+  - name: change_6h_hpa
+    type: number(quantity)
+    units: hPa
+    description: >-
+      Pressure change over the next six hours (D). A fall of 3 hPa or more suspends the drone's third and holds
+      the Bear Sax; 6 hPa or more fires an event.
+    range:
+    - -8.5
+    - 6.3
+  - name: rain_mm
+    type: number(quantity)
+    units: mm
+    description: >-
+      Rain in the six hours before the time stamp (D, the difference of the model's running total). Plays log drums
+      and marimba.
+    range:
+    - 0.0
+    - 4.9
+  - name: snow_cm
+    type: number(quantity)
+    units: cm
+    description: >-
+      Snow in the six hours before the time stamp (the model's snowfall, one centimetre per millimetre of water).
+      Plays glock, triangle and a bell tree.
+    range:
+    - 0.0
+    - 5.0
+  - name: drum_weight
+    type: number(quantity)
+    units: 0 to 1
+    description: >-
+      Rain plus snow, over 4, capped at 1 (A: counting 1 cm of snow as 1 mm of water). From 0.2 the full drum kit
+      plays.
+    range:
+    - 0.0
+    - 1.0
+  - name: sun_wm2
+    type: number(quantity)
+    units: W/m2
+    description: >-
+      Downward shortwave radiation, a mean over the six hours before the time stamp (R).
+    range:
+    - 0
+    - 419
+  - name: sun_pulse_peak
+    type: number(quantity)
+    units: 0 to 1
+    description: >-
+      The highest of the bar's 16 step levels of the sun pulse (D): the window's value spread along its daylight
+      curve and scaled by the run's best moment.
+    range:
+    - 0.0
+    - 1.0
+  - name: wind10_kmh
+    type: number(quantity)
+    units: km/h
+    description: 10 m wind speed (R). Sets the conga density, 3 to 9 hits of 16.
+    range:
+    - 1
+    - 28
+  - name: wind10_from_deg
+    type: number(quantity)
+    units: degrees
+    description: >-
+      10 m wind direction, the direction it comes from (R). Picks one of three conga accent sets.
+    range:
+    - 1
+    - 355
+  - name: wind700_kmh
+    type: number(quantity)
+    units: km/h
+    description: >-
+      700 hPa wind speed, about 3 km up (R). Sets the cello pizzicato density.
+    range:
+    - 20
+    - 94
+  - name: shear_deg
+    type: number(quantity)
+    units: degrees
+    description: >-
+      Angle between the 10 m and 700 hPa wind directions (D). Under 60 the harp counter-line is a third above, to
+      120 a fifth, over 120 a seventh.
+    range:
+    - 3
+    - 177
+  - name: mode
+    type: enum
+    description: D Dorian when the 2 m temperature is 3 C or more, else D Aeolian (D).
+    values:
+      Aeolian: Aeolian
+      Dorian: Dorian
+  - name: chord
+    type: string
+    description: >-
+      The bar's chord, with sus4 where the drone's third became a fourth (D).
+    examples:
+    - A
+    - Asus4
+    - Bb
+    - Bbsus4
+    - C
+    - Csus4
+    - D
+    - Dsus4
+  - name: pressure_event
+    type: enum
+    description: >-
+      none, fall (6 hPa or more down: timpani, sinking tuba, Bear Sax slide and sub drop) or rise (6 hPa or more
+      up: timpani roll and violin triad) (D).
+    values:
+      fall: fall
+      none: none
+      rise: rise
+  - name: conga_hits
+    type: number(quantity)
+    units: hits
+    description: How many of the 16 steps carry a conga hit (D).
+    range:
+    - 3
+    - 7

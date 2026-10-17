@@ -25,6 +25,7 @@ A learning workbench for turning environmental data into music and pictures. It 
 | `tracks/` | one card per published track (version, changelog, records, mapping, credits) and the album list; rendered into `tracks.qmd` by `scripts/export_cards.py` |
 | `data/parquet/` | the records as tidy parquet tables, with their data dictionaries (`data-dict.yaml`, [data-dict](https://data-dict.tidyverse.org/) format); the site's build validates the data against them |
 | `meridian/`, `superior-ice/`, `flow-regimes/` | the Meridian Chorus, Superior Ice Year and Flow Regimes pages (one HTML file each, no framework), their data and audio; `meridian.qmd`, `superior-ice.qmd` and `regimes.qmd` frame them in the site |
+| `godbout/` | Godbout Outlook (a 15-day AIFS forecast played as a groove): the page, its audio and banner; `godbout.qmd` frames it in the site; the saved forecast table is `data/meteogram/` |
 | `arctic-bside/` | The Wheel (a variant on Arctic Round; the main piece, the Round, is in preparation): the page, its data and audio, with its own README (sources, per-file terms, how to rebuild); `arctic-round.qmd` frames it in the site |
 | `variants/`, `remixes/` | named variants of a track, and remixes of published tracks (see `CONTRIBUTING.md`) |
 

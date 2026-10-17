@@ -1,0 +1,62 @@
+id: godbout-groove
+lock: godbout-groove
+site_mp3: godbout/godbout_groove_v1_2.mp3
+title: Godbout Outlook
+album: godbout
+script: meteogram_groove.py
+args: ["data/meteogram/aifs_godbout_gwpoint_20261016.json", "groove-v1-2-godbout"]
+question: >
+  What does a 15-day weather outlook sound like when every six hours of the model run is one bar of a groove, with a
+  storm at each end, snow at one and rain at the other?
+place: >
+  The north shore of the St Lawrence estuary near Godbout, Quebec. The model point is 49.21 N, 68.14 W, over the
+  water about 45 km west of the village (49.32 N, 67.60 W), a point picked on a forecast map. One frozen run of ECMWF's
+  AIFS Single (16 October 2026, 12 UTC), 61 six-hour steps, with times in a fixed UTC-5 clock.
+territory: >
+  Godbout lies on the north shore of the St Lawrence, in Nitassinan, the Innu homeland, within the traditional territory of the Innu of Pessamit.
+year: {label: "16 to 31 October 2026", framing: "a 15-day forecast, 61 steps of six hours, one bar each", from: 2026-10-16, to: 2026-10-31}
+records:
+  - ECMWF AIFS Single, run of 16 October 2026 12 UTC (CC BY 4.0, https://www.ecmwf.int/en/forecasts/datasets/open-data): 2 m temperature, dew point, 850 hPa temperature, cloud cover, sea-level pressure, 10 m and 700 hPa wind, downward shortwave radiation, rain and snow, taken from ECMWF's open data and interpolated to the point by scripts/fetch_aifs_open.py (R; snow in cm is the model's snowfall, counted as 1 cm of snow per mm of water)
+  - Sea floor and land for the page's banner, GEBCO 2025 Grid (doi 10.5285/37c52e96-24ea-67ce-e063-7086abc05f29; public domain, not for navigation)
+  - Instruments, VSCO 2 Community Edition and Karoryfer Samples Big Rusty Drums, War Tuba and Bear Sax (all CC0)
+mapping:
+  - {layer: pulse (hats, kicks, shaker, snare), data: "downward shortwave radiation, a 6 h mean ending at each time stamp", sound: "the model's value is spread along that window's daylight curve (the sine of the sun's height, rounded at sunrise and sunset, as in Meridian Chorus), keeping the window's mean; each hit's loudness follows the curve: offbeat hats first, then backbeat kicks and shaker, then snare, then sixteenth hats; two soft kicks at night, with the night hand drums taking over; the run's best moment sets the ceiling", tag: D}
+  - {layer: drum kit, data: "rain (mm) plus snow (cm) in the six hours, over 4, capped at 1", sound: "from 0.2 the full kit (kick, snare, ghost notes); a crash when it first passes 0.5, on the first bar of a day with weight above 0.1, and on the first bar of the song", tag: A}
+  - {layer: log drums and marimba, data: rain, sound: "3 to 9 notes of 16 steps, more the harder it falls", tag: D}
+  - {layer: glock, triangle and bell tree, data: snow, sound: "3 to 7 notes of 16, a bell tree when snow starts", tag: D}
+  - {layer: congas, data: "10 m wind speed and direction", sound: "3 to 9 hits of 16 by speed; the direction picks one of three accent sets (S/E, W, N)", tag: R}
+  - {layer: night hand drums, data: "the sun pulse (its complement) and 10 m wind speed", sound: "as the sun gate closes at dusk, a loose heartbeat of low conga, log drum and brushed tambourine: each hit drawn from a probability for its step, nudged off the grid by about 10 ms; wind sets the density from 0.7 to 1.4 times; quiet when rain brings the kit", tag: A}
+  - {layer: cello pizzicato, data: "700 hPa wind speed", sound: "2 to 8 notes of 16", tag: R}
+  - {layer: harp counter-line, data: "angle between the 10 m and 700 hPa wind directions (shear)", sound: "a third above the harp line under 60 degrees, a fifth to 120, a seventh above", tag: D}
+  - {layer: harp, data: "chord, 2 m temperature, temperature minus dew point", sound: "chord tones; an octave higher from 6 C; drier air plays quieter", tag: R}
+  - {layer: chord loop and tuba riff, data: "2 m temperature and sea-level pressure", sound: "3 C or warmer: D Dorian (i IV VII IV); colder: D Aeolian (i VI iv VII); pressure level drifts the loop up to two scale degrees", tag: D}
+  - {layer: low cello drone, data: "6 h pressure change", sound: "root, fifth and third; a fall of 3 hPa or more turns the third into a fourth", tag: D}
+  - {layer: Bear Sax and sub drop, data: "6 h pressure change", sound: "an octave under the chord root: held through a fall of 3 hPa or more; on a fall of 6 hPa or more it slides down a fifth with a sine sub drop", tag: D}
+  - {layer: timpani, tuba and violin triad, data: "6 h pressure change of 6 hPa or more", sound: "a fall: timpani hit and the tuba stepping fifth to root; a rise: timpani roll and a violin triad", tag: D}
+  - {layer: violin pad, data: cloud cover, sound: "a sustained pad on every second bar with cloud of 20 percent or more", tag: R}
+  - {layer: lead-in and wrap-out, data: "the first and last chords", sound: "four bars each of drone, harp and the deep reed, with no kit; they carry no data", tag: A}
+harmony: >
+  4/4 at 126 bpm, one bar per six-hour step (four bars a day, 61 bars) with 16 steps a bar, swing 0.54 and a small
+  drag per voice. D Dorian or D Aeolian by temperature, one chord a bar from a four-chord loop; every pitched voice
+  takes chord tones, the one diminished triad in each mode is skipped, and the only added colour is the suspended
+  fourth. 2 min 18 s with the lead-in, the wrap-out and the reverb tail.
+simulated:
+  - The sun pulse is a modelled curve, not a measurement. The model gives one radiation value per six hours, and the shape inside each window is the clear-sky daylight curve scaled to that value.
+  - Every value is a model forecast; the run was not compared with what happened.
+limitations:
+  - Weather appreciation, not a forecast, and not for route, marine, snowpack or avalanche decisions.
+  - The model point is over open water 45 km from the village; the temperature there sits near the 3 C line that switches the mode, so a point at the village would change the mode on some bars.
+  - Six-hour steps hide a front's passage; the model ends at 15 days, so the last storm is two bars.
+  - The thresholds (3 C, 3 and 6 hPa, the sun gates) and the wind-direction accent sets are chosen for musical contrast, not weather criteria.
+  - The values come from ECMWF's open data; the saved point series is in data/meteogram/ and the extraction script is scripts/fetch_aifs_open.py.
+  - Claude Code cannot hear; levels were set by measurement and Graham has listened.
+credits:
+  - Graham Watt, the place, the genre, the question and direction
+  - Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code
+  - Data, ECMWF AIFS open data (CC BY 4.0); banner, GEBCO 2025; instruments, VSCO 2 Community Edition and Karoryfer Samples Big Rusty Drums, War Tuba and Bear Sax (CC0)
+lineage:
+  parent: null
+  variants: []
+  remixes: []
+changelog:
+  - {version: "1.0", date: 2026-10-16, change: "First published render (groove v1.2: the lead-in, the wrap-out, the Bear Sax, the daylight-curve pulse and the night hand drums)."}

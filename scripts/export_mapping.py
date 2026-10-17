@@ -170,6 +170,20 @@ def arctic_wheel(track):
                                                   ("vol_mean_1000km3", f), ("bass_gate", f), ("cello_index_start", i32)])}
 
 
+def godbout_groove(track):
+    """The score of the locked Godbout render: what the forecast gave each bar and what the groove did with it (the page's inline data adds the 850 hPa temperature and the 700 hPa direction)."""
+    sc, version = locked_score(track)
+    f, i32, s_ = pa.float64(), pa.int32(), pa.string()
+    rows = [{"bar": b["i"], "start_s": round(sc["lead_s"] + b["i"] * sc["bar_s"], 3), "time_local": b["t"], "temp_c": b["tmp"], "dewpoint_c": b["dpt"], "cloud_pct": b["cloud"],
+             "pressure_hpa": b["slp"], "change_6h_hpa": b["rate3"], "rain_mm": b["rain"], "snow_cm": b["snow"], "drum_weight": b["hv"], "sun_wm2": b["sw"],
+             "sun_pulse_peak": max(b["sun"]), "wind10_kmh": b["ws"], "wind10_from_deg": b["wd"], "wind700_kmh": b["ws700"], "shear_deg": b["shear"],
+             "mode": b["mode"], "chord": b["chord"], "pressure_event": b["p_event"] or "none", "conga_hits": b["conga_k"]} for b in sc["bars"]]
+    return version, {"bars": table(rows, [("bar", i32), ("start_s", f), ("time_local", s_), ("temp_c", f), ("dewpoint_c", f), ("cloud_pct", i32), ("pressure_hpa", f),
+                                          ("change_6h_hpa", f), ("rain_mm", f), ("snow_cm", f), ("drum_weight", f), ("sun_wm2", i32), ("sun_pulse_peak", f),
+                                          ("wind10_kmh", i32), ("wind10_from_deg", i32), ("wind700_kmh", i32), ("shear_deg", i32), ("mode", s_), ("chord", s_),
+                                          ("pressure_event", s_), ("conga_hits", i32)])}
+
+
 # mapping folder -> (locked track, exporter)
 TRACKS = {"granby-wy2024": ("granby-wy2024", water_year), "okanagan-wy2024": ("okanagan-wy2024", water_year),
           "climate-pair-pacific": ("climate-pair-pacific", climate_pair),
@@ -178,7 +192,8 @@ TRACKS = {"granby-wy2024": ("granby-wy2024", water_year), "okanagan-wy2024": ("o
           "meridian-daylight": ("meridian-chorus-daylight", meridian),
           "superior-ice": ("icecover-superior-ice:v1", superior_ice),
           "superior-ice-short": ("icecover-superior-ice", superior_ice),
-          "regimes-bside": ("regimes-bside", regimes_bside), "arctic-wheel": ("arctic-wheel", arctic_wheel)}
+          "regimes-bside": ("regimes-bside", regimes_bside), "arctic-wheel": ("arctic-wheel", arctic_wheel),
+          "godbout-groove": ("godbout-groove", godbout_groove)}
 
 
 def main():

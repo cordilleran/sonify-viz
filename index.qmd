@@ -42,6 +42,9 @@ Four water years of interior British Columbia, sorted by when the freshet comes 
 ### [Arctic Round](arctic-round.qmd)
 Forty-eight years of Arctic sea ice, October 1978 to September 2026, one ice year per bar, as a set of pieces. **The Wheel**, a variant, is ready first: eight organ notes turn in a fixed order, one a week, and the total ice extent decides how many can sound, eight in a full March and two at the 2012 record low. A cello follows ice volume, open water brightens the room, and a map of the ice runs on the same clock. Thirteen minutes, cello and organ. The Round, the main piece, is in preparation.
 
+### [Godbout Outlook](godbout.qmd)
+A 15-day weather forecast for Godbout, Quebec, from a frozen run of ECMWF's AI model, one bar for every six hours at 126 beats a minute. The sun sets the pulse, rain and snow bring in the full kit, wind drives the congas and cello, and falling pressure sinks the drone and brings in a deep baritone sax. A storm of snow opens the run and one of rain closes it. Two minutes, drum-led, weather appreciation rather than a forecast.
+
 Every track has a card with its version, its records, what drives each sound, what to be careful about, and how to check it byte for byte: see [Tracks](tracks.qmd).
 
 ## The code
