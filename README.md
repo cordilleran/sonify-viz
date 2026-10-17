@@ -6,6 +6,9 @@ A learning workbench for turning environmental data into music and pictures. It 
 - **Climate Pair:** two pieces on the global record from 1958 to 2025, one year per bar: CO₂, ocean heat, ENSO, the PDO or AMO, and storm tracks, heard from the Pacific and from the Atlantic. A year-ring spiral on the page draws each year as you hear it: ocean temperature as colour, ENSO as thickness, storms as sparks.
 - **Meridian Chorus:** one meridian (100° W) from pole to pole, a voice every 15 degrees of latitude, through one year from solstice to solstice. Day length sets each note; layer 2 adds air, sea and ice.
 - **Superior Ice Year:** Lake Superior's 2025-26 ice season, 1 November to 15 June, as eight regional voices on a map of the lake: ice, water temperature, air, sunlight, wind, snow, rain and birds, with the ghost of the lake's median year (v1.0). A 4K shaded-relief figure of the lake floor, with its method and code, is on the page.
+- **Flow Regimes:** a drum-led B-side on the interior British Columbia water year. Four exemplar years are four drum voices on 9, 7, 5 and 3-step cycles, entering one per pass over a shared cycle of snow, melt and warmth (8 min 42 s).
+- **The Wheel (a variant on Arctic Round):** the satellite record of Arctic sea ice, October 1978 to September 2026, one ice year per bar. Eight organ notes turn in a fixed order, one a week, and total ice extent decides how many sound; a cello follows ice volume. The main piece, the Round, is in preparation.
+- **Godbout Outlook:** a 15-day forecast from ECMWF's AI model (AIFS), taken from its open data at a point over the St Lawrence estuary near Godbout, Quebec, played as a groove at 126 beats a minute: one bar per six hours, the sun setting the pulse, rain and snow the drum kit, wind the congas and cello, pressure the chords, and loose hand drums for the night. The page is in French first, with an English switch.
 
 **Site:** <https://cordilleran.github.io/sonify-viz/>
 
@@ -16,11 +19,11 @@ A learning workbench for turning environmental data into music and pictures. It 
 | `index.qmd`, `listen.qmd`, `methods.qmd`, `styles.scss`, `_quarto.yml` | Quarto website source; GitHub Actions renders and publishes it |
 | `listen/` | the Water Year Rings listening companion (one HTML file, no framework), its data, audio and self-hosted fonts |
 | `audio/`, `climate/` | the Climate Pair audio, its generated listening guides, and the spiral visualizer (`viz.js`, one canvas script, no framework, with its data `viz_*.json`) |
-| `scripts/` | the Python pipeline: data pulls, harmony and instrument engine, the two scores, QA plots, export for the companion |
+| `scripts/` | the Python pipeline: data pulls (including `fetch_aifs_open.py`, ECMWF open data by byte range), harmony and instrument engines, the scores, QA plots, exports for the pages |
 | `data/` | cached data used by the pieces; restricted series (Wells Dam counts, sunspots, ocean heat content) are fetched, not stored |
 | `figs/` | QA plots: each data lane against each instrument's loudness |
 | `samples_manifest.csv` | sources and licences for every instrument and bird recording |
-| `tests/` | the engine's test suite (`pytest tests`, about a second, no data or samples needed); run on every push |
+| `tests/` | the engine's and the site's tests (`pytest tests`, about twenty seconds, no samples needed); run on every push, including a check that every file a page loads is listed in `_quarto.yml` |
 | `renders.lock.json` | each track's version, seed and content hashes; `python scripts/renders.py verify` re-renders and compares |
 | `tracks/` | one card per published track (version, changelog, records, mapping, credits) and the album list; rendered into `tracks.qmd` by `scripts/export_cards.py` |
 | `data/parquet/` | the records as tidy parquet tables, with their data dictionaries (`data-dict.yaml`, [data-dict](https://data-dict.tidyverse.org/) format); the site's build validates the data against them |
@@ -53,14 +56,14 @@ python export_climate_viz.py      # data for the spiral visualizer
 cd .. && quarto preview
 ```
 
-Samples go to `samples/` and renders to `rendered/` (both git-ignored); set `SONIFICATION_SAMPLES` or `SONIFICATION_HEAVY` to put them elsewhere. Renders are seeded and, with the pinned packages, repeat byte for byte. Any water year the records cover renders with `python pilot_granby_wy2024.py wy2019`. To contribute a listening note, a remix or a fix, see `CONTRIBUTING.md`.
+Samples go to `samples/` and renders to `rendered/` (both git-ignored); set `SONIFICATION_SAMPLES` or `SONIFICATION_HEAVY` to put them elsewhere. Renders are seeded and, with the pinned packages, repeat byte for byte. Any water year the records cover renders with `python pilot_granby_wy2024.py wy2019`. Godbout Outlook's forecast table is saved in `data/meteogram/`; to pull a run yourself, `fetch_aifs_open.py` documents its pinned `uv run` line (it needs `eccodes`, which `requirements.txt` does not install), and `python scripts/renders.py verify` re-renders the locked pieces and compares hashes. To contribute a listening note, a remix or a fix, see `CONTRIBUTING.md`.
 
 ## Licences
 
 - **Code:** Mozilla Public License 2.0 (`LICENSE`).
-- **Rendered audio and figures:** Water Year Rings is CC BY-SA 4.0 (it incorporates CC BY-SA bird recordings, credited in `samples_manifest.csv`). Climate Pair is CC BY-NC-SA 4.0 (it derives in part from CC BY-NC sunspot data). See `LICENSE-media`.
-- **Instrument samples:** VSCO 2 Community Edition, Versilian Studios, CC0. Not redistributed here; `fetch_samples.py` downloads them.
+- **Rendered audio and figures:** Water Year Rings is CC BY-SA 4.0 (it incorporates CC BY-SA bird recordings, credited in `samples_manifest.csv`). Climate Pair is CC BY-NC-SA 4.0 (it derives in part from CC BY-NC sunspot data). Flow Regimes and The Wheel are CC BY-SA 4.0, and Godbout Outlook is CC BY 4.0 (ECMWF open data). See `LICENSE-media` for each piece's terms and exceptions.
+- **Instrument samples:** VSCO 2 Community Edition, Versilian Studios, CC0, and, for Godbout Outlook, Karoryfer Samples (Big Rusty Drums, War Tuba, Bear Sax), CC0. Not redistributed here; `fetch_samples.py` downloads them.
 - **Fonts:** Gloock, Atkinson Hyperlegible and JetBrains Mono, SIL Open Font License 1.1.
-- **Data:** Environment and Climate Change Canada / Water Survey of Canada: contains information licensed under the [Open Government Licence – Canada](https://open.canada.ca/en/open-government-licence-canada). NASA MODIS MOD17A2HGF v061 ([doi:10.5067/MODIS/MOD17A2HGF.061](https://doi.org/10.5067/MODIS/MOD17A2HGF.061)) via the ORNL DAAC. Columbia River DART, Columbia Basin Research, University of Washington (Wells Dam data courtesy of Douglas County PUD). Climate Pair sources are listed on its page.
+- **Data:** Environment and Climate Change Canada / Water Survey of Canada: contains information licensed under the [Open Government Licence – Canada](https://open.canada.ca/en/open-government-licence-canada). NASA MODIS MOD17A2HGF v061 ([doi:10.5067/MODIS/MOD17A2HGF.061](https://doi.org/10.5067/MODIS/MOD17A2HGF.061)) via the ORNL DAAC. Columbia River DART, Columbia Basin Research, University of Washington (Wells Dam data courtesy of Douglas County PUD). ECMWF AIFS Single open data, CC BY 4.0, and the GEBCO 2025 Grid (Godbout Outlook). The Arctic and Flow Regimes sources are in `LICENSE-media`; Climate Pair sources are listed on its page.
 
 To cite this work, see `CITATION.cff`. Built by Graham Watt with Claude Code.
