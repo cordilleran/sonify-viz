@@ -538,13 +538,13 @@ Every step from record to sound, with its bounds: [the mapping dictionary](dicti
 
 A 15-day weather forecast for Godbout, Quebec, one bar for every six hours, played as a groove. [The album's page](godbout.qmd).
 
-## Godbout Outlook {#godbout-groove}
+## Godbout Outlook {#godbout-village}
 
-**v1.0** · 16 to 31 October 2026 (a 15-day forecast, 61 steps of six hours, one bar each, 2026-10-16 to 2026-10-31) · [listen](godbout.qmd?piece=godbout_groove_v1_2)
+**v1.0** · 16 to 31 October 2026 (a 15-day forecast, 61 steps of six hours, one bar each, 2026-10-16 to 2026-10-31) · [listen](godbout.qmd?piece=godbout_village_v1_2)
 
 *What does a 15-day weather outlook sound like when every six hours of the model run is one bar of a groove, with a storm at each end, snow at one and rain at the other?*
 
-**Place.** The north shore of the St Lawrence estuary near Godbout, Quebec. The model point is 49.21 N, 68.14 W, over the water about 45 km west of the village (49.32 N, 67.60 W), a point picked on a forecast map. One frozen run of ECMWF's AIFS Single (16 October 2026, 12 UTC), 61 six-hour steps, with times in a fixed UTC-5 clock.
+**Place.** The north shore of the St Lawrence estuary at Godbout, Quebec. The model point is the village itself, 49.32 N, 67.62 W (the ECCC station's coordinates), averaged over a 0.25-degree model grid box that takes in the shore and some of the estuary. One frozen run of ECMWF's AIFS Single (16 October 2026, 12 UTC), 61 six-hour steps, with times in a fixed UTC-5 clock.
 
 **Territory.** Godbout lies on the north shore of the St Lawrence, in Nitassinan, the Innu homeland, within the traditional territory of the Innu of Pessamit.
 
@@ -572,7 +572,7 @@ A 15-day weather forecast for Godbout, Quebec, one bar for every six hours, play
 | violin pad | cloud cover | a sustained pad on every second bar with cloud of 20 percent or more | <span class="src R">R</span> |
 | lead-in and wrap-out | the first and last chords | four bars each of drone, harp and the deep reed, with no kit; they carry no data | <span class="src A">A</span> |
 
-Every step from record to sound, with its bounds: [the mapping dictionary](dictionary/godbout-groove-mapping.html) (tables in `tracks/mapping/godbout-groove/`).
+Every step from record to sound, with its bounds: [the mapping dictionary](dictionary/godbout-village-mapping.html) (tables in `tracks/mapping/godbout-village/`).
 
 **Harmony.** 4/4 at 126 bpm, one bar per six-hour step (four bars a day, 61 bars) with 16 steps a bar, swing 0.54 and a small drag per voice. D Dorian or D Aeolian by temperature, one chord a bar from a four-chord loop; every pitched voice takes chord tones, the one diminished triad in each mode is skipped, and the only added colour is the suspended fourth. 2 min 18 s with the lead-in, the wrap-out and the reverb tail.
 
@@ -584,17 +584,17 @@ Every step from record to sound, with its bounds: [the mapping dictionary](dicti
 **Be careful about.**
 
 - Weather appreciation, not a forecast, and not for route, marine, snowpack or avalanche decisions.
-- The model point is over open water 45 km from the village; the temperature there sits near the 3 C line that switches the mode, so a point at the village would change the mode on some bars.
+- The model's grid box covers shore and water, so each value is an average over about 28 by 18 km, not the village alone; the temperature sits near the 3 C line that switches the mode, and a point off Baie-Comeau, 45 km west, gives nearly the same song (the mode differs on 1 bar of the 61).
 - Six-hour steps hide a front's passage; the model ends at 15 days, so the last storm is two bars.
 - The thresholds (3 C, 3 and 6 hPa, the sun gates) and the wind-direction accent sets are chosen for musical contrast, not weather criteria.
 - The values come from ECMWF's open data; the saved point series is in data/meteogram/ and the extraction script is scripts/fetch_aifs_open.py.
 - Claude Code cannot hear; levels were set by measurement and Graham has listened.
 
-**Reproduce.** `python scripts/meteogram_groove.py data/meteogram/aifs_godbout_gwpoint_20261016.json groove-v1-2-godbout` · seed 1016 · locked 2026-10-16 · SHA-256 of the MP3 on this site `7b430260b8b4cf8d…` · check it with `python scripts/renders.py verify godbout-groove`
+**Reproduce.** `python scripts/meteogram_groove.py data/meteogram/aifs_godbout_village_ecmwf_20261016.json groove-v1-2-village` · seed 1016 · locked 2026-10-17 · SHA-256 of the MP3 on this site `cf8a123a0ac77f81…` · check it with `python scripts/renders.py verify godbout-village`
 
 **Credits.** Graham Watt, the place, the genre, the question and direction; Claude Code (Anthropic's AI coding agent), mapping, sound design and all of the code; Data, ECMWF AIFS open data (CC BY 4.0); banner, GEBCO 2025; instruments, VSCO 2 Community Edition and Karoryfer Samples Big Rusty Drums, War Tuba and Bear Sax (CC0).
 
 **Changelog.**
 
-- v1.0 (2026-10-16): First published render (groove v1.2: the lead-in, the wrap-out, the Bear Sax, the daylight-curve pulse and the night hand drums).
+- v1.0 (2026-10-17): First published render of the Godbout take (groove v1.2: the lead-in, the wrap-out, the Bear Sax, the daylight-curve pulse and the night hand drums), from the 16 October 12 UTC run read at the village.
 

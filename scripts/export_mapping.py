@@ -193,7 +193,10 @@ TRACKS = {"granby-wy2024": ("granby-wy2024", water_year), "okanagan-wy2024": ("o
           "superior-ice": ("icecover-superior-ice:v1", superior_ice),
           "superior-ice-short": ("icecover-superior-ice", superior_ice),
           "regimes-bside": ("regimes-bside", regimes_bside), "arctic-wheel": ("arctic-wheel", arctic_wheel),
-          "godbout-groove": ("godbout-groove", godbout_groove)}
+          "godbout-village": ("godbout-village", godbout_groove), "godbout-baie-comeau": ("godbout-baie-comeau", godbout_groove)}
+# a take that is locked only in the vault (the Baie-Comeau take is not published) has no entry in the published lock file: skip it there
+_LOCKED = json.loads(LOCK.read_text())["tracks"]
+TRACKS = {f: v for f, v in TRACKS.items() if v[0] in _LOCKED}
 
 
 def main():

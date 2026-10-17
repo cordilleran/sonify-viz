@@ -160,10 +160,10 @@
    ],
    "version": "2.0"
   },
-  "godbout-groove": {
+  "godbout-village": {
    "args": [
-    "data/meteogram/aifs_godbout_gwpoint_20261016.json",
-    "groove-v1-2-godbout",
+    "data/meteogram/aifs_godbout_village_ecmwf_20261016.json",
+    "groove-v1-2-village",
     "--bars",
     "61"
    ],
@@ -180,7 +180,7 @@
     "timegrid.py": "ba48353bf8a03e0b24fbd07b89be928eb6fefa9ba81f3adb800fa5fcf4b05a70"
    },
    "data": {
-    "data/meteogram/aifs_godbout_gwpoint_20261016.json": "e111e92da74067881257a25c321cba7549b00a16223e9863cfd784c431ca7d9c"
+    "data/meteogram/aifs_godbout_village_ecmwf_20261016.json": "1635b078b33ef463e3fae6a61fd6e225835aebc3772d30e2e48ccdead1e33cc5"
    },
    "environment": {
     "ffmpeg": "ffmpeg version 8.0.1-3ubuntu2+esm5 Copyright (c) 2000-2025 the FFmpeg developers",
@@ -189,15 +189,15 @@
     "scipy": "1.18.1",
     "soundfile": "0.14.0"
    },
-   "locked": "2026-10-16",
+   "locked": "2026-10-17",
    "outputs": {
-    "heavy/meteogram/groove-v1-2-godbout.wav": "08f763dc486cfcc80c25a1cf9ecc630cdcfb89326b1dad9a9eb7a4398359712a",
-    "light/meteogram/groove-v1-2-godbout.mp3": "7b430260b8b4cf8d77d9c07f08a04ae533d0a7f27bf1df87c0029b3899296750",
-    "light/meteogram/groove-v1-2-godbout_score.json": "c66b4638b559fb10f35af257a979bd9dac1aa2046754d747c78f17c63e2dcbe3"
+    "heavy/meteogram/groove-v1-2-village.wav": "c1da81bdac29784a8ab5fafe4c8108c5ec13ac690ffb4d705173011a2b335110",
+    "light/meteogram/groove-v1-2-village.mp3": "cf8a123a0ac77f81b2fd0e958fa98c1fa8d573202bc4b9ba6cfd5aa4700028d0",
+    "light/meteogram/groove-v1-2-village_score.json": "689ea0f454e06b2313d9a15575d3555ea059daac36cd9b0df5c6acc0305ff303"
    },
    "samples": {
-    "files": 290,
-    "sha256": "554a7f4787e48310aff3fff6e62740524e68d2d66bafbcf2c66a47e2bd253960"
+    "files": 287,
+    "sha256": "cf2cedcef75f3407d931ec4800998ea7f1475bfab301358b6e2c39011202cc80"
    },
    "script": "meteogram_groove.py",
    "seeds": [

@@ -59,8 +59,8 @@ Open-Meteo plan before any commercial reuse. Credit the sources: NSIDC Sea Ice I
 Copernicus Climate Change Service (ERA5), Natural Earth (public domain). Each dataset remains under its provider's terms. The PIOMAS series itself is not
 redistributed. VSCO 2 CE samples are CC0.
 
-Godbout Outlook: the rendered audio in godbout/ (godbout_groove_v1_2.mp3), the banner picture beside it, and the mapping tables in tracks/mapping/godbout-groove/ and the dictionary page rendered from them, are licensed
+Godbout Outlook: the rendered audio in godbout/ (godbout_village_v1_2.mp3), the banner picture beside it, and the mapping tables in tracks/mapping/godbout-village/ and the dictionary page rendered from them, are licensed
 under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). The weather values are the ECMWF AIFS Single forecast of 16 October 2026, (c) European Centre for
-Medium-Range Weather Forecasts (ECMWF), CC BY 4.0, taken from ECMWF's open data (data.ecmwf.int) by scripts/fetch_aifs_open.py; the saved point series is data/meteogram/aifs_godbout_gwpoint_20261016.json.
-The banner is derived from the GEBCO 2025 Grid (GEBCO Compilation Group, doi 10.5285/37c52e96-24ea-67ce-e063-7086abc05f29; public domain, not for navigation). Instrument samples:
+Medium-Range Weather Forecasts (ECMWF), CC BY 4.0, taken from ECMWF's open data (data.ecmwf.int) by scripts/fetch_aifs_open.py at Godbout village; the saved point series is
+data/meteogram/aifs_godbout_village_ecmwf_20261016.json. The banner is derived from the GEBCO 2025 Grid (GEBCO Compilation Group, doi 10.5285/37c52e96-24ea-67ce-e063-7086abc05f29; public domain, not for navigation). Instrument samples:
 VSCO 2 CE and Karoryfer Samples Big Rusty Drums, War Tuba and Bear Sax, all CC0.

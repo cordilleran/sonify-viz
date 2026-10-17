@@ -4,6 +4,7 @@ Quarto copies only what `resources` names. A page whose audio is missing from th
 the other tests, then deploys with a player that 404s (Godbout, 17 Oct 2026: the list still named the v1.1 mp3).
 """
 import fnmatch
+import posixpath
 import re
 from pathlib import Path
 
@@ -29,8 +30,8 @@ def test_files_a_standalone_page_loads_are_listed():
     for page in (r for r in RESOURCES if r.endswith("/index.html")):
         folder = Path(page).parent
         for ref in LOCAL_SRC.findall((ROOT / page).read_text()):
-            target = (folder / ref).as_posix()
-            if target.startswith(".."):  # shared assets such as ../shared/tokens.css are copied elsewhere
+            target = posixpath.normpath((folder / ref).as_posix())
+            if target.startswith("..") or target.startswith("shared/"):  # shared assets (tokens.css) are copied elsewhere
                 continue
             if not _listed(target):
                 unlisted.append(f"{page} loads {target}")
