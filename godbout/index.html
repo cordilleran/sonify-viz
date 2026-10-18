@@ -62,6 +62,8 @@ a{color:var(--teal)}
 .foot p{margin:0 0 6px}
 .tip{position:fixed;z-index:20;pointer-events:none;background:rgba(10,18,22,.96);border:1px solid var(--line2);border-radius:6px;padding:7px 10px;font-size:13px;line-height:1.4;max-width:280px;opacity:0;transition:opacity .12s;box-shadow:0 4px 18px rgba(0,0,0,.45)}
 .tip.on{opacity:1}
+.embedded .langsw{display:none}
+.langsw{justify-content:flex-end}
 .tip b{font-weight:600}
 .tip .v{font:13px var(--mono);font-variant-numeric:tabular-nums}
 .tip .d{font:11px var(--mono);color:var(--muted)}
@@ -69,6 +71,7 @@ a{color:var(--teal)}
 </style>
 
 <div class="wrap">
+  <div class="row langsw" role="group" aria-label="Language / Langue"><span data-t="langlab">Language:</span><button type="button" lang="fr" data-lang="fr" aria-pressed="false">Fran&ccedil;ais</button><button type="button" lang="en" data-lang="en" aria-pressed="false">English</button></div>
   <header>
     <div class="eyebrow" data-t="eyebrow">Godbout, Quebec &middot; a 15-day weather groove &middot; ECMWF AIFS run of 16 October 2026</div>
     <h1 data-t="h1">Godbout Outlook</h1>
@@ -87,7 +90,6 @@ a{color:var(--teal)}
     <div class="row"><span data-t="jump">Jump to day:</span><span class="days" id="days"></span></div>
     <p class="disc" data-t="disc">Weather appreciation, not a forecast. Not for route, marine, snowpack or avalanche decisions.</p>
     <p class="hint" data-t="hint">Hover or tap any chart to read a bar. Click one to play from there.</p>
-    <div class="row langsw" role="group" aria-label="Language / Langue"><span data-t="langlab">Language:</span><button type="button" lang="fr" data-lang="fr" aria-pressed="false">Fran&ccedil;ais</button><button type="button" lang="en" data-lang="en" aria-pressed="false">English</button></div>
   </section>
 
   <section class="card"><h2 data-t="h_strips">The forecast, as the song reads it</h2>
@@ -393,6 +395,7 @@ function applyStatic(){const fr=LANG==='fr',S=I.static,pick=(k,en)=>fr&&S[k]!=nu
  document.querySelectorAll('[data-tc]').forEach(e=>e.setAttribute('content',pick(e.dataset.tc,EN['c:'+e.dataset.tc])));
  document.title=pick('title',EN.title);document.documentElement.lang=LANG;
  document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===LANG)))}
+window.addEventListener('message',e=>{if(e.source===parent&&e.data&&(e.data.wyrSetLang==='fr'||e.data.wyrSetLang==='en'))setLang(e.data.wyrSetLang)});
 function setLang(l){if(l===LANG)return;LANG=l;try{localStorage.setItem('godbout-lang',l)}catch(e){}hideTip();applyStatic();tables();build();$('srLive').textContent='';try{parent.postMessage({wyrLang:l},'*')}catch(e){}}
 document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
 function build(){pal();heads.length=0;hovs.length=0;drawStrips();drawBaro();drawRose();drawPhase();drawDial();drawRibbon();lastBar=-1;lastKey='';lastCk='';C.day=null;frame()}

@@ -52,6 +52,10 @@ figure img, .figure img { border: 1px solid $line; border-radius: 4px; }
 .cta { display: inline-block; background: $salmon; color: #fff !important; padding: .55rem 1.1rem; border-radius: 999px; text-decoration: none; font-weight: 700; }
 .cta:hover { filter: brightness(1.08); }
 details > summary { cursor: pointer; font-family: "JetBrains Mono", monospace; font-size: .9rem; color: $river; }
+// Godbout wrapper: language switch pinned to the top of the viewport
+.langbar { position: sticky; top: 0; z-index: 20; display: flex; justify-content: flex-end; gap: .4rem; padding: .4rem 0; background: $ground; }
+.langbar button { font: inherit; font-size: .9rem; padding: .3rem .9rem; border: 1px solid $line; border-radius: 999px; background: transparent; color: inherit; cursor: pointer; }
+.langbar button[aria-pressed="true"] { background: $river; border-color: $river; color: $ground; }
 iframe.companion { width: 100%; border: 0; display: block; min-height: 900px; background: $ground; }
 
 // Climate Pair visualizer (climate/viz.js)
