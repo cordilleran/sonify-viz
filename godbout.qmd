@@ -7,13 +7,15 @@ include-before-body: godbout-langbar.html
 
 
 ::: {#intro-fr lang="fr"}
-Une prévision de 15 jours du modèle d'intelligence artificielle du CEPMMT pour Godbout (Québec), jouée en groove : chaque tranche de six heures devient une mesure, et le soleil, la pluie, le vent et la pression commandent chacun leurs sons. Appuyez sur « Lecture » et regardez d'où vient chaque son.
+Ceci est une prévision météorologique de 15 jours provenant du modèle d'intelligence artificielle du CEPMMT, AIFS, traduite en pièce de musique. Les valeurs proviennent du modèle pour Godbout, situé sur la rive nord du Fleuve Saint-Laurent. Appuyez sur « Lecture » afin de découvrir la signification de chaque son.
 
 <details><summary>Plus de détails</summary>
 
-Une prévision figée du modèle de prévision par intelligence artificielle du CEPMMT (AIFS), celle du 16 octobre 2026, lue à Godbout (Québec), sur la rive nord du Saint-Laurent. Chaque tranche de six heures de la prévision devient une mesure d'un groove à 126 pulsations par minute. Une tempête ouvre la prévision sous forme de neige et une autre la ferme sous forme de pluie, avec entre les deux une longue période sèche et ensoleillée. Le soleil détermine la pulsation, la pluie et la neige font entrer la batterie complète et les maillets, le vent mène les congas et le violoncelle, et la pression atmosphérique déplace les accords et un saxophone baryton grave.
+Une prévision figée du modèle de prévision par intelligence artificielle du CEPMMT (AIFS), celle du 16 octobre 2026, lue à Godbout (Québec), sur la rive nord du Fleuve Saint-Laurent. Chaque tranche de six heures de la prévision devient une mesure d'un groove à 126 pulsations par minute. Une tempête ouvre la prévision sous forme de neige et une autre la ferme sous forme de pluie, avec entre les deux une longue période sèche et ensoleillée. Le soleil détermine la pulsation, la pluie et la neige font entrer la batterie complète et les maillets, le vent mène les congas et le violoncelle, et la pression atmosphérique déplace les accords et un saxophone baryton grave.
 
 Chaque graphique indique sa mesure au survol ou au toucher. [La fiche](tracks.qmd#godbout-village) (en anglais) énumère ce qui est associé, ce qui ne l'est pas et les précautions à prendre.
+
+*Cette traduction française a été réalisée avec plusieurs assistants d'intelligence artificielle et révisée par une seule personne bilingue; des erreurs ou des tournures maladroites sont possibles. Une formulation vous semble fausse, ou vous en connaissez une meilleure? [Dites-le-nous sur GitHub](https://github.com/cordilleran/sonify-viz/issues/new/choose) (un compte GitHub est nécessaire; le formulaire est en anglais, mais vous pouvez écrire en français).*
 </details>
 :::
 
@@ -25,6 +27,8 @@ A 15-day forecast from ECMWF's AI model for Godbout, Quebec, played as a groove:
 A frozen run of ECMWF's AI forecasting model (AIFS), from 16 October 2026, read at Godbout, Quebec, on the north shore of the St Lawrence. Every six hours of the forecast is one bar of a groove at 126 beats a minute. A storm opens the run as snow and another closes it as rain, with a long dry, sunny stretch between. The sun sets the pulse, rain and snow bring in the full drum kit and mallets, wind drives the congas and the cello, and the air pressure moves the chords and a deep baritone sax.
 
 Every chart reads out its bar on hover or tap. [The card](tracks.qmd#godbout-village) lists what is mapped, what is not and what to be careful about.
+
+*The French version was made with several AI assistants and checked by one bilingual reviewer, so errors or awkward phrasing are possible. If a wording looks wrong, or you know a better one, [tell us on GitHub](https://github.com/cordilleran/sonify-viz/issues/new/choose) (a GitHub account is needed; French is welcome).*
 </details>
 :::
 
@@ -33,7 +37,7 @@ Every chart reads out its bar on hover or tap. [The card](tracks.qmd#godbout-vil
 <script>
 // The page inside the frame is French first, with an English switch; this wrapper follows its choice (same site, so the same saved setting).
 const TXT = {
-  fr: { title: 'De la météo de Godbout en groove' },
+  fr: { title: 'La météo de Godbout sous forme de « groove »' },
   en: { title: 'Godbout Outlook' }
 };
 function setWrapLang(l) {
