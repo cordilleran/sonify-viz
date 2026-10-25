@@ -34,3 +34,8 @@
   page: godbout.qmd
   about: A 15-day weather forecast for Godbout, Quebec, one bar for every six hours, played as a groove.
   tracks: [godbout-village]
+- id: lightning
+  title: "2424/461"
+  page: lightning.qmd
+  about: 2,424 lightning flashes over 461 minutes in the Cariboo and Chilcotin, 30 June to 1 July 2021, heard from a pin you can move.
+  tracks: []

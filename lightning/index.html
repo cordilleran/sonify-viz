@@ -1,0 +1,2570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2424/461</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>/* Leaflet 1.9.4 (BSD-2), inlined: an artifact page cannot load a local stylesheet */
+/* required styles */
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-pane > svg,
+.leaflet-pane > canvas,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	}
+.leaflet-container {
+	overflow: hidden;
+	}
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	  -webkit-user-drag: none;
+	}
+/* Prevents IE11 from highlighting tiles in blue */
+.leaflet-tile::selection {
+	background: transparent;
+}
+/* Safari renders non-retina tile on retina better with this, but Chrome is worse */
+.leaflet-safari .leaflet-tile {
+	image-rendering: -webkit-optimize-contrast;
+	}
+/* hack that prevents hw layers "stretching" when loading new tiles */
+.leaflet-safari .leaflet-tile-container {
+	width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	display: block;
+	}
+/* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */
+/* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */
+.leaflet-container .leaflet-overlay-pane svg {
+	max-width: none !important;
+	max-height: none !important;
+	}
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer,
+.leaflet-container .leaflet-tile {
+	max-width: none !important;
+	max-height: none !important;
+	width: auto;
+	padding: 0;
+	}
+
+.leaflet-container img.leaflet-tile {
+	/* See: https://bugs.chromium.org/p/chromium/issues/detail?id=600120 */
+	mix-blend-mode: plus-lighter;
+}
+
+.leaflet-container.leaflet-touch-zoom {
+	-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;
+	}
+.leaflet-container.leaflet-touch-drag {
+	-ms-touch-action: pinch-zoom;
+	/* Fallback for FF which doesn't support pinch-zoom */
+	touch-action: none;
+	touch-action: pinch-zoom;
+}
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+	-ms-touch-action: none;
+	touch-action: none;
+}
+.leaflet-container {
+	-webkit-tap-highlight-color: transparent;
+}
+.leaflet-container a {
+	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+}
+.leaflet-tile {
+	filter: inherit;
+	visibility: hidden;
+	}
+.leaflet-tile-loaded {
+	visibility: inherit;
+	}
+.leaflet-zoom-box {
+	width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	z-index: 800;
+	}
+/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
+.leaflet-overlay-pane svg {
+	-moz-user-select: none;
+	}
+
+.leaflet-pane         { z-index: 400; }
+
+.leaflet-tile-pane    { z-index: 200; }
+.leaflet-overlay-pane { z-index: 400; }
+.leaflet-shadow-pane  { z-index: 500; }
+.leaflet-marker-pane  { z-index: 600; }
+.leaflet-tooltip-pane   { z-index: 650; }
+.leaflet-popup-pane   { z-index: 700; }
+
+.leaflet-map-pane canvas { z-index: 100; }
+.leaflet-map-pane svg    { z-index: 200; }
+
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+	}
+.lvml {
+	behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;
+	}
+
+
+/* control positioning */
+
+.leaflet-control {
+	position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+	pointer-events: auto;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;
+	}
+.leaflet-top {
+	top: 0;
+	}
+.leaflet-right {
+	right: 0;
+	}
+.leaflet-bottom {
+	bottom: 0;
+	}
+.leaflet-left {
+	left: 0;
+	}
+.leaflet-control {
+	float: left;
+	clear: both;
+	}
+.leaflet-right .leaflet-control {
+	float: right;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 10px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 10px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 10px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 10px;
+	}
+
+
+/* zoom and fade animations */
+
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;
+	}
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+	opacity: 1;
+	}
+.leaflet-zoom-animated {
+	-webkit-transform-origin: 0 0;
+	    -ms-transform-origin: 0 0;
+	        transform-origin: 0 0;
+	}
+svg.leaflet-zoom-animated {
+	will-change: transform;
+}
+
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile {
+	-webkit-transition: none;
+	   -moz-transition: none;
+	        transition: none;
+	}
+
+.leaflet-zoom-anim .leaflet-zoom-hide {
+	visibility: hidden;
+	}
+
+
+/* cursors */
+
+.leaflet-interactive {
+	cursor: pointer;
+	}
+.leaflet-grab {
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	cursor:         grab;
+	}
+.leaflet-crosshair,
+.leaflet-crosshair .leaflet-interactive {
+	cursor: crosshair;
+	}
+.leaflet-popup-pane,
+.leaflet-control {
+	cursor: auto;
+	}
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-grab .leaflet-interactive,
+.leaflet-dragging .leaflet-marker-draggable {
+	cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	cursor:         grabbing;
+	}
+
+/* marker & overlays interactivity */
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+	pointer-events: none;
+	}
+
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive,
+svg.leaflet-image-layer.leaflet-interactive path {
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+	pointer-events: auto;
+	}
+
+/* visual tweaks */
+
+.leaflet-container {
+	background: #ddd;
+	outline-offset: 1px;
+	}
+.leaflet-container a {
+	color: #0078A8;
+	}
+.leaflet-zoom-box {
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
+	}
+
+
+/* general typography */
+.leaflet-container {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;
+	}
+
+
+/* general toolbar styles */
+
+.leaflet-bar {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+	}
+.leaflet-bar a {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	}
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-bar a:hover,
+.leaflet-bar a:focus {
+	background-color: #f4f4f4;
+	}
+.leaflet-bar a:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	}
+.leaflet-bar a:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;
+	}
+.leaflet-bar a.leaflet-disabled {
+	cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;
+	}
+
+.leaflet-touch .leaflet-bar a {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	}
+.leaflet-touch .leaflet-bar a:first-child {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	}
+.leaflet-touch .leaflet-bar a:last-child {
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	}
+
+/* zoom control */
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;
+	}
+
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
+	font-size: 22px;
+	}
+
+
+/* layers control */
+
+.leaflet-control-layers {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	}
+.leaflet-control-layers-toggle {
+	background-image: url(images/layers.png);
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: url(images/layers-2x.png);
+	background-size: 26px 26px;
+	}
+.leaflet-touch .leaflet-control-layers-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	display: none;
+	}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-layers-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-layers-scrollbar {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;
+	}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-layers label {
+	display: block;
+	font-size: 13px;
+	font-size: 1.08333em;
+	}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+
+/* Default icon URLs */
+.leaflet-default-icon-path { /* used only in path-guessing heuristic, see L.Icon.Default */
+	background-image: url(images/marker-icon.png);
+	}
+
+
+/* attribution and scale controls */
+
+.leaflet-container .leaflet-control-attribution {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;
+	}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: #333;
+	line-height: 1.4;
+	}
+.leaflet-control-attribution a {
+	text-decoration: none;
+	}
+.leaflet-control-attribution a:hover,
+.leaflet-control-attribution a:focus {
+	text-decoration: underline;
+	}
+.leaflet-attribution-flag {
+	display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;
+	}
+.leaflet-left .leaflet-control-scale {
+	margin-left: 5px;
+	}
+.leaflet-bottom .leaflet-control-scale {
+	margin-bottom: 5px;
+	}
+.leaflet-control-scale-line {
+	border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	white-space: nowrap;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.8);
+	text-shadow: 1px 1px #fff;
+	}
+.leaflet-control-scale-line:not(:first-child) {
+	border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;
+	}
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+	border-bottom: 2px solid #777;
+	}
+
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;
+	}
+
+
+/* popup */
+
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+	}
+.leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 12px;
+	}
+.leaflet-popup-content {
+	margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;
+	}
+.leaflet-popup-content p {
+	margin: 17px 0;
+	margin: 1.3em 0;
+	}
+.leaflet-popup-tip-container {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;
+	}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+
+	margin: -10px auto 0;
+	pointer-events: auto;
+
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);
+	}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	}
+.leaflet-container a.leaflet-popup-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;
+	}
+.leaflet-container a.leaflet-popup-close-button:hover,
+.leaflet-container a.leaflet-popup-close-button:focus {
+	color: #585858;
+	}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	}
+
+.leaflet-oldie .leaflet-popup-content-wrapper {
+	-ms-zoom: 1;
+	}
+.leaflet-oldie .leaflet-popup-tip {
+	width: 24px;
+	margin: 0 auto;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+	}
+
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+	border: 1px solid #999;
+	}
+
+
+/* div icon */
+
+.leaflet-div-icon {
+	background: #fff;
+	border: 1px solid #666;
+	}
+
+
+/* Tooltip */
+/* Base styles for the element that has a tooltip */
+.leaflet-tooltip {
+	position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+	}
+.leaflet-tooltip.leaflet-interactive {
+	cursor: pointer;
+	pointer-events: auto;
+	}
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";
+	}
+
+/* Directions */
+
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+}
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-top:before {
+	left: 50%;
+	margin-left: -6px;
+	}
+.leaflet-tooltip-top:before {
+	bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;
+	}
+.leaflet-tooltip-bottom:before {
+	top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;
+	}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+}
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	top: 50%;
+	margin-top: -6px;
+	}
+.leaflet-tooltip-left:before {
+	right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;
+	}
+.leaflet-tooltip-right:before {
+	left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;
+	}
+
+/* Printing */
+
+@media print {
+	/* Prevent printers from removing background-images of controls. */
+	.leaflet-control {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		}
+	}
+</style>
+<style>
+  :root {
+    --bg: #070b0d;
+    --bg-grad: radial-gradient(ellipse at 50% 0%, #111e24 0%, #070b0d 75%);
+    --panel: #0e1619;
+    --panel-elevated: #152226;
+    --line: #1c2b30;
+    --line-bright: #2d454d;
+    --ink: #e3eeec;
+    --dim: #8ba2a8;
+    --accent: #f0a05a;
+    --on: #4fc3b6;
+    --electric: #70d6ff;
+    --flash-core: #ffffff;
+    --strings: #c490e4;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image: var(--bg-grad);
+    background-attachment: fixed;
+    color: var(--ink);
+    font: 14px/1.4 var(--sans);
+    padding: 12px 16px 36px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1480px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+
+  header {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px 16px;
+    box-shadow: 0 4px 20px -2px rgba(0,0,0,0.5);
+  }
+
+  h1 { font-size: 1.15rem; margin: 0; font-weight: 600; display: inline-flex; align-items: baseline; gap: 8px; }
+  h2 { font-size: 0.8rem; margin: 0 0 6px; font-weight: 600; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; }
+  .badge { font: 600 0.72rem var(--mono); color: var(--electric); background: rgba(112, 214, 255, 0.12); border: 1px solid rgba(112, 214, 255, 0.35); padding: 2px 8px; border-radius: 999px; }
+  .headphone-pill { font: 500 0.72rem var(--mono); color: var(--accent); background: rgba(240, 160, 90, 0.1); border: 1px solid rgba(240, 160, 90, 0.3); padding: 2px 8px; border-radius: 999px; }
+
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+  }
+
+  button, select {
+    font: inherit;
+    color: var(--ink);
+    background: #141f22;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px 12px;
+    min-height: 36px;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  button:hover:not([disabled]), select:hover:not([disabled]) { background: #1c2b30; border-color: var(--line-bright); }
+  button[aria-pressed="true"], button.on { background: var(--on); color: #04241e; border-color: var(--on); font-weight: 600; }
+  button.go { background: var(--electric); color: #051d26; border-color: var(--electric); font-weight: 600; box-shadow: 0 0 16px rgba(112, 214, 255, 0.35); }
+  button.audition { font-size: 0.78rem; padding: 4px 10px; border-radius: 6px; min-height: 30px; }
+  button.bookmark-btn { font-size: 0.75rem; padding: 3px 8px; min-height: 28px; border-radius: 6px; font-family: var(--mono); }
+
+  header { position: sticky; top: 0; z-index: 800; background: rgba(7, 11, 13, 0.94); padding: 6px 0; backdrop-filter: blur(4px); }
+  .grid2 { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; }
+  @media (min-width: 980px) {
+    .grid2 { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+  }
+
+  /* Leaflet Map Container */
+  .map-card { display: flex; flex-direction: column; gap: 8px; position: relative; }
+  #map {
+    width: 100%;
+    height: 480px;
+    border-radius: 8px;
+    background: #070b0d;
+    border: 1px solid var(--line);
+  }
+
+  /* Immersive map: the card fills the screen; the HUD sits in the upper right and lower left */
+  body.imm-open { overflow: hidden; }
+  .map-card.imm { position: fixed; inset: 0; z-index: 9000; border-radius: 0; padding: 0; border: 0; gap: 0; background: #05080a; }
+  .map-card.imm #map { height: 100%; flex: 1; border-radius: 0; border: 0; }
+  .map-card.imm > :not(#map):not(.hud) { display: none !important; }
+  .hud { display: none; position: absolute; z-index: 9100; color: var(--ink); font: 0.74rem var(--mono); pointer-events: none; }
+  .map-card.imm .hud { display: block; }
+  .hud button, .hud select, .hud input { pointer-events: auto; }
+  .hud-box { background: rgba(7, 11, 13, 0.78); border: 1px solid var(--line-bright); border-radius: 10px; padding: 8px 10px; backdrop-filter: blur(3px); }
+  #hudTR { top: 10px; right: 10px; width: min(280px, 52vw); }
+  #hudTR .hud-grid b { white-space: nowrap; }
+  #hudTR .hud-time { color: var(--electric); font-weight: 600; margin-bottom: 4px; }
+  #hudTR .hud-grid { display: grid; grid-template-columns: auto 1fr; gap: 1px 10px; }
+  #hudTR .hud-grid span { color: var(--dim); }
+  #hudTR .hud-grid b { text-align: right; font-weight: 600; }
+  #hudBL { left: 10px; bottom: 10px; display: none; gap: 8px; }
+  .map-card.imm #hudBL { display: flex; }
+  #hudBL .glyph { width: min(150px, 28vw); }
+  #hudBL .cap { color: var(--dim); font-size: 0.64rem; text-align: center; margin-top: 2px; }
+  #hudCtl { right: 10px; bottom: 10px; display: none; flex-direction: column; gap: 6px; align-items: flex-end; width: min(330px, 60vw); }
+  .map-card.imm #hudCtl { display: flex; }
+  #hudCtl .row { justify-content: flex-end; }
+  #hudCtl button, #hudCtl select { min-height: 34px; background: rgba(20, 31, 34, 0.9); }
+  #hudCtl button.go { background: var(--electric); color: #051d26; }
+  html:has(body.imm-open) { overflow: hidden; }
+  .glyph svg { width: 100%; height: auto; display: block; }
+  .glyph-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-around; }
+  .glyph-row .glyph { width: min(210px, 44%); }
+  .glyph .cap { font-size: 0.7rem; color: var(--dim); text-align: center; }
+  .ack { border-left: 3px solid var(--on); padding: 6px 12px; font-size: 0.82rem; line-height: 1.5; color: var(--ink); }
+  .ack small { color: var(--dim); }
+  .frac { font: 600 1.5rem var(--mono); letter-spacing: 0.02em; }
+  .frac .slash { color: var(--electric); padding: 0 1px; }
+
+  /* Leaflet Dark Filter for OpenStreetMap (No API key needed!) */
+  .map-tiles-dark {
+    filter: brightness(0.62) invert(1) contrast(2.3) hue-rotate(185deg) saturate(0.25) brightness(0.85);
+  }
+
+  /* Leaflet Studio Overrides */
+  .leaflet-container { background: #070b0d !important; font-family: var(--sans); }
+  .leaflet-control-layers-toggle { background-image: none !important; width: auto !important; height: auto !important; padding: 5px 9px; background: #0e1619 !important; color: var(--ink); font: 600 .75rem var(--sans); }
+  .leaflet-control-layers-toggle::before { content: 'Layers'; }
+  .leaflet-bar a { background-color: #141f22 !important; color: var(--ink) !important; border-color: var(--line) !important; }
+  .leaflet-bar a:hover { background-color: #1c2b30 !important; color: var(--on) !important; }
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background: #0e1619 !important;
+    color: var(--ink) !important;
+    border: 1px solid var(--line-bright);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  }
+  .city-tip { background: rgba(7,11,13,.75) !important; color: var(--ink) !important; border: 1px solid var(--line-bright) !important; font: 600 .72rem var(--sans); box-shadow: none !important; }
+  .city-tip::before { display: none; }
+  .leaflet-popup-content { margin: 10px 14px; font-size: 0.82rem; line-height: 1.4; }
+
+  /* Custom Observer Icon */
+  .observer-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .observer-dot {
+    width: 14px;
+    height: 14px;
+    background: var(--on);
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--on);
+  }
+
+  /* Telemetry Grid */
+  .telemetry-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px; }
+  @media (min-width: 1200px) {
+    .telemetry-grid3 { grid-template-columns: repeat(3, 1fr); }
+  }
+  .telemetry-cell { background: #070c0e; border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; }
+  .telemetry-cell .lbl { font-size: 0.7rem; color: var(--dim); text-transform: uppercase; font-family: var(--mono); }
+  .telemetry-cell .val { font-size: 1.05rem; font-weight: 600; font-family: var(--mono); color: var(--electric); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .telemetry-cell .sub { font-size: 0.72rem; line-height: 1.3; color: var(--dim); margin-top: 2px; height: 3.9em; overflow: hidden; }
+  #reachReadout { min-height: 2.9em; }
+
+  /* Event Log */
+  #log {
+    height: 95px;
+    overflow-y: auto;
+    background: #05080a;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font: 0.75rem/1.4 var(--mono);
+    color: var(--dim);
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .log-entry { margin-bottom: 2px; border-bottom: 1px solid #0f1618; padding-bottom: 2px; }
+  .log-near { color: var(--electric); font-weight: 600; }
+  .log-mid { color: var(--accent); }
+  .log-far { color: var(--dim); }
+
+  /* Range Sliders */
+  input[type=range] { accent-color: var(--electric); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1><span class="frac" title="2,424 lightning flashes in 460.7 minutes">2424<span class="slash">/</span>461</span> <span class="badge">flashes / minutes</span></h1>
+      <p style="margin:2px 0 0;font-size:.82rem;color:var(--dim)">
+        A night of lightning over the Cariboo and Chilcotin, 30 June to 1 July 2021, heard from a point that follows the storm. 51.19-53.50 N, 124.89-120.59 W, 21:43 to 05:24 UTC: at the default pace, about five flashes a second.
+      </p>
+    </div>
+    <div class="row">
+      <span class="headphone-pill">🎧 Headphones recommended · left-right and distance cues</span>
+      <button id="startBtn" class="go">▶ Start Acoustic Engine</button>
+      <button id="playBtn" disabled>▶ Play Storm</button>
+      <button id="stopBtn" title="Stop and return to the start">■ Stop</button>
+      <label style="display:flex;gap:6px;align-items:center;font-size:.82rem">Length
+        <select id="speedSel">
+          <option value="15">30 min (15x)</option>
+          <option value="60" selected>7.7 min (60x)</option>
+          <option value="120">3.8 min (120x)</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <details class="panel ack" id="ack">
+    <summary style="cursor:pointer"><b>Land acknowledgement</b> <small>(draft)</small></summary>
+    <p style="margin:8px 0 0">This storm passed over the unceded and ancestral territories of the Secwépemc, Tŝilhqot’in and Dakelh (Carrier) peoples, in the country now called the Cariboo and Chilcotin, and close to the lands of the Northern St’át’imc and Nlaka’pamux. We recognise everyone who has cared for this land, its waters, its ecosystems and its kin since time immemorial, and who care for them now, in a climate that is changing the land, the waters, the fire, and the storm.</p>
+    <p style="margin:8px 0 0"><small>Draft for review: the Nations named have not reviewed or endorsed this wording, and I take all responsibility for errors and omissions.</small></p>
+  </details>
+
+  <details class="panel about">
+    <summary style="cursor:pointer;font-weight:600">About this page: sources and limits </summary>
+    <ul style="margin:8px 0 0;padding-left:18px;line-height:1.5;color:var(--dim);font-size:.82rem">
+      <li><b style="color:var(--ink)">Flashes.</b> 2,424 optical flashes from the NOAA GOES-17 Geostationary Lightning Mapper, 30 June 21:43 to 1 July 05:24 UTC 2021 (14:43 to 22:24 PDT), inside 49.0 to 53.5°N and 125 to 118°W. The cluster runs up to the box's northern edge, so flashes farther north are not in this set.</li>
+      <li><b style="color:var(--ink)">Weather.</b> Open-Meteo reanalysis at 35 points (sea-level pressure, wind at 10 and 100 m, temperature) and ERA5 pressure levels at the same points. Temperature is corrected with hourly readings from 81 Environment and Climate Change Canada stations: the correction is each station's difference from the reanalysis, spread to your pin by distance and faded away from stations. Held back one station at a time, the error falls from 4.5 C to 2.0 C. Valley-floor and mountain pins are the weakest; the correction does not know elevation.</li>
+      <li><b style="color:var(--ink)">The pin.</b> By default it chases the storm: the densest cluster of the last 10 minutes, stood off 10 to 20 km on the left of its motion, so strikes arrive as distant flashes with direction. Drag the pin or click the map to take it back.</li>
+      <li><b style="color:var(--ink)">What you hear.</b> Each flash heard within the reach (90 km by default) is a drum hit; the strings, flute, organ, tuba and bear sax follow the weather at the pin (see "How the data becomes sound"). The sound is a composed transform, not a recording of thunder. Real thunder carries tens of kilometres at most.</li>
+      <li><b style="color:var(--ink)">Not claimed.</b> This page is about a night of lightning in a hot, dry summer, not about any one place or fire. It says nothing about what started any fire.</li><li><b style="color:var(--ink)">Height correction.</b> The pin's ground height comes from a 2 km elevation grid (AWS Terrain Tiles). A lapse rate (the cooling of air with height) can lift or drop the reanalysis temperature from the height of the weather nodes to the ground under the pin: a fixed 6.5 C per km, a guess from humidity (dry air 9.8, saturated 4 to 6), one from the reanalysis profile, or one fitted to the stations hour by hour. Held out one station at a time (81 stations), none improves on the station correction alone: all five land within 0.13 C of each other, and before the station correction the three physical options make the reanalysis worse (raw error 6.0 to 7.7 C against 4.5 C with none). So the default is off and the lapse rate shown is the one you choose. The fitted option follows the stations as they are: in the afternoon the higher stations ran warmer than the reanalysis, the reverse of the textbook lapse rate, and in the evening they ran cooler. Treat it as a curiosity, not a measurement of the atmosphere.</li><li><b style="color:var(--ink)">Upper air.</b> Wind and temperature at 850 hPa (about 1.5 km) and 700 hPa (about 3 km) come from the ERA5 pressure-level reanalysis (Copernicus). They draw the wind rose and temperature path; they do not yet drive any sound.</li>
+      <li style="color:var(--dim)">Credits: flashes NOAA/NESDIS (open data); weather <a href="https://open-meteo.com/" style="color:var(--on)">Open-Meteo.com</a> (CC BY 4.0); upper air: generated using Copernicus Climate Change Service information (ERA5, 2021; neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus information or data it contains); stations Environment and Climate Change Canada (Open Government Licence - Canada); instruments VSCO 2 CE and Karoryfer (CC0): the organ, strings, thunder roll and thunder boom are VSCO 2 CE samples trimmed or looped, and the crack is a processed VSCO 2 CE percussion hit; relief AWS Terrain Tiles (<a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" style="color:var(--on)">sources</a>), tinted with Natural Earth II land cover (public domain); rivers and lakes: BC Freshwater Atlas, contains information licensed under the Open Government Licence - British Columbia; map Leaflet.</li>
+    </ul>
+  </details>
+
+  <div class="grid2">
+    <!-- LEFT: Geographic Leaflet Map -->
+    <section class="panel map-card">
+      <div class="row justify-between">
+        <h2>Spatial Propagation Field & Terrain Corridors</h2>
+        <div class="row" style="gap:6px">
+          <button class="audition" id="cityBtn" style="display:none"></button>
+          <button class="audition" id="fsBtn" title="Full screen map with the readouts over it">⤢ Immersive</button>
+        </div>
+      </div>
+
+      <!-- Map Toolbar for Flash Layer -->
+      <div class="row justify-between" style="font-size:.78rem;background:#060a0c;padding:5px 8px;border-radius:6px;border:1px solid var(--line)">
+        <div class="row" style="gap:8px">
+          <label style="display:flex;align-items:center;gap:5px;color:var(--dim)">
+            ⚡ Strikes Layer:
+            <select id="flashModeSel" style="min-height:28px;padding:2px 8px;font-size:.75rem">
+              <option value="window30" selected>Trailing 30 Min</option>
+              <option value="window10">Trailing 10 Min</option>
+              <option value="window5">Recent 5 Min</option>
+              <option value="cumulative">All 2,424 Strikes (Footprint)</option>
+            </select>
+          </label>
+          <span style="color:var(--dim)">|</span>
+          <span id="flashCounterBadge" style="font-family:var(--mono);color:var(--electric)">0 strikes in view · Total: 0 / 2,424</span>
+        </div>
+        <span style="color:var(--dim)">Click strike for energy & lag</span>
+      </div>
+
+      <div id="map"></div>
+
+      <div class="row justify-between" style="font-size:.78rem;color:var(--dim)">
+        <span>📍 Drag observer pin or click map to 'travel'. Rings = acoustic arrival (15s, 45s, 90s).</span>
+        <span id="coordReadout" style="font-family:var(--mono);color:var(--ink)">Observer: loading</span>
+        <div id="reachReadout" style="flex-basis:100%;font-family:var(--mono);color:var(--accent)"></div>
+      </div>
+
+      <!-- Time Scrubber & Quick Conditions -->
+      <div style="border-top:1px solid var(--line);padding-top:8px;margin-top:2px">
+        <div class="row justify-between" style="font-size:.8rem;margin-bottom:4px">
+          <span id="stormTimeReadout" style="font-family:var(--mono);color:var(--electric)">Time: 2021-06-30 21:43 UTC (14:43 PDT)</span>
+          <span id="weatherReadout" style="font-family:var(--mono);color:var(--accent)">Air: 40.4°C · 980.2 hPa · Wind: 10 km/h · Shear: 6 km/h</span>
+        </div>
+        <input id="timeScrubber" aria-label="Time in the storm, seconds from 21:43:58 UTC" type="range" min="0" max="27641" value="0" step="1" style="width:100%">
+      </div>
+
+      <div class="hud" id="hudTR"><div class="hud-box">
+        <div class="hud-time" id="hudTime">--</div>
+        <div class="hud-grid">
+          <span>Air</span><b id="hudTemp">--</b>
+          <span>Pressure</span><b id="hudPres">--</b>
+          <span>Wind 10 m</span><b id="hudW10">--</b>
+          <span>Wind 100 m</span><b id="hudW100">--</b>
+          <span>700 hPa wind</span><b id="hudW700">--</b>
+          <span>Ground</span><b id="hudGround">--</b>
+          <span>Lapse rate</span><b id="hudLapse">--</b>
+          <span>Heard</span><b id="hudHeard">--</b>
+        </div>
+      </div></div>
+      <div class="hud" id="hudBL">
+        <div class="hud-box glyph"><svg id="roseHud" viewBox="0 0 200 200" role="img" aria-label="Wind rose: 10 m and 700 hPa wind at the pin"></svg><div class="cap">wind from: 10 m teal · 700 hPa violet</div></div>
+        <div class="hud-box glyph"><svg id="phaseHud" viewBox="0 0 200 200" role="img" aria-label="Path of 2 m temperature against 850 hPa temperature at the pin"></svg><div class="cap">2 m (across) · 850 hPa (up), °C</div></div>
+      </div>
+      <div class="hud" id="hudCtl"><div class="hud-box" style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+        <div class="row"><button id="hudStart" class="go">▶ Start sound</button><button id="hudPlay" disabled>▶ Play</button><button id="hudStop">■ Stop</button><button id="hudExit">✕ Exit</button></div>
+        <div class="row"><select id="hudSpeed"></select><select id="hudHarmony"></select></div>
+        <input id="hudScrub" aria-label="Time in the storm, seconds from 21:43:58 UTC" type="range" min="0" max="27641" value="0" step="1" style="width:100%">
+      </div></div>
+    </section>
+
+    <!-- RIGHT: Spatial Airmass EDA & Acoustics -->
+    <section class="panel">
+      <!-- 1. Local Airmass Dynamics -->
+      <h2>Local Airmass Telemetry (Interpolated at Observer)</h2>
+      <div class="telemetry-grid telemetry-grid3">
+        <div class="telemetry-cell"><div class="lbl">Air temp (2m)</div><div class="val" id="teleTemp">-- °C</div><div class="sub" id="teleMode">Mode</div></div>
+        <div class="telemetry-cell"><div class="lbl">Sea-level pressure</div><div class="val" id="telePres">-- hPa</div><div class="sub" id="teleDrone">Tuba on a fall</div></div>
+        <div class="telemetry-cell"><div class="lbl">Surface wind (10m)</div><div class="val" id="teleWind10">-- km/h</div><div class="sub" id="teleDir10">Cello note</div></div>
+        <div class="telemetry-cell"><div class="lbl">Wind at 100m</div><div class="val" id="teleWind100">-- km/h</div><div class="sub" id="teleDir100">Flute above 12 km/h</div></div>
+        <div class="telemetry-cell"><div class="lbl">Wind shear</div><div class="val" id="teleShear">-- km/h</div><div class="sub" id="teleVeer">Organ</div></div>
+        <div class="telemetry-cell"><div class="lbl">Upper air</div><div class="val" id="teleUpper">-- °C</div><div class="sub" id="teleUpperSub">850 hPa; 700 hPa wind</div></div>
+        <div class="telemetry-cell"><div class="lbl">Ground under the pin</div><div class="val" id="teleGround">-- m</div><div class="sub" id="teleGroundSub">height correction</div></div>
+        <div class="telemetry-cell"><div class="lbl">Lapse rate used</div><div class="val" id="teleLapse">-- K/km</div><div class="sub" id="teleLapseSub">humidity, dry and moist</div></div>
+        <div class="telemetry-cell"><div class="lbl">Last drum heard</div><div class="val" id="lastDistVal">-- km</div><div class="sub" id="lastDelayVal">layer, lag</div></div>
+      </div>
+
+      <div class="glyph-row" style="margin-top:10px">
+        <div class="glyph"><svg id="roseMain" viewBox="0 0 200 200" role="img" aria-label="Wind rose. Petals count how often the 10 m wind came from each direction at the pin; violet dots are the 700 hPa wind; needles are now."></svg>
+          <div class="cap" id="roseCap">Wind from. Teal: 10 m (petals: how often). Violet: 700 hPa, about 3 km up. The shaded angle is the turn with height.</div></div>
+        <div class="glyph"><svg id="phaseMain" viewBox="0 0 200 200" role="img" aria-label="The path of 2 m temperature against 850 hPa temperature at the pin over the storm, with now marked."></svg>
+          <div class="cap" id="phaseCap">Temperature path: 2 m (across) against 850 hPa (up). Amber is the path so far; the diagonal is no change with height.</div></div>
+      </div>
+
+      <!-- 2. What you hear -->
+      <div style="border-top:1px solid var(--line);padding-top:10px;margin-top:10px">
+        <h2>Sound layers (switch any off)</h2>
+        <div class="row justify-between" style="margin-bottom:6px">
+          <label style="display:flex;gap:6px;align-items:center;font-size:.82rem"><input type="checkbox" id="chaseToggle" checked> Chase the storm (pin 10 to 20 km off the core)</label>
+          <label style="display:flex;gap:6px;align-items:center;font-size:.82rem"><input type="checkbox" id="followToggle" checked> Map follows the pin</label>
+        </div>
+        <div class="row justify-between" style="margin-bottom:6px">
+          <label style="display:flex;gap:6px;align-items:center;font-size:.82rem"><input type="checkbox" id="kitToggle" checked> Drums: each flash heard from the pin</label>
+        </div>
+        <div class="row justify-between" style="margin-bottom:6px">
+          <label style="display:flex;gap:6px;align-items:center;font-size:.82rem"><input type="checkbox" id="bedToggle" checked> Strings: drone, mode colour, cello line</label>
+          <label style="display:flex;gap:6px;align-items:center;font-size:.82rem"><input type="checkbox" id="windToggle" checked> Flute: high wind aloft</label>
+        </div>
+        <div class="row justify-between" style="margin-bottom:8px">
+          <label style="display:flex;gap:6px;align-items:center;font-size:.82rem"><input type="checkbox" id="orgToggle" checked> Organ: wind shear</label>
+          <label style="display:flex;gap:6px;align-items:center;font-size:.82rem"><input type="checkbox" id="evToggle" checked> Tuba and bear sax: pressure fall, wind change</label>
+        </div>
+        <div class="row" style="margin-bottom:8px"><label style="display:flex;gap:6px;align-items:center;font-size:.82rem;flex:1">Harmony
+          <select id="harmonySel" style="flex:1"><option value="B" selected>B · Open: third held back, suspended 2nd</option><option value="A">A · Mode by temperature (Lydian, Dorian, Aeolian)</option><option value="C">C · Both ways: F♯ and F in turn, Dorian, higher cello</option></select></label></div>
+        <div class="row" style="margin-bottom:8px"><label style="display:flex;gap:6px;align-items:center;font-size:.82rem;flex:1">Height correction
+          <select id="lapseSel" style="flex:1"><option value="emp">Lapse rate fitted to the stations, by hour</option><option value="parcel">Humidity guess: dry to moist adiabat</option><option value="env">From the reanalysis profile (2 m to 700 hPa)</option><option value="fixed">Fixed 6.5 K/km</option><option value="none" selected>Off (station correction only)</option></select></label></div>
+        <div class="row" style="gap:10px">
+          <label style="display:flex;gap:6px;align-items:center;font-size:.8rem;flex:1">Strings
+            <input type="range" id="bedLevel" min="0" max="1.5" step="0.05" value="0.4" style="width:100%"></label>
+          <label style="display:flex;gap:6px;align-items:center;font-size:.8rem;flex:1">Drums
+            <input type="range" id="kitLevel" min="0" max="2" step="0.05" value="1.1" style="width:100%"></label>
+        </div>
+        <details style="margin-top:8px;font-size:.78rem;color:var(--dim)">
+          <summary style="cursor:pointer;color:var(--ink)">How the data becomes sound</summary>
+          <ul style="margin:6px 0 0;padding-left:18px;line-height:1.5">
+            <li><b>Each flash</b> is a drum hit on a 1/8-second grid. The strongest flash heard in each eighth-second also gets a crack when it is hard enough and within 45 km, softer and duller the farther it is. Distance picks the drum (under 12 km log drum, to 30 km conga or tumba, to 60 km bass drum or timpani, beyond that low timpani), is a lag (about 3.5 ms per km, capped at 0.3 s, plus a small fixed random looseness; real sound takes 2.9 s per km), and dulls the sound. Optical energy sets how hard it is hit. Direction sets left and right. Big hits drag a duller echo behind them, and the biggest ring a gong.</li>
+            <li><b>Dense moments:</b> three hits at most per step; the rest of a crowded step is heard as a shaker (rain on the drum heads), and five or more flashes in one step bring a quiet low roll (at most every 12 s).</li>
+            <li><b>Harmony</b> has three versions to compare. <b>B</b> (default) holds the third back and sounds a suspended 2nd, so the harmony neither says major nor minor; temperature still moves the colour note (Lydian when hot, Dorian otherwise). <b>A</b> follows temperature through D Lydian (the hottest third of this storm's pin temperatures), Dorian (the middle) and Aeolian (the coolest third); the page prints the limits when it loads. <b>C</b> alternates F♯ and F, 24 s a turn, stays in Dorian, and lifts the cello an octave.</li>
+            <li><b>Surface wind</b> picks the cello's note from the mode (stronger wind, higher degree), one change at most every 4 s. <b>Wind at 100 m</b> above 12 km/h breathes a low flute. <b>Wind shear</b> brings the organ.</li>
+            <li><b>Events</b> are set from this storm's own changes along the chase (the page says the numbers when it loads): the tuba sounds on a sea-level pressure fall in the last 30 min and also swells continuously with the rate of fall; the bear sax sounds on a surface wind change or a gust rise in the last 30 min. At most one of each every 8 s.</li>
+            <li>The drone (contrabass, cello D and A) never changes: it is the ground the changes are heard against.</li>
+          </ul>
+        </details>
+      </div>
+
+      <!-- 3. Space -->
+      <div style="border-top:1px solid var(--line);padding-top:10px;margin-top:10px">
+        <h2>Space and reach</h2>
+        <div class="row justify-between" style="margin-bottom:6px">
+          <label style="display:flex;gap:6px;align-items:center;font-size:.82rem"><input type="checkbox" id="canyonEchoToggle" checked> Canyon echo on far hits</label>
+        </div>
+        <div class="row" style="gap:10px;margin-bottom:6px">
+          <label style="display:flex;gap:6px;align-items:center;font-size:.8rem;flex:1">Space
+            <input type="range" id="spaceLevel" min="0" max="1" step="0.05" value="0.45" style="width:100%"></label>
+          <label style="display:flex;gap:6px;align-items:center;font-size:.8rem;flex:1">Reach (km)
+            <input type="range" id="reachKm" min="30" max="150" step="5" value="90" style="width:100%"></label>
+        </div>
+        <div class="row" style="gap:8px;margin-bottom:4px">
+          <span style="font-size:.78rem;color:var(--dim)">Audition one flash:</span>
+          <button class="audition" id="audNear">💥 3 km</button>
+          <button class="audition" id="audMid">🥁 18 km</button>
+          <button class="audition" id="audFar">🌊 48 km</button>
+        </div>
+      </div>
+
+      <!-- 4. Stream Log -->
+      <div style="border-top:1px solid var(--line);padding-top:10px;margin-top:8px">
+        <h2>Lightning & Airmass Event Log</h2>
+        <div id="log" role="log" aria-live="off" aria-label="Event log">
+          <div class="log-entry">Loading the storm data...</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SYNCHRONIZED EDA TIME SERIES & METEOGRAM -->
+  <section class="panel" style="margin-top:4px">
+    <div class="row justify-between" style="align-items:flex-start;margin-bottom:6px">
+      <div>
+        <h2 style="margin:0 0 4px">Atmospheric Covariates & Lightning Density (Synoptic & Mesoscale EDA)</h2>
+        <div style="font-size:.78rem;color:var(--dim)">
+          Synchronized time series across the 7.68-hour storm outbreak. Click or drag anywhere on the graphs to jump to and hear that specific part of the storm.
+        </div>
+      </div>
+      <div class="row" style="gap:6px">
+        <span style="font-size:.75rem;color:var(--dim)">Key Moments:</span>
+        <button class="audition bookmark-btn" data-seek="0">🔥 Peak Heat (21:45 UTC)</button>
+        <button class="audition bookmark-btn" data-seek="5400">⚡ Convection (23:15 UTC)</button>
+        <button class="audition bookmark-btn" data-seek="12600">⛈️ Storm Peak (01:15 UTC)</button>
+        <button class="audition bookmark-btn" data-seek="20700">💨 Second Surge (03:30 UTC)</button>
+        <button class="audition bookmark-btn" data-seek="26100">🌌 Night Calming (05:00 UTC)</button>
+      </div>
+    </div>
+
+    <!-- Live Scrubber & Status Readout -->
+    <div class="row justify-between" style="font-family:var(--mono);font-size:.78rem;background:#060a0c;padding:6px 10px;border-radius:6px;border:1px solid var(--line);margin-bottom:8px">
+      <span id="edaTimeBadge" style="color:var(--electric)">Storm Elapsed: +00h 00m · 2021-06-30 21:43:58 UTC</span>
+      <span id="edaMetricsBadge" style="color:var(--ink)">Strikes: 1 / 15m · Temp: 40.4°C (D Lydian) · Pres: 980.2 hPa · Winds: 10 km/h (10m) / 16 km/h (100m)</span>
+    </div>
+
+    <!-- The 4-Lane Interactive Canvas -->
+    <div style="position:relative;background:#05080a;border:1px solid var(--line);border-radius:8px;padding:4px;overflow:hidden">
+      <canvas id="edaCanvas" role="img" aria-label="Timeline of the storm in six lanes: strikes, temperature, pressure, wind, drums heard and ground height at the pin. Use the time slider to move through the night." style="touch-action:pan-y;width:100%;height:470px;display:block;cursor:crosshair"></canvas>
+      <div id="edaTooltip" style="display:none;position:absolute;pointer-events:none;background:rgba(14,22,25,0.96);border:1px solid var(--line-bright);border-radius:6px;padding:6px 10px;font:0.75rem var(--mono);color:var(--ink);box-shadow:0 4px 16px rgba(0,0,0,0.6);z-index:100"></div>
+    </div>
+
+    <!-- Legend explaining musical and meteorological bindings -->
+    <div class="row justify-between" style="margin-top:8px;font-size:.72rem;color:var(--dim);border-top:1px solid var(--line);padding-top:6px">
+      <div class="row" style="gap:14px">
+        <span style="color:#70d6ff">⚡ Lane 1: Lightning strike rate (15m bins, energy dots)</span>
+        <span style="color:#f0a05a">🌡️ Lane 2: Corrected temperature (mode colour)</span>
+        <span style="color:#4fc3b6">📉 Lane 3: Sea-level pressure; red bands = the tuba rule is true</span>
+        <span style="color:#b298dc">💨 Lane 4: Surface wind (cello), 100 m wind (flute above the dashed line), shear (organ); violet bands = the bear sax rule is true</span>
+        <span style="color:#ff7a59">🥁 Lane 5: Flashes the drums hear from the pin, per 5 min, by layer: log drum (&lt;12 km), conga/tumba (&lt;30), bass drum/timpani (&lt;60), low timpani (farther)</span>
+        <span style="color:#8ba2a8">⛰️ Lane 6: Ground height under the pin (grey) and lapse rate used (amber; dashed = dry 9.8 K/km)</span>
+      </div>
+      <span style="font-family:var(--mono);color:var(--ink)">Tip: Click or drag on graph to travel in time</span>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script type="module">
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+// --- Spatial Coordinates for Southern & Central BC ---
+const BBOX = { latMin: 49.0, latMax: 53.5, lonMin: -125.0, lonMax: -118.0 };
+
+// One anchor only: the city nearest the middle of the flashes (chosen when the data load).
+const CITIES = [
+  { name: "Quesnel", lat: 52.9784, lon: -122.4927 }, { name: "Williams Lake", lat: 52.1417, lon: -122.1417 }, { name: "100 Mile House", lat: 51.6419, lon: -121.2956 },
+  { name: "Prince George", lat: 53.9171, lon: -122.7497 }, { name: "Clinton", lat: 51.0912, lon: -121.5885 }, { name: "Lillooet", lat: 50.6869, lon: -121.9361 }
+];
+let anchorCity = null;
+
+// Observer position (default: 100 Mile House, inside the flash cluster)
+let observer = { lat: 52.9784, lon: -122.4927 };
+
+function getDistanceKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function getBearingDeg(lat1, lon1, lat2, lon2) {
+  const y = Math.sin((lon2 - lon1) * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180);
+  const x = Math.cos(lat1 * Math.PI / 180) * Math.sin(lat2 * Math.PI / 180) -
+            Math.sin(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.cos((lon2 - lon1) * Math.PI / 180);
+  return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+}
+
+// --- Leaflet Map Setup with Zero-API Reliable Basemaps ---
+const map = L.map('map', {
+  center: [52.35, -122.7],
+  zoom: 7.5,
+  zoomSnap: 0.25,
+  zoomDelta: 0.5,
+  minZoom: 5,
+  maxZoom: 12,
+  zoomControl: true
+});
+
+// Offline basemap (built by build/make_basemap.py): hillshade image plus rivers and lakes, all shipped beside the page
+const RELIEF_BOUNDS = [[48.45835188280866, -125.859375], [53.748710796898976, -117.421875]];
+const relief = L.imageOverlay('data/relief.jpg', RELIEF_BOUNDS, {
+  attribution: 'Relief: AWS Terrain Tiles (SRTM and others), tint: Natural Earth · water: BC Freshwater Atlas (Open Government Licence - British Columbia)'
+}).addTo(map);
+map.createPane('streams'); map.getPane('streams').style.zIndex = 405; map.createPane('lakes'); map.getPane('lakes').style.zIndex = 406;   // streams draw under lakes
+const streamCanvas = L.canvas({ pane: 'streams', padding: 0.3 }), lakeCanvas = L.canvas({ pane: 'lakes', padding: 0.3 });
+const waterLayer = L.layerGroup(), minorRivers = L.layerGroup(), waterStats = { rivers: 0, lakes: 0, minor: 0 };   // rivers and lakes start switched off (GW 10-25); the Layers control turns them on
+const riverStyle = f => { const o = f.properties.o; return { color: '#6fb6d6', weight: o >= 7 ? 1.9 : o === 6 ? 1.2 : o === 5 ? 0.8 : 0.5, opacity: o >= 6 ? 0.85 : 0.62 }; };
+fetch('data/lakes.geojson').then(r => { if (!r.ok) throw new Error('lakes ' + r.status); return r.json(); }).then(g => { waterStats.lakes = g.features.length; L.geoJSON(g, { renderer: lakeCanvas, interactive: false, style: { color: '#5fa8c8', weight: 0.8, fillColor: '#2c5f78', fillOpacity: 0.62 } }).addTo(waterLayer); }).catch(e => log('Water layer not loaded: ' + e.message));
+fetch('data/rivers.geojson').then(r => { if (!r.ok) throw new Error('rivers ' + r.status); return r.json(); }).then(g => {
+  waterStats.rivers = g.features.filter(f => f.properties.o >= 5).length; waterStats.minor = g.features.filter(f => f.properties.o === 4).length;
+  L.geoJSON(g, { renderer: streamCanvas, interactive: false, filter: f => f.properties.o >= 5, style: riverStyle }).addTo(waterLayer);
+  L.geoJSON(g, { renderer: streamCanvas, interactive: false, filter: f => f.properties.o === 4, style: riverStyle }).addTo(minorRivers);   // the smallest streams show once you zoom in
+  setMinorRivers();
+}).catch(e => log('Water layer not loaded: ' + e.message));
+function setMinorRivers() { const show = map.getZoom() >= map.getMinZoom() + 0.75; if (show && !waterLayer.hasLayer(minorRivers)) waterLayer.addLayer(minorRivers); else if (!show && waterLayer.hasLayer(minorRivers)) waterLayer.removeLayer(minorRivers); }
+map.on('zoomend', setMinorRivers);
+const OUTER_BOUNDS = [[45.089, -132.1875], [57.3265, -111.09375]];
+L.imageOverlay('data/relief_outer.jpg', OUTER_BOUNDS, { opacity: 1 }).addTo(map).bringToBack();
+map.options.maxBoundsViscosity = 1.0;   // the pan limit is the flash bounding box, set when the data load (setMapLimits)
+map.on('dragstart', () => { if ($('followToggle')) $('followToggle').checked = false; });
+L.control.layers(null, { 'Relief': relief, 'Rivers and lakes': waterLayer }, { position: 'topleft' }).addTo(map);
+
+// Observer Marker & Listening Rings
+const obsIcon = L.divIcon({
+  className: 'observer-icon',
+  html: '<div class="observer-dot" title="Drag me to explore"></div>',
+  iconSize: [14, 14],
+  iconAnchor: [7, 7]
+});
+
+const obsMarker = L.marker([observer.lat, observer.lon], { icon: obsIcon, draggable: true }).addTo(map);
+const ring5 = L.circle([observer.lat, observer.lon], { radius: 5000, color: '#4fc3b6', weight: 1, dashArray: '3, 4', fill: false }).addTo(map);
+const ring15 = L.circle([observer.lat, observer.lon], { radius: 15000, color: '#4fc3b6', opacity: 0.7, weight: 1, dashArray: '3, 4', fill: false }).addTo(map);
+const ring30 = L.circle([observer.lat, observer.lon], { radius: 30000, color: '#4fc3b6', opacity: 0.4, weight: 1, dashArray: '3, 4', fill: false }).addTo(map);
+
+let heardNow = { n: 0, nearest: null };
+const LAPSE_NAME = { none: 'off', fixed: 'fixed 6.5', parcel: 'humidity guess', env: 'from the profile', emp: 'fitted to stations' };
+function updateReach() {
+  const el = $('reachReadout');
+  if (!el || !stormData) return;
+  const reach = parseFloat($('reachKm').value), t = stormElapsed;
+  let nearest = Infinity, within = 0, recent = 0, nearestRecent = Infinity;
+  for (const f of stormData.flashes) {
+    const d = getDistanceKm(observer.lat, observer.lon, f.lat, f.lon);
+    if (d < nearest) nearest = d;
+    if (d <= reach) { within++; if (f.rel_s <= t && f.rel_s > t - 600) { recent++; if (d < nearestRecent) nearestRecent = d; } }
+  }
+  heardNow = { n: recent, nearest: recent ? nearestRecent : null };
+  if (chase.on && chase.track.length) {
+    const c = chaseAt(t);
+    el.textContent = `Chasing the storm: pin ${c.off.toFixed(0)} km from the core of the busiest cluster; ${recent} flashes in the last 10 min within ${reach} km.`;
+  } else {
+    el.textContent = within ? `Thunder reach: ${within.toLocaleString()} of ${stormData.total_flashes.toLocaleString()} flashes fall within ${reach} km of this pin (nearest ${nearest.toFixed(0)} km).`
+      : `Thunder reach: no flash came within ${reach} km of this pin (nearest ${nearest.toFixed(0)} km). Here you hear the air, not the storm.`;
+  }
+}
+
+function updateObserverPosition(lat, lon, fromChase = false) {
+  if (!fromChase && chase.on) { chase.on = false; $('chaseToggle').checked = false; log('Chase off: the pin is yours now.'); }
+  observer = { lat, lon };
+  obsMarker.setLatLng([lat, lon]);
+  ring5.setLatLng([lat, lon]);
+  ring15.setLatLng([lat, lon]);
+  ring30.setLatLng([lat, lon]);
+  updateReach();
+  updateAirmassAtObserver();
+  if (!fromChase) { calculateObserverTimeSeries(); renderEdaGraph(); }
+}
+
+obsMarker.on('drag', e => {
+  const p = e.target.getLatLng();
+  updateObserverPosition(p.lat, p.lng);
+});
+
+map.on('click', e => {
+  updateObserverPosition(e.latlng.lat, e.latlng.lng);
+});
+
+function placeAnchorCity() {
+  const F = stormData.flashes, med = a => { const s2 = a.slice().sort((x, y) => x - y); return s2[Math.floor(s2.length / 2)]; };
+  const cLat = med(F.map(f => f.lat)), cLon = med(F.map(f => f.lon));
+  anchorCity = CITIES.reduce((a, c) => getDistanceKm(c.lat, c.lon, cLat, cLon) < getDistanceKm(a.lat, a.lon, cLat, cLon) ? c : a);
+  L.circleMarker([anchorCity.lat, anchorCity.lon], { radius: 5, color: '#8ba2a8', fillColor: '#1c2b30', fillOpacity: 0.85, weight: 1.5 }).addTo(map)
+    .bindTooltip(anchorCity.name, { permanent: true, direction: 'right', offset: [6, 0], className: 'city-tip' });
+  const b = $('cityBtn'); b.style.display = ''; b.textContent = `📍 ${anchorCity.name}`;
+  b.title = `The city nearest the middle of the flashes (${getDistanceKm(anchorCity.lat, anchorCity.lon, cLat, cLon).toFixed(0)} km from their median)`;
+  b.onclick = () => { updateObserverPosition(anchorCity.lat, anchorCity.lon); map.panTo([anchorCity.lat, anchorCity.lon]); log(`Pin moved to ${anchorCity.name}.`); };
+}
+
+let chaseLine = null, coreMarker = null, lastChaseUi = 0, lastFollow = 0;
+function chaseUi(force) {
+  const t = performance.now(); if (!force && t - lastChaseUi < 120) return; lastChaseUi = t;
+  const c = chaseAt(stormElapsed); if (!c) return;
+  updateObserverPosition(c.lat, c.lon, true);
+  if (coreMarker) coreMarker.setLatLng([c.coreLat, c.coreLon]);
+}
+function followStep(dt) {                                  // ease the map centre toward the pin, a little each frame
+  if (!chase.on || !$('followToggle').checked || map._animatingZoom || map._panAnim && map._panAnim._inProgress) return;
+  const c = chaseAt(stormElapsed); if (!c) return;
+  const ctr = map.getCenter(), k = 1 - Math.exp(-Math.min(dt, 0.25) * 2.0), la = ctr.lat + (c.lat - ctr.lat) * k, lo = ctr.lng + (c.lon - ctr.lng) * k;
+  if (Math.abs(la - ctr.lat) + Math.abs(lo - ctr.lng) > 2e-5) map.setView([la, lo], map.getZoom(), { animate: false });
+}
+
+// Pan and zoom limits: the flash bounding box, and at most 2x the zoom that fits it
+let FLASH_BOUNDS = null;
+function setMapLimits() {
+  if (!stormData) return;
+  if (!FLASH_BOUNDS) {
+    let a = 99, b = -99, c = 99, d = -999; for (const f of stormData.flashes) { if (f.lat < a) a = f.lat; if (f.lat > b) b = f.lat; if (f.lon < c) c = f.lon; if (f.lon > d) d = f.lon; }
+    FLASH_BOUNDS = L.latLngBounds([[a - 0.12, c - 0.2], [b + 0.12, d + 0.2]]);
+  }
+  map.invalidateSize({ animate: false });
+  const z = map.getBoundsZoom(FLASH_BOUNDS, false);
+  map.setMinZoom(z); map.setMaxZoom(z + 1); map.setMaxBounds(FLASH_BOUNDS);
+  if (map.getZoom() < z || !map._limitsSet) map.setView(FLASH_BOUNDS.getCenter(), z, { animate: false }); else if (map.getZoom() > z + 1) map.setZoom(z + 1);
+  map._limitsSet = true;
+}
+
+// Map Layer Groups
+const shockwaveLayer = L.layerGroup().addTo(map);
+const flashMarkerLayer = L.layerGroup().addTo(map);
+
+// --- Data Stores ---
+let stormData = null;
+let airmassData = null;
+let activeShockwaves = [];
+let isPlaying = false;
+let stormElapsed = 0; // seconds into storm
+let lastFrameTime = 0;
+let lastProcessedFlashIdx = 0;
+let lastHarpTickTime = 0;
+let flashDisplayMode = 'window30';
+let strikeBins = [];
+let observerTimeSeries = [];
+
+// --- Web Audio Spatial Binaural & Orchestral String Engine ---
+let audioCtx = null;
+const SAMPLES = {};
+let masterGain = null;
+let canyonDelayL = null, canyonDelayR = null, canyonGain = null;
+let pulseTimer = null;
+
+// Harmonic String Voice Nodes
+let droneGainNode = null, stringsGainNode = null;
+let stringVoices = {};
+
+// ============================ v2 ENGINE ============================
+// Station-corrected field, storm-chase pin, audio-clock scheduler, subtractive bed with real modes, percussion kit.
+const T0_HOUR = 21.7328;                    // hours after 2021-06-30 00:00 UTC of the first flash
+let stationRes = null;                      // data/station_residuals.json
+let LAPSE_MODE = 'none';                     // 'none' | 'fixed' | 'parcel' | 'env' | 'emp' (hourly lapse fitted to the stations); stationRes.lapse_mode overrides
+let DEM = null;                             // data/elevation.json, a 2 km ground-height grid
+const SCALES = { lyd: [0, 2, 4, 6, 7, 9, 11], dor: [0, 2, 3, 5, 7, 9, 10], aeo: [0, 2, 3, 5, 7, 8, 10] };
+const MODE_NAME = { lyd: 'D Lydian', dor: 'D Dorian', aeo: 'D Aeolian' };
+const clamp01 = x => Math.max(0, Math.min(1, x));
+const semis = n => Math.pow(2, n / 12);
+
+// ---- the field at a point and time: model interpolation, plus a shrunk station correction to temperature ----
+function groundElev(lat, lon) {
+  if (!DEM) return null;
+  const r = (DEM.lat_n - lat) / DEM.dlat - 0.5, c = (lon - DEM.lon_w) / DEM.dlon - 0.5;
+  if (r < 0 || c < 0 || r > DEM.rows - 1 || c > DEM.cols - 1) return null;
+  const r0 = Math.floor(r), c0 = Math.floor(c), fr = r - r0, fc = c - c0, g = (i, j) => Math.max(0, DEM.grid[Math.min(DEM.rows - 1, i) * DEM.cols + Math.min(DEM.cols - 1, j)]);
+  return (g(r0, c0) * (1 - fc) + g(r0, c0 + 1) * fc) * (1 - fr) + (g(r0 + 1, c0) * (1 - fc) + g(r0 + 1, c0 + 1) * fc) * fr;
+}
+function moistLapse(Tc, pHpa) {                 // saturated adiabatic lapse rate, K/km
+  const T = Tc + 273.15, es = 6.112 * Math.exp(17.67 * Tc / (Tc + 243.5)), rs = 0.622 * es / Math.max(1, pHpa - es);
+  const g = 9.80665, Lv = 2.501e6, Rd = 287.04, cp = 1005.7, eps = 0.622;
+  return 1000 * g * (1 + Lv * rs / (Rd * T)) / (cp + Lv * Lv * rs * eps / (Rd * T * T));
+}
+function nodeLapse(mode, t2, rh, pmsl, elev, t700, z700) {   // K/km at one node and hour
+  if (mode === 'none') return 0;
+  if (mode === 'fixed') return 6.5;
+  if (mode === 'env') return Math.max(-4, Math.min(10, (t2 - t700) / Math.max(0.5, (z700 - elev) / 1000)));
+  const w = clamp01((rh - 60) / 40);            // humidity weight: dry air follows the dry adiabat, saturated air the moist one
+  return 9.8 * (1 - w) + moistLapse(t2, pmsl * Math.exp(-elev / 8400)) * w;
+}
+function fieldAt(lat, lon, tSec) {
+  const hf = Math.max(0, Math.min(46.999, T0_HOUR + tSec / 3600)), h0 = Math.floor(hf), h1 = h0 + 1, fr = hf - h0;
+  const L = a => a[h0] * (1 - fr) + a[h1] * fr, up = !!airmassData.stations[0].hourly.t700, gEmp = stationRes && stationRes.lapse_hourly ? L(stationRes.lapse_hourly) : 6.5;
+  let sumW = 0, t = 0, p = 0, gu = 0, el = 0, rh = 0, gam = 0, t850 = 0, t700 = 0, u10 = 0, v10 = 0, u100 = 0, v100 = 0, u7 = 0, v7 = 0, u85 = 0, v85 = 0;
+  for (const s of airmassData.stations) {
+    const d = getDistanceKm(lat, lon, s.lat, s.lon), w = 1 / Math.pow(Math.max(2, d), 2), h = s.hourly, ev = s.elev_m || 200, t2 = L(h.t2m), r = L(h.rh), pm = L(h.pres);
+    sumW += w; el += ev * w; t += t2 * w; p += pm * w; gu += L(h.gust) * w; rh += r * w;
+    const a10 = L(h.w10_spd), r10 = L(h.w10_dir) * Math.PI / 180, a100 = L(h.w100_spd), r100 = L(h.w100_dir) * Math.PI / 180;
+    u10 += -a10 * Math.sin(r10) * w; v10 += -a10 * Math.cos(r10) * w; u100 += -a100 * Math.sin(r100) * w; v100 += -a100 * Math.cos(r100) * w;
+    let tt7 = 0, zz7 = 0;
+    if (up) {
+      tt7 = L(h.t700); zz7 = L(h.z700); t850 += L(h.t850) * w; t700 += tt7 * w;
+      const a7 = L(h.w700_spd), r7 = L(h.w700_dir) * Math.PI / 180, a85 = L(h.w850_spd), r85 = L(h.w850_dir) * Math.PI / 180;
+      u7 += -a7 * Math.sin(r7) * w; v7 += -a7 * Math.cos(r7) * w; u85 += -a85 * Math.sin(r85) * w; v85 += -a85 * Math.cos(r85) * w;
+    }
+    gam += (LAPSE_MODE === 'emp' ? gEmp : nodeLapse(LAPSE_MODE, t2, r, pm, ev, tt7, zz7)) * w;
+  }
+  u10 /= sumW; v10 /= sumW; u100 /= sumW; v100 /= sumW; u7 /= sumW; v7 /= sumW; u85 /= sumW; v85 /= sumW;
+  const elNode = el / sumW, zg = groundElev(lat, lon), lapse = gam / sumW, lapseTerm = zg == null ? 0 : lapse * (elNode - zg) / 1000;
+  const model = t / sumW + lapseTerm;
+  let corr = 0;
+  if (stationRes) {
+    let cn = 0, sc = stationRes.scale_km[LAPSE_MODE], cd = 1 / (sc * sc);
+    for (const s of stationRes.stations) {
+      const rs = s.res[LAPSE_MODE], r0 = rs[h0], r1 = rs[h1]; if (r0 == null || r1 == null) continue;
+      const d = Math.max(5, getDistanceKm(lat, lon, s.lat, s.lon)), w = 1 / (d * d);
+      cn += w * (r0 * (1 - fr) + r1 * fr); cd += w;
+    }
+    corr = cn / cd;
+  }
+  const dir = (u, v) => (Math.atan2(-u, -v) * 180 / Math.PI + 360) % 360;
+  let veering = (dir(u100, v100) - dir(u10, v10) + 360) % 360; if (veering > 180) veering -= 360;
+  return { lat, lon, elev: zg == null ? elNode : zg, elevNode: elNode, lapse, lapseTerm, rh: rh / sumW, t2m: model + corr, t2m_model: model - lapseTerm, pres: p / sumW, gust: gu / sumW,
+    t850: up ? t850 / sumW : null, t700: up ? t700 / sumW : null, w700_spd: Math.hypot(u7, v7), w700_dir: dir(u7, v7), w850_spd: Math.hypot(u85, v85), w850_dir: dir(u85, v85),
+    w10_spd: Math.hypot(u10, v10), w10_dir: dir(u10, v10), w100_spd: Math.hypot(u100, v100), w100_dir: dir(u100, v100),
+    shearMag: Math.hypot(u100 - u10, v100 - v10), veering };
+}
+const MODE_T = { hot: 38, cool: 30 };          // centres of the Lydian and Aeolian blends; calibrateModes() sets them from this storm's pin temperatures
+function modeWeights(T) {                       // hot: Lydian, middle: Dorian, cool: Aeolian; blends of 4 C around MODE_T.hot and MODE_T.cool
+  const wl = clamp01((T - (MODE_T.hot - 2)) / 4), wa = clamp01((MODE_T.cool + 2 - T) / 4);
+  return { lyd: wl, dor: Math.max(0, 1 - wl - wa), aeo: wa };
+}
+const dominantMode = w => (w.lyd >= w.dor && w.lyd >= w.aeo) ? 'lyd' : (w.aeo >= w.dor ? 'aeo' : 'dor');
+
+// ---- storm chase: the pin follows the densest recent cluster, 10 to 20 km off its core, on the left of the storm's motion ----
+const chase = { on: true, track: [], step: 30 };
+function destPoint(lat, lon, bearingDeg, km) {
+  const R = 6371, b = bearingDeg * Math.PI / 180, p1 = lat * Math.PI / 180, l1 = lon * Math.PI / 180, dr = km / R;
+  const p2 = Math.asin(Math.sin(p1) * Math.cos(dr) + Math.cos(p1) * Math.sin(dr) * Math.cos(b));
+  const l2 = l1 + Math.atan2(Math.sin(b) * Math.sin(dr) * Math.cos(p1), Math.cos(dr) - Math.sin(p1) * Math.sin(p2));
+  return [p2 * 180 / Math.PI, l2 * 180 / Math.PI];
+}
+function buildChaseTrack() {
+  const F = stormData.flashes, dur = stormData.duration_seconds, step = chase.step, win = 600, raw = [];
+  let lo = 0, hi = 0;
+  for (let t = 0; t <= dur + step; t += step) {
+    while (hi < F.length && F[hi].rel_s <= t) hi++;
+    while (lo < hi && F[lo].rel_s < t - win) lo++;
+    let c = null;
+    if (hi - lo >= 6) {
+      const cells = new Map();
+      for (let k = lo; k < hi; k++) { const key = Math.floor(F[k].lat / 0.25) + ',' + Math.floor(F[k].lon / 0.4); cells.set(key, (cells.get(key) || 0) + 1); }
+      let best = -1, bi = 0, bj = 0;
+      for (const key of cells.keys()) {
+        const [i, j] = key.split(',').map(Number); let s = 0;
+        for (let di = -1; di <= 1; di++) for (let dj = -1; dj <= 1; dj++) s += cells.get((i + di) + ',' + (j + dj)) || 0;
+        if (s > best) { best = s; bi = i; bj = j; }
+      }
+      const cLat = (bi + 0.5) * 0.25, cLon = (bj + 0.5) * 0.4; let sl = 0, so = 0, n = 0;
+      for (let k = lo; k < hi; k++) if (getDistanceKm(cLat, cLon, F[k].lat, F[k].lon) <= 45) { sl += F[k].lat; so += F[k].lon; n++; }
+      if (n >= 4) {
+        const la = sl / n, lo2 = so / n; let ss = 0;
+        for (let k = lo; k < hi; k++) { const d = getDistanceKm(cLat, cLon, F[k].lat, F[k].lon); if (d <= 45) ss += Math.pow(getDistanceKm(la, lo2, F[k].lat, F[k].lon), 2); }
+        c = { lat: la, lon: lo2, spread: Math.sqrt(ss / n), n };
+      }
+    }
+    raw.push(c);
+  }
+  const first = raw.find(c => c); if (!first) return;
+  let prev = first; for (let i = 0; i < raw.length; i++) { if (raw[i]) prev = raw[i]; else raw[i] = { ...prev, held: true }; }
+  const sm = (arr, key, r) => arr.map((_, i) => { let s = 0, n = 0; for (let k = Math.max(0, i - r); k <= Math.min(arr.length - 1, i + r); k++) { s += arr[k][key]; n++; } return s / n; });
+  const coreLat = sm(raw, 'lat', 3), coreLon = sm(raw, 'lon', 3), spread = sm(raw, 'spread', 3);
+  let bearing = 0; { const a = raw[raw.length - 1], b = first; bearing = getBearingDeg(b.lat, b.lon, a.lat, a.lon); }
+  const lag = Math.round(1200 / step), pins = [];
+  for (let i = 0; i < raw.length; i++) {
+    const j = Math.max(0, i - lag);
+    if (getDistanceKm(coreLat[j], coreLon[j], coreLat[i], coreLon[i]) >= 4) bearing = getBearingDeg(coreLat[j], coreLon[j], coreLat[i], coreLon[i]);
+    const off = 10 + 10 * clamp01((spread[i] - 6) / 14), [pl, po] = destPoint(coreLat[i], coreLon[i], (bearing + 270) % 360, off);
+    pins.push({ t: i * step, lat: pl, lon: po, coreLat: coreLat[i], coreLon: coreLon[i], off, held: raw[i].held || false });
+  }
+  const pl = sm(pins, 'lat', 3), po = sm(pins, 'lon', 3);
+  chase.track = pins.map((p, i) => ({ ...p, lat: pl[i], lon: po[i] }));
+}
+function chaseAt(t) {
+  const tr = chase.track; if (!tr.length) return null;
+  const f = Math.max(0, Math.min(tr.length - 1.001, t / chase.step)), i = Math.floor(f), r = f - i, a = tr[i], b = tr[i + 1];
+  const m = k => a[k] * (1 - r) + b[k] * r;
+  return { lat: m('lat'), lon: m('lon'), coreLat: m('coreLat'), coreLon: m('coreLon'), off: m('off') };
+}
+const pinAt = t => (chase.on && chase.track.length) ? chaseAt(t) : observer;
+
+// ---- audio ----
+const S = {};                                    // decoded buffers
+const stats = { hits: {}, steps: 0, tuba: 0, sax: 0, dropped: 0, scheduledAhead: 0 };
+let bus = null, bedBus = null, kitBus = null, evBus = null, reverbIn = null, canyonSend = null, V = {};
+const clk = { base: 0, t0: 0, speed: 60 };
+const EV = { fall: 0.7, wind: 5, gust: 15, win: 1800, cooldown: 8 };
+const sched = { idx: 0, lastRoll: -99, lastGong: -99, lastLog: -99, lastSlow: -99, lastTuba: -99, lastSax: -99 };
+const LOOKAHEAD = 0.7, STEP = 0.125, TICK_MS = 50;
+
+function stormNowS() { return (isPlaying && audioCtx) ? clk.base + (audioCtx.currentTime - clk.t0) * clk.speed : stormElapsed; }
+function rebaseClock() {
+  if (stormData) { sched.idx = stormData.flashes.findIndex(f => f.rel_s >= stormElapsed); if (sched.idx < 0) sched.idx = stormData.flashes.length; }
+  clk.base = stormElapsed; clk.speed = parseFloat($('speedSel').value);
+  if (audioCtx) clk.t0 = audioCtx.currentTime;
+  sched.lastSlow = -99;
+}
+async function loadSample(ctx, url) { const r = await fetch(url); if (!r.ok) throw new Error(url + ' ' + r.status); return await ctx.decodeAudioData(await r.arrayBuffer()); }
+function makeImpulse(ctx, sec = 3.4, decay = 2.4) {
+  const n = Math.floor(ctx.sampleRate * sec), b = ctx.createBuffer(2, n, ctx.sampleRate); let s = 12345;
+  const rnd = () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296 * 2 - 1; };
+  for (let c = 0; c < 2; c++) { const d = b.getChannelData(c); let lp = 0; for (let i = 0; i < n; i++) { lp += 0.3 * (rnd() - lp); d[i] = lp * Math.pow(1 - i / n, decay) * Math.min(1, i / 300); } }
+  return b;
+}
+const AUDIO_NAMES = ['bass_D1', 'cello_D2', 'cello_A2', 'cello_C3', 'cello_E3', 'cello_G3', 'cello_B3', 'cello_D4', 'violin_Fs3', 'violin_G4', 'violin_B4', 'flute_A3',
+  'organ_pedal', 'organ_manual', 'tuba_D2', 'tuba_A1', 'tuba_A1_long', 'sax_D3_phrase', 'k_timp_lo', 'k_timp_hi', 'k_bdrum', 'k_tumba', 'k_conga', 'k_quinto', 'k_log_lo', 'k_log_hi', 'k_tap',
+  'k_shake', 'k_gong', 'k_crack', 'k_roll'];
+
+async function initAudio() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: 'playback' });
+  const ctx = audioCtx;
+  masterGain = ctx.createGain(); masterGain.gain.value = 0.9;
+  const limiter = ctx.createDynamicsCompressor(); limiter.threshold.value = -4; limiter.ratio.value = 10; limiter.attack.value = 0.003; limiter.release.value = 0.2;
+  masterGain.connect(limiter); limiter.connect(ctx.destination);
+  bedBus = ctx.createGain(); kitBus = ctx.createGain(); evBus = ctx.createGain(); bedBus.connect(masterGain); kitBus.connect(masterGain); evBus.connect(masterGain);
+  // space: one synthetic hall, fed by every layer; the canyon echo only from the kit
+  reverbIn = ctx.createGain(); const conv = ctx.createConvolver(); conv.buffer = makeImpulse(ctx); const rOut = ctx.createGain(); rOut.gain.value = parseFloat($('spaceLevel').value);
+  reverbIn.connect(conv); conv.connect(rOut); rOut.connect(masterGain); window.__reverbOut = rOut;
+  const dL = ctx.createDelay(), dR = ctx.createDelay(); dL.delayTime.value = 0.26; dR.delayTime.value = 0.39;
+  const fL = ctx.createGain(), fR = ctx.createGain(); fL.gain.value = 0.32; fR.gain.value = 0.28;
+  const damp = ctx.createBiquadFilter(); damp.type = 'lowpass'; damp.frequency.value = 1400; const cg = ctx.createGain(); cg.gain.value = 0.35;
+  dL.connect(damp); damp.connect(fR); fR.connect(dR); dR.connect(fL); fL.connect(dL); dL.connect(cg); dR.connect(cg); cg.connect(masterGain); canyonSend = dL;
+  log('Loading instruments (cello, violin, flute, organ, tuba, bear sax, drum kit)...');
+  try {
+    const got = await Promise.all(AUDIO_NAMES.map(async n => [n, await loadSample(ctx, `audio-v2/${n}.wav`)]));
+    for (const [n, b] of got) S[n] = b;
+    startBed();
+    log('Engine ready: ' + AUDIO_NAMES.length + ' sounds loaded.');
+    $('playBtn').disabled = false; $('startBtn').textContent = '✓ Engine Running'; $('startBtn').classList.remove('go');
+  } catch (e) { log('Audio load problem: ' + e.message); try { audioCtx.close(); } catch (_) {} audioCtx = null; $('startBtn').textContent = '⚠ Sound did not load: try again'; $('startBtn').classList.add('go'); return; }
+  setInterval(schedulerTick, TICK_MS);
+}
+
+function loopVoice(name, bus, rate = 1, offsetFrac = 0) {
+  const src = audioCtx.createBufferSource(); src.buffer = S[name]; src.loop = true; src.playbackRate.value = rate;
+  const g = audioCtx.createGain(); g.gain.value = 0; src.connect(g); g.connect(bus); g.connect(reverbIn);
+  src.start(0, offsetFrac * S[name].duration); return { src, g };
+}
+function startBed() {
+  const b = bedBus; V = {};
+  V.bass = loopVoice('bass_D1', b, 1, 0.0); V.celloD2 = loopVoice('cello_D2', b, 1, 0.3); V.celloA2 = loopVoice('cello_A2', b, 1, 0.6);
+  V.thirdSharp = loopVoice('violin_Fs3', b, 1, 0.1); V.thirdNat = loopVoice('violin_Fs3', b, semis(-1), 0.5);
+  V.chLyd = loopVoice('violin_G4', b, semis(1), 0.2); V.chDor = loopVoice('violin_B4', b, 1, 0.4); V.chAeo = loopVoice('violin_B4', b, semis(-1), 0.7);
+  V.flute = loopVoice('flute_A3', b, 1, 0.0); V.sus2 = loopVoice('cello_E3', b, 1, 0.45); V.tubaSwell = loopVoice('tuba_A1', b, 1, 0.0);
+  V.orgP = loopVoice('organ_pedal', b, semis(2), 0.0); V.orgM = loopVoice('organ_manual', b, semis(2), 0.5);
+  V.line = null; V.lineLast = -99; V.lineMidi = -1;
+}
+const CELLO_NATIVE = [[48, 'cello_C3'], [52, 'cello_E3'], [55, 'cello_G3'], [59, 'cello_B3'], [62, 'cello_D4']];
+function setGain(v, g, tau = 1.6) { v.g.gain.setTargetAtTime(g, audioCtx.currentTime, tau); }
+function bedUpdate(cur, prev) {
+  if (!V.bass) return;
+  const hv = $('harmonySel').value, bedOn = $('bedToggle').checked, bl = parseFloat($('bedLevel').value), lvl = bl * (bedOn ? 1 : 0), now = audioCtx.currentTime;
+  let mw = modeWeights(cur.t2m);
+  if (hv === 'C') mw = { lyd: 0, dor: 1, aeo: 0 };                    // both ways: Dorian only (no flat 6th)
+  if (hv === 'B') mw = { lyd: mw.lyd, dor: 1 - mw.lyd, aeo: 0 };      // open: no Aeolian
+  setGain(V.bass, 0.45 * lvl); setGain(V.celloD2, 0.30 * lvl); setGain(V.celloA2, 0.20 * lvl);
+  let tS = 0.20 * mw.lyd, tN = 0.20 * (1 - mw.lyd);
+  if (hv === 'B') { tS = 0; tN = 0; }                                  // open: the third is held back
+  if (hv === 'C') { const ph = 0.5 + 0.5 * Math.sin(2 * Math.PI * now / 24); tS = 0.2 * ph; tN = 0.2 * (1 - ph); }   // F sharp and F in turn, 24 s a turn
+  setGain(V.thirdSharp, tS * lvl, 2.5); setGain(V.thirdNat, tN * lvl, 2.5); setGain(V.sus2, (hv === 'B' ? 0.16 : 0) * lvl, 2.5);
+  setGain(V.chLyd, 0.12 * mw.lyd * lvl); setGain(V.chDor, 0.12 * mw.dor * lvl); setGain(V.chAeo, 0.12 * mw.aeo * lvl);
+  setGain(V.flute, 0.30 * clamp01((cur.w100_spd - 12) / 25) * ($('windToggle').checked ? 1 : 0) * bl, 2.0);
+  const og = 0.28 * clamp01(cur.shearMag / 18) * ($('orgToggle').checked ? 1 : 0) * bl;
+  setGain(V.orgP, og, 2.5); setGain(V.orgM, og * 0.8, 2.5);
+  const fall = prev ? Math.max(0, prev.pres - cur.pres) : 0;          // the tuba swells with the rate of fall, continuously
+  setGain(V.tubaSwell, 0.26 * clamp01(fall / Math.max(0.2, EV.fall * 1.6)) * ($('evToggle').checked ? 1 : 0) * bl, 3.0);
+  const dom = dominantMode(mw), cfg = hv === 'C' ? { base: 62, scale: [0, 2, 3, 5], div: 4 } : hv === 'B' ? { base: 50, scale: [0, 2, 5, 7, 9, 12, 14], div: 2.5 } : { base: 50, scale: SCALES[dom], div: 2.5 };
+  const idx = Math.max(0, Math.min(cfg.scale.length - 1, Math.floor((cur.w10_spd - 3) / cfg.div))), midi = cfg.base + cfg.scale[idx];
+  if (midi !== V.lineMidi && now - V.lineLast > 4 && bedOn) {
+    const [nat, name] = CELLO_NATIVE.reduce((a, c) => Math.abs(c[0] - midi) < Math.abs(a[0] - midi) ? c : a);
+    const nv = loopVoice(name, bedBus, semis(midi - nat), 0.15); nv.g.gain.setValueAtTime(0, now); nv.g.gain.linearRampToValueAtTime(0.30 * bl, now + 1.4);
+    if (V.line) { const o = V.line; o.g.gain.cancelScheduledValues(now); o.g.gain.setValueAtTime(o.g.gain.value, now); o.g.gain.linearRampToValueAtTime(0, now + 1.6); o.src.stop(now + 1.8); }
+    V.line = nv; V.lineMidi = midi; V.lineLast = now;
+  }
+  if (V.line && !bedOn) V.line.g.gain.setTargetAtTime(0, now, 0.8);
+}
+function calibrateModes() {
+  const ts = []; for (let t = 0; t < stormData.duration_seconds; t += 60) { const p = chaseAt(t), c = fieldAt(p.lat, p.lon, t); ts.push(c.t2m); }
+  ts.sort((x, y) => x - y); const q = f => ts[Math.floor(f * (ts.length - 1))];
+  let hot = q(0.7), cool = q(0.3); if (hot - cool < 3) { const m = (hot + cool) / 2; hot = m + 1.5; cool = m - 1.5; }
+  MODE_T.hot = hot; MODE_T.cool = cool;
+  log(`Mode colour limits, set from this storm's pin temperatures: Lydian above ${hot.toFixed(1)} C (the hottest third), Aeolian below ${cool.toFixed(1)} C (the coolest third).`);
+}
+function calibrateEvents() {
+  const dps = [], dws = [], dgs = [];
+  for (let t = EV.win; t < stormData.duration_seconds; t += 60) {
+    const p = chaseAt(t), c = fieldAt(p.lat, p.lon, t), q = fieldAt(p.lat, p.lon, t - EV.win);
+    dps.push(Math.max(0, q.pres - c.pres)); dws.push(Math.abs(c.w10_spd - q.w10_spd)); dgs.push(Math.max(0, c.gust - q.gust));
+  }
+  const qt = (a, f) => { const s2 = [...a].sort((x, y) => x - y); return s2[Math.floor(f * (s2.length - 1))]; };
+  EV.fall = Math.max(0.05, qt(dps, 0.7)); EV.wind = Math.max(1.0, qt(dws, 0.75)); EV.gust = Math.max(5, qt(dgs, 0.8));
+  log(`Event rules, set from this storm's own changes along the chase: tuba on a pressure fall of ${EV.fall.toFixed(2)} hPa in 30 min; bear sax on a surface wind change of ${EV.wind.toFixed(1)} km/h or a gust rise of ${EV.gust.toFixed(0)} km/h in 30 min.`);
+}
+function playEvent(name, gain, pan = 0) {
+  const src = audioCtx.createBufferSource(); src.buffer = S[name]; const g = audioCtx.createGain(); g.gain.value = gain * parseFloat($('bedLevel').value);
+  const p = audioCtx.createStereoPanner(); p.pan.value = pan; src.connect(g); g.connect(p); p.connect(evBus); g.connect(reverbIn); src.start();
+}
+function eventsUpdate(cur, prev, tS) {
+  if (!$('evToggle').checked || tS < EV.win / 2) return;
+  const now = audioCtx.currentTime, fall = prev.pres - cur.pres, dw = cur.w10_spd - prev.w10_spd, dg = cur.gust - prev.gust;
+  if (fall >= EV.fall && now - sched.lastTuba > EV.cooldown) { sched.lastTuba = now; stats.tuba++; playEvent('tuba_A1_long', 0.5); log(`Tuba: sea-level pressure fell ${fall.toFixed(2)} hPa in the last 30 min at the pin.`); }
+  if ((Math.abs(dw) >= EV.wind || dg >= EV.gust) && now - sched.lastSax > EV.cooldown) { sched.lastSax = now; stats.sax++; playEvent('sax_D3_phrase', 0.5, dw > 0 ? 0.3 : -0.3); log(`Bear sax: ${Math.abs(dw) >= EV.wind ? `surface wind ${dw > 0 ? 'rose' : 'fell'} ${Math.abs(dw).toFixed(1)} km/h` : `gusts rose ${dg.toFixed(0)} km/h`} in the last 30 min.`); }
+}
+
+// ---- percussion: each flash heard from the pin becomes a drum hit, on a 125 ms grid, late by its distance, loosened by a seeded jitter ----
+const distGain = d => Math.max(0.12, 1 / Math.pow(1 + d / 15, 0.9));
+let lastHeard = null;
+const hash01 = i => { let x = Math.imul(i + 1, 2654435761) >>> 0; x ^= x >>> 15; x = Math.imul(x, 2246822519) >>> 0; return (x >>> 0) / 4294967296; };
+function hit(name, when, vel, pan, d, rate = 1, dull = 1) {
+  const ctx = audioCtx, src = ctx.createBufferSource(); src.buffer = S[name]; src.playbackRate.value = rate;
+  const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = (900 + 14000 * Math.exp(-d / 28)) * dull;
+  const g = ctx.createGain(); g.gain.value = vel * distGain(d) * parseFloat($('kitLevel').value); const p = ctx.createStereoPanner(); p.pan.value = Math.max(-1, Math.min(1, pan));
+  src.connect(lp); lp.connect(g); g.connect(p); p.connect(kitBus);
+  const rs = ctx.createGain(); rs.gain.value = 0.12 + 0.5 * Math.min(1, d / 60); g.connect(rs); rs.connect(reverbIn);
+  if ($('canyonEchoToggle').checked && d > 8) { const cs = ctx.createGain(); cs.gain.value = Math.min(0.6, 0.1 + d / 80); g.connect(cs); cs.connect(canyonSend); }
+  src.start(when); stats.hits[name] = (stats.hits[name] || 0) + 1;
+}
+function playStep(group, when) {
+  stats.steps++;
+  const reach = parseFloat($('reachKm').value), F = stormData.flashes, heard = [];
+  for (const i of group) {
+    const f = F[i], pin = pinAt(f.rel_s), d = getDistanceKm(pin.lat, pin.lon, f.lat, f.lon); if (d > reach) continue;
+    heard.push({ i, d, e: clamp01(Math.log10(f.energy_j / 1e-14) / 3), b: getBearingDeg(pin.lat, pin.lon, f.lat, f.lon) });
+  }
+  if (!heard.length || !$('kitToggle').checked) return;
+  heard.sort((a, b) => (b.e * 2 - b.d / reach) - (a.e * 2 - a.d / reach));
+  heard.slice(0, 3).forEach((h, k) => {
+    const pan = Math.sin(h.b * Math.PI / 180) * 1.2, jit = (hash01(h.i) - 0.5) * 0.03, lag = Math.min(0.3, h.d * 0.0035) + jit + (k ? 0.04 + hash01(h.i + 7) * 0.07 : 0);
+    const t = when + Math.max(0, lag);
+    if (k === 0) {
+      const vel = 0.35 + 0.65 * h.e;
+      lastHeard = { d: h.d, lag: Math.max(0, lag), b: h.b, e: h.e, layer: h.d < 12 ? 'log drum' : h.d < 30 ? (h.e > 0.5 ? 'tumba' : 'conga') : h.d < 60 ? (h.e > 0.5 ? 'bass drum' : 'timpani') : 'low timpani', stormT: F[h.i].rel_s };
+      if (h.e > 0.35 && h.d < 45) hit('k_crack', t, 0.55 * h.e * (1 - h.d / 60), pan, h.d, 1 - 0.1 * (h.d / 45));   // the snap carries, softer and duller with distance
+      if (h.d < 12) hit('k_log_hi', t, vel, pan, h.d, 1 + 0.1 * (0.5 - h.e));
+      else if (h.d < 30) hit(h.e > 0.5 ? 'k_tumba' : 'k_conga', t, vel, pan, h.d, 1 + 0.08 * (0.5 - h.e));
+      else if (h.d < 60) hit(h.e > 0.5 ? 'k_bdrum' : 'k_timp_hi', t, vel, pan, h.d, 1);
+      else hit('k_timp_lo', t, vel, pan, h.d, 0.97);
+      if (h.e > 0.6) hit('k_timp_hi', t + 0.18, 0.3 * vel, pan * 0.6, h.d + 12, 0.85, 0.7);         // the drag: a duller echo of a big hit
+      const now = audioCtx.currentTime;
+      if (h.e > 0.85 && h.d < 45 && now - sched.lastGong > 10) { sched.lastGong = now; hit('k_gong', t, 0.5, pan * 0.5, h.d, 1, 0.8); }
+      if (now - sched.lastLog > 0.6) { sched.lastLog = now; logStrike(h.d, h.b > 180 ? h.b - 360 : h.b, F[h.i].energy_j); }
+    } else hit(k === 1 ? 'k_quinto' : 'k_tap', t, 0.28 + 0.25 * h.e, pan, h.d, 1 + 0.06 * hash01(h.i + 3));
+  });
+  const extra = heard.length - 3, now = audioCtx.currentTime;
+  if (extra > 0) hit('k_shake', when + 0.02, Math.min(0.5, 0.08 * extra), 0, 20, 1);                // the rest of a dense step is heard as rain on the heads
+  if (heard.length >= 5 && now - sched.lastRoll > 12) { sched.lastRoll = now; hit('k_roll', when, Math.min(0.3, heard.length / 25), 0, 45, 1, 0.7); }
+}
+function processSteps(horizonStorm) {
+  const F = stormData.flashes, sp = clk.speed;
+  while (sched.idx < F.length) {
+    const step = Math.floor((F[sched.idx].rel_s - clk.base) / sp / STEP), endStorm = clk.base + (step + 1) * STEP * sp;
+    if (endStorm > horizonStorm) break;
+    const group = []; let j = sched.idx; while (j < F.length && F[j].rel_s < endStorm) { group.push(j); j++; } sched.idx = j;
+    const when = clk.t0 + (step + 1) * STEP;
+    if (when < audioCtx.currentTime - 0.02) { stats.dropped += group.length; continue; }          // the page was stalled: drop, never stack
+    stats.scheduledAhead = Math.max(stats.scheduledAhead, when - audioCtx.currentTime);
+    playStep(group, when);
+  }
+}
+function schedulerTick() {
+  if (!audioCtx || !stormData || !isPlaying) return;
+  const tS = stormNowS(), now = audioCtx.currentTime;
+  if (tS >= stormData.duration_seconds) { stormElapsed = 0; lastProcessedFlashIdx = 0; activeShockwaves.forEach(sw => shockwaveLayer.removeLayer(sw.circle)); activeShockwaves = []; rebaseClock(); return; }
+  processSteps(tS + LOOKAHEAD * clk.speed);
+  if (now - sched.lastSlow > 0.25 && S.bass_D1) {                                              // the slow layers run here too, so a hidden tab keeps them
+    sched.lastSlow = now; const pos = pinAt(tS), cur = fieldAt(pos.lat, pos.lon, tS), prev = fieldAt(pos.lat, pos.lon, Math.max(0, tS - EV.win)); bedUpdate(cur, prev); eventsUpdate(cur, prev, tS);
+  }
+}
+window.auditionFlash = async (dist, brng, energy) => { await initAudio(); const e = clamp01(Math.log10(energy / 1e-14) / 3); playHitNow(dist, brng, e); logStrike(dist, brng, energy); };
+function playHitNow(d, b, e) { // audition: the same layer rules as playStep for a single flash
+  if (!audioCtx || !S.k_conga) return; const t = audioCtx.currentTime + 0.05, pan = Math.sin(b * Math.PI / 180) * 1.2, vel = 0.35 + 0.65 * e;
+  if (e > 0.35 && d < 45) hit('k_crack', t, 0.55 * e * (1 - d / 60), pan, d, 1 - 0.1 * (d / 45));
+  if (d < 12) hit('k_log_hi', t, vel, pan, d); else if (d < 30) hit(e > 0.5 ? 'k_tumba' : 'k_conga', t, vel, pan, d);
+  else if (d < 60) hit(e > 0.5 ? 'k_bdrum' : 'k_timp_hi', t, vel, pan, d); else hit('k_timp_lo', t, vel, pan, d, 0.97);
+}
+window.__lightning = { get ctx() { return audioCtx; }, get voices() { return V; }, get samples() { return S; }, get master() { return masterGain; }, stats, chase, fieldAt, modeWeights, pinAt, clk,
+  get observer() { return observer; }, get map() { return map; }, EV, MODE_T, get water() { return waterStats; }, get DEM() { return DEM; }, get series() { return observerTimeSeries; }, get heard() { return heardBins; }, get anchor() { return anchorCity; }, setLapse(m) { LAPSE_MODE = m; calculateObserverTimeSeries(); updateAirmassAtObserver(); }, setImmersive, setChase(on) { chase.on = on; } };
+
+// --- Inverse Distance Weighted (IDW) Airmass Interpolation ---
+let chasing = false;
+function updateAirmassAtObserver() {
+  if (!airmassData || chasing) return;                       // chasing: called from chaseUi, the outer call finishes the job
+  if (chase.on && chase.track.length) { chasing = true; try { chaseUi(false); } finally { chasing = false; } }
+
+  const hourFrac = 21.7328 + stormElapsed / 3600;
+  const hIdx = Math.max(0, Math.min(47, Math.floor(hourFrac)));
+
+  const pos = pinAt(stormElapsed);
+  const cur = fieldAt(pos.lat, pos.lon, stormElapsed);
+  if (!cur) return;
+
+  // Format UTC Time
+  const totalSec = Math.floor(stormElapsed);
+  const startUtcSec = (21 * 3600) + (43 * 60) + 58;
+  const curUtcSec = (startUtcSec + totalSec) % 86400;
+  const isJuly1 = (startUtcSec + totalSec) >= 86400;
+  const utcHours = Math.floor(curUtcSec / 3600);
+  const utcMins = Math.floor((curUtcSec % 3600) / 60);
+  const utcSecs = curUtcSec % 60;
+  const dateStr = isJuly1 ? '2021-07-01' : '2021-06-30';
+  const utcStr = `${dateStr} ${String(utcHours).padStart(2,'0')}:${String(utcMins).padStart(2,'0')}:${String(utcSecs).padStart(2,'0')} UTC`;
+
+  $('stormTimeReadout').textContent = `Time: ${utcStr} (+${Math.floor(stormElapsed/3600)}h ${Math.floor((stormElapsed%3600)/60)}m)`;
+  $('weatherReadout').textContent = `Air: ${cur.t2m.toFixed(1)}°C · ${cur.pres.toFixed(1)} hPa · Wind: ${cur.w10_spd.toFixed(1)} km/h · Shear: ${cur.shearMag.toFixed(1)} km/h`;
+
+  // Telemetry updates
+  $('teleTemp').textContent = `${cur.t2m.toFixed(1)} °C`;
+  $('telePres').textContent = `${cur.pres.toFixed(1)} hPa`;
+  $('teleWind10').textContent = `${cur.w10_spd.toFixed(1)} km/h`;
+  $('teleDir10').textContent = `Dir: ${Math.round(cur.w10_dir)}°`;
+  $('teleWind100').textContent = `${cur.w100_spd.toFixed(1)} km/h`;
+  $('teleDir100').textContent = `Aloft: ${Math.round(cur.w100_dir)}°`;
+  $('teleShear').textContent = `${cur.shearMag.toFixed(1)} km/h`;
+  $('teleVeer').textContent = `Veering: ${cur.veering > 0 ? '+' : ''}${Math.round(cur.veering)}° · organ`;
+  const dp = Math.round(prevPres(pos, stormElapsed) - cur.pres);
+  if (cur.t850 != null) {
+    $('teleUpper').textContent = `${cur.t850.toFixed(1)} °C at 850`;
+    $('teleUpperSub').textContent = `700 hPa wind ${cur.w700_spd.toFixed(0)} km/h from ${Math.round(cur.w700_dir)}°`;
+  }
+  $('teleGround').textContent = `${Math.round(cur.elev)} m`;
+  $('teleGroundSub').textContent = `nodes ${Math.round(cur.elevNode)} m: ${cur.lapseTerm >= 0 ? '+' : ''}${cur.lapseTerm.toFixed(1)} °C for height`;
+  $('teleLapse').textContent = `${cur.lapse.toFixed(1)} K/km`;
+  $('teleLapseSub').textContent = `${LAPSE_NAME[LAPSE_MODE]} · RH ${Math.round(cur.rh)}% · dry 9.8, moist ${moistLapse(cur.t2m, cur.pres * Math.exp(-cur.elev / 8400)).toFixed(1)}`;
+  if (lastHeard) {
+    $('lastDistVal').textContent = `${lastHeard.d.toFixed(0)} km · ${lastHeard.layer}`;
+    $('lastDelayVal').textContent = `lag ${(lastHeard.lag * 1000).toFixed(0)} ms (real sound ${(lastHeard.d / 0.343).toFixed(0)} s) · from ${COMPASS[Math.round(((lastHeard.b % 360) + 360) % 360 / 22.5) % 16]}`;
+  } else { $('lastDistVal').textContent = 'none yet'; $('lastDelayVal').textContent = 'press Play'; }
+  updateGlyphs(cur); syncHud(cur);
+  $('coordReadout').textContent = `Observer: ${cur.lat.toFixed(2)}°N, ${Math.abs(cur.lon).toFixed(2)}°W · Elev ~${Math.round(cur.elev)}m`;
+
+  const mwNow = modeWeights(cur.t2m);
+  let modeDesc = MODE_NAME[dominantMode(mwNow)];
+  $('teleMode').textContent = `Mode: ${modeDesc} · model ${cur.t2m_model.toFixed(1)}°`;
+
+  // Update status badge on EDA panel
+  $('edaTimeBadge').textContent = `Storm Elapsed: +${String(Math.floor(stormElapsed/3600)).padStart(2,'0')}h ${String(Math.floor((stormElapsed%3600)/60)).padStart(2,'0')}m · ${utcStr}`;
+  $('edaMetricsBadge').textContent = `Temp: ${cur.t2m.toFixed(1)}°C (${modeDesc}) · Pres: ${cur.pres.toFixed(1)} hPa · Wind: ${cur.w10_spd.toFixed(1)} km/h (10m) / ${cur.w100_spd.toFixed(1)} km/h (100m) · Shear: ${cur.shearMag.toFixed(1)} km/h`;
+
+}
+
+// --- Multi-tier Lightning Strike Visualization on Leaflet ---
+function renderMapFlashes() {
+  if (!stormData || !stormData.flashes) return;
+
+  flashMarkerLayer.clearLayers();
+
+  const nowSec = stormElapsed;
+  let windowSec = 1800; // 30 min default
+  if (flashDisplayMode === 'window10') windowSec = 600;
+  if (flashDisplayMode === 'window5') windowSec = 300;
+  if (flashDisplayMode === 'cumulative') windowSec = Infinity;
+
+  let inViewCount = 0;
+  const flashes = stormData.flashes;
+
+  for (let i = 0; i < flashes.length; i++) {
+    const f = flashes[i];
+    const rel = f.rel_s;
+
+    if (flashDisplayMode === 'cumulative') {
+      const isPast = rel <= nowSec;
+      const age = nowSec - rel;
+      let color, fillColor, fillOpacity, radius, weight;
+
+      if (!isPast) {
+        color = '#2d3b43';
+        fillColor = '#1a252b';
+        fillOpacity = 0.35;
+        radius = 2.5;
+        weight = 0.5;
+      } else if (age < 45) {
+        color = '#ffffff';
+        fillColor = '#70d6ff';
+        fillOpacity = 1.0;
+        radius = Math.min(9, 4 + Math.log10(f.energy_j / 1e-14));
+        weight = 2;
+      } else if (age < 600) {
+        color = '#ffffff';
+        fillColor = '#f0a05a';
+        fillOpacity = 0.85;
+        radius = 4;
+        weight = 1;
+      } else if (age < 1800) {
+        color = '#e05a47';
+        fillColor = '#e05a47';
+        fillOpacity = 0.65;
+        radius = 3.5;
+        weight = 1;
+      } else {
+        color = '#785ef0';
+        fillColor = '#785ef0';
+        fillOpacity = 0.45;
+        radius = 3;
+        weight = 0.5;
+      }
+
+      const m = L.circleMarker([f.lat, f.lon], { radius, color, fillColor, fillOpacity, weight });
+      attachFlashPopup(m, f, i);
+      flashMarkerLayer.addLayer(m);
+      if (isPast) inViewCount++;
+    } else {
+      if (rel > nowSec) break; // sorted by rel_s
+      if (rel < nowSec - windowSec) continue;
+
+      const age = nowSec - rel;
+      let color, fillColor, fillOpacity, radius, weight;
+
+      if (age < 45) {
+        color = '#ffffff';
+        fillColor = '#70d6ff';
+        fillOpacity = 1.0;
+        radius = Math.min(9, 4 + Math.log10(f.energy_j / 1e-14));
+        weight = 2;
+      } else if (age < 600) {
+        color = '#ffffff';
+        fillColor = '#f0a05a';
+        fillOpacity = 0.85;
+        radius = 4.5;
+        weight = 1;
+      } else if (age < 1800) {
+        color = '#e05a47';
+        fillColor = '#e05a47';
+        fillOpacity = 0.65;
+        radius = 3.5;
+        weight = 1;
+      } else {
+        color = '#785ef0';
+        fillColor = '#785ef0';
+        fillOpacity = 0.45;
+        radius = 3;
+        weight = 0.5;
+      }
+
+      const m = L.circleMarker([f.lat, f.lon], { radius, color, fillColor, fillOpacity, weight });
+      attachFlashPopup(m, f, i);
+      flashMarkerLayer.addLayer(m);
+      inViewCount++;
+    }
+  }
+
+  const totalPassed = flashes.filter(f => f.rel_s <= nowSec).length;
+  $('flashCounterBadge').textContent = `${inViewCount} strikes in window · Passed: ${totalPassed} / ${flashes.length}`;
+}
+
+function attachFlashPopup(marker, flash, idx) {
+  const dist = getDistanceKm(observer.lat, observer.lon, flash.lat, flash.lon);
+  const brng = getBearingDeg(observer.lat, observer.lon, flash.lat, flash.lon);
+  const delaySec = dist / 0.343;
+  const hours = Math.floor(flash.rel_s / 3600);
+  const mins = Math.floor((flash.rel_s % 3600) / 60);
+  const secs = Math.floor(flash.rel_s % 60);
+  const timeStr = `+${String(hours).padStart(2,'0')}h ${String(mins).padStart(2,'0')}m ${String(secs).padStart(2,'0')}s`;
+
+  const html = `
+    <div style="font-family:var(--sans);font-size:0.82rem;line-height:1.4">
+      <div style="font-weight:700;color:var(--electric);margin-bottom:2px">⚡ NOAA Flash #${idx+1}</div>
+      <div style="color:var(--ink);font-family:var(--mono)">Time: ${timeStr} (${flash.utc || 'UTC'})</div>
+      <div>Location: ${flash.lat.toFixed(3)}°N, ${Math.abs(flash.lon).toFixed(3)}°W</div>
+      <div>Optical Energy: <b>${flash.energy_j.toExponential(2)} J</b></div>
+      <div style="margin-top:4px;border-top:1px solid #23353c;padding-top:4px">
+        Distance to you: <b style="color:var(--accent)">${dist.toFixed(1)} km</b> (${Math.round(brng)}°)<br>
+        Real-world delay: <b>${delaySec.toFixed(1)} s</b> (played shortened: ${Math.round(Math.min(0.3, dist * 0.0035) * 1000)} ms)
+      </div>
+      <button onclick="window.auditionFlash(${dist}, ${brng}, ${flash.energy_j})" style="margin-top:6px;width:100%;padding:4px 8px;font-size:0.75rem;background:#141f22;border:1px solid var(--line-bright);color:var(--on);border-radius:4px;cursor:pointer">
+        💥 Audition Thunder for this Strike
+      </button>
+    </div>
+  `;
+  marker.bindPopup(html);
+}
+
+// --- Precompute Observer Time Series for the EDA Graph ---
+let heardBins = [];
+function computeHeard() {
+  if (!stormData) return;
+  const bs = 300, nb = Math.ceil(stormData.duration_seconds / bs), reach = parseFloat($('reachKm').value); heardBins = Array.from({ length: nb }, () => [0, 0, 0, 0]);
+  for (const f of stormData.flashes) {
+    const pin = pinAt(f.rel_s), d = getDistanceKm(pin.lat, pin.lon, f.lat, f.lon); if (d > reach) continue;
+    heardBins[Math.min(nb - 1, Math.floor(f.rel_s / bs))][d < 12 ? 0 : d < 30 ? 1 : d < 60 ? 2 : 3]++;
+  }
+}
+function prevPres(pos, t) { return fieldAt(pos.lat, pos.lon, Math.max(0, t - EV.win)).pres; }
+function calculateObserverTimeSeries() {
+  if (!airmassData || !airmassData.stations || !stormData) return;
+  const n = 96, dur = stormData.duration_seconds; observerTimeSeries = [];
+  for (let i = 0; i < n; i++) {
+    const t = (i / (n - 1)) * dur, pos = pinAt(t), c = fieldAt(pos.lat, pos.lon, t), q = fieldAt(pos.lat, pos.lon, Math.max(0, t - EV.win)), late = t >= EV.win / 2;
+    observerTimeSeries.push({ tSec: t, t2m: c.t2m, pres: c.pres, w10: c.w10_spd, w100: c.w100_spd, shear: c.shearMag, dir10: c.w10_dir, w700: c.w700_spd, dir700: c.w700_dir,
+      t850: c.t850, lapse: c.lapse, zg: c.elev, tuba: late && (q.pres - c.pres) >= EV.fall, sax: late && (Math.abs(c.w10_spd - q.w10_spd) >= EV.wind || (c.gust - q.gust) >= EV.gust) });
+  }
+  computeHeard(); rebuildGlyphs();
+}
+
+// --- Wind rose and temperature path (after the Godbout page): drawn as SVG, once in the page and once in the immersive HUD ---
+const SVGNS = 'http://www.w3.org/2000/svg';
+const sv = (tag, attrs, parent) => { const e = document.createElementNS(SVGNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+const polar = (deg, r) => [100 + r * Math.sin(deg * Math.PI / 180), 100 - r * Math.cos(deg * Math.PI / 180)];
+const COMPASS = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+function makeRose(svg) {
+  const R1 = 58, R2 = 84, st = {}, rad7 = sp => R1 + 7 + (R2 - R1 - 12) * clamp01(sp / 90);
+  function redraw() {
+    svg.innerHTML = ''; const S = observerTimeSeries; st.ready = false; if (!S.length) return;
+    sv('circle', { cx: 100, cy: 100, r: R2, fill: 'none', stroke: '#2d454d', 'stroke-width': 1 }, svg);
+    sv('circle', { cx: 100, cy: 100, r: R1, fill: 'none', stroke: '#2d454d', 'stroke-width': 1 }, svg);
+    const bins = new Array(16).fill(0); S.forEach(p => bins[Math.round(p.dir10 / 22.5) % 16]++); const mb = Math.max(1, ...bins);
+    bins.forEach((c, k) => { if (!c) return; const r = R1 * 0.12 + R1 * 0.85 * c / mb, a = polar(k * 22.5 - 9, r), b = polar(k * 22.5 + 9, r);
+      sv('path', { d: `M100 100 L${a[0].toFixed(1)} ${a[1].toFixed(1)} A${r.toFixed(1)} ${r.toFixed(1)} 0 0 1 ${b[0].toFixed(1)} ${b[1].toFixed(1)} Z`, fill: '#4fc3b6', opacity: 0.32 }, svg); });
+    S.forEach(p => { const q = polar(p.dir700, rad7(p.w700)); sv('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 1.7, fill: '#b298dc', opacity: 0.42 }, svg); });
+    [['N', 0], ['E', 90], ['S', 180], ['W', 270]].forEach(([l, d]) => { const q = polar(d, R2 + 9), t = sv('text', { x: q[0], y: q[1] + 3.5, 'text-anchor': 'middle', fill: '#8ba2a8', 'font-size': 10 }, svg); t.textContent = l; });
+    st.wedge = sv('path', { d: '', fill: '#e3eeec', opacity: 0.25 }, svg);
+    st.n10 = sv('line', { x1: 100, y1: 100, x2: 100, y2: 100, stroke: '#4fc3b6', 'stroke-width': 3.5, 'stroke-linecap': 'round' }, svg);
+    st.n7 = sv('line', { x1: 100, y1: 100, x2: 100, y2: 100, stroke: '#b298dc', 'stroke-width': 2.6, 'stroke-linecap': 'round' }, svg);
+    st.d10 = sv('circle', { cx: 100, cy: 100, r: 5, fill: '#4fc3b6' }, svg); st.d7 = sv('circle', { cx: 100, cy: 100, r: 4, fill: '#b298dc' }, svg); st.ready = true;
+  }
+  function update(c) {
+    if (!st.ready || c.w700_dir == null) return;
+    const a = polar(c.w10_dir, R1 * Math.max(0.2, clamp01(c.w10_spd / 40))), b = polar(c.w700_dir, rad7(c.w700_spd));
+    st.n10.setAttribute('x2', a[0]); st.n10.setAttribute('y2', a[1]); st.d10.setAttribute('cx', a[0]); st.d10.setAttribute('cy', a[1]);
+    st.n7.setAttribute('x2', b[0]); st.n7.setAttribute('y2', b[1]); st.d7.setAttribute('cx', b[0]); st.d7.setAttribute('cy', b[1]);
+    const dd = ((c.w700_dir - c.w10_dir + 540) % 360) - 180, p0 = polar(c.w10_dir, R1 * 0.5), p1 = polar(c.w700_dir, R1 * 0.5);
+    st.wedge.setAttribute('d', `M100 100 L${p0[0].toFixed(1)} ${p0[1].toFixed(1)} A${R1 * 0.5} ${R1 * 0.5} 0 0 ${dd > 0 ? 1 : 0} ${p1[0].toFixed(1)} ${p1[1].toFixed(1)} Z`);
+  }
+  return { redraw, update };
+}
+function makePhase(svg) {
+  const M = { l: 30, r: 8, t: 8, b: 24 }, st = {};
+  function redraw() {
+    svg.innerHTML = ''; st.ready = false; const S = observerTimeSeries.filter(p => p.t850 != null && isFinite(p.t850)); if (!S.length) return;
+    const lo = Math.floor(Math.min(...S.map(p => p.t2m), ...S.map(p => p.t850)) - 1), hi = Math.ceil(Math.max(...S.map(p => p.t2m), ...S.map(p => p.t850)) + 1);
+    st.px = v => M.l + (v - lo) / (hi - lo) * (200 - M.l - M.r); st.py = v => 200 - M.b - (v - lo) / (hi - lo) * (200 - M.t - M.b); st.S = S;
+    sv('rect', { x: M.l, y: M.t, width: 200 - M.l - M.r, height: 200 - M.t - M.b, fill: 'none', stroke: '#2d454d' }, svg);
+    sv('line', { x1: st.px(lo), y1: st.py(lo), x2: st.px(hi), y2: st.py(hi), stroke: '#8ba2a8', 'stroke-dasharray': '3 3', opacity: 0.6 }, svg);
+    [lo, hi].forEach(v => { let t = sv('text', { x: st.px(v), y: 200 - M.b + 12, 'text-anchor': 'middle', fill: '#8ba2a8', 'font-size': 9 }, svg); t.textContent = v;
+      t = sv('text', { x: M.l - 4, y: st.py(v) + 3, 'text-anchor': 'end', fill: '#8ba2a8', 'font-size': 9 }, svg); t.textContent = v; });
+    let t = sv('text', { x: 100 + 10, y: 197, 'text-anchor': 'middle', fill: '#8ba2a8', 'font-size': 9 }, svg); t.textContent = '2 m temperature, °C';
+    t = sv('text', { x: 9, y: 100, 'text-anchor': 'middle', fill: '#8ba2a8', 'font-size': 9, transform: 'rotate(-90 9 100)' }, svg); t.textContent = '850 hPa, °C';
+    st.future = sv('polyline', { fill: 'none', stroke: '#2d454d', 'stroke-width': 1.4 }, svg); st.past = sv('polyline', { fill: 'none', stroke: '#f0a05a', 'stroke-width': 2, 'stroke-linejoin': 'round' }, svg);
+    st.cur = sv('circle', { cx: 0, cy: 0, r: 5.5, fill: 'none', stroke: '#ffffff', 'stroke-width': 2 }, svg); st.ready = true;
+  }
+  function update(c, frac) {
+    if (!st.ready || c.t850 == null) return;
+    const S = st.S, k = Math.max(0, Math.min(S.length - 1, Math.round(frac * (S.length - 1)))), pt = i => `${st.px(S[i].t2m).toFixed(1)},${st.py(S[i].t850).toFixed(1)}`;
+    st.past.setAttribute('points', S.slice(0, k + 1).map((_, i) => pt(i)).join(' ')); st.future.setAttribute('points', S.slice(k).map((_, i) => pt(i + k)).join(' '));
+    st.cur.setAttribute('cx', st.px(c.t2m)); st.cur.setAttribute('cy', st.py(c.t850));
+  }
+  return { redraw, update };
+}
+const glyphs = [makeRose($('roseMain')), makePhase($('phaseMain')), makeRose($('roseHud')), makePhase($('phaseHud'))];
+function rebuildGlyphs() { glyphs.forEach(g => g.redraw()); }
+function updateGlyphs(cur) { const fr = stormData ? stormElapsed / stormData.duration_seconds : 0; glyphs.forEach(g => g.update(cur, fr)); }
+
+// --- Immersive map: the card fills the screen; the HUD shows time, air and the glyphs; controls mirror the page's
+function syncHud(cur) {
+  const card = document.querySelector('.map-card'); if (!card.classList.contains('imm')) return;
+  const startUtc = 21 * 3600 + 43 * 60 + 58, u = (startUtc + Math.floor(stormElapsed)) % 86400, hh = Math.floor(u / 3600), mm = Math.floor((u % 3600) / 60), pdt = (hh + 17) % 24;
+  $('hudTime').textContent = `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')} UTC · ${String(pdt).padStart(2, '0')}:${String(mm).padStart(2, '0')} PDT`;
+  $('hudTemp').textContent = `${cur.t2m.toFixed(1)} °C`; $('hudPres').textContent = `${cur.pres.toFixed(1)} hPa`;
+  $('hudW10').textContent = `${cur.w10_spd.toFixed(0)} km/h ${COMPASS[Math.round(cur.w10_dir / 22.5) % 16]}`; $('hudW100').textContent = `${cur.w100_spd.toFixed(0)} km/h`;
+  $('hudW700').textContent = `${cur.w700_spd.toFixed(0)} km/h ${COMPASS[Math.round(cur.w700_dir / 22.5) % 16]}`;
+  $('hudGround').textContent = `${Math.round(cur.elev)} m`; $('hudLapse').textContent = `${cur.lapse.toFixed(1)} K/km`;
+  $('hudHeard').textContent = heardNow.n ? `${heardNow.n} in 10 min, ${heardNow.nearest.toFixed(0)} km` : 'quiet';
+  $('hudStart').textContent = $('startBtn').textContent; $('hudStart').disabled = $('startBtn').disabled; $('hudPlay').textContent = isPlaying ? '⏸ Pause' : '▶ Play'; $('hudPlay').disabled = $('playBtn').disabled;
+  if (document.activeElement !== $('hudScrub')) $('hudScrub').value = stormElapsed;
+  if ($('hudHarmony').value !== $('harmonySel').value) $('hudHarmony').value = $('harmonySel').value;
+  if ($('hudSpeed').value !== $('speedSel').value) $('hudSpeed').value = $('speedSel').value;
+}
+function setImmersive(on) {
+  const card = document.querySelector('.map-card'); card.classList.toggle('imm', on); document.body.classList.toggle('imm-open', on);
+  if (on) { try { const p = document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); if (p && p.catch) p.catch(() => {}); } catch (e) {} }
+  else if (document.fullscreenElement) { try { const p = document.exitFullscreen(); if (p && p.catch) p.catch(() => {}); } catch (e) {} }
+  $('fsBtn').textContent = on ? '✕ Exit' : '⤢ Immersive';
+  setTimeout(() => { setMapLimits(); updateAirmassAtObserver(); }, 150);
+}
+$('fsBtn').onclick = () => setImmersive(!document.querySelector('.map-card').classList.contains('imm'));
+$('hudExit').onclick = () => setImmersive(false);
+$('hudStart').onclick = () => $('startBtn').click(); $('hudPlay').onclick = () => $('playBtn').click();
+$('hudScrub').oninput = e => { $('timeScrubber').value = e.target.value; $('timeScrubber').oninput({ target: $('timeScrubber') }); };
+$('hudSpeed').innerHTML = $('speedSel').innerHTML; $('hudSpeed').onchange = e => { $('speedSel').value = e.target.value; $('speedSel').onchange(); };
+$('hudHarmony').innerHTML = $('harmonySel').innerHTML; $('hudHarmony').onchange = e => { $('harmonySel').value = e.target.value; $('harmonySel').dispatchEvent(new Event('change')); };
+document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && document.querySelector('.map-card').classList.contains('imm')) setImmersive(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.querySelector('.map-card').classList.contains('imm')) setImmersive(false); });
+let limitsTimer = null; window.addEventListener('resize', () => { clearTimeout(limitsTimer); limitsTimer = setTimeout(setMapLimits, 200); });
+
+function computeStrikeBins() {
+  if (!stormData) return;
+  const binSec = 900; // 15 min
+  const numBins = Math.ceil(stormData.duration_seconds / binSec);
+  strikeBins = Array.from({ length: numBins }, (_, i) => ({
+    t0: i * binSec,
+    t1: (i + 1) * binSec,
+    count: 0
+  }));
+  for (const f of stormData.flashes) {
+    const idx = Math.min(numBins - 1, Math.floor(f.rel_s / binSec));
+    if (idx >= 0) strikeBins[idx].count++;
+  }
+}
+
+// --- Multi-Lane EDA Canvas Rendering ---
+const edaCanvas = $('edaCanvas');
+const edaCtx = edaCanvas.getContext('2d');
+let hoverCanvasX = null;
+let isCanvasDragging = false;
+
+function renderEdaGraph() {
+  if (!stormData || !edaCanvas) return;
+
+  const rect = edaCanvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  const width = rect.width;
+  const height = rect.height;
+
+  if (edaCanvas.width !== Math.round(width * dpr) || edaCanvas.height !== Math.round(height * dpr)) {
+    edaCanvas.width = Math.round(width * dpr);
+    edaCanvas.height = Math.round(height * dpr);
+  }
+
+  edaCtx.save();
+  edaCtx.scale(dpr, dpr);
+  edaCtx.clearRect(0, 0, width, height);
+
+  const left = 68, right = 20, top = 8, bottom = 24;
+  const W = width - left - right;
+  const H = height - top - bottom;
+  const laneH = Math.floor(H / 6) - 4;
+  const duration = stormData.duration_seconds;
+
+  // Background Grid Lines & Borders
+  edaCtx.strokeStyle = '#152125';
+  edaCtx.lineWidth = 1;
+  for (let i = 0; i < 6; i++) {
+    const y0 = top + i * (laneH + 4);
+    edaCtx.strokeRect(left, y0, W, laneH);
+  }
+
+  // --- LANE 0: Lightning Activity (15m Bins) ---
+  const yL0 = top;
+  const maxStrikes = 350;
+  if (strikeBins.length > 0) {
+    for (const b of strikeBins) {
+      const bx = left + (b.t0 / duration) * W;
+      const bw = Math.max(2, (900 / duration) * W - 1);
+      const bh = (b.count / maxStrikes) * (laneH - 8);
+      const by = yL0 + laneH - bh;
+
+      edaCtx.fillStyle = b.count > 150 ? '#f0a05a' : '#70d6ff';
+      edaCtx.fillRect(bx, by, bw, bh);
+    }
+  }
+
+  // Flash scatter dots
+  edaCtx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+  for (let i = 0; i < stormData.flashes.length; i += 3) {
+    const f = stormData.flashes[i];
+    const fx = left + (f.rel_s / duration) * W;
+    const energyNorm = Math.max(0, Math.min(1, Math.log10(f.energy_j / 1e-14) / 3.0));
+    const fy = yL0 + laneH - 4 - energyNorm * (laneH - 12);
+    edaCtx.fillRect(fx, fy, 1.5, 1.5);
+  }
+
+  edaCtx.fillStyle = '#8ba2a8';
+  edaCtx.font = '10px "IBM Plex Mono", monospace';
+  edaCtx.textAlign = 'right';
+  edaCtx.fillText('350/15m', left - 6, yL0 + 12);
+  edaCtx.fillText('⚡ Strikes', left - 6, yL0 + laneH - 4);
+
+  // --- LANE 1: Ambient Temperature (T2m) ---
+  const yL1 = top + (laneH + 4);
+  const tMin = 16, tMax = 40;
+
+  // Mode color bands
+  const yBright = yL1 + laneH - ((MODE_T.hot - tMin) / (tMax - tMin)) * laneH;
+  const yMid = yL1 + laneH - ((MODE_T.cool - tMin) / (tMax - tMin)) * laneH;
+
+  edaCtx.fillStyle = 'rgba(240, 160, 90, 0.08)'; // bright zone (major third)
+  edaCtx.fillRect(left, yL1, W, Math.max(0, yBright - yL1));
+  edaCtx.fillStyle = 'rgba(79, 195, 182, 0.06)'; // middle zone (third fading)
+  edaCtx.fillRect(left, yBright, W, Math.max(0, yMid - yBright));
+  edaCtx.fillStyle = 'rgba(94, 129, 172, 0.08)'; // cool zone (open fifth)
+  edaCtx.fillRect(left, yMid, W, Math.max(0, (yL1 + laneH) - yMid));
+
+  if (observerTimeSeries.length > 0) {
+    edaCtx.beginPath();
+    observerTimeSeries.forEach((pt, idx) => {
+      const px = left + (pt.tSec / duration) * W;
+      const py = yL1 + laneH - ((pt.t2m - tMin) / (tMax - tMin)) * (laneH - 8) - 4;
+      if (idx === 0) edaCtx.moveTo(px, py);
+      else edaCtx.lineTo(px, py);
+    });
+    edaCtx.strokeStyle = '#f0a05a';
+    edaCtx.lineWidth = 2;
+    edaCtx.stroke();
+  }
+
+  edaCtx.fillStyle = '#8ba2a8';
+  edaCtx.fillText('40°C', left - 6, yL1 + 12);
+  edaCtx.fillText('16°C', left - 6, yL1 + laneH - 4);
+
+  // --- LANE 2: Barometric Sea Level Pressure ---
+  const yL2 = top + 2 * (laneH + 4);
+  const pMin = 978, pMax = 992;
+  if (observerTimeSeries.length > 0) {
+    edaCtx.beginPath();
+    observerTimeSeries.forEach((pt, idx) => {
+      const px = left + (pt.tSec / duration) * W;
+      const py = yL2 + laneH - ((pt.pres - pMin) / (pMax - pMin)) * (laneH - 8) - 4;
+      if (idx === 0) edaCtx.moveTo(px, py);
+      else edaCtx.lineTo(px, py);
+    });
+    edaCtx.strokeStyle = '#4fc3b6';
+    edaCtx.lineWidth = 2;
+    edaCtx.stroke();
+
+    // Fill trough under curve
+    edaCtx.lineTo(left + W, yL2 + laneH);
+    edaCtx.lineTo(left, yL2 + laneH);
+    edaCtx.closePath();
+    edaCtx.fillStyle = 'rgba(79, 195, 182, 0.1)';
+    edaCtx.fill();
+  }
+
+  edaCtx.fillStyle = '#8ba2a8';
+  edaCtx.fillText('992hPa', left - 6, yL2 + 12);
+  edaCtx.fillText('978hPa', left - 6, yL2 + laneH - 4);
+  observerTimeSeries.forEach((pt, i) => {                       // where the tuba rule is true (falls of EV.fall hPa in 30 min)
+    if (!pt.tuba) return; const x0 = left + (pt.tSec / duration) * W, x1 = i + 1 < observerTimeSeries.length ? left + (observerTimeSeries[i + 1].tSec / duration) * W : x0 + 3;
+    edaCtx.fillStyle = 'rgba(240, 100, 90, 0.20)'; edaCtx.fillRect(x0, yL2, x1 - x0 + 0.5, laneH);
+  });
+
+  // --- LANE 3: Winds & Vertical Shear ---
+  const yL3 = top + 3 * (laneH + 4);
+  const wMax = 40;
+  if (observerTimeSeries.length > 0) {
+    // Shaded vertical shear area between w100 and w10
+    edaCtx.beginPath();
+    observerTimeSeries.forEach((pt, idx) => {
+      const px = left + (pt.tSec / duration) * W;
+      const py = yL3 + laneH - (pt.w100 / wMax) * (laneH - 8) - 4;
+      if (idx === 0) edaCtx.moveTo(px, py);
+      else edaCtx.lineTo(px, py);
+    });
+    for (let idx = observerTimeSeries.length - 1; idx >= 0; idx--) {
+      const pt = observerTimeSeries[idx];
+      const px = left + (pt.tSec / duration) * W;
+      const py = yL3 + laneH - (pt.w10 / wMax) * (laneH - 8) - 4;
+      edaCtx.lineTo(px, py);
+    }
+    edaCtx.closePath();
+    edaCtx.fillStyle = 'rgba(178, 152, 220, 0.18)';
+    edaCtx.fill();
+
+    // 10m surface wind line
+    edaCtx.beginPath();
+    observerTimeSeries.forEach((pt, idx) => {
+      const px = left + (pt.tSec / duration) * W;
+      const py = yL3 + laneH - (pt.w10 / wMax) * (laneH - 8) - 4;
+      if (idx === 0) edaCtx.moveTo(px, py);
+      else edaCtx.lineTo(px, py);
+    });
+    edaCtx.strokeStyle = '#4fc3b6';
+    edaCtx.lineWidth = 1.8;
+    edaCtx.stroke();
+
+    // 100m winds aloft line
+    edaCtx.beginPath();
+    observerTimeSeries.forEach((pt, idx) => {
+      const px = left + (pt.tSec / duration) * W;
+      const py = yL3 + laneH - (pt.w100 / wMax) * (laneH - 8) - 4;
+      if (idx === 0) edaCtx.moveTo(px, py);
+      else edaCtx.lineTo(px, py);
+    });
+    edaCtx.strokeStyle = '#b298dc';
+    edaCtx.lineWidth = 1.5;
+    edaCtx.stroke();
+  }
+
+  edaCtx.fillStyle = '#8ba2a8';
+  edaCtx.fillText('40km/h', left - 6, yL3 + 12);
+  edaCtx.fillText('0km/h', left - 6, yL3 + laneH - 4);
+  observerTimeSeries.forEach((pt, i) => {                       // where the bear sax rule is true
+    if (!pt.sax) return; const x0 = left + (pt.tSec / duration) * W, x1 = i + 1 < observerTimeSeries.length ? left + (observerTimeSeries[i + 1].tSec / duration) * W : x0 + 3;
+    edaCtx.fillStyle = 'rgba(178, 152, 220, 0.20)'; edaCtx.fillRect(x0, yL3, x1 - x0 + 0.5, laneH);
+  });
+  { const yF = yL3 + laneH - (12 / wMax) * (laneH - 8) - 4; edaCtx.setLineDash([4, 3]); edaCtx.strokeStyle = 'rgba(178, 152, 220, 0.7)'; edaCtx.beginPath(); edaCtx.moveTo(left, yF); edaCtx.lineTo(left + W, yF); edaCtx.stroke(); edaCtx.setLineDash([]);
+    edaCtx.fillStyle = '#b298dc'; edaCtx.textAlign = 'right'; edaCtx.fillText('flute >12', left + W - 4, yF - 3); edaCtx.textAlign = 'right'; edaCtx.fillStyle = '#8ba2a8'; }
+
+  // --- LANE 5: what the drums hear (flashes within reach of the pin per 5 min, by drum layer) ---
+  const yL4 = top + 4 * (laneH + 4), HC = ['#ff7a59', '#f0a05a', '#70d6ff', '#3d6f86'], bsz = 300;
+  { let mx = 1; heardBins.forEach(b => { mx = Math.max(mx, b[0] + b[1] + b[2] + b[3]); });
+    heardBins.forEach((b, i) => { let acc = 0; const bx = left + (i * bsz / duration) * W, bw = Math.max(1.5, bsz / duration * W - 0.8);
+      for (let k = 0; k < 4; k++) { const hh = b[k] / mx * (laneH - 6); edaCtx.fillStyle = HC[k]; edaCtx.fillRect(bx, yL4 + laneH - 2 - acc - hh, bw, hh); acc += hh; } });
+    edaCtx.fillStyle = '#8ba2a8'; edaCtx.fillText(mx + '/5m', left - 6, yL4 + 12); edaCtx.fillText('🥁 heard', left - 6, yL4 + laneH - 4); }
+
+  // --- LANE 6: ground height under the pin (grey) and the lapse rate used (amber) ---
+  const yL5 = top + 5 * (laneH + 4);
+  if (observerTimeSeries.length) {
+    const zs = observerTimeSeries.map(p => p.zg), zlo = Math.min(...zs) - 60, zhi = Math.max(...zs) + 60, lmax = 11;
+    edaCtx.beginPath(); observerTimeSeries.forEach((pt, i) => { const px = left + (pt.tSec / duration) * W, py = yL5 + laneH - ((pt.zg - zlo) / (zhi - zlo)) * (laneH - 4) - 2; if (i === 0) edaCtx.moveTo(px, py); else edaCtx.lineTo(px, py); });
+    edaCtx.lineTo(left + W, yL5 + laneH); edaCtx.lineTo(left, yL5 + laneH); edaCtx.closePath(); edaCtx.fillStyle = 'rgba(139, 162, 168, 0.22)'; edaCtx.fill();
+    const yD = yL5 + laneH - (9.8 / lmax) * (laneH - 8) - 4; edaCtx.setLineDash([3, 3]); edaCtx.strokeStyle = 'rgba(240, 160, 90, 0.5)'; edaCtx.beginPath(); edaCtx.moveTo(left, yD); edaCtx.lineTo(left + W, yD); edaCtx.stroke(); edaCtx.setLineDash([]);
+    edaCtx.beginPath(); observerTimeSeries.forEach((pt, i) => { const px = left + (pt.tSec / duration) * W, py = yL5 + laneH - (Math.max(0, pt.lapse) / lmax) * (laneH - 8) - 4; if (i === 0) edaCtx.moveTo(px, py); else edaCtx.lineTo(px, py); });
+    edaCtx.strokeStyle = '#f0a05a'; edaCtx.lineWidth = 1.8; edaCtx.stroke(); edaCtx.lineWidth = 1;
+    edaCtx.fillStyle = '#8ba2a8'; edaCtx.fillText(Math.round(zhi) + ' m', left - 6, yL5 + 12); edaCtx.fillText('K/km', left - 6, yL5 + laneH - 4);
+  }
+
+  // --- TIME AXIS TICKS ---
+  const yAxis = top + H;
+  edaCtx.strokeStyle = '#2d454d';
+  edaCtx.lineWidth = 1;
+  edaCtx.beginPath();
+  edaCtx.moveTo(left, yAxis);
+  edaCtx.lineTo(left + W, yAxis);
+  edaCtx.stroke();
+
+  edaCtx.fillStyle = '#8ba2a8';
+  edaCtx.font = '9.5px "IBM Plex Mono", monospace';
+  edaCtx.textAlign = 'center';
+
+  const tickIntervalSec = 3600; // 1 hour
+  for (let sec = 0; sec <= duration; sec += tickIntervalSec) {
+    const tx = left + (sec / duration) * W;
+    edaCtx.beginPath();
+    edaCtx.moveTo(tx, yAxis);
+    edaCtx.lineTo(tx, yAxis + 4);
+    edaCtx.stroke();
+
+    const hr = Math.floor(sec / 3600);
+    const startUtcHour = (21 + hr) % 24;
+    edaCtx.fillText(`${String(startUtcHour).padStart(2,'0')}:43z`, tx, yAxis + 14);
+  }
+
+  // --- HOVER INSPECTOR GUIDE LINE ---
+  if (hoverCanvasX !== null && hoverCanvasX >= left && hoverCanvasX <= left + W) {
+    edaCtx.setLineDash([3, 3]);
+    edaCtx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+    edaCtx.lineWidth = 1;
+    edaCtx.beginPath();
+    edaCtx.moveTo(hoverCanvasX, top);
+    edaCtx.lineTo(hoverCanvasX, top + H);
+    edaCtx.stroke();
+    edaCtx.setLineDash([]);
+  }
+
+  // --- PLAYHEAD SCRUBBER LINE ---
+  const playheadX = left + (stormElapsed / duration) * W;
+  if (playheadX >= left && playheadX <= left + W) {
+    edaCtx.strokeStyle = '#ffffff';
+    edaCtx.lineWidth = 2;
+    edaCtx.shadowColor = 'rgba(112, 214, 255, 0.8)';
+    edaCtx.shadowBlur = 8;
+    edaCtx.beginPath();
+    edaCtx.moveTo(playheadX, top);
+    edaCtx.lineTo(playheadX, top + H);
+    edaCtx.stroke();
+    edaCtx.shadowBlur = 0;
+
+    // Small diamond head
+    edaCtx.fillStyle = '#ffffff';
+    edaCtx.beginPath();
+    edaCtx.moveTo(playheadX, top);
+    edaCtx.lineTo(playheadX + 5, top - 5);
+    edaCtx.lineTo(playheadX, top - 8);
+    edaCtx.lineTo(playheadX - 5, top - 5);
+    edaCtx.closePath();
+    edaCtx.fill();
+  }
+
+  edaCtx.restore();
+}
+
+// --- Interactive Canvas Seeking & Hover Inspector ---
+function seekFromCanvasEvent(e) {
+  const rect = edaCanvas.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const left = 68, right = 20;
+  const W = rect.width - left - right;
+  const frac = Math.max(0, Math.min(1, (mouseX - left) / W));
+  const newElapsed = frac * (stormData ? stormData.duration_seconds : 27641);
+
+  stormElapsed = newElapsed;
+  $('timeScrubber').value = stormElapsed;
+
+  if (stormData) {
+    lastProcessedFlashIdx = stormData.flashes.findIndex(f => f.rel_s >= stormElapsed);
+    if (lastProcessedFlashIdx === -1) lastProcessedFlashIdx = stormData.flashes.length;
+    rebaseClock();
+  }
+  activeShockwaves.forEach(sw => shockwaveLayer.removeLayer(sw.circle));
+  activeShockwaves = [];
+
+  updateAirmassAtObserver();
+  renderMapFlashes();
+  renderEdaGraph();
+}
+
+function updateEdaHover(e) {
+  const rect = edaCanvas.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+  const left = 68, right = 20, top = 8, bottom = 24;
+  const W = rect.width - left - right;
+  const H = rect.height - top - bottom;
+
+  if (mouseX < left || mouseX > left + W || mouseY < top || mouseY > top + H) {
+    $('edaTooltip').style.display = 'none';
+    hoverCanvasX = null;
+    renderEdaGraph();
+    return;
+  }
+
+  hoverCanvasX = mouseX;
+  renderEdaGraph();
+
+  const frac = (mouseX - left) / W;
+  const hoverSec = frac * (stormData ? stormData.duration_seconds : 27641);
+  const hoverHourFrac = 21.7328 + hoverSec / 3600;
+  const hpos = pinAt(hoverSec);
+  const cur = fieldAt(hpos.lat, hpos.lon, hoverSec);
+
+  // Find strike count in this 15-min bin
+  const binIdx = Math.min(strikeBins.length - 1, Math.floor(hoverSec / 900));
+  const count = (binIdx >= 0 && strikeBins[binIdx]) ? strikeBins[binIdx].count : 0;
+
+  const hr = Math.floor(hoverSec / 3600);
+  const min = Math.floor((hoverSec % 3600) / 60);
+  const startUtcSec = (21 * 3600) + (43 * 60) + 58;
+  const curUtcSec = (startUtcSec + Math.floor(hoverSec)) % 86400;
+  const utcHours = Math.floor(curUtcSec / 3600);
+  const utcMins = Math.floor((curUtcSec % 3600) / 60);
+
+  const tt = $('edaTooltip');
+  tt.style.display = 'block';
+  tt.style.left = `${Math.min(rect.width - 240, mouseX + 12)}px`;
+  tt.style.top = `${Math.min(rect.height - 130, mouseY + 12)}px`;
+
+  tt.innerHTML = `
+    <div style="font-weight:700;color:var(--electric)">Time: ${String(utcHours).padStart(2,'0')}:${String(utcMins).padStart(2,'0')} UTC (+${hr}h ${min}m)</div>
+    <div style="color:#70d6ff">⚡ Strikes: <b>${count}</b> / 15m</div>
+    <div style="color:#f0a05a">🌡️ Temp: <b>${cur ? cur.t2m.toFixed(1) : '--'}°C</b></div>
+    <div style="color:#4fc3b6">📉 Pres: <b>${cur ? cur.pres.toFixed(1) : '--'} hPa</b></div>
+    <div style="color:#b298dc">💨 Wind: <b>${cur ? cur.w10_spd.toFixed(1) : '--'}</b> km/h · Aloft: <b>${cur ? cur.w100_spd.toFixed(1) : '--'}</b> · Shear: <b>${cur ? cur.shearMag.toFixed(1) : '--'}</b></div>
+    <div style="color:#8ba2a8">⛰️ Ground <b>${cur ? Math.round(cur.elev) : '--'} m</b> · lapse <b>${cur ? cur.lapse.toFixed(1) : '--'}</b> K/km · 850 hPa <b>${cur && cur.t850 != null ? cur.t850.toFixed(1) : '--'}°C</b></div>
+  `;
+}
+
+edaCanvas.addEventListener('pointerdown', e => {
+  isCanvasDragging = true;
+  edaCanvas.setPointerCapture(e.pointerId);
+  seekFromCanvasEvent(e);
+});
+
+edaCanvas.addEventListener('pointermove', e => {
+  if (isCanvasDragging) {
+    seekFromCanvasEvent(e);
+  } else {
+    updateEdaHover(e);
+  }
+});
+
+edaCanvas.addEventListener('pointercancel', () => { isCanvasDragging = false; });
+edaCanvas.addEventListener('pointerup', e => {
+  isCanvasDragging = false;
+  try { edaCanvas.releasePointerCapture(e.pointerId); } catch (_) {}
+});
+
+edaCanvas.addEventListener('pointerleave', () => {
+  if (!isCanvasDragging) {
+    $('edaTooltip').style.display = 'none';
+    hoverCanvasX = null;
+    renderEdaGraph();
+  }
+});
+
+// Bookmark jump buttons
+document.querySelectorAll('[data-seek]').forEach(btn => {
+  btn.onclick = () => {
+    const s = parseFloat(btn.dataset.seek);
+    stormElapsed = s;
+    $('timeScrubber').value = stormElapsed;
+    if (stormData) {
+      lastProcessedFlashIdx = stormData.flashes.findIndex(f => f.rel_s >= stormElapsed);
+      if (lastProcessedFlashIdx === -1) lastProcessedFlashIdx = stormData.flashes.length;
+    rebaseClock();
+    }
+    activeShockwaves.forEach(sw => shockwaveLayer.removeLayer(sw.circle));
+    activeShockwaves = [];
+    updateAirmassAtObserver();
+    renderMapFlashes();
+    renderEdaGraph();
+    log(`Jumped to bookmark: ${btn.textContent}`);
+  };
+});
+
+// Flash Mode Selector
+$('flashModeSel').onchange = e => {
+  flashDisplayMode = e.target.value;
+  renderMapFlashes();
+};
+
+// --- Animation & Playback Loop ---
+let lastMapFlashUpdateSec = 0, lastMapFlashWall = 0;
+
+function tick(now) {
+  if (!lastFrameTime) lastFrameTime = now;
+  const dt = (now - lastFrameTime) / 1000;
+  lastFrameTime = now;
+  if (stormData && airmassData) followStep(dt);
+
+  if (isPlaying && stormData) {
+    const speed = parseFloat($('speedSel').value);
+    stormElapsed = audioCtx ? stormNowS() : stormElapsed + dt * speed;
+    if (stormElapsed > stormData.duration_seconds) { stormElapsed = 0; lastProcessedFlashIdx = 0; activeShockwaves.forEach(sw => shockwaveLayer.removeLayer(sw.circle)); activeShockwaves = []; rebaseClock(); }
+    $('timeScrubber').value = stormElapsed;
+
+    // Check newly fired flashes for acoustic shockwave trigger
+    while (lastProcessedFlashIdx < stormData.flashes.length && stormData.flashes[lastProcessedFlashIdx].rel_s <= stormElapsed) {
+      const f = stormData.flashes[lastProcessedFlashIdx];
+
+      // Spawn shockwave circle on Leaflet map
+      const circle = L.circle([f.lat, f.lon], {
+        radius: 100,
+        color: '#70d6ff',
+        weight: 2,
+        opacity: 0.95,
+        fillColor: '#70d6ff',
+        fillOpacity: 0.25
+      }).addTo(shockwaveLayer);
+
+      activeShockwaves.push({
+        lat: f.lat,
+        lon: f.lon,
+        energy: f.energy_j,
+        born: performance.now(),
+        circle: circle,
+        triggered: false
+      });
+
+      lastProcessedFlashIdx++;
+    }
+
+    // Update shockwaves expansion
+    const curNow = performance.now();
+    activeShockwaves = activeShockwaves.filter(sw => {
+      const ageSec = (curNow - sw.born) / 1000;
+      const speed = parseFloat($('speedSel').value);
+      const radiusMeters = ageSec * 343 * speed;
+
+      if (radiusMeters > 50000) {
+        shockwaveLayer.removeLayer(sw.circle);
+        return false;
+      }
+
+      sw.circle.setRadius(radiusMeters);
+      const alpha = Math.max(0, 1 - radiusMeters / 50000);
+      sw.circle.setStyle({ opacity: alpha * 0.9, fillOpacity: alpha * 0.2 });
+
+      return true;
+    });
+
+    // Update Airmass telemetry
+    updateAirmassAtObserver();
+
+    // Throttle flash map re-render during playback
+    if (performance.now() - lastMapFlashWall > 400) {
+      lastMapFlashWall = performance.now(); lastMapFlashUpdateSec = stormElapsed;
+      renderMapFlashes();
+    }
+
+    renderEdaGraph();
+  }
+
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+// --- Event Logging ---
+function log(msg) {
+  const d = document.createElement('div');
+  d.className = 'log-entry';
+  d.textContent = msg;
+  $('log').prepend(d);
+}
+
+function logStrike(distKm, bearingDeg, energy) {
+  const d = document.createElement('div');
+  let tag = 'log-far', name = 'Far rolling thunder';
+  if (distKm < 3.5) { tag = 'log-near'; name = 'Near explosive crack'; }
+  else if (distKm < 12) { tag = 'log-mid'; name = 'Mid thunder boom'; }
+
+  d.className = `log-entry ${tag}`;
+  d.textContent = `[${name}] Dist ${distKm.toFixed(1)} km · Azimuth ${bearingDeg > 0 ? '+' : ''}${Math.round(bearingDeg)}° · Real delay ${(distKm / 0.343).toFixed(1)} s, played ${Math.round(Math.min(0.3, distKm * 0.0035) * 1000)} ms`;
+  $('log').prepend(d);
+}
+
+// --- Data Loading ---
+async function loadAllData() {
+  try {
+    const [stormResp, airmassResp] = await Promise.all([
+      fetch('data/lightning_storm_2021.json'),
+      fetch('data/airmass_grid_2021.json')
+    ]);
+    if (!stormResp.ok || !airmassResp.ok) throw new Error('storm data ' + stormResp.status + ', airmass ' + airmassResp.status);
+    stormData = await stormResp.json();
+    airmassData = await airmassResp.json();
+    try { stationRes = await (await fetch('data/station_residuals.json')).json(); log(`Temperature corrected to ${stationRes.stations.length} ECCC stations (held-out error ${stationRes.loo_rmse_c[stationRes.lapse_mode]} C, reanalysis alone ${stationRes.reanalysis_rmse_c} C).`); } catch (e) { log('Station correction not loaded: ' + e.message); }
+
+    if (stationRes && stationRes.lapse_mode) { LAPSE_MODE = stationRes.lapse_mode; $('lapseSel').value = LAPSE_MODE; }
+    try { const e = await (await fetch('data/elevation.json')).json(), bin = atob(e.data), u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); e.grid = new Int16Array(u8.buffer); DEM = e; log(`Ground heights: ${e.rows} x ${e.cols} grid, about 2 km cells. Height correction: ${LAPSE_MODE}.`); } catch (e) { log('Ground heights not loaded: ' + e.message); }
+    $('timeScrubber').max = stormData.duration_seconds; $('hudScrub').max = stormData.duration_seconds;
+    setMapLimits(); placeAnchorCity();
+    log(`Storm catalog: ${stormData.total_flashes.toLocaleString()} flashes from NOAA GOES-17 GLM.`);
+    updateReach();
+    log(`Airmass grid: ${airmassData.stations.length} reanalysis nodes (sea-level pressure${airmassData.stations[0].hourly.t700 ? ', 850 and 700 hPa' : ''}) loaded.`);
+
+    computeStrikeBins();
+    buildChaseTrack();
+    if (chase.track.length) {
+      chaseLine = L.polyline(chase.track.map(p => [p.lat, p.lon]), { color: '#4fc3b6', weight: 1.2, opacity: 0.55, dashArray: '2,6', interactive: false }).addTo(map);
+      coreMarker = L.circleMarker([chase.track[0].coreLat, chase.track[0].coreLon], { radius: 13, color: '#f0a05a', weight: 1.5, dashArray: '3,3', fill: false, interactive: false }).addTo(map);
+      chaseUi(true);
+    }
+    calibrateModes();
+    calibrateEvents();
+    calculateObserverTimeSeries();
+    updateAirmassAtObserver();
+    renderMapFlashes();
+    renderEdaGraph();
+  } catch (e) {
+    log('Data load error: ' + e.message); if ($('reachReadout')) $('reachReadout').textContent = 'The storm data did not load (' + e.message + '). Reload the page to try again.';
+  }
+}
+
+// --- UI Controls Wiring ---
+$('startBtn').onclick = () => initAudio();
+
+let wakeLock = null;
+function keepAwake() { try { if (navigator.wakeLock) navigator.wakeLock.request('screen').then(l => { wakeLock = l; }).catch(() => {}); } catch (e) {} }
+let pausedAt = -1, pausedIdx = null;
+$('playBtn').onclick = async () => {
+  await initAudio(); if (!audioCtx) return;
+  if (isPlaying) { stormElapsed = stormNowS(); pausedAt = stormElapsed; pausedIdx = sched.idx; isPlaying = false; try { await audioCtx.suspend(); } catch (e) {} }          // pause: the whole sound stops, drone and tails
+  else { try { await audioCtx.resume(); } catch (e) {} isPlaying = true; rebaseClock(); if (pausedIdx !== null && stormElapsed === pausedAt) sched.idx = Math.max(sched.idx, pausedIdx); pausedIdx = null; keepAwake(); }
+  $('playBtn').textContent = isPlaying ? '⏸ Pause Storm' : '▶ Play Storm';
+  $('playBtn').classList.toggle('on', isPlaying);
+};
+$('stopBtn').onclick = async () => {
+  pausedIdx = null;   // a stale lookahead index must not carry into the next play
+  isPlaying = false; $('playBtn').textContent = '▶ Play Storm'; $('playBtn').classList.remove('on');
+  if (audioCtx) { try { await audioCtx.suspend(); } catch (e) {} }
+  $('timeScrubber').value = 0; $('timeScrubber').oninput({ target: $('timeScrubber') });
+  log('Stopped. Back at the start.');
+};
+$('hudStop').onclick = () => $('stopBtn').click();
+document.addEventListener('keydown', e => { if (e.code === 'Space' && !/^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(document.activeElement.tagName) && !$('playBtn').disabled) { e.preventDefault(); $('playBtn').click(); } });
+$('speedSel').onchange = () => { stormElapsed = stormNowS(); rebaseClock(); };
+if ('mediaSession' in navigator) {
+  try {
+    navigator.mediaSession.metadata = new MediaMetadata({ title: '2424/461', artist: 'a storm followed' });
+    navigator.mediaSession.setActionHandler('play', () => { if (!isPlaying) $('playBtn').click(); });
+    navigator.mediaSession.setActionHandler('pause', () => { if (isPlaying) $('playBtn').click(); });
+  } catch (e) {}
+}
+
+$('timeScrubber').oninput = e => {
+  stormElapsed = parseFloat(e.target.value);
+  pausedIdx = null;
+  if (stormData) {
+    lastProcessedFlashIdx = stormData.flashes.findIndex(f => f.rel_s >= stormElapsed);
+    if (lastProcessedFlashIdx === -1) lastProcessedFlashIdx = stormData.flashes.length;
+    rebaseClock();
+  }
+  activeShockwaves.forEach(sw => shockwaveLayer.removeLayer(sw.circle));
+  activeShockwaves = [];
+  updateAirmassAtObserver();
+  renderMapFlashes();
+  renderEdaGraph();
+};
+
+// Audition buttons (one flash heard at 3, 18 and 48 km by the same layer rules as the storm)
+const audition = async (d, b, e) => { await initAudio(); if (!audioCtx) return; if (audioCtx.state === 'suspended') { log('Press Play to hear a flash: the sound is paused.'); return; } playHitNow(d, b, e); };
+$('audNear').onclick = () => audition(3, 15, 0.85);
+$('audMid').onclick = () => audition(18, -35, 0.6);
+$('audFar').onclick = () => audition(48, 60, 0.4);
+$('spaceLevel').oninput = e => { if (window.__reverbOut) window.__reverbOut.gain.value = parseFloat(e.target.value); };
+$('chaseToggle').onchange = e => { chase.on = e.target.checked; calculateObserverTimeSeries(); if (chase.on) chaseUi(true); else updateReach(); renderEdaGraph(); };
+$('lapseSel').onchange = e => { LAPSE_MODE = e.target.value; calibrateModes(); calculateObserverTimeSeries(); updateAirmassAtObserver(); renderEdaGraph(); log(`Height correction: ${LAPSE_NAME[LAPSE_MODE]} (held-out error ${stationRes ? stationRes.loo_rmse_c[LAPSE_MODE] : '?'} C).`); };
+$('reachKm').oninput = () => { updateReach(); computeHeard(); renderEdaGraph(); };
+
+window.addEventListener('resize', () => {
+  renderEdaGraph();
+});
+
+loadAllData();
+if (window.parent !== window) {   // inside the site's page: tell it how tall this one is, so the frame does not scroll
+  const postHeight = () => { if (!document.querySelector('.map-card.imm')) parent.postMessage({ wyrHeight: document.documentElement.scrollHeight }, '*'); };
+  new ResizeObserver(postHeight).observe(document.body); postHeight();
+}
+</script>
+</body>
+</html>

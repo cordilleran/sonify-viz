@@ -598,3 +598,7 @@ Every step from record to sound, with its bounds: [the mapping dictionary](dicti
 
 - v1.0 (2026-10-17): First published render of the Godbout take (groove v1.2: the lead-in, the wrap-out, the Bear Sax, the daylight-curve pulse and the night hand drums), from the 16 October 12 UTC run read at the village.
 
+# 2424/461
+
+2,424 lightning flashes over 461 minutes in the Cariboo and Chilcotin, 30 June to 1 July 2021, heard from a pin you can move. [The album's page](lightning.qmd).
+

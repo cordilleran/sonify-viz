@@ -17,6 +17,7 @@ project:
     - regimes.qmd
     - arctic-round.qmd
     - godbout.qmd
+    - lightning.qmd
     - tracks.qmd
     - glossary.qmd
     - about.qmd
@@ -52,6 +53,9 @@ project:
     - godbout/index.html
     - godbout/godbout_village_v1_2.mp3
     - godbout/godbout_banner_1600.jpg
+    - lightning/index.html
+    - lightning/data/*
+    - lightning/audio-v2/*
     - arctic-bside/index.html
     - arctic-bside/README.md
     - arctic-bside/vendor/d3.min.js
@@ -96,6 +100,8 @@ website:
             text: "Arctic Round"
           - href: godbout.qmd
             text: "Godbout Outlook"
+          - href: lightning.qmd
+            text: "2424/461"
           - text: "---"
           - href: listen.qmd
             text: "Water Year: listen with the visual"

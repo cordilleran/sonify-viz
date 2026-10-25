@@ -1,0 +1,25 @@
+---
+title: "2424/461"
+toc: false
+page-layout: full
+---
+
+2,424 lightning flashes in 461 minutes, over the Cariboo and Chilcotin on the night of 30 June to 1 July 2021, played back as thunder, wind and weather. Place a pin, or let it chase the storm, and hear the strikes arrive as they would reach you, with the air around the pin (temperature, pressure, wind at ground level and aloft) as the other voices. The map goes full screen for a closer look.
+
+<details><summary>More details</summary>
+
+The flashes are GOES-17 Geostationary Lightning Mapper detections. The weather is a reanalysis (Open-Meteo, with ERA5 pressure levels from Copernicus for the winds and temperature aloft), corrected to Environment and Climate Change Canada stations and to the ground height under the pin. The thunder is sampled, not synthesised from the flashes' energy, and the delay between flash and thunder is shortened for listening (3.5 ms a km, where real sound takes 2.9 s). The page makes no claim about what started any fire. It uses no Indigenous knowledge and no Indigenous data.
+
+Above the map, a folded panel holds a draft land acknowledgement for the Nations whose territories the storm crossed. The Nations named have not reviewed or endorsed this wording, and I take all responsibility for errors and omissions.
+
+Sound starts after you press Start, and it works best with headphones or speakers that carry low notes. For the full-screen view, [open the piece on its own page](lightning/index.html).
+</details>
+
+<iframe class="companion" id="companion" src="lightning/index.html" title="Interactive map and sound player: 2,424 lightning flashes over 461 minutes" loading="eager" allow="fullscreen" style="height:2400px"></iframe>
+
+<script>
+window.addEventListener('message', (e) => {
+  if (e.source !== document.getElementById('companion').contentWindow) return;   // only our own frame may resize it
+  if (e.data && typeof e.data.wyrHeight === 'number') document.getElementById('companion').style.height = (e.data.wyrHeight + 8) + 'px';
+});
+</script>
