@@ -5,7 +5,7 @@ toc: false
 page-layout: full
 ---
 
-Arctic Round is a set of pieces on one record: the satellite record of Arctic sea ice, October 1978 to September 2026, with one ice year (October to September) in every bar. The pieces share the record and the clock and differ in what they let you hear.
+Arctic Round is a collection about the satellite record of Arctic sea ice, October 1978 to September 2026, with one ice year (October to September) in every bar. The pieces share the record and the clock and differ in what they let you hear.
 
 | Piece | What it is | Status |
 |---|---|---|

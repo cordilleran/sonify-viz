@@ -8,7 +8,7 @@ toc: false
 A learning project and a starting scaffold · Graham Watt and Claude Code
 :::
 
-These are pieces of music made from real environmental records: river gauges, weather stations, satellites, fish counts, storm tracks and the Keeling curve. Nothing is a simple value-to-pitch beep. Slow signals set the harmony, and faster ones set rhythm, texture and short motifs. Every sound is tagged by whether its data were retrieved, derived or simulated.
+These are pieces of music made from real environmental records: river gauges, weather stations, satellites, fish counts, storm tracks and the Keeling curve. Slow signals set the harmony, and faster ones set rhythm, texture and short motifs. Every sound is tagged by whether its data were retrieved, derived or simulated.
 
 This is a first scaffold, not a finished instrument. An interdisciplinary planner brought the questions, the rivers and the domain knowledge. An AI coding agent led the music theory and wrote the code. [How this was made](about.qmd) sets out who did what.
 

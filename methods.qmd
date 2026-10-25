@@ -5,7 +5,7 @@ subtitle: "How a water year becomes a piece of music, and how the synced visual 
 
 ## The idea in one paragraph
 
-Sonification means turning data into sound. The usual failure is mapping one number straight to pitch, which sounds like an alarm. These pieces separate timescales instead. **Slow** signals (the season, lake level, how far the year sits from its 15-year normal) set the **harmony**. **Medium** signals (streamflow, plant productivity) set **density and presence**. **Fast or eventful** signals (a rainy day, ice forming, fish passing a dam) trigger **short motifs**. A repeating piano figure holds it all together: a minimalist form, where one pattern stays constant and everything around it changes.
+Sonification means turning data into sound. Instead of mapping one number straight to pitch, which sounds like an alarm, these pieces separate timescales and signal according to music theory. **Slow** signals (the season, lake level, how far the year sits from its 15-year normal) set the **harmony**. **Medium** signals (streamflow, plant productivity) set **density and presence**. **Fast or eventful** signals (a rainy day, ice forming, fish passing a dam) trigger **short motifs**. A repeating piano figure holds it all together: a minimalist form, where one pattern stays constant and everything around it changes. This means the sound isn't exactly the data, or even exploratory data analysis, but is accompaniment to data visualization designed for deeper appreciation and exploration.
 
 ## Design principles
 
