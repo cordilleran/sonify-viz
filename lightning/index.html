@@ -865,6 +865,41 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .log-mid { color: var(--accent); }
   .log-far { color: var(--dim); }
 
+
+  /* Building blocks. Page view: map and sound side by side, the timeline under both, telemetry and log below. */
+  #notes { display: flex; flex-direction: column; gap: 10px; }
+  #dash { display: grid; gap: 12px; grid-template-columns: minmax(0, 1fr); grid-template-areas: "map" "side" "eda" "tele"; align-items: start; }
+  #blkMap { grid-area: map; } #blkSide { grid-area: side; display: flex; flex-direction: column; gap: 12px; min-width: 0; } #blkEda { grid-area: eda; margin-top: 0 !important; } #blkTele { grid-area: tele; }
+  @media (min-width: 980px) {
+    #dash { grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); grid-template-areas: "map side" "eda eda" "tele tele"; }
+    #blkSide { align-self: stretch; }
+  }
+  .tele-body { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 1100px) { .tele-body { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); } }
+  .tele-cells .telemetry-grid { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 1100px) { .tele-cells .telemetry-grid { grid-template-columns: repeat(3, 1fr); } }
+  #blkGlyphs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  #blkGlyphs .panel { padding: 10px; } #blkGlyphs .glyph { width: 100%; }
+  #blkGlyphs .panel::before { display: block; font: 0.7rem var(--mono); color: var(--dim); text-transform: uppercase; margin-bottom: 4px; }
+  #blkRose::before { content: 'Wind rose'; } #blkPath::before { content: 'Temperature path'; }
+  .tele-log #log { height: 230px; }
+
+  /* Dashboard view: one screen, no scrolling (button in the header; automatic on a big screen). */
+  body.dash .wrap { max-width: none; }
+  body.dash #notes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+  body.dash #dash { height: var(--dashH, 900px); align-items: stretch; grid-template-columns: minmax(0, 3fr) minmax(300px, 1.1fr) minmax(340px, 1.25fr); grid-template-rows: minmax(0, 1.3fr) minmax(0, 1fr); grid-template-areas: "map side tele" "eda side tele"; }
+  body.dash #dash > .panel, body.dash #dash > #blkSide { overflow: auto; min-height: 0; }
+  body.dash #dash > #blkMap, body.dash #dash > #blkEda { overflow: hidden; }
+  body.dash #map { flex: 1 1 auto; height: auto; min-height: 160px; }
+  body.dash #blkEda { display: flex; flex-direction: column; }
+  body.dash #edaWrap { flex: 1 1 auto; min-height: 140px; }
+  body.dash #edaCanvas { height: 100% !important; }
+  body.dash .eda-legend { font-size: .64rem; max-height: 3.6em; overflow: auto; }
+  body.dash .tele-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); height: 100%; }
+  body.dash .tele-cells .telemetry-grid { grid-template-columns: repeat(3, 1fr); }
+  body.dash .tele-log { display: flex; flex-direction: column; min-height: 0; }
+  body.dash .tele-log > div { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  body.dash .tele-log #log { flex: 1; height: auto; min-height: 100px; }
   /* Range Sliders */
   input[type=range] { accent-color: var(--electric); }
 </style>
@@ -890,9 +925,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
           <option value="120">3.8 min (120x)</option>
         </select>
       </label>
+      <button id="dashBtn" class="audition" title="Fill the screen: map, controls, timeline and readouts at once, without scrolling">▦ Dashboard view</button>
     </div>
   </header>
 
+  <div id="notes">
   <details class="panel ack" id="ack">
     <summary style="cursor:pointer"><b>Land acknowledgement</b> <small>(draft)</small></summary>
     <p style="margin:8px 0 0">This storm passed over the unceded and ancestral territories of the Secwépemc, Tŝilhqot’in and Dakelh (Carrier) peoples, in the country now called the Cariboo and Chilcotin, and close to the lands of the Northern St’át’imc and Nlaka’pamux. We recognise everyone who has cared for this land, its waters, its ecosystems and its kin since time immemorial, and who care for them now, in a climate that is changing the land, the waters, the fire, and the storm.</p>
@@ -910,10 +947,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <li style="color:var(--dim)">Credits: flashes NOAA/NESDIS (open data); weather <a href="https://open-meteo.com/" style="color:var(--on)">Open-Meteo.com</a> (CC BY 4.0); upper air: generated using Copernicus Climate Change Service information (ERA5, 2021; neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus information or data it contains); stations Environment and Climate Change Canada (Open Government Licence - Canada); instruments VSCO 2 CE and Karoryfer (CC0): the organ, strings, thunder roll and thunder boom are VSCO 2 CE samples trimmed or looped, and the crack is a processed VSCO 2 CE percussion hit; relief AWS Terrain Tiles (<a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" style="color:var(--on)">sources</a>), tinted with Natural Earth II land cover (public domain); rivers and lakes: BC Freshwater Atlas, contains information licensed under the Open Government Licence - British Columbia; map Leaflet.</li>
     </ul>
   </details>
+  </div>
 
-  <div class="grid2">
+  <div id="dash">
     <!-- LEFT: Geographic Leaflet Map -->
-    <section class="panel map-card">
+    <section class="panel map-card" id="blkMap">
       <div class="row justify-between">
         <h2>Spatial Propagation Field & Terrain Corridors</h2>
         <div class="row" style="gap:6px">
@@ -981,31 +1019,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
       </div></div>
     </section>
 
-    <!-- RIGHT: Spatial Airmass EDA & Acoustics -->
-    <section class="panel">
-      <!-- 1. Local Airmass Dynamics -->
-      <h2>Local Airmass Telemetry (Interpolated at Observer)</h2>
-      <div class="telemetry-grid telemetry-grid3">
-        <div class="telemetry-cell"><div class="lbl">Air temp (2m)</div><div class="val" id="teleTemp">-- °C</div><div class="sub" id="teleMode">Mode</div></div>
-        <div class="telemetry-cell"><div class="lbl">Sea-level pressure</div><div class="val" id="telePres">-- hPa</div><div class="sub" id="teleDrone">Tuba on a fall</div></div>
-        <div class="telemetry-cell"><div class="lbl">Surface wind (10m)</div><div class="val" id="teleWind10">-- km/h</div><div class="sub" id="teleDir10">Cello note</div></div>
-        <div class="telemetry-cell"><div class="lbl">Wind at 100m</div><div class="val" id="teleWind100">-- km/h</div><div class="sub" id="teleDir100">Flute above 12 km/h</div></div>
-        <div class="telemetry-cell"><div class="lbl">Wind shear</div><div class="val" id="teleShear">-- km/h</div><div class="sub" id="teleVeer">Organ</div></div>
-        <div class="telemetry-cell"><div class="lbl">Upper air</div><div class="val" id="teleUpper">-- °C</div><div class="sub" id="teleUpperSub">850 hPa; 700 hPa wind</div></div>
-        <div class="telemetry-cell"><div class="lbl">Ground under the pin</div><div class="val" id="teleGround">-- m</div><div class="sub" id="teleGroundSub">height correction</div></div>
-        <div class="telemetry-cell"><div class="lbl">Lapse rate used</div><div class="val" id="teleLapse">-- K/km</div><div class="sub" id="teleLapseSub">humidity, dry and moist</div></div>
-        <div class="telemetry-cell"><div class="lbl">Last drum heard</div><div class="val" id="lastDistVal">-- km</div><div class="sub" id="lastDelayVal">layer, lag</div></div>
-      </div>
-
-      <div class="glyph-row" style="margin-top:10px">
-        <div class="glyph"><svg id="roseMain" viewBox="0 0 200 200" role="img" aria-label="Wind rose. Petals count how often the 10 m wind came from each direction at the pin; violet dots are the 700 hPa wind; needles are now."></svg>
-          <div class="cap" id="roseCap">Wind from. Teal: 10 m (petals: how often). Violet: 700 hPa, about 3 km up. The shaded angle is the turn with height.</div></div>
-        <div class="glyph"><svg id="phaseMain" viewBox="0 0 200 200" role="img" aria-label="The path of 2 m temperature against 850 hPa temperature at the pin over the storm, with now marked."></svg>
-          <div class="cap" id="phaseCap">Temperature path: 2 m (across) against 850 hPa (up). Amber is the path so far; the diagonal is no change with height.</div></div>
-      </div>
-
-      <!-- 2. What you hear -->
-      <div style="border-top:1px solid var(--line);padding-top:10px;margin-top:10px">
+    <!-- SIDE: the pickers, then the wind rose and the temperature path as their own blocks -->
+    <div id="blkSide">
+      <section class="panel" id="blkSound">
+        <!-- 2. What you hear -->
+      <div>
         <h2>Sound layers (switch any off)</h2>
         <div class="row justify-between" style="margin-bottom:6px">
           <label style="display:flex;gap:6px;align-items:center;font-size:.82rem"><input type="checkbox" id="chaseToggle" checked> Chase the storm (pin 10 to 20 km off the core)</label>
@@ -1045,7 +1063,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         </details>
       </div>
 
-      <!-- 3. Space -->
+        <!-- 3. Space -->
       <div style="border-top:1px solid var(--line);padding-top:10px;margin-top:10px">
         <h2>Space and reach</h2>
         <div class="row justify-between" style="margin-bottom:6px">
@@ -1064,19 +1082,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
           <button class="audition" id="audFar">🌊 48 km</button>
         </div>
       </div>
-
-      <!-- 4. Stream Log -->
-      <div style="border-top:1px solid var(--line);padding-top:10px;margin-top:8px">
-        <h2>Lightning & Airmass Event Log</h2>
-        <div id="log" role="log" aria-live="off" aria-label="Event log">
-          <div class="log-entry">Loading the storm data...</div>
-        </div>
+      </section>
+      <div id="blkGlyphs">
+        <section class="panel" id="blkRose"><div class="glyph"><svg id="roseMain" viewBox="0 0 200 200" role="img" aria-label="Wind rose. Petals count how often the 10 m wind came from each direction at the pin; violet dots are the 700 hPa wind; needles are now."></svg>
+          <div class="cap" id="roseCap">Wind from. Teal: 10 m (petals: how often). Violet: 700 hPa, about 3 km up. The shaded angle is the turn with height.</div></div></section>
+        <section class="panel" id="blkPath"><div class="glyph"><svg id="phaseMain" viewBox="0 0 200 200" role="img" aria-label="The path of 2 m temperature against 850 hPa temperature at the pin over the storm, with now marked."></svg>
+          <div class="cap" id="phaseCap">Temperature path: 2 m (across) against 850 hPa (up). Amber is the path so far; the diagonal is no change with height.</div></div></section>
       </div>
-    </section>
-  </div>
+    </div>
 
-  <!-- SYNCHRONIZED EDA TIME SERIES & METEOGRAM -->
-  <section class="panel" style="margin-top:4px">
+    <!-- TIMELINE: the six synchronized lanes -->
+    <section class="panel" id="blkEda">
     <div class="row justify-between" style="align-items:flex-start;margin-bottom:6px">
       <div>
         <h2 style="margin:0 0 4px">Atmospheric Covariates & Lightning Density (Synoptic & Mesoscale EDA)</h2>
@@ -1101,24 +1117,50 @@ svg.leaflet-image-layer.leaflet-interactive path {
     </div>
 
     <!-- The 4-Lane Interactive Canvas -->
-    <div style="position:relative;background:#05080a;border:1px solid var(--line);border-radius:8px;padding:4px;overflow:hidden">
-      <canvas id="edaCanvas" role="img" aria-label="Timeline of the storm in six lanes: strikes, temperature, pressure, wind, drums heard and ground height at the pin. Use the time slider to move through the night." style="touch-action:pan-y;width:100%;height:470px;display:block;cursor:crosshair"></canvas>
+    <div id="edaWrap" style="position:relative;background:#05080a;border:1px solid var(--line);border-radius:8px;padding:4px;overflow:hidden">
+      <canvas id="edaCanvas" role="img" aria-label="Timeline of the storm in five lanes: lightning (every flash, and those the pin hears), temperature, pressure, wind and ground height at the pin. Use the time slider to move through the night." style="touch-action:pan-y;width:100%;height:470px;display:block;cursor:crosshair"></canvas>
       <div id="edaTooltip" style="display:none;position:absolute;pointer-events:none;background:rgba(14,22,25,0.96);border:1px solid var(--line-bright);border-radius:6px;padding:6px 10px;font:0.75rem var(--mono);color:var(--ink);box-shadow:0 4px 16px rgba(0,0,0,0.6);z-index:100"></div>
     </div>
 
     <!-- Legend explaining musical and meteorological bindings -->
-    <div class="row justify-between" style="margin-top:8px;font-size:.72rem;color:var(--dim);border-top:1px solid var(--line);padding-top:6px">
+    <div class="row justify-between eda-legend" style="margin-top:8px;font-size:.72rem;color:var(--dim);border-top:1px solid var(--line);padding-top:6px">
       <div class="row" style="gap:14px">
-        <span style="color:#70d6ff">⚡ Lane 1: Lightning strike rate (15m bins, energy dots)</span>
+        <span style="color:#70d6ff">⚡ Lane 1: Every flash of the night (dim bars, 15 min, energy dots) and the ones the pin hears (coloured by drum layer: log drum &lt;12 km, conga/tumba &lt;30, bass drum/timpani &lt;60, low timpani farther); the bracket spans the stretch of the night the pin hears</span>
         <span style="color:#f0a05a">🌡️ Lane 2: Corrected temperature (mode colour)</span>
         <span style="color:#4fc3b6">📉 Lane 3: Sea-level pressure; red bands = the tuba rule is true</span>
         <span style="color:#b298dc">💨 Lane 4: Surface wind (cello), 100 m wind (flute above the dashed line), shear (organ); violet bands = the bear sax rule is true</span>
-        <span style="color:#ff7a59">🥁 Lane 5: Flashes the drums hear from the pin, per 5 min, by layer: log drum (&lt;12 km), conga/tumba (&lt;30), bass drum/timpani (&lt;60), low timpani (farther)</span>
-        <span style="color:#8ba2a8">⛰️ Lane 6: Ground height under the pin (grey) and lapse rate used (amber; dashed = dry 9.8 K/km)</span>
+        <span style="color:#8ba2a8">⛰️ Lane 5: Ground height under the pin (grey) and lapse rate used (amber; dashed = dry 9.8 K/km)</span>
       </div>
       <span style="font-family:var(--mono);color:var(--ink)">Tip: Click or drag on graph to travel in time</span>
     </div>
   </section>
+
+    <!-- TELEMETRY: readouts at the pin, the wind rose and temperature path, and the event log -->
+    <section class="panel" id="blkTele">
+      <div class="tele-body">
+        <div class="tele-cells"><!-- 1. Local Airmass Dynamics -->
+      <h2>Local Airmass Telemetry (Interpolated at Observer)</h2>
+      <div class="telemetry-grid telemetry-grid3">
+        <div class="telemetry-cell"><div class="lbl">Air temp (2m)</div><div class="val" id="teleTemp">-- °C</div><div class="sub" id="teleMode">Mode</div></div>
+        <div class="telemetry-cell"><div class="lbl">Sea-level pressure</div><div class="val" id="telePres">-- hPa</div><div class="sub" id="teleDrone">Tuba on a fall</div></div>
+        <div class="telemetry-cell"><div class="lbl">Surface wind (10m)</div><div class="val" id="teleWind10">-- km/h</div><div class="sub" id="teleDir10">Cello note</div></div>
+        <div class="telemetry-cell"><div class="lbl">Wind at 100m</div><div class="val" id="teleWind100">-- km/h</div><div class="sub" id="teleDir100">Flute above 12 km/h</div></div>
+        <div class="telemetry-cell"><div class="lbl">Wind shear</div><div class="val" id="teleShear">-- km/h</div><div class="sub" id="teleVeer">Organ</div></div>
+        <div class="telemetry-cell"><div class="lbl">Upper air</div><div class="val" id="teleUpper">-- °C</div><div class="sub" id="teleUpperSub">850 hPa; 700 hPa wind</div></div>
+        <div class="telemetry-cell"><div class="lbl">Ground under the pin</div><div class="val" id="teleGround">-- m</div><div class="sub" id="teleGroundSub">height correction</div></div>
+        <div class="telemetry-cell"><div class="lbl">Lapse rate used</div><div class="val" id="teleLapse">-- K/km</div><div class="sub" id="teleLapseSub">humidity, dry and moist</div></div>
+        <div class="telemetry-cell"><div class="lbl">Last drum heard</div><div class="val" id="lastDistVal">-- km</div><div class="sub" id="lastDelayVal">layer, lag</div></div>
+      </div></div>
+        <div class="tele-log"><!-- 4. Stream Log -->
+      <div>
+        <h2>Lightning & Airmass Event Log</h2>
+        <div id="log" role="log" aria-live="off" aria-label="Event log">
+          <div class="log-entry">Loading the storm data...</div>
+        </div>
+      </div></div>
+      </div>
+    </section>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -1285,6 +1327,7 @@ function setMapLimits() {
   const z = map.getBoundsZoom(FLASH_BOUNDS, false);
   map.setMinZoom(z); map.setMaxZoom(z + 1); map.setMaxBounds(FLASH_BOUNDS);
   if (map.getZoom() < z || !map._limitsSet) map.setView(FLASH_BOUNDS.getCenter(), z, { animate: false }); else if (map.getZoom() > z + 1) map.setZoom(z + 1);
+  map.panInsideBounds(FLASH_BOUNDS, { animate: false });   // a resized map re-centres inside the limits
   map._limitsSet = true;
 }
 
@@ -1949,6 +1992,31 @@ $('hudSpeed').innerHTML = $('speedSel').innerHTML; $('hudSpeed').onchange = e =>
 $('hudHarmony').innerHTML = $('harmonySel').innerHTML; $('hudHarmony').onchange = e => { $('harmonySel').value = e.target.value; $('harmonySel').dispatchEvent(new Event('change')); };
 document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && document.querySelector('.map-card').classList.contains('imm')) setImmersive(false); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.querySelector('.map-card').classList.contains('imm')) setImmersive(false); });
+
+// --- Views: the page, or a full-screen dashboard (big screens; not inside the site's frame unless asked with ?view=dash)
+const EMBEDDED = window.parent !== window, VIEW_Q = new URLSearchParams(location.search).get('view');
+function fitDash() {
+  const d = $('dash'); if (!document.body.classList.contains('dash')) { d.style.removeProperty('--dashH'); return; }
+  d.style.removeProperty('--dashH'); const top = d.getBoundingClientRect().top + window.scrollY;
+  d.style.setProperty('--dashH', Math.max(520, window.innerHeight - top - 12) + 'px');
+}
+function setDash(on, remember) {
+  document.body.classList.toggle('dash', on); $('dashBtn').textContent = on ? '▤ Page view' : '▦ Dashboard view';
+  if (on) window.scrollTo(0, 0); fitDash(); setTimeout(() => { fitDash(); setMapLimits(); renderEdaGraph(); }, 80);
+  if (remember) { try { localStorage.setItem('lightningView', on ? 'dash' : 'page'); } catch (_) {} }
+}
+$('dashBtn').onclick = () => setDash(!document.body.classList.contains('dash'), true);
+if (EMBEDDED && !VIEW_Q) $('dashBtn').style.display = 'none';
+{ let saved = null; try { saved = localStorage.getItem('lightningView'); } catch (_) {}
+  const big = window.innerWidth >= 1700 && window.innerHeight >= 900;
+  setDash(VIEW_Q ? VIEW_Q === 'dash' : (!EMBEDDED && (saved ? saved === 'dash' : big)), false); }
+window.addEventListener('resize', fitDash);
+document.querySelectorAll('#notes details').forEach(d => d.addEventListener('toggle', fitDash));
+if (window.ResizeObserver) {   // the map and the timeline follow their own size: leaving full screen, or switching view, needs no timer
+  let mapT = null, edaT = null;
+  new ResizeObserver(() => { clearTimeout(mapT); mapT = setTimeout(setMapLimits, 120); }).observe($('map'));
+  new ResizeObserver(() => { cancelAnimationFrame(edaT); edaT = requestAnimationFrame(renderEdaGraph); }).observe($('edaCanvas'));
+}
 let limitsTimer = null; window.addEventListener('resize', () => { clearTimeout(limitsTimer); limitsTimer = setTimeout(setMapLimits, 200); });
 
 function computeStrikeBins() {
@@ -1992,13 +2060,13 @@ function renderEdaGraph() {
   const left = 68, right = 20, top = 8, bottom = 24;
   const W = width - left - right;
   const H = height - top - bottom;
-  const laneH = Math.floor(H / 6) - 4;
+  const laneH = Math.floor(H / 5) - 4;
   const duration = stormData.duration_seconds;
 
   // Background Grid Lines & Borders
   edaCtx.strokeStyle = '#152125';
   edaCtx.lineWidth = 1;
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 5; i++) {
     const y0 = top + i * (laneH + 4);
     edaCtx.strokeRect(left, y0, W, laneH);
   }
@@ -2013,8 +2081,25 @@ function renderEdaGraph() {
       const bh = (b.count / maxStrikes) * (laneH - 8);
       const by = yL0 + laneH - bh;
 
-      edaCtx.fillStyle = b.count > 150 ? '#f0a05a' : '#70d6ff';
+      edaCtx.fillStyle = '#2b4a57';   // every flash of the night, 15-minute bins
       edaCtx.fillRect(bx, by, bw, bh);
+    }
+    // the flashes the pin hears (within reach), in the same bins and on the same scale, stacked by drum layer
+    const HC = ['#ff7a59', '#f0a05a', '#70d6ff', '#3d6f86'];
+    let firstH = -1, lastH = -1, heardTotal = 0;
+    for (let i = 0; i < strikeBins.length; i++) {
+      const t0 = strikeBins[i].t0, acc4 = [0, 0, 0, 0];
+      for (let j = Math.floor(t0 / 300); j < Math.min(heardBins.length, Math.floor((t0 + 900) / 300)); j++) for (let k = 0; k < 4; k++) acc4[k] += heardBins[j][k];
+      const tot = acc4[0] + acc4[1] + acc4[2] + acc4[3]; if (!tot) continue;
+      if (firstH < 0) firstH = i; lastH = i; heardTotal += tot;
+      const bx = left + (t0 / duration) * W, bw = Math.max(2, (900 / duration) * W - 1); let acc = 0;
+      for (let k = 0; k < 4; k++) { const hh = acc4[k] / maxStrikes * (laneH - 8); edaCtx.fillStyle = HC[k]; edaCtx.fillRect(bx, yL0 + laneH - acc - hh, bw, hh); acc += hh; }
+    }
+    if (firstH >= 0) {   // a bracket over the stretch of the night the pin hears
+      const x0 = left + (strikeBins[firstH].t0 / duration) * W, x1 = left + ((strikeBins[lastH].t0 + 900) / duration) * W, yb = yL0 + 5;
+      edaCtx.strokeStyle = 'rgba(255, 122, 89, 0.85)'; edaCtx.lineWidth = 1.2; edaCtx.beginPath(); edaCtx.moveTo(x0, yb + 5); edaCtx.lineTo(x0, yb); edaCtx.lineTo(x1, yb); edaCtx.lineTo(x1, yb + 5); edaCtx.stroke(); edaCtx.lineWidth = 1;
+      edaCtx.font = '10px "IBM Plex Mono", monospace'; edaCtx.fillStyle = '#ff7a59'; edaCtx.textAlign = 'center';
+      edaCtx.fillText('heard from the pin: ' + heardTotal.toLocaleString() + ' flashes', (x0 + x1) / 2, yb + 15); edaCtx.textAlign = 'right';
     }
   }
 
@@ -2032,7 +2117,7 @@ function renderEdaGraph() {
   edaCtx.font = '10px "IBM Plex Mono", monospace';
   edaCtx.textAlign = 'right';
   edaCtx.fillText('350/15m', left - 6, yL0 + 12);
-  edaCtx.fillText('⚡ Strikes', left - 6, yL0 + laneH - 4);
+  edaCtx.fillText('⚡ all · 🥁 heard', left - 6, yL0 + laneH - 4);
 
   // --- LANE 1: Ambient Temperature (T2m) ---
   const yL1 = top + (laneH + 4);
@@ -2154,15 +2239,8 @@ function renderEdaGraph() {
   { const yF = yL3 + laneH - (12 / wMax) * (laneH - 8) - 4; edaCtx.setLineDash([4, 3]); edaCtx.strokeStyle = 'rgba(178, 152, 220, 0.7)'; edaCtx.beginPath(); edaCtx.moveTo(left, yF); edaCtx.lineTo(left + W, yF); edaCtx.stroke(); edaCtx.setLineDash([]);
     edaCtx.fillStyle = '#b298dc'; edaCtx.textAlign = 'right'; edaCtx.fillText('flute >12', left + W - 4, yF - 3); edaCtx.textAlign = 'right'; edaCtx.fillStyle = '#8ba2a8'; }
 
-  // --- LANE 5: what the drums hear (flashes within reach of the pin per 5 min, by drum layer) ---
-  const yL4 = top + 4 * (laneH + 4), HC = ['#ff7a59', '#f0a05a', '#70d6ff', '#3d6f86'], bsz = 300;
-  { let mx = 1; heardBins.forEach(b => { mx = Math.max(mx, b[0] + b[1] + b[2] + b[3]); });
-    heardBins.forEach((b, i) => { let acc = 0; const bx = left + (i * bsz / duration) * W, bw = Math.max(1.5, bsz / duration * W - 0.8);
-      for (let k = 0; k < 4; k++) { const hh = b[k] / mx * (laneH - 6); edaCtx.fillStyle = HC[k]; edaCtx.fillRect(bx, yL4 + laneH - 2 - acc - hh, bw, hh); acc += hh; } });
-    edaCtx.fillStyle = '#8ba2a8'; edaCtx.fillText(mx + '/5m', left - 6, yL4 + 12); edaCtx.fillText('🥁 heard', left - 6, yL4 + laneH - 4); }
-
-  // --- LANE 6: ground height under the pin (grey) and the lapse rate used (amber) ---
-  const yL5 = top + 5 * (laneH + 4);
+  // --- LANE 5: ground height under the pin (grey) and the lapse rate used (amber) ---
+  const yL5 = top + 4 * (laneH + 4);
   if (observerTimeSeries.length) {
     const zs = observerTimeSeries.map(p => p.zg), zlo = Math.min(...zs) - 60, zhi = Math.max(...zs) + 60, lmax = 11;
     edaCtx.beginPath(); observerTimeSeries.forEach((pt, i) => { const px = left + (pt.tSec / duration) * W, py = yL5 + laneH - ((pt.zg - zlo) / (zhi - zlo)) * (laneH - 4) - 2; if (i === 0) edaCtx.moveTo(px, py); else edaCtx.lineTo(px, py); });
