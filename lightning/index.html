@@ -913,7 +913,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <div>
       <h1><span class="frac" title="2,424 lightning flashes in 460.7 minutes">2424<span class="slash">/</span>461</span> <span class="badge">flashes / minutes</span></h1>
       <p style="margin:2px 0 0;font-size:.82rem;color:var(--dim)">
-        A night of lightning over the Cariboo and Chilcotin, 30 June to 1 July 2021, heard from a point that follows the storm. 51.19-53.50 N, 124.89-120.59 W, 21:43 to 05:24 UTC: at the default pace, about five flashes a second.
+        An afternoon and evening of lightning over the Cariboo and Chilcotin, 30 June 2021, heard from a point that follows the storm. 51.19-53.50 N, 124.89-120.59 W, 14:43 to 22:24 PDT (21:43 to 05:24 UTC): at the default pace, about five flashes a second.
       </p>
     </div>
     <div class="row">
@@ -935,18 +935,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <div id="notes">
   <details class="panel ack" id="ack">
     <summary style="cursor:pointer"><b>Land acknowledgement</b> <small>(draft)</small></summary>
-    <p style="margin:8px 0 0">This storm passed over the unceded and ancestral territories of the Secwépemc, Tŝilhqot’in and Dakelh (Carrier) peoples, in the country now called the Cariboo and Chilcotin, and close to the lands of the Northern St’át’imc and Nlaka’pamux. We recognise everyone who has cared for this land, its waters, its ecosystems and its kin since time immemorial, and who care for them now, in a climate that is changing the land, the waters, the fire, and the storm.</p>
+    <p style="margin:8px 0 0">This storm passed over the unceded and ancestral territories of the Secwépemc, Tŝilhqot’in and Dakelh (Carrier) peoples, in the country now called the Cariboo and Chilcotin, and close to the lands of the Northern St’át’imc and Nlaka’pamux. I recognise everyone who has cared for this land, its waters, its ecosystems and its kin since time immemorial, and who care for them now, in a climate that is changing the land, the water, and the storm.</p>
     <p style="margin:8px 0 0"><small>Draft for review: the Nations named have not reviewed or endorsed this wording, and I take all responsibility for errors and omissions.</small></p>
   </details>
 
   <details class="panel about">
     <summary style="cursor:pointer;font-weight:600">About this page: sources and limits </summary>
     <ul style="margin:8px 0 0;padding-left:18px;line-height:1.5;color:var(--dim);font-size:.82rem">
-      <li><b style="color:var(--ink)">Flashes.</b> 2,424 optical flashes from the NOAA GOES-17 Geostationary Lightning Mapper, 30 June 21:43 to 1 July 05:24 UTC 2021 (14:43 to 22:24 PDT), inside 49.0 to 53.5°N and 125 to 118°W. The cluster runs up to the box's northern edge, so flashes farther north are not in this set.</li>
+      <li><b style="color:var(--ink)">Flashes.</b> 2,424 optical flashes from the NOAA GOES-17 Geostationary Lightning Mapper, 30 June 2021, 14:43 to 22:24 PDT (21:43 UTC on 30 June to 05:24 UTC on 1 July). Times on this page are Pacific Daylight Time, UTC minus 7 hours, with UTC in brackets; the flash record and the reanalysis are kept in UTC. The flashes kept lie inside 49.0 to 53.5°N and 125 to 118°W. The cluster runs up to the box's northern edge, so flashes farther north are not in this set.</li>
       <li><b style="color:var(--ink)">Weather.</b> Open-Meteo reanalysis at 35 points (sea-level pressure, wind at 10 and 100 m, temperature) and ERA5 pressure levels at the same points. Temperature is corrected with hourly readings from 81 Environment and Climate Change Canada stations: the correction is each station's difference from the reanalysis, spread to your pin by distance and faded away from stations. Held back one station at a time, the error falls from 4.5 C to 2.0 C. Valley-floor and mountain pins are the weakest; the correction does not know elevation.</li>
       <li><b style="color:var(--ink)">The pin.</b> By default it chases the storm: the densest cluster of the last 10 minutes, stood off 10 to 20 km on the left of its motion, so strikes arrive as distant flashes with direction. Drag the pin or click the map to take it back.</li>
       <li><b style="color:var(--ink)">What you hear.</b> Each flash heard within the reach (90 km by default) is a drum hit; the strings, flute, organ, tuba and bear sax follow the weather at the pin (see "How the data becomes sound"). The sound is a composed transform, not a recording of thunder. Real thunder carries tens of kilometres at most.</li>
-      <li><b style="color:var(--ink)">Not claimed.</b> This page is about a night of lightning in a hot, dry summer, not about any one place or fire. It says nothing about what started any fire.</li><li><b style="color:var(--ink)">Height correction.</b> The pin's ground height comes from a 2 km elevation grid (AWS Terrain Tiles). A lapse rate (the cooling of air with height) can lift or drop the reanalysis temperature from the height of the weather nodes to the ground under the pin: a fixed 6.5 C per km, a guess from humidity (dry air 9.8, saturated 4 to 6), one from the reanalysis profile, or one fitted to the stations hour by hour. Held out one station at a time (81 stations), none improves on the station correction alone: all five land within 0.13 C of each other, and before the station correction the three physical options make the reanalysis worse (raw error 6.0 to 7.7 C against 4.5 C with none). So the default is off and the lapse rate shown is the one you choose. The fitted option follows the stations as they are: in the afternoon the higher stations ran warmer than the reanalysis, the reverse of the textbook lapse rate, and in the evening they ran cooler. Treat it as a curiosity, not a measurement of the atmosphere.</li><li><b style="color:var(--ink)">Upper air.</b> Wind and temperature at 850 hPa (about 1.5 km) and 700 hPa (about 3 km) come from the ERA5 pressure-level reanalysis (Copernicus). They draw the wind rose and temperature path; they do not yet drive any sound.</li>
+      <li><b style="color:var(--ink)">Not claimed.</b> This page is about an afternoon and evening of lightning in a hot, dry summer, not about any one place or fire. It says nothing about what started any fire.</li><li><b style="color:var(--ink)">Height correction.</b> The pin's ground height comes from a 2 km elevation grid (AWS Terrain Tiles). A lapse rate (the cooling of air with height) can lift or drop the reanalysis temperature from the height of the weather nodes to the ground under the pin: a fixed 6.5 C per km, a guess from humidity (dry air 9.8, saturated 4 to 6), one from the reanalysis profile, or one fitted to the stations hour by hour. Held out one station at a time (81 stations), none improves on the station correction alone: all five land within 0.13 C of each other, and before the station correction the three physical options make the reanalysis worse (raw error 6.0 to 7.7 C against 4.5 C with none). So the default is off and the lapse rate shown is the one you choose. The fitted option follows the stations as they are: in the afternoon the higher stations ran warmer than the reanalysis, the reverse of the textbook lapse rate, and in the evening they ran cooler. Treat it as a curiosity, not a measurement of the atmosphere.</li><li><b style="color:var(--ink)">Upper air.</b> Wind and temperature at 850 hPa (about 1.5 km) and 700 hPa (about 3 km) come from the ERA5 pressure-level reanalysis (Copernicus). They draw the wind rose and temperature path; they do not yet drive any sound.</li>
       <li style="color:var(--dim)">Credits: flashes NOAA/NESDIS (open data); weather <a href="https://open-meteo.com/" style="color:var(--on)">Open-Meteo.com</a> (CC BY 4.0); upper air: generated using Copernicus Climate Change Service information (ERA5, 2021; neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus information or data it contains); stations Environment and Climate Change Canada (Open Government Licence - Canada); instruments VSCO 2 CE and Karoryfer (CC0): the organ, strings, thunder roll and thunder boom are VSCO 2 CE samples trimmed or looped, and the crack is a processed VSCO 2 CE percussion hit; relief AWS Terrain Tiles (<a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" style="color:var(--on)">sources</a>), tinted with Natural Earth II land cover (public domain); rivers and lakes: BC Freshwater Atlas, contains information licensed under the Open Government Licence - British Columbia; map Leaflet.</li>
     </ul>
   </details>
@@ -992,10 +992,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <!-- Time Scrubber & Quick Conditions -->
       <div style="border-top:1px solid var(--line);padding-top:8px;margin-top:2px">
         <div class="row justify-between" style="font-size:.8rem;margin-bottom:4px">
-          <span id="stormTimeReadout" style="font-family:var(--mono);color:var(--electric)">Time: 2021-06-30 21:43 UTC (14:43 PDT)</span>
+          <span id="stormTimeReadout" style="font-family:var(--mono);color:var(--electric)">Time: 2021-06-30 14:43:58 PDT (21:43:58 UTC)</span>
           <span id="weatherReadout" style="font-family:var(--mono);color:var(--accent)">Air: 40.4°C · 980.2 hPa · Wind: 10 km/h · Shear: 6 km/h</span>
         </div>
-        <input id="timeScrubber" aria-label="Time in the storm, seconds from 21:43:58 UTC" type="range" min="0" max="27641" value="0" step="1" style="width:100%">
+        <input id="timeScrubber" aria-label="Time in the storm, seconds from 14:43:58 PDT (21:43:58 UTC)" type="range" min="0" max="27641" value="0" step="1" style="width:100%">
       </div>
 
       <div class="hud" id="hudTR"><div class="hud-box">
@@ -1018,7 +1018,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="hud" id="hudCtl"><div class="hud-box" style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
         <div class="row"><button id="hudStart" class="go">▶ Start sound</button><button id="hudPlay" disabled>▶ Play</button><button id="hudStop">■ Stop</button><button id="hudExit">✕ Exit</button></div>
         <div class="row"><select id="hudSpeed"></select><select id="hudHarmony"></select></div>
-        <input id="hudScrub" aria-label="Time in the storm, seconds from 21:43:58 UTC" type="range" min="0" max="27641" value="0" step="1" style="width:100%">
+        <input id="hudScrub" aria-label="Time in the storm, seconds from 14:43:58 PDT (21:43:58 UTC)" type="range" min="0" max="27641" value="0" step="1" style="width:100%">
       </div></div>
     </section>
 
@@ -1101,28 +1101,28 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <h2 style="margin:0 0 4px">Atmospheric Covariates & Lightning Density (Synoptic & Mesoscale EDA)</h2>
         <div style="font-size:.78rem;color:var(--dim)">
           Synchronized time series across the 7.68-hour storm outbreak. Click or drag anywhere on the graphs to jump to and hear that specific part of the storm.
-          <details class="lanes-fold"><summary>How to read the lanes</summary><div class="lanes-body"><div style="margin:3px 0"><span style="color:#70d6ff">⚡ Lane 1: Every flash of the night (dim bars, 15 min, energy dots) and the ones the pin hears (coloured by drum layer: log drum &lt;12 km, conga/tumba &lt;30, bass drum/timpani &lt;60, low timpani farther); the bracket spans the stretch of the night the pin hears</span></div><div style="margin:3px 0"><span style="color:#f0a05a">🌡️ Lane 2: Corrected temperature (mode colour)</span></div><div style="margin:3px 0"><span style="color:#4fc3b6">📉 Lane 3: Sea-level pressure; red bands = the tuba rule is true</span></div><div style="margin:3px 0"><span style="color:#b298dc">💨 Lane 4: Surface wind (cello), 100 m wind (flute above the dashed line), shear (organ); violet bands = the bear sax rule is true</span></div><div style="margin:3px 0"><span style="color:#8ba2a8">⛰️ Lane 5: Ground height under the pin (grey) and lapse rate used (amber; dashed = dry 9.8 K/km)</span></div></div></details>
+          <details class="lanes-fold"><summary>How to read the lanes</summary><div class="lanes-body"><div style="margin:3px 0"><span style="color:#70d6ff">⚡ Lane 1: Every flash of the storm (dim bars, 15 min, energy dots) and the ones the pin hears (coloured by drum layer: log drum &lt;12 km, conga/tumba &lt;30, bass drum/timpani &lt;60, low timpani farther); the bracket spans the stretch of the storm the pin hears</span></div><div style="margin:3px 0"><span style="color:#f0a05a">🌡️ Lane 2: Corrected temperature (mode colour)</span></div><div style="margin:3px 0"><span style="color:#4fc3b6">📉 Lane 3: Sea-level pressure; red bands = the tuba rule is true</span></div><div style="margin:3px 0"><span style="color:#b298dc">💨 Lane 4: Surface wind (cello), 100 m wind (flute above the dashed line), shear (organ); violet bands = the bear sax rule is true</span></div><div style="margin:3px 0"><span style="color:#8ba2a8">⛰️ Lane 5: Ground height under the pin (grey) and lapse rate used (amber; dashed = dry 9.8 K/km)</span></div></div></details>
         </div>
       </div>
       <div class="row" style="gap:6px">
         <span style="font-size:.75rem;color:var(--dim)">Key Moments:</span>
-        <button class="audition bookmark-btn" data-seek="0">🔥 Peak Heat (21:45 UTC)</button>
-        <button class="audition bookmark-btn" data-seek="5400">⚡ Convection (23:15 UTC)</button>
-        <button class="audition bookmark-btn" data-seek="12600">⛈️ Storm Peak (01:15 UTC)</button>
-        <button class="audition bookmark-btn" data-seek="20700">💨 Second Surge (03:30 UTC)</button>
-        <button class="audition bookmark-btn" data-seek="26100">🌌 Night Calming (05:00 UTC)</button>
+        <button class="audition bookmark-btn" data-seek="0">🔥 Peak Heat (14:45 PDT)</button>
+        <button class="audition bookmark-btn" data-seek="5400">⚡ Convection (16:15 PDT)</button>
+        <button class="audition bookmark-btn" data-seek="12600">⛈️ Storm Peak (18:15 PDT)</button>
+        <button class="audition bookmark-btn" data-seek="20700">💨 Second Surge (20:30 PDT)</button>
+        <button class="audition bookmark-btn" data-seek="26100">🌆 Evening Calming (22:00 PDT)</button>
       </div>
     </div>
 
     <!-- Live Scrubber & Status Readout -->
     <div class="row justify-between" style="font-family:var(--mono);font-size:.78rem;background:#060a0c;padding:6px 10px;border-radius:6px;border:1px solid var(--line);margin-bottom:8px">
-      <span id="edaTimeBadge" style="color:var(--electric)">Storm Elapsed: +00h 00m · 2021-06-30 21:43:58 UTC</span>
+      <span id="edaTimeBadge" style="color:var(--electric)">Storm Elapsed: +00h 00m · 2021-06-30 14:43:58 PDT (21:43:58 UTC)</span>
       <span id="edaMetricsBadge" style="color:var(--ink)">Strikes: 1 / 15m · Temp: 40.4°C (D Lydian) · Pres: 980.2 hPa · Winds: 10 km/h (10m) / 16 km/h (100m)</span>
     </div>
 
     <!-- The 4-Lane Interactive Canvas -->
     <div id="edaWrap" style="position:relative;background:#05080a;border:1px solid var(--line);border-radius:8px;padding:4px;overflow:hidden">
-      <canvas id="edaCanvas" role="img" aria-label="Timeline of the storm in five lanes: lightning (every flash, and those the pin hears), temperature, pressure, wind and ground height at the pin. Use the time slider to move through the night." style="touch-action:pan-y;width:100%;height:470px;display:block;cursor:crosshair"></canvas>
+      <canvas id="edaCanvas" role="img" aria-label="Timeline of the storm in five lanes: lightning (every flash, and those the pin hears), temperature, pressure, wind and ground height at the pin. Use the time slider to move through the storm. Times are Pacific Daylight Time." style="touch-action:pan-y;width:100%;height:470px;display:block;cursor:crosshair"></canvas>
       <div id="edaTooltip" style="display:none;position:absolute;pointer-events:none;background:rgba(14,22,25,0.96);border:1px solid var(--line-bright);border-radius:6px;padding:6px 10px;font:0.75rem var(--mono);color:var(--ink);box-shadow:0 4px 16px rgba(0,0,0,0.6);z-index:100"></div>
     </div>
   </section>
@@ -1353,6 +1353,9 @@ let stringVoices = {};
 
 // ============================ v2 ENGINE ============================
 // Station-corrected field, storm-chase pin, audio-clock scheduler, subtractive bed with real modes, percussion kit.
+const CLK_U0 = 21 * 3600 + 43 * 60 + 58, CLK_OFF = 7 * 3600;   // first flash in UTC seconds of 30 June; PDT = UTC - 7 h
+function clkHms(t, withSec) { t = ((t % 86400) + 86400) % 86400; const p2 = v => String(v).padStart(2, '0'); return p2(Math.floor(t / 3600)) + ':' + p2(Math.floor((t % 3600) / 60)) + (withSec ? ':' + p2(t % 60) : ''); }
+function clkStr(sec, withSec = true) { const u = CLK_U0 + Math.floor(sec), loc = u - CLK_OFF; return (Math.floor(loc / 86400) === 0 ? '2021-06-30' : '2021-07-01') + ' ' + clkHms(loc, withSec) + ' PDT (' + clkHms(u, withSec) + ' UTC)'; }
 const T0_HOUR = 21.7328;                    // hours after 2021-06-30 00:00 UTC of the first flash
 let stationRes = null;                      // data/station_residuals.json
 let LAPSE_MODE = 'none';                     // 'none' | 'fixed' | 'parcel' | 'env' | 'emp' (hourly lapse fitted to the stations); stationRes.lapse_mode overrides
@@ -1678,7 +1681,7 @@ function playHitNow(d, b, e) { // audition: the same layer rules as playStep for
   if (d < 12) hit('k_log_hi', t, vel, pan, d); else if (d < 30) hit(e > 0.5 ? 'k_tumba' : 'k_conga', t, vel, pan, d);
   else if (d < 60) hit(e > 0.5 ? 'k_bdrum' : 'k_timp_hi', t, vel, pan, d); else hit('k_timp_lo', t, vel, pan, d, 0.97);
 }
-window.__lightning = { get ctx() { return audioCtx; }, get voices() { return V; }, get samples() { return S; }, get master() { return masterGain; }, stats, chase, fieldAt, modeWeights, pinAt, clk,
+window.__lightning = { get ctx() { return audioCtx; }, get voices() { return V; }, get samples() { return S; }, get master() { return masterGain; }, stats, chase, fieldAt, modeWeights, pinAt, clk, clkStr,
   get observer() { return observer; }, get map() { return map; }, EV, MODE_T, get water() { return waterStats; }, get DEM() { return DEM; }, get series() { return observerTimeSeries; }, get heard() { return heardBins; }, get anchor() { return anchorCity; }, setLapse(m) { LAPSE_MODE = m; calculateObserverTimeSeries(); updateAirmassAtObserver(); }, setImmersive, setChase(on) { chase.on = on; } };
 
 // --- Inverse Distance Weighted (IDW) Airmass Interpolation ---
@@ -1694,18 +1697,10 @@ function updateAirmassAtObserver() {
   const cur = fieldAt(pos.lat, pos.lon, stormElapsed);
   if (!cur) return;
 
-  // Format UTC Time
-  const totalSec = Math.floor(stormElapsed);
-  const startUtcSec = (21 * 3600) + (43 * 60) + 58;
-  const curUtcSec = (startUtcSec + totalSec) % 86400;
-  const isJuly1 = (startUtcSec + totalSec) >= 86400;
-  const utcHours = Math.floor(curUtcSec / 3600);
-  const utcMins = Math.floor((curUtcSec % 3600) / 60);
-  const utcSecs = curUtcSec % 60;
-  const dateStr = isJuly1 ? '2021-07-01' : '2021-06-30';
-  const utcStr = `${dateStr} ${String(utcHours).padStart(2,'0')}:${String(utcMins).padStart(2,'0')}:${String(utcSecs).padStart(2,'0')} UTC`;
+  // Local time first (PDT), UTC in brackets
+  const clock = clkStr(Math.floor(stormElapsed));
 
-  $('stormTimeReadout').textContent = `Time: ${utcStr} (+${Math.floor(stormElapsed/3600)}h ${Math.floor((stormElapsed%3600)/60)}m)`;
+  $('stormTimeReadout').textContent = `Time: ${clock} · +${Math.floor(stormElapsed/3600)}h ${Math.floor((stormElapsed%3600)/60)}m`;
   $('weatherReadout').textContent = `Air: ${cur.t2m.toFixed(1)}°C · ${cur.pres.toFixed(1)} hPa · Wind: ${cur.w10_spd.toFixed(1)} km/h · Shear: ${cur.shearMag.toFixed(1)} km/h`;
 
   // Telemetry updates
@@ -1738,7 +1733,7 @@ function updateAirmassAtObserver() {
   $('teleMode').textContent = `Mode: ${modeDesc} · model ${cur.t2m_model.toFixed(1)}°`;
 
   // Update status badge on EDA panel
-  $('edaTimeBadge').textContent = `Storm Elapsed: +${String(Math.floor(stormElapsed/3600)).padStart(2,'0')}h ${String(Math.floor((stormElapsed%3600)/60)).padStart(2,'0')}m · ${utcStr}`;
+  $('edaTimeBadge').textContent = `Storm Elapsed: +${String(Math.floor(stormElapsed/3600)).padStart(2,'0')}h ${String(Math.floor((stormElapsed%3600)/60)).padStart(2,'0')}m · ${clock}`;
   $('edaMetricsBadge').textContent = `Temp: ${cur.t2m.toFixed(1)}°C (${modeDesc}) · Pres: ${cur.pres.toFixed(1)} hPa · Wind: ${cur.w10_spd.toFixed(1)} km/h (10m) / ${cur.w100_spd.toFixed(1)} km/h (100m) · Shear: ${cur.shearMag.toFixed(1)} km/h`;
 
 }
@@ -1958,7 +1953,7 @@ function updateGlyphs(cur) { const fr = stormData ? stormElapsed / stormData.dur
 function syncHud(cur) {
   const card = document.querySelector('.map-card'); if (!card.classList.contains('imm')) return;
   const startUtc = 21 * 3600 + 43 * 60 + 58, u = (startUtc + Math.floor(stormElapsed)) % 86400, hh = Math.floor(u / 3600), mm = Math.floor((u % 3600) / 60), pdt = (hh + 17) % 24;
-  $('hudTime').textContent = `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')} UTC · ${String(pdt).padStart(2, '0')}:${String(mm).padStart(2, '0')} PDT`;
+  $('hudTime').textContent = `${String(pdt).padStart(2, '0')}:${String(mm).padStart(2, '0')} PDT · ${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')} UTC`;
   $('hudTemp').textContent = `${cur.t2m.toFixed(1)} °C`; $('hudPres').textContent = `${cur.pres.toFixed(1)} hPa`;
   $('hudW10').textContent = `${cur.w10_spd.toFixed(0)} km/h ${COMPASS[Math.round(cur.w10_dir / 22.5) % 16]}`; $('hudW100').textContent = `${cur.w100_spd.toFixed(0)} km/h`;
   $('hudW700').textContent = `${cur.w700_spd.toFixed(0)} km/h ${COMPASS[Math.round(cur.w700_dir / 22.5) % 16]}`;
@@ -2087,7 +2082,7 @@ function renderEdaGraph() {
       const bx = left + (t0 / duration) * W, bw = Math.max(2, (900 / duration) * W - 1); let acc = 0;
       for (let k = 0; k < 4; k++) { const hh = acc4[k] / maxStrikes * (laneH - 8); edaCtx.fillStyle = HC[k]; edaCtx.fillRect(bx, yL0 + laneH - acc - hh, bw, hh); acc += hh; }
     }
-    if (firstH >= 0) {   // a bracket over the stretch of the night the pin hears
+    if (firstH >= 0) {   // a bracket over the stretch of the storm the pin hears
       const x0 = left + (strikeBins[firstH].t0 / duration) * W, x1 = left + ((strikeBins[lastH].t0 + 900) / duration) * W, yb = yL0 + 5;
       edaCtx.strokeStyle = 'rgba(255, 122, 89, 0.85)'; edaCtx.lineWidth = 1.2; edaCtx.beginPath(); edaCtx.moveTo(x0, yb + 5); edaCtx.lineTo(x0, yb); edaCtx.lineTo(x1, yb); edaCtx.lineTo(x1, yb + 5); edaCtx.stroke(); edaCtx.lineWidth = 1;
       edaCtx.font = '10px "IBM Plex Mono", monospace'; edaCtx.fillStyle = '#ff7a59'; edaCtx.textAlign = 'center';
@@ -2258,15 +2253,15 @@ function renderEdaGraph() {
 
   const tickIntervalSec = 3600; // 1 hour
   for (let sec = 0; sec <= duration; sec += tickIntervalSec) {
-    const tx = left + (sec / duration) * W;
+    const tx = left + (sec / duration) * W; edaCtx.textAlign = sec === 0 ? 'left' : 'center';
     edaCtx.beginPath();
     edaCtx.moveTo(tx, yAxis);
     edaCtx.lineTo(tx, yAxis + 4);
     edaCtx.stroke();
 
     const hr = Math.floor(sec / 3600);
-    const startUtcHour = (21 + hr) % 24;
-    edaCtx.fillText(`${String(startUtcHour).padStart(2,'0')}:43z`, tx, yAxis + 14);
+    const localHour = (14 + hr) % 24;   // 21:43 UTC is 14:43 PDT
+    edaCtx.fillText(`${String(localHour).padStart(2,'0')}:43` + (sec === 0 ? ' PDT' : ''), tx, yAxis + 14);
   }
 
   // --- HOVER INSPECTOR GUIDE LINE ---
@@ -2363,10 +2358,7 @@ function updateEdaHover(e) {
 
   const hr = Math.floor(hoverSec / 3600);
   const min = Math.floor((hoverSec % 3600) / 60);
-  const startUtcSec = (21 * 3600) + (43 * 60) + 58;
-  const curUtcSec = (startUtcSec + Math.floor(hoverSec)) % 86400;
-  const utcHours = Math.floor(curUtcSec / 3600);
-  const utcMins = Math.floor((curUtcSec % 3600) / 60);
+  const hoverClk = clkStr(Math.floor(hoverSec), false);
 
   const tt = $('edaTooltip');
   tt.style.display = 'block';
@@ -2374,7 +2366,7 @@ function updateEdaHover(e) {
   tt.style.top = `${Math.min(rect.height - 130, mouseY + 12)}px`;
 
   tt.innerHTML = `
-    <div style="font-weight:700;color:var(--electric)">Time: ${String(utcHours).padStart(2,'0')}:${String(utcMins).padStart(2,'0')} UTC (+${hr}h ${min}m)</div>
+    <div style="font-weight:700;color:var(--electric)">Time: ${hoverClk} · +${hr}h ${min}m</div>
     <div style="color:#70d6ff">⚡ Strikes: <b>${count}</b> / 15m</div>
     <div style="color:#f0a05a">🌡️ Temp: <b>${cur ? cur.t2m.toFixed(1) : '--'}°C</b></div>
     <div style="color:#4fc3b6">📉 Pres: <b>${cur ? cur.pres.toFixed(1) : '--'} hPa</b></div>

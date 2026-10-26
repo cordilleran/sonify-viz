@@ -46,7 +46,7 @@ Forty-eight years of Arctic sea ice, October 1978 to September 2026, one ice yea
 A 15-day weather forecast for Godbout, Quebec, from a frozen run of ECMWF's AI model, one bar for every six hours at 126 beats a minute. The sun sets the pulse, rain and snow bring in the full kit, wind drives the congas and cello, and falling pressure sinks the drone and brings in a deep baritone sax. A storm of snow opens the run and one of rain closes it. Two minutes, drum-led, weather appreciation rather than a forecast.
 
 ### [2424/461](lightning.qmd)
-2,424 lightning flashes in 461 minutes over the Cariboo and Chilcotin, on the night of 30 June to 1 July 2021, from the GOES-17 satellite. A pin follows the storm (or goes where you put it), each flash within reach is a drum hit placed by its distance and direction, and the weather at the pin plays the strings, flute, organ, tuba and bear sax. It runs in the browser, from a few minutes to half an hour, with a dashboard view for a big screen.
+2,424 lightning flashes in 461 minutes over the Cariboo and Chilcotin, on the afternoon and evening of 30 June 2021, from the GOES-17 satellite. A pin follows the storm (or goes where you put it), each flash within reach is a drum hit placed by its distance and direction, and the weather at the pin plays the strings, flute, organ, tuba and bear sax. It runs in the browser, from a few minutes to half an hour, with a dashboard view for a big screen.
 
 Every track has a card with its version, its records, what drives each sound, what to be careful about, and how to check it byte for byte: see [Tracks](tracks.qmd).
 
