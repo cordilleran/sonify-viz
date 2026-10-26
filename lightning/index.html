@@ -894,12 +894,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
   body.dash #blkEda { display: flex; flex-direction: column; }
   body.dash #edaWrap { flex: 1 1 auto; min-height: 140px; }
   body.dash #edaCanvas { height: 100% !important; }
-  body.dash .eda-legend { font-size: .64rem; max-height: 3.6em; overflow: auto; }
   body.dash .tele-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); height: 100%; }
   body.dash .tele-cells .telemetry-grid { grid-template-columns: repeat(3, 1fr); }
   body.dash .tele-log { display: flex; flex-direction: column; min-height: 0; }
   body.dash .tele-log > div { display: flex; flex-direction: column; flex: 1; min-height: 0; }
   body.dash .tele-log #log { flex: 1; height: auto; min-height: 100px; }
+  #blkEda { position: relative; }
+  .lanes-fold { display: inline-block; margin-left: 8px; font-size: .78rem; }
+  .lanes-fold > summary { display: inline; cursor: pointer; color: var(--on, #70d6ff); }
+  .lanes-fold[open] > .lanes-body { position: absolute; left: 14px; right: 14px; top: 4.6rem; z-index: 30; background: #0b1114; border: 1px solid var(--line-bright); border-radius: 8px; padding: 8px 12px; box-shadow: 0 6px 20px rgba(0,0,0,.6); font-size: .74rem; line-height: 1.45; }
   /* Range Sliders */
   input[type=range] { accent-color: var(--electric); }
 </style>
@@ -1098,6 +1101,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <h2 style="margin:0 0 4px">Atmospheric Covariates & Lightning Density (Synoptic & Mesoscale EDA)</h2>
         <div style="font-size:.78rem;color:var(--dim)">
           Synchronized time series across the 7.68-hour storm outbreak. Click or drag anywhere on the graphs to jump to and hear that specific part of the storm.
+          <details class="lanes-fold"><summary>How to read the lanes</summary><div class="lanes-body"><div style="margin:3px 0"><span style="color:#70d6ff">⚡ Lane 1: Every flash of the night (dim bars, 15 min, energy dots) and the ones the pin hears (coloured by drum layer: log drum &lt;12 km, conga/tumba &lt;30, bass drum/timpani &lt;60, low timpani farther); the bracket spans the stretch of the night the pin hears</span></div><div style="margin:3px 0"><span style="color:#f0a05a">🌡️ Lane 2: Corrected temperature (mode colour)</span></div><div style="margin:3px 0"><span style="color:#4fc3b6">📉 Lane 3: Sea-level pressure; red bands = the tuba rule is true</span></div><div style="margin:3px 0"><span style="color:#b298dc">💨 Lane 4: Surface wind (cello), 100 m wind (flute above the dashed line), shear (organ); violet bands = the bear sax rule is true</span></div><div style="margin:3px 0"><span style="color:#8ba2a8">⛰️ Lane 5: Ground height under the pin (grey) and lapse rate used (amber; dashed = dry 9.8 K/km)</span></div></div></details>
         </div>
       </div>
       <div class="row" style="gap:6px">
@@ -1120,18 +1124,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <div id="edaWrap" style="position:relative;background:#05080a;border:1px solid var(--line);border-radius:8px;padding:4px;overflow:hidden">
       <canvas id="edaCanvas" role="img" aria-label="Timeline of the storm in five lanes: lightning (every flash, and those the pin hears), temperature, pressure, wind and ground height at the pin. Use the time slider to move through the night." style="touch-action:pan-y;width:100%;height:470px;display:block;cursor:crosshair"></canvas>
       <div id="edaTooltip" style="display:none;position:absolute;pointer-events:none;background:rgba(14,22,25,0.96);border:1px solid var(--line-bright);border-radius:6px;padding:6px 10px;font:0.75rem var(--mono);color:var(--ink);box-shadow:0 4px 16px rgba(0,0,0,0.6);z-index:100"></div>
-    </div>
-
-    <!-- Legend explaining musical and meteorological bindings -->
-    <div class="row justify-between eda-legend" style="margin-top:8px;font-size:.72rem;color:var(--dim);border-top:1px solid var(--line);padding-top:6px">
-      <div class="row" style="gap:14px">
-        <span style="color:#70d6ff">⚡ Lane 1: Every flash of the night (dim bars, 15 min, energy dots) and the ones the pin hears (coloured by drum layer: log drum &lt;12 km, conga/tumba &lt;30, bass drum/timpani &lt;60, low timpani farther); the bracket spans the stretch of the night the pin hears</span>
-        <span style="color:#f0a05a">🌡️ Lane 2: Corrected temperature (mode colour)</span>
-        <span style="color:#4fc3b6">📉 Lane 3: Sea-level pressure; red bands = the tuba rule is true</span>
-        <span style="color:#b298dc">💨 Lane 4: Surface wind (cello), 100 m wind (flute above the dashed line), shear (organ); violet bands = the bear sax rule is true</span>
-        <span style="color:#8ba2a8">⛰️ Lane 5: Ground height under the pin (grey) and lapse rate used (amber; dashed = dry 9.8 K/km)</span>
-      </div>
-      <span style="font-family:var(--mono);color:var(--ink)">Tip: Click or drag on graph to travel in time</span>
     </div>
   </section>
 
