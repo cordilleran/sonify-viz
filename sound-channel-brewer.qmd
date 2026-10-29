@@ -1,0 +1,30 @@
+---
+title: "Sound Channel Brewer"
+toc: false
+page-layout: full
+---
+
+Pick two sounds for two variables, such as pitch and loudness, and hear them together on made-up data before you tie them to real data. Click a cell of the matrix to listen, and watch the data, the score and the sound drawn under one playhead.
+
+<details><summary>More details</summary>
+
+Every piece on this site has to decide which part of a sound carries which part of the data: pitch for temperature, loudness for flow, how long a note lasts for day length. This page is for trying that choice by ear. Each cell of the matrix is a pair of auditory channels. You set how many levels each one carries, the layout (a steady pulse, a scattered cloud or held tones), the voice, the octave, and the shape of the made-up data, and a third variable can make the loop busier or faster. A drum lane adds one more variable on a single drum, a first look at a percussion layer. A bench lets you swap a channel into the matrix, such as vibrato for distance, to hear the same pair with one part changed.
+
+The data are seeded random numbers, so the same seed always gives the same loop. The fold-down "How the data are made" shows the rules three ways: in plain words, as formulas, and as javascript. The pairs under "From our pieces" are mappings the pieces use or propose.
+
+It will be more useful for listening, not ranking: the pair that sounds clear here may not work on real data, and no formal listening tests are developed yet. Headphones help with pan, distance and with small loudness steps.
+
+The idea comes from [Channel Brewer](https://github.com/ebertini/channel-brewer) by Enrico Bertini, which does the same for visual channels (size, colour, shape and the rest) and is itself after ColorBrewer. This page is new code, written for sound.
+
+</details>
+
+It also works [on its own, full screen](sound-channel-brewer/index.html).
+
+<iframe class="companion" id="companion" src="sound-channel-brewer/index.html?embed" title="Sound Channel Brewer" loading="eager" allow="autoplay"></iframe>
+
+<script>
+window.addEventListener('message', (e) => {
+  if (e.source !== document.getElementById('companion').contentWindow) return;   // only our own frame may resize it
+  if (e.data && typeof e.data.wyrHeight === 'number') document.getElementById('companion').style.height = (e.data.wyrHeight + 8) + 'px';
+});
+</script>

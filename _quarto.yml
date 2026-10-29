@@ -18,6 +18,7 @@ project:
     - arctic-round.qmd
     - godbout.qmd
     - lightning.qmd
+    - sound-channel-brewer.qmd
     - tracks.qmd
     - glossary.qmd
     - about.qmd
@@ -56,6 +57,11 @@ project:
     - lightning/index.html
     - lightning/data/*
     - lightning/audio-v2/*
+    - sound-channel-brewer/index.html
+    - sound-channel-brewer/README.md
+    - sound-channel-brewer/*.js
+    - sound-channel-brewer/vendor/katex.min.js
+    - sound-channel-brewer/vendor/katex-LICENSE.txt
     - arctic-bside/index.html
     - arctic-bside/README.md
     - arctic-bside/vendor/d3.min.js
@@ -110,6 +116,10 @@ website:
           # nav:pieces end
       - href: tracks.qmd
         text: Tracks
+      - text: Tools
+        menu:
+          - href: sound-channel-brewer.qmd
+            text: "Sound Channel Brewer"
       - href: glossary.qmd
         text: Glossary
       - href: about.qmd

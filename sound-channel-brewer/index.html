@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+<title>Sound Channel Brewer</title>
+<link rel="stylesheet" href="../listen/fonts/fonts.css">
+<style>
+/* Layout: a patch-bay page. Left the channel matrix (the menu), right the controls and legends,
+   then four strips on one time axis (data, score, waveform, spectrogram) under a shared playhead. */
+:root {
+  --bg: #eef1f3;
+  --panel: #f8fafb;
+  --fg: #16202a;
+  --muted: #5a6876;
+  --line: #cfd7de;
+  --grid: #dfe5ea;
+  --accent: #1d5d86;
+  --accent-ink: #ffffff;
+  --v1: #2c4fbf;
+  --v2: #b26a00;
+  --v3: #1f7a5a; --v4: #a2386c;
+  --ramp-lo: #f2c879;
+  --ramp-hi: #7a3600;
+  --linked: #8a5a9e;
+  --off: #c3ccd4;
+  --strip: #e6eaee;
+  --font-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-label: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11171d; --panel: #18212a; --fg: #dde5ec; --muted: #94a3b1; --line: #2c3a46; --grid: #24303b;
+    --accent: #6cb0dd; --accent-ink: #0d1820; --v1: #8ea8ff; --v2: #f0a640; --v3: #5fd0a4; --v4: #f08cbc; --ramp-lo: #5a3a10; --ramp-hi: #ffd590;
+    --linked: #c49ad6; --off: #33414d; --strip: #0d1318; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11171d; --panel: #18212a; --fg: #dde5ec; --muted: #94a3b1; --line: #2c3a46; --grid: #24303b;
+  --accent: #6cb0dd; --accent-ink: #0d1820; --v1: #8ea8ff; --v2: #f0a640; --v3: #5fd0a4; --v4: #f08cbc; --ramp-lo: #5a3a10; --ramp-hi: #ffd590;
+  --linked: #c49ad6; --off: #33414d; --strip: #0d1318; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font: 15px/1.5 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 40px;
+}
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; gap: 20px; }
+header { display: grid; gap: 6px; }
+h1 { font: 600 28px/1.15 var(--font-label); letter-spacing: 0.01em; margin: 0; text-wrap: balance; }
+h2 { font: 600 13px/1.2 var(--font-label); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0; }
+.lede { margin: 0; max-width: 68ch; }
+.caveat { margin: 0; font-size: 13px; color: var(--muted); max-width: 68ch; }
+.caveat strong { color: var(--fg); font-weight: 600; }
+.top { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 860px) { .top { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 14px; min-width: 0; }
+/* Matrix */
+.matrix { display: grid; grid-template-columns: 78px repeat(7, minmax(0, 1fr)); gap: 3px; align-items: stretch; }
+.matrix .rl { font: 500 12px/1 var(--font-label); color: var(--muted); display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; }
+.matrix .cl { font: 500 11px/1.1 var(--font-label); color: var(--muted); writing-mode: vertical-rl; transform: rotate(180deg); justify-self: center; padding-top: 4px; height: 76px; }
+.cell { aspect-ratio: 1; min-width: 0; border: 1px solid var(--line); border-radius: 3px; background: var(--bg); cursor: pointer; padding: 0; position: relative; color: var(--muted); font: 500 10px/1 var(--font-mono); }
+.cell:hover { border-color: var(--accent); }
+.cell:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cell.linked { border-style: dashed; border-color: var(--linked); color: var(--linked); }
+.cell.unavailable { background: repeating-linear-gradient(135deg, var(--off) 0 2px, transparent 2px 6px); cursor: not-allowed; border-color: var(--off); }
+.cell.kept { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.cell.piece::after { content: ""; position: absolute; right: 3px; top: 3px; width: 5px; height: 5px; border-radius: 50%; background: var(--v2); }
+.cell.kept.piece::after { background: var(--accent-ink); }
+.key { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted); }
+.key span { display: inline-flex; gap: 6px; align-items: center; }
+.sw { width: 12px; height: 12px; border: 1px solid var(--line); border-radius: 2px; display: inline-block; background: var(--bg); }
+.sw.linked { border: 1px dashed var(--linked); }
+.sw.unavailable { background: repeating-linear-gradient(135deg, var(--off) 0 2px, transparent 2px 5px); }
+.sw.kept { background: var(--accent); border-color: var(--accent); }
+.sw.piece { border: none; background: none; position: relative; }
+.sw.piece::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--v2); }
+.desc { font-size: 13px; min-height: 4.5em; border-top: 1px solid var(--grid); padding-top: 10px; }
+.desc b { font-weight: 600; }
+.pieces { display: grid; gap: 6px; }
+.pieces button { text-align: left; font: 13px/1.35 var(--font-body); color: var(--fg); background: none; border: 1px solid var(--line); border-radius: 4px; padding: 7px 9px; cursor: pointer; }
+.pieces button:hover { border-color: var(--accent); }
+.pieces button:disabled { opacity: 0.45; cursor: default; }
+.swapper { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; font: 500 13px/1.2 var(--font-label); color: var(--muted); }
+.swapper .btn { padding: 6px 10px; font-size: 13px; }
+.pieces button b { font-weight: 600; }
+/* Controls */
+.transport { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.btn { font: 600 14px/1 var(--font-label); letter-spacing: 0.02em; border: 1px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 4px; padding: 9px 14px; cursor: pointer; }
+.btn:hover { border-color: var(--accent); }
+.btn:focus-visible, .seg button:focus-visible, .lv:focus-visible, input:focus-visible, .pieces button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); min-width: 92px; }
+.now { font: 13px/1.4 var(--font-mono); color: var(--muted); flex: 1 1 260px; min-width: 0; }
+.now b { color: var(--fg); font-weight: 500; }
+.rows { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 10px 14px; align-items: center; }
+.rows label, .rows .lab { font: 500 13px/1.2 var(--font-label); color: var(--muted); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; flex-wrap: wrap; }
+.seg button { font: 500 13px/1 var(--font-label); padding: 7px 11px; border: 0; border-right: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.range { display: flex; gap: 10px; align-items: center; min-width: 0; }
+.range input { flex: 1; min-width: 0; accent-color: var(--accent); }
+.range output { font: 13px var(--font-mono); min-width: 4.5ch; text-align: right; font-variant-numeric: tabular-nums; }
+.legends { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 560px) { .legends { grid-template-columns: minmax(0, 1fr); } }
+.legend { border-top: 3px solid var(--c); padding-top: 8px; display: grid; gap: 8px; min-width: 0; }
+.legend .hd { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.legend .nm { font: 600 15px/1.2 var(--font-label); }
+.legend .nm small { font: 500 12px var(--font-label); color: var(--muted); margin-left: 6px; }
+.stepper { display: inline-flex; align-items: center; gap: 4px; font: 13px var(--font-mono); }
+.stepper button { width: 26px; height: 26px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 4px; cursor: pointer; font: 600 15px/1 var(--font-mono); }
+.stepper button:disabled { opacity: 0.35; cursor: default; }
+.lvs { display: flex; flex-wrap: wrap; gap: 5px; }
+.lv { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 4px; padding: 5px 7px; font: 12px var(--font-mono); cursor: pointer; font-variant-numeric: tabular-nums; }
+.lv i { width: 10px; height: 10px; border-radius: 2px; background: var(--sw); flex: none; }
+.lv[aria-pressed="true"] { outline: 2px solid var(--fg); outline-offset: 1px; }
+.legend .tools { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+.legend .tools label { display: inline-flex; gap: 5px; align-items: center; cursor: pointer; }
+.hint { font-size: 12px; color: var(--muted); margin: 0; }
+.warn { font-size: 12px; color: var(--fg); background: var(--strip); border-left: 3px solid var(--v2); padding: 6px 8px; margin: 0; }
+/* Strips */
+.strips { display: grid; gap: 4px; position: relative; }
+.strips .bar { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.toggles { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+.toggles label { display: inline-flex; gap: 5px; align-items: center; cursor: pointer; }
+.strip { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 8px; align-items: stretch; }
+.strip .sl { font: 500 12px/1.25 var(--font-label); color: var(--muted); padding-top: 4px; }
+.strip .sl b { display: block; color: var(--fg); font-weight: 600; font-size: 13px; }
+.strip canvas { width: 100%; display: block; background: var(--strip); border-radius: 3px; }
+.cv { position: relative; min-width: 0; }
+.ph { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--fg); left: 0; pointer-events: none; opacity: 0; }
+.axis { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 8px; }
+.axis div { position: relative; height: 16px; font: 11px var(--font-mono); color: var(--muted); }
+.axis span { position: absolute; transform: translateX(-50%); }
+@media (max-width: 560px) { .strip, .axis { grid-template-columns: minmax(0, 1fr); } .axis > :first-child { display: none; } }
+.tip { position: fixed; z-index: 20; max-width: 300px; background: var(--fg); color: var(--bg); font-size: 12.5px; line-height: 1.4; padding: 8px 10px; border-radius: 4px; pointer-events: none; }
+.tip b { font-weight: 600; }
+.tip hr { border: 0; border-top: 1px solid color-mix(in srgb, var(--bg) 40%, transparent); margin: 5px 0; }
+select { font: 13px var(--font-body); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 5px 6px; max-width: 100%; }
+.pair2 { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-width: 0; }
+.seg button:disabled { opacity: 0.4; cursor: default; }
+details.formula summary { cursor: pointer; font: 600 13px/1.2 var(--font-label); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+details.formula .fview { margin-top: 8px; }
+details.load { margin-top: 12px; }
+details.load > :not(summary) { margin-top: 8px; }
+.explain { display: grid; gap: 10px; margin-top: 10px; }
+.explain h3 { font: 600 13px/1.2 var(--font-label); margin: 0 0 4px; }
+.explain p { margin: 0; font-size: 13.5px; max-width: 68ch; }
+.explain pre { margin: 0; font: 12px/1.5 var(--font-mono); white-space: pre-wrap; overflow-wrap: anywhere; background: var(--strip); padding: 8px 10px; border-radius: 4px; }
+.explain .m { overflow-x: auto; max-width: 100%; }
+.explain .m + .m { margin-top: -4px; }
+.explain math { font-size: 1.05em; }
+.strip canvas { cursor: crosshair; }
+footer { font-size: 12px; color: var(--muted); max-width: 80ch; display: grid; gap: 6px; }
+footer a { color: var(--accent); }
+textarea.json { width: 100%; min-height: 140px; font: 12px var(--font-mono); background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 4px; padding: 8px; }
+.embed header h1, .embed header .lede { display: none; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap"><header>
+    <h1>Sound Channel Brewer</h1>
+    <p class="lede">Pick two auditory channels for two variables and hear them together on random data, with a few levels each, before you bind a real data lane to them. Each cell of the matrix is a pair; click it or press Enter to hear it.</p>
+    <p class="caveat"><strong>For hearing, not for ranking.</strong> A pair that sounds clear here is not proven to work on your data. The page states no listening-test results. Headphones help with pan and fine loudness steps. Sound starts only when you press Play or pick a pair.</p>
+  </header>
+
+  <div class="top">
+    <section class="panel" aria-labelledby="mx-h">
+      <h2 id="mx-h">Channel pairs</h2>
+      <div class="matrix" id="matrix" role="group" aria-label="Channel pairs. Arrow keys move, Enter plays, Space stops." aria-describedby="pair-desc"></div>
+      <div class="key" aria-hidden="true">
+        <span><i class="sw kept"></i>kept</span>
+        <span><i class="sw linked"></i>linked</span>
+        <span><i class="sw unavailable"></i>not on this layout</span>
+        <span><i class="sw piece"></i>used or proposed in our pieces</span>
+      </div>
+      <div class="swapper">
+        <label for="bench">Swap in</label><select id="bench"></select>
+        <label for="slot">for</label><select id="slot"></select>
+        <button class="btn" id="swap-ch" type="button">Swap</button>
+        <button class="btn" id="swap-back" type="button" hidden></button>
+      </div>
+      <p class="hint"><span id="bench-o"></span> The matrix keeps eight channels. If the kept pair uses the channel you swap out, the new one takes its place, so you hear the same pair with one channel changed.</p>
+      <div class="desc" id="pair-desc" aria-live="polite"></div>
+      <h2>From our pieces</h2>
+      <div class="pieces" id="pieces"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="ct-h">
+      <h2 id="ct-h">Listen</h2>
+      <div class="transport">
+        <button class="btn primary" id="play" type="button">Play</button>
+        <button class="btn" id="stop" type="button">Stop</button>
+        <button class="btn" id="swap" type="button" title="Put V1 on the other channel">Swap V1 and V2</button>
+        <div class="now" id="now" aria-live="polite"></div>
+      </div>
+      <div class="rows">
+        <span class="lab" id="lay-l">Layout</span>
+        <div class="seg" id="layout" role="group" aria-labelledby="lay-l"></div>
+        <label for="count">Events per loop</label>
+        <div class="range"><input id="count" type="range" min="4" max="64" step="1" value="16"><output id="count-o" for="count">16</output></div>
+        <label for="corr">Temporal pattern</label>
+        <div class="range"><input id="corr" type="range" min="0" max="1" step="0.05" value="0"><output id="corr-o" for="corr">0 %</output></div>
+        <span class="lab" id="tg-l">Pattern on</span>
+        <div class="seg" id="target" role="group" aria-labelledby="tg-l"></div>
+        <label for="vol">Volume</label>
+        <div class="range"><input id="vol" type="range" min="0" max="1" step="0.01" value="0.6"><output id="vol-o" for="vol">60 %</output></div>
+        <label for="voice">Voice</label>
+        <div class="pair2"><select id="voice"></select><span class="hint" id="voice-o"></span></div>
+        <span class="lab" id="oct-l">Pitch from</span>
+        <div class="pair2"><div class="seg" id="octave" role="group" aria-labelledby="oct-l"></div><div class="seg" id="span" role="group" aria-label="Pitch span"></div></div>
+        <label for="m1">V1 data</label>
+        <div class="pair2"><select id="m1"></select></div>
+        <label for="m2">V2 data</label>
+        <div class="pair2"><select id="m2"></select></div>
+        <span class="lab" id="v3-l">V3 drives</span>
+        <div class="pair2"><div class="seg" id="stream-use" role="group" aria-labelledby="v3-l"></div><select id="stream-model" aria-label="V3 data"></select></div>
+        <label for="drum">Drum lane</label>
+        <div class="pair2"><select id="drum"></select><span class="pair2"><span class="lab">V4</span><select id="drum-model" aria-label="V4 data"></select></span><span class="pair2"><span class="lab">on</span><select id="drum-ch" aria-label="V4 drives the drum's"></select></span></div>
+        <label for="drum-level">Drum level</label>
+        <div class="range"><input id="drum-level" type="range" min="-24" max="0" step="1" value="-6"><output id="drum-level-o" for="drum-level">−6 dB</output></div>
+        <span class="lab">Seed</span>
+        <div class="transport"><button class="btn" id="shuffle" type="button">Shuffle</button><span class="hint" id="seed-o"></span></div>
+      </div>
+      <p class="hint" id="drum-o">The drum lane is a first look at a percussion layer: one drum on sixteen steps under the pair, with one variable, V4, on one of its channels at four levels.</p>
+      <p class="hint">V3 is a third variable over time. It does not sit in the matrix: it changes how many events sound (density) or how fast they come (pace), not how each note sounds.</p>
+      <details class="formula" id="fold-math"><summary>How the data are made</summary>
+        <div class="seg fview" id="fview" role="group" aria-label="Show the rules as"></div>
+        <div class="explain" id="explain" aria-live="polite"></div>
+      </details>
+      <p class="hint" id="layout-hint"></p>
+      <p class="hint">Temporal pattern: the share of events whose level follows a slow curve over the loop instead of chance, so you can test whether a pattern comes through.</p>
+      <div class="legends" id="legends"></div>
+      <p class="warn" id="warn" hidden></p>
+      <div class="transport">
+        <button class="btn" id="copy" type="button">Copy pair as JSON</button>
+        <span class="hint" id="copy-o" aria-live="polite"></span>
+      </div>
+      <textarea class="json" id="json" readonly hidden aria-label="Pair as JSON"></textarea>
+      <details class="formula load"><summary>Play a pair from JSON</summary>
+        <p class="hint">Paste a pair copied from this page, or open a saved .json file, then press Play. The JSON carries the seed, so the same JSON gives the same loop.</p>
+        <textarea class="json" id="load-ta" spellcheck="false" aria-label="Pair JSON to play"></textarea>
+        <div class="transport">
+          <button class="btn" id="load-play" type="button">Play this pair</button>
+          <button class="btn" id="load-open" type="button">Open a .json file</button>
+          <input type="file" id="load-file" accept=".json,application/json" hidden>
+          <span class="hint" id="load-o" aria-live="polite"></span>
+        </div>
+      </details>
+    </section>
+  </div>
+
+  <section class="panel strips" id="strips" aria-labelledby="st-h">
+    <div class="bar">
+      <h2 id="st-h">What is playing: data to sound</h2>
+      <div class="toggles" id="toggles"></div>
+    </div>
+    <div class="strip" data-k="data"><div class="sl"><b>Data</b>V1 and V2, one tick per event; V3 dashed</div><div class="cv"><canvas id="cv-data" height="80" aria-label="Data strip"></canvas></div></div>
+    <div class="strip" data-k="score"><div class="sl"><b>Score</b>height by V1, colour by V2</div><div class="cv"><canvas id="cv-score" height="110" aria-label="Score strip"></canvas></div></div>
+    <div class="strip" data-k="wave"><div class="sl"><b>Waveform</b>left above, right below</div><div class="cv"><canvas id="cv-wave" height="90" aria-label="Waveform strip"></canvas></div></div>
+    <div class="strip" data-k="spec"><div class="sl"><b>Spectrogram</b>40 Hz to 8 kHz, log scale</div><div class="cv"><canvas id="cv-spec" height="130" aria-label="Spectrogram strip"></canvas></div></div>
+    <div class="axis" aria-hidden="true"><div></div><div id="axis"></div></div>
+    <p class="hint" id="strip-sum" aria-live="off"></p>
+  </section>
+
+  <footer>
+    <p>Design logic from <a href="https://github.com/ebertini/channel-brewer" target="_blank" rel="noopener">Channel Brewer</a> by Enrico Bertini (a visual-channel picker, itself after ColorBrewer), taken as an idea only; this page is new code. Synthesis runs in the page: eight channels in the matrix with more on the bench, eleven synthetic voices and a drum lane with five drums, D major pentatonic, a 4-second loop, peak capped at −6 dBFS with a limiter after it. Random data from a fixed seed. Formulas are set with <a href="https://katex.org" target="_blank" rel="noopener">KaTeX</a> (MIT), shipped with the page.</p>
+    <p>Keys: arrows move in the matrix, Enter plays the pair, Space stops (in the matrix), Escape stops anywhere.</p>
+  </footer>
+</div>
+<div class="tip" id="tip" role="tooltip" hidden></div>
+<script src="./vendor/katex.min.js" defer></script>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
