@@ -532,6 +532,7 @@ Every step from record to sound, with its bounds: [the mapping dictionary](dicti
 
 **Changelog.**
 
+- v1.0 (2026-10-31): Page update, music unchanged: the player moves while the map loads, load progress shows, and the notes fold.
 - v1.0 (2026-10-10): First published render (take 3).
 
 # Godbout Outlook

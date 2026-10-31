@@ -49,3 +49,4 @@ lineage:
   remixes: []
 changelog:
   - {version: "1.0", date: 2026-10-10, change: "First published render (take 3)."}
+  - {version: "1.0", date: 2026-10-31, change: "Page update, music unchanged: the player moves while the map loads, load progress shows, and the notes fold."}
