@@ -824,6 +824,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .north-arrow { color: #e9e4d8; opacity: .85; margin-top: 4px !important; filter: drop-shadow(0 0 2px #0b1114); }
   .leaflet-control-scale-line { background: rgba(7,11,13,.6) !important; color: #e9e4d8 !important; border-color: #e9e4d8 !important; font: 500 .66rem var(--sans) !important; }
   .map-layers { gap: 6px; font-size: .78rem; flex-wrap: wrap; }
+  #map.leaflet-container { background: #0e1518; }   /* the plain ground when the relief is off */
+  button.loading { background-image: linear-gradient(90deg, rgba(112,214,255,.35) var(--p, 0%), transparent var(--p, 0%)) !important; }
   .map-card.imm .leaflet-top.leaflet-right { top: calc(var(--hud-tr-h, 170px) + 18px); }   /* scale and north below the readout */
   .map-layers button[aria-pressed="false"] { opacity: .55; text-decoration: line-through; text-decoration-thickness: 1px; }
   .map-layers button[aria-pressed="true"] { border-color: var(--line-bright); }
@@ -1221,9 +1223,11 @@ const map = L.map('map', {
 // Offline basemap, all shipped beside the page. Relief: hillshade blended with Sentinel-2 true colour from the clear days before
 // the storm, cut into tiles (build/make_relief_tiles.py). Water: BC Freshwater Atlas (make_water.py). Roads and towns: OpenStreetMap
 // (make_places_roads.py). Day 11 of MapChallenge2026 (D168 onward).
-const RELIEF_BOUNDS = [[48.691, -125.508], [53.749, -117.773]];   // data/relief_tiles.json
-const CREDIT = 'AWS Terrain Tiles · contains modified Copernicus Sentinel data 2021 · BC Freshwater Atlas · © OpenStreetMap';   // full credits in About this page
-const relief = L.tileLayer('data/relief_tiles/{z}/{x}/{y}.jpg', { bounds: RELIEF_BOUNDS, minZoom: 5, maxNativeZoom: 10, maxZoom: 13, attribution: CREDIT, className: 'relief-tiles' }).addTo(map);
+const RELIEF_BOUNDS = [[48.458, -127.266], [54.572, -116.367]];   // data/relief_tiles.json
+const CREDIT = 'AWS Terrain Tiles · contains modified Copernicus Sentinel data 2021 · BC Freshwater Atlas · © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';   // full credits in About this page
+const reliefTiles = L.tileLayer('data/relief_tiles/{z}/{x}/{y}.jpg', { bounds: RELIEF_BOUNDS, minZoom: 5, maxNativeZoom: 10, maxZoom: 13, className: 'relief-tiles' });
+const relief = L.layerGroup([reliefTiles]).addTo(map);   // the far underlay joins it below, so the button switches both
+map.attributionControl.addAttribution(CREDIT);            // credits stay whatever the layers
 map.createPane('roads'); map.getPane('roads').style.zIndex = 404;
 map.createPane('streams'); map.getPane('streams').style.zIndex = 405; map.createPane('lakes'); map.getPane('lakes').style.zIndex = 406;   // streams draw under lakes
 map.createPane('towns'); map.getPane('towns').style.zIndex = 640;
@@ -1269,9 +1273,11 @@ function placeTownLabels() {
   const mr = map.getContainer().getBoundingClientRect();   // in immersive view the readout panels sit over the map: labels keep clear of them too
   for (const h of document.querySelectorAll('.map-card.imm .hud-box')) { const r = h.getBoundingClientRect(); if (r.width) placed.push([r.left - mr.left - M, r.top - mr.top - M, r.right - mr.left + M, r.bottom - mr.top + M]); }
   for (const t of towns) {
-    t.el.style.display = 'none';
+    t.el.style.visibility = 'hidden'; t.el.style.display = '';   // laid out but unseen, so it can be measured
+    const w = t.el.offsetWidth || t.name.length * 7 + 8, h = t.el.offsetHeight || 16;
+    t.el.style.display = 'none'; t.el.style.visibility = '';
     if (!show) continue;
-    const p = map.latLngToContainerPoint([t.lat, t.lon]), w = t.el.offsetWidth || t.name.length * 7 + 8, h = t.el.offsetHeight || 16, gap = t.big ? 6 : 5;
+    const p = map.latLngToContainerPoint([t.lat, t.lon]), gap = t.big ? 6 : 5;
     const sides = [[p.x + gap, p.y - h / 2], [p.x - gap - w, p.y - h / 2], [p.x - w / 2, p.y - gap - h], [p.x - w / 2, p.y + gap]];
     for (const [x, y] of sides) {
       const box = [x, y, x + w, y + h];
@@ -1286,7 +1292,8 @@ function placeTownLabels() {
 let townTimer = 0;
 map.on('move zoomend resize', () => { if (townTimer) return; townTimer = requestAnimationFrame(() => { townTimer = 0; placeTownLabels(); }); });
 const OUTER_BOUNDS = [[45.089, -132.1875], [57.3265, -111.09375]];
-L.imageOverlay('data/relief_outer.jpg', OUTER_BOUNDS, { opacity: 1 }).addTo(map).bringToBack();
+map.createPane('underlay'); map.getPane('underlay').style.zIndex = 150;   // below the tile pane (200): an image overlay defaults to the overlay pane (400) and would cover the tiles
+const reliefOuter = L.imageOverlay('data/relief_outer.jpg', OUTER_BOUNDS, { opacity: 1, pane: 'underlay' }); relief.addLayer(reliefOuter);
 map.options.maxBoundsViscosity = 1.0;   // the pan limit is the flash bounding box, set when the data load (setMapLimits)
 map.on('dragstart', () => { if ($('followToggle')) $('followToggle').checked = false; });
 L.control.scale({ metric: true, imperial: false, position: 'topright', maxWidth: 120 }).addTo(map);
@@ -1358,6 +1365,8 @@ obsMarker.on('drag', e => {
 });
 
 map.on('click', e => {
+  const i = glowLayer ? glowLayer.hit(e.containerPoint) : null;
+  if (i !== null) { const f = stormData.flashes[i]; L.popup().setLatLng([f.lat, f.lon]).setContent(flashPopupHtml(f, i)).openOn(map); return; }
   updateObserverPosition(e.latlng.lat, e.latlng.lng);
 });
 
@@ -1381,6 +1390,7 @@ function chaseUi(force) {
 function followStep(dt) {                                  // ease the map centre toward the pin, a little each frame
   if (!chase.on || !$('followToggle').checked || map._animatingZoom || map._panAnim && map._panAnim._inProgress) return;
   const c = chaseAt(stormElapsed); if (!c) return;
+  // _limitCenter is private Leaflet API (pinned at 1.9.4): the same clamp Leaflet applies itself, so the follow never fights it
   const z = map.getZoom(), goal = map.options.maxBounds ? map._limitCenter(L.latLng(c.lat, c.lon), z, map.options.maxBounds) : L.latLng(c.lat, c.lon);
   const ctr = map.getCenter(), off = map.project(goal, z).subtract(map.project(ctr, z));
   if (Math.abs(off.x) < 1.5 && Math.abs(off.y) < 1.5) return;       // within a pixel and a half: hold still
@@ -1402,6 +1412,7 @@ function setMapLimits() {
   if (map.getZoom() < z || !map._limitsSet) map.setView(FLASH_BOUNDS.getCenter(), z, { animate: false }); else if (map.getZoom() > z + 3) map.setZoom(z + 3);
   map.panInsideBounds(FLASH_BOUNDS, { animate: false });   // a resized map re-centres inside the limits
   map._limitsSet = true;
+  setRiverTiers(); placeTownLabels();   // the tiers count zoom steps from this minimum (A5)
 }
 
 // Map Layer Groups
@@ -1611,7 +1622,13 @@ async function initAudio() {
   dL.connect(damp); damp.connect(fR); fR.connect(dR); dR.connect(fL); fL.connect(dL); dL.connect(cg); dR.connect(cg); cg.connect(masterGain); canyonSend = dL;
   log('Loading instruments (cello, violin, flute, organ, tuba, bear sax, drum kit)...');
   try {
-    const got = await Promise.all(AUDIO_NAMES.map(async n => [n, await loadSample(ctx, `audio-v2/${n}.wav`)]));
+    // Progress on the button: the 31 sounds are about 10 MB, slow on a first visit (GW 11-10, Firefox private window)
+    let done = 0; const sb = $('startBtn'), total = AUDIO_NAMES.length; sb.disabled = true; sb.classList.add('loading');
+    const progress = () => { sb.textContent = `Loading sounds… ${done} of ${total}`; sb.style.setProperty('--p', Math.round(100 * done / total) + '%'); const hs = $("hudStart"); if (hs) { hs.textContent = sb.textContent; hs.disabled = true; } };
+    progress();
+    let got;
+    try { got = await Promise.all(AUDIO_NAMES.map(async n => { const b = await loadSample(ctx, `audio-v2/${n}.wav`); done++; progress(); return [n, b]; })); }
+    finally { sb.disabled = false; sb.classList.remove('loading'); const hs = $('hudStart'); if (hs) hs.disabled = false; }
     for (const [n, b] of got) S[n] = b;
     startBed();
     log('Engine ready: ' + AUDIO_NAMES.length + ' sounds loaded.');
@@ -1819,9 +1836,95 @@ function updateAirmassAtObserver() {
 
 }
 
+// --- Afterglow (Day 11, D178): every flash on one canvas, redrawn each frame. A new flash blooms and fades over about
+// 1.2 s of real time at any playback speed (additive light, so bursts brighten); its ember then moves smoothly through the
+// age colours of the strikes layer (blue-white, amber, red, violet) instead of stepping every 400 ms. ?flashes=classic keeps
+// the old markers for comparison. Clicks on a flash open its popup (hit test below), so the pin does not move.
+const FLASH_STYLE = new URLSearchParams(location.search).get('flashes') === 'classic' ? 'classic' : 'glow';
+const REDUCED_MOTION = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const EMBER = [[0, [190, 236, 255]], [0.04, [112, 214, 255]], [0.25, [240, 160, 90]], [0.6, [224, 90, 71]], [1, [120, 94, 240]]];
+function emberColour(q) {
+  for (let k = 1; k < EMBER.length; k++) if (q <= EMBER[k][0]) {
+    const [q0, c0] = EMBER[k - 1], [q1, c1] = EMBER[k], u = (q - q0) / (q1 - q0);
+    return c0.map((v, j) => Math.round(v + (c1[j] - v) * u));
+  }
+  return EMBER[EMBER.length - 1][1];
+}
+const GlowLayer = L.Layer.extend({
+  onAdd(m) {
+    this._c = L.DomUtil.create('canvas', 'glow-canvas'); this._c.style.pointerEvents = 'none';
+    if (!m.getPane('glow')) { m.createPane('glow'); m.getPane('glow').style.zIndex = 450; m.getPane('glow').style.pointerEvents = 'none'; }
+    m.getPane('glow').appendChild(this._c);
+    this._hide = () => { this._c.style.visibility = 'hidden'; };
+    m.on('moveend zoomend resize viewreset', this._reset, this); m.on('zoomstart', this._hide);
+    this._drawn = []; this._reset();
+  },
+  onRemove(m) { L.DomUtil.remove(this._c); m.off('moveend zoomend resize viewreset', this._reset, this); m.off('zoomstart', this._hide); },
+  _reset() {
+    const m = this._map, size = m.getSize(), dpr = window.devicePixelRatio || 1;
+    L.DomUtil.setPosition(this._c, m.containerPointToLayerPoint([0, 0]));
+    this._c.width = size.x * dpr; this._c.height = size.y * dpr; this._c.style.width = size.x + 'px'; this._c.style.height = size.y + 'px';
+    this._c.style.visibility = ''; this.draw();
+  },
+  draw() {
+    const m = this._map; if (!m || !stormData) return;
+    const c = this._c, g = c.getContext('2d'), dpr = window.devicePixelRatio || 1, size = m.getSize();
+    L.DomUtil.setPosition(c, m.containerPointToLayerPoint([0, 0]));   // keeps the canvas on the view during a drag, between moveends
+    g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, size.x, size.y);
+    const now = stormElapsed, speed = parseFloat($('speedSel').value) || 60;
+    const tau = (REDUCED_MOTION ? 0.5 : 1.2) * speed;                   // glow time constant in storm seconds (1.2 s real)
+    const cum = flashDisplayMode === 'cumulative';
+    const win = cum ? 1800 : flashDisplayMode === 'window10' ? 600 : flashDisplayMode === 'window5' ? 300 : 1800;
+    const F = stormData.flashes, drawn = [], glows = [];
+    for (let i = 0; i < F.length; i++) {
+      const f = F[i], a = now - f.rel_s;
+      if (a < 0) {
+        if (!cum) break;                                              // sorted by time
+        const p = m.latLngToContainerPoint([f.lat, f.lon]);
+        g.fillStyle = 'rgba(45,59,67,0.55)'; g.beginPath(); g.arc(p.x, p.y, 1.8, 0, 6.2832); g.fill();
+        continue;
+      }
+      if (!cum && a > win) continue;
+      const p = m.latLngToContainerPoint([f.lat, f.lon]);
+      if (p.x < -40 || p.y < -40 || p.x > size.x + 40 || p.y > size.y + 40) continue;
+      const q = Math.min(1, a / win), [r, gg, b] = emberColour(q), alpha = cum && a > win ? 0.4 : 0.92 - 0.5 * q;
+      const rad = 3.6 - 1.1 * q;
+      g.fillStyle = `rgba(${r},${gg},${b},${alpha.toFixed(3)})`; g.beginPath(); g.arc(p.x, p.y, rad, 0, 6.2832); g.fill();
+      drawn.push([p.x, p.y, i]);
+      const k = Math.exp(-a / tau);
+      if (k > 0.015) glows.push([p.x, p.y, k, f.energy_j]);
+    }
+    g.globalCompositeOperation = 'lighter';                             // overlapping glows add light
+    for (const [x, y, k, e] of glows) {
+      const base = Math.min(26, 10 + 3.2 * Math.log10(Math.max(e, 1e-15) / 1e-14));
+      const R = base * (REDUCED_MOTION ? 1 : 1 + 0.5 * (1 - k));
+      const grd = g.createRadialGradient(x, y, 0, x, y, R);
+      grd.addColorStop(0, `rgba(255,255,255,${(0.95 * k).toFixed(3)})`);
+      grd.addColorStop(0.18, `rgba(170,230,255,${(0.75 * k).toFixed(3)})`);
+      grd.addColorStop(0.55, `rgba(80,170,255,${(0.28 * k).toFixed(3)})`);
+      grd.addColorStop(1, 'rgba(40,110,255,0)');
+      g.fillStyle = grd; g.beginPath(); g.arc(x, y, R, 0, 6.2832); g.fill();
+    }
+    g.globalCompositeOperation = 'source-over';
+    this._drawn = drawn;
+  },
+  hit(pt, tol = 7) {                                                    // the nearest drawn flash within tol px of a container point
+    let best = null, bd = tol * tol;
+    for (const [x, y, i] of this._drawn) { const d = (x - pt.x) ** 2 + (y - pt.y) ** 2; if (d <= bd) { bd = d; best = i; } }
+    return best;
+  },
+});
+const glowLayer = FLASH_STYLE === 'glow' ? new GlowLayer().addTo(map) : null;
+function flashCounts() {
+  const now = stormElapsed, F = stormData.flashes, win = flashDisplayMode === 'window10' ? 600 : flashDisplayMode === 'window5' ? 300 : 1800;
+  let passed = 0, inView = 0; for (const f of F) { if (f.rel_s <= now) { passed++; if (flashDisplayMode === 'cumulative' || now - f.rel_s <= win) inView++; } }
+  $('flashCounterBadge').textContent = `${inView} strikes in window · Passed: ${passed} / ${F.length}`;
+}
+
 // --- Multi-tier Lightning Strike Visualization on Leaflet ---
 function renderMapFlashes() {
   if (!stormData || !stormData.flashes) return;
+  if (glowLayer) { flashMarkerLayer.clearLayers(); glowLayer.draw(); flashCounts(); return; }
 
   flashMarkerLayer.clearLayers();
 
@@ -1923,7 +2026,12 @@ function renderMapFlashes() {
   $('flashCounterBadge').textContent = `${inViewCount} strikes in window · Passed: ${totalPassed} / ${flashes.length}`;
 }
 
-function attachFlashPopup(marker, flash, idx) {
+function attachFlashPopup(marker, flash, idx) { marker.bindPopup(flashPopupHtml(flash, idx)); }
+function flashClock(rel) {                         // PDT first, UTC in brackets (LT37); the storm starts 21:43:58 UTC
+  const u = (21 * 3600 + 43 * 60 + 58 + Math.floor(rel)) % 86400, hh = Math.floor(u / 3600), mm = Math.floor((u % 3600) / 60), pdt = (hh + 17) % 24;
+  return `${String(pdt).padStart(2, '0')}:${String(mm).padStart(2, '0')} PDT (${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')} UTC)`;
+}
+function flashPopupHtml(flash, idx) {
   const dist = getDistanceKm(observer.lat, observer.lon, flash.lat, flash.lon);
   const brng = getBearingDeg(observer.lat, observer.lon, flash.lat, flash.lon);
   const delaySec = dist / 0.343;
@@ -1935,7 +2043,7 @@ function attachFlashPopup(marker, flash, idx) {
   const html = `
     <div style="font-family:var(--sans);font-size:0.82rem;line-height:1.4">
       <div style="font-weight:700;color:var(--electric);margin-bottom:2px">⚡ NOAA Flash #${idx+1}</div>
-      <div style="color:var(--ink);font-family:var(--mono)">Time: ${timeStr} (${flash.utc || 'UTC'})</div>
+      <div style="color:var(--ink);font-family:var(--mono)">Time: ${flashClock(flash.rel_s)} (${timeStr} into the storm)</div>
       <div>Location: ${flash.lat.toFixed(3)}°N, ${Math.abs(flash.lon).toFixed(3)}°W</div>
       <div>Optical Energy: <b>${flash.energy_j.toExponential(2)} J</b></div>
       <div style="margin-top:4px;border-top:1px solid #23353c;padding-top:4px">
@@ -1947,7 +2055,7 @@ function attachFlashPopup(marker, flash, idx) {
       </button>
     </div>
   `;
-  marker.bindPopup(html);
+  return html;
 }
 
 // --- Precompute Observer Time Series for the EDA Graph ---
@@ -2573,10 +2681,11 @@ function tick(now) {
     // Update Airmass telemetry
     updateAirmassAtObserver();
 
-    // Throttle flash map re-render during playback
+    // Flashes: the afterglow redraws every frame; the classic markers rebuild at most every 400 ms
+    if (glowLayer) glowLayer.draw();
     if (performance.now() - lastMapFlashWall > 400) {
       lastMapFlashWall = performance.now(); lastMapFlashUpdateSec = stormElapsed;
-      renderMapFlashes();
+      if (glowLayer) flashCounts(); else renderMapFlashes();
     }
 
     renderEdaGraph();
