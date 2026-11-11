@@ -818,6 +818,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
   .city-tip { background: rgba(7,11,13,.75) !important; color: var(--ink) !important; border: 1px solid var(--line-bright) !important; font: 600 .72rem var(--sans); box-shadow: none !important; }
   .city-tip::before { display: none; }
+  .town-label { position: absolute; white-space: nowrap; pointer-events: none; font: 500 .7rem/1.25 var(--sans); color: #ece7da; letter-spacing: .02em;
+    text-shadow: 0 0 2px #0b1114, 0 0 3px #0b1114, 0 0 5px rgba(11,17,20,.9); }
+  .town-label.big { font-size: .8rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .north-arrow { color: #e9e4d8; opacity: .85; margin-top: 4px !important; filter: drop-shadow(0 0 2px #0b1114); }
+  .leaflet-control-scale-line { background: rgba(7,11,13,.6) !important; color: #e9e4d8 !important; border-color: #e9e4d8 !important; font: 500 .66rem var(--sans) !important; }
+  .map-layers { gap: 6px; font-size: .78rem; flex-wrap: wrap; }
+  .map-card.imm .leaflet-top.leaflet-right { top: calc(var(--hud-tr-h, 170px) + 18px); }   /* scale and north below the readout */
+  .map-layers button[aria-pressed="false"] { opacity: .55; text-decoration: line-through; text-decoration-thickness: 1px; }
+  .map-layers button[aria-pressed="true"] { border-color: var(--line-bright); }
   .leaflet-popup-content { margin: 10px 14px; font-size: 0.82rem; line-height: 1.4; }
 
   /* Custom Observer Icon */
@@ -947,7 +956,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <li><b style="color:var(--ink)">The pin.</b> By default it chases the storm: the densest cluster of the last 10 minutes, stood off 10 to 20 km on the left of its motion, so strikes arrive as distant flashes with direction. Drag the pin or click the map to take it back.</li>
       <li><b style="color:var(--ink)">What you hear.</b> Each flash heard within the reach (90 km by default) is a drum hit; the strings, flute, organ, tuba and bear sax follow the weather at the pin (see "How the data becomes sound"). The sound is a composed transform, not a recording of thunder. Real thunder carries tens of kilometres at most.</li>
       <li><b style="color:var(--ink)">Not claimed.</b> This page is about an afternoon and evening of lightning in a hot, dry summer, not about any one place or fire. It says nothing about what started any fire.</li><li><b style="color:var(--ink)">Height correction.</b> The pin's ground height comes from a 2 km elevation grid (AWS Terrain Tiles). A lapse rate (the cooling of air with height) can lift or drop the reanalysis temperature from the height of the weather nodes to the ground under the pin: a fixed 6.5 C per km, a guess from humidity (dry air 9.8, saturated 4 to 6), one from the reanalysis profile, or one fitted to the stations hour by hour. Held out one station at a time (81 stations), none improves on the station correction alone: all five land within 0.13 C of each other, and before the station correction the three physical options make the reanalysis worse (raw error 6.0 to 7.7 C against 4.5 C with none). So the default is off and the lapse rate shown is the one you choose. The fitted option follows the stations as they are: in the afternoon the higher stations ran warmer than the reanalysis, the reverse of the textbook lapse rate, and in the evening they ran cooler. Treat it as a curiosity, not a measurement of the atmosphere.</li><li><b style="color:var(--ink)">Upper air.</b> Wind and temperature at 850 hPa (about 1.5 km) and 700 hPa (about 3 km) come from the ERA5 pressure-level reanalysis (Copernicus). They draw the wind rose and temperature path; they do not yet drive any sound.</li>
-      <li style="color:var(--dim)">Credits: flashes NOAA/NESDIS (open data); weather <a href="https://open-meteo.com/" style="color:var(--on)">Open-Meteo.com</a> (CC BY 4.0); upper air: generated using Copernicus Climate Change Service information (ERA5, 2021; neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus information or data it contains); stations Environment and Climate Change Canada (Open Government Licence - Canada); instruments VSCO 2 CE and Karoryfer (CC0): the organ, strings, thunder roll and thunder boom are VSCO 2 CE samples trimmed or looped, and the crack is a processed VSCO 2 CE percussion hit; relief AWS Terrain Tiles (<a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" style="color:var(--on)">sources</a>), tinted with Natural Earth II land cover (public domain); rivers and lakes: BC Freshwater Atlas, contains information licensed under the Open Government Licence - British Columbia; map Leaflet.</li>
+      <li style="color:var(--dim)">Credits: flashes NOAA/NESDIS (open data); weather <a href="https://open-meteo.com/" style="color:var(--on)">Open-Meteo.com</a> (CC BY 4.0); upper air: generated using Copernicus Climate Change Service information (ERA5, 2021; neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus information or data it contains); stations Environment and Climate Change Canada (Open Government Licence - Canada); instruments VSCO 2 CE and Karoryfer (CC0): the organ, strings, thunder roll and thunder boom are VSCO 2 CE samples trimmed or looped, and the crack is a processed VSCO 2 CE percussion hit; relief AWS Terrain Tiles (<a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" style="color:var(--on)">sources</a>), blended with Sentinel-2 true colour from 22 May to 29 June 2021 (contains modified Copernicus Sentinel data 2021; scenes via Element 84 Earth Search), with Natural Earth II land cover (public domain) on the far underlay; highways and towns © OpenStreetMap contributors (ODbL), the towns being the six most populous around the storm; rivers and lakes: BC Freshwater Atlas, contains information licensed under the Open Government Licence - British Columbia; map Leaflet.</li>
     </ul>
   </details>
   </div>
@@ -981,6 +990,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <span style="color:var(--dim)">Click strike for energy & lag</span>
       </div>
 
+      <div class="row map-layers" id="mapLayers" role="group" aria-label="Map layers">
+        <span style="color:var(--dim)">Map:</span>
+        <button type="button" class="audition" data-layer="relief" aria-pressed="true">Relief and imagery</button>
+        <button type="button" class="audition" data-layer="water" aria-pressed="true">Rivers and lakes</button>
+        <button type="button" class="audition" data-layer="roads" aria-pressed="true">Highways</button>
+        <button type="button" class="audition" data-layer="towns" aria-pressed="true">Towns</button>
+      </div>
       <div id="map"></div>
 
       <div class="row justify-between" style="font-size:.78rem;color:var(--dim)">
@@ -1202,29 +1218,92 @@ const map = L.map('map', {
   zoomControl: true
 });
 
-// Offline basemap (built by build/make_basemap.py): hillshade image plus rivers and lakes, all shipped beside the page
-const RELIEF_BOUNDS = [[48.45835188280866, -125.859375], [53.748710796898976, -117.421875]];
-const relief = L.imageOverlay('data/relief.jpg', RELIEF_BOUNDS, {
-  attribution: 'Relief: AWS Terrain Tiles (SRTM and others), tint: Natural Earth · water: BC Freshwater Atlas (Open Government Licence - British Columbia)'
-}).addTo(map);
+// Offline basemap, all shipped beside the page. Relief: hillshade blended with Sentinel-2 true colour from the clear days before
+// the storm, cut into tiles (build/make_relief_tiles.py). Water: BC Freshwater Atlas (make_water.py). Roads and towns: OpenStreetMap
+// (make_places_roads.py). Day 11 of MapChallenge2026 (D168 onward).
+const RELIEF_BOUNDS = [[48.691, -125.508], [53.749, -117.773]];   // data/relief_tiles.json
+const CREDIT = 'AWS Terrain Tiles · contains modified Copernicus Sentinel data 2021 · BC Freshwater Atlas · © OpenStreetMap';   // full credits in About this page
+const relief = L.tileLayer('data/relief_tiles/{z}/{x}/{y}.jpg', { bounds: RELIEF_BOUNDS, minZoom: 5, maxNativeZoom: 10, maxZoom: 13, attribution: CREDIT, className: 'relief-tiles' }).addTo(map);
+map.createPane('roads'); map.getPane('roads').style.zIndex = 404;
 map.createPane('streams'); map.getPane('streams').style.zIndex = 405; map.createPane('lakes'); map.getPane('lakes').style.zIndex = 406;   // streams draw under lakes
-const streamCanvas = L.canvas({ pane: 'streams', padding: 0.3 }), lakeCanvas = L.canvas({ pane: 'lakes', padding: 0.3 });
-const waterLayer = L.layerGroup(), minorRivers = L.layerGroup(), waterStats = { rivers: 0, lakes: 0, minor: 0 };   // rivers and lakes start switched off (GW 10-25); the Layers control turns them on
-const riverStyle = f => { const o = f.properties.o; return { color: '#6fb6d6', weight: o >= 7 ? 1.9 : o === 6 ? 1.2 : o === 5 ? 0.8 : 0.5, opacity: o >= 6 ? 0.85 : 0.62 }; };
-fetch('data/lakes.geojson').then(r => { if (!r.ok) throw new Error('lakes ' + r.status); return r.json(); }).then(g => { waterStats.lakes = g.features.length; L.geoJSON(g, { renderer: lakeCanvas, interactive: false, style: { color: '#5fa8c8', weight: 0.8, fillColor: '#2c5f78', fillOpacity: 0.62 } }).addTo(waterLayer); }).catch(e => log('Water layer not loaded: ' + e.message));
+map.createPane('towns'); map.getPane('towns').style.zIndex = 640;
+const roadCanvas = L.canvas({ pane: 'roads', padding: 0.3 }), streamCanvas = L.canvas({ pane: 'streams', padding: 0.3 }), lakeCanvas = L.canvas({ pane: 'lakes', padding: 0.3 });
+// Rivers: a strict hierarchy, so the map stays quiet. At the zoom that fits the storm only order 7 and up; each zoom step in adds the next order down.
+// Width grows with order; one colour, close to the lakes' edge, so a river reads as water entering a lake, not a line across it.
+const waterLayer = L.layerGroup().addTo(map), roadLayer = L.layerGroup().addTo(map), townLayer = L.layerGroup().addTo(map), waterStats = { rivers: 0, lakes: 0, minor: 0 };
+const RIVER_W = { 4: 0.45, 5: 0.7, 6: 1.0, 7: 1.5, 8: 2.0, 9: 2.6 };
+const riverStyle = f => { const o = Math.min(f.properties.o, 9); return { color: '#7fb2c9', weight: RIVER_W[o], opacity: o >= 7 ? 0.9 : o === 6 ? 0.75 : 0.55, lineCap: 'round', lineJoin: 'round' }; };
+const riverTiers = { 4: L.layerGroup(), 5: L.layerGroup(), 6: L.layerGroup(), 7: L.layerGroup() };   // 7 holds 7 and up
+fetch('data/lakes.geojson').then(r => { if (!r.ok) throw new Error('lakes ' + r.status); return r.json(); }).then(g => { waterStats.lakes = g.features.length; L.geoJSON(g, { renderer: lakeCanvas, interactive: false, style: { color: '#7fb2c9', weight: 0.7, opacity: 0.8, fillColor: '#24506a', fillOpacity: 0.85 } }).addTo(waterLayer); }).catch(e => log('Water layer not loaded: ' + e.message));
 fetch('data/rivers.geojson').then(r => { if (!r.ok) throw new Error('rivers ' + r.status); return r.json(); }).then(g => {
-  waterStats.rivers = g.features.filter(f => f.properties.o >= 5).length; waterStats.minor = g.features.filter(f => f.properties.o === 4).length;
-  L.geoJSON(g, { renderer: streamCanvas, interactive: false, filter: f => f.properties.o >= 5, style: riverStyle }).addTo(waterLayer);
-  L.geoJSON(g, { renderer: streamCanvas, interactive: false, filter: f => f.properties.o === 4, style: riverStyle }).addTo(minorRivers);   // the smallest streams show once you zoom in
-  setMinorRivers();
+  for (const f of g.features) waterStats.rivers++;
+  for (const t of [4, 5, 6, 7]) L.geoJSON(g, { renderer: streamCanvas, interactive: false, filter: f => (t === 7 ? f.properties.o >= 7 : f.properties.o === t), style: riverStyle }).addTo(riverTiers[t]);
+  setRiverTiers();
 }).catch(e => log('Water layer not loaded: ' + e.message));
-function setMinorRivers() { const show = map.getZoom() >= map.getMinZoom() + 0.75; if (show && !waterLayer.hasLayer(minorRivers)) waterLayer.addLayer(minorRivers); else if (!show && waterLayer.hasLayer(minorRivers)) waterLayer.removeLayer(minorRivers); }
-map.on('zoomend', setMinorRivers);
+function setRiverTiers() {                          // which orders show at this zoom, relative to the zoom that fits the storm
+  const dz = map.getZoom() - map.getMinZoom();
+  const want = { 7: true, 6: dz >= 1, 5: dz >= 2, 4: dz >= 3 };
+  for (const t of [4, 5, 6, 7]) { const on = want[t] && map.hasLayer(waterLayer); if (on && !waterLayer.hasLayer(riverTiers[t])) waterLayer.addLayer(riverTiers[t]); else if (!want[t] && waterLayer.hasLayer(riverTiers[t])) waterLayer.removeLayer(riverTiers[t]); }
+}
+map.on('zoomend', setRiverTiers);
+fetch('data/roads.geojson').then(r => { if (!r.ok) throw new Error('roads ' + r.status); return r.json(); }).then(g => {
+  L.geoJSON(g, { renderer: roadCanvas, interactive: false, style: f => ({ color: '#d8b68c', weight: f.properties.cls === 'major' ? 1.3 : 0.9, opacity: 0.55, lineCap: 'round' }) }).addTo(roadLayer);
+}).catch(e => log('Roads not loaded: ' + e.message));
+// Towns: the six most populous around the storm (OSM). Each label takes the first side (right, left, above, below) that stays
+// inside the map with a margin and clear of the labels already placed; if no side fits, it hides. Rechecked after every move.
+let towns = [];
+fetch('data/places.geojson').then(r => { if (!r.ok) throw new Error('places ' + r.status); return r.json(); }).then(g => {
+  towns = g.features.map(f => {
+    const [lon, lat] = f.geometry.coordinates, big = f.properties.rank <= 2;
+    const dot = L.circleMarker([lat, lon], { pane: 'towns', radius: big ? 3.5 : 2.6, color: '#e9e4d8', weight: 1.2, fillColor: '#11181b', fillOpacity: 1, interactive: false }).addTo(townLayer);
+    const el = document.createElement('div'); el.className = 'town-label' + (big ? ' big' : ''); el.textContent = f.properties.name;
+    map.getPane('towns').appendChild(el);
+    return { name: f.properties.name, lat, lon, big, dot, el };
+  });
+  placeTownLabels();
+}).catch(e => log('Towns not loaded: ' + e.message));
+function placeTownLabels() {
+  if (!towns.length) return;
+  const show = map.hasLayer(townLayer), size = map.getSize(), M = 6, placed = [];
+  const att = map.getContainer().querySelector('.leaflet-control-attribution'), bottom = (att ? att.offsetHeight : 0) + M;   // keep clear of the credits line
+  const mr = map.getContainer().getBoundingClientRect();   // in immersive view the readout panels sit over the map: labels keep clear of them too
+  for (const h of document.querySelectorAll('.map-card.imm .hud-box')) { const r = h.getBoundingClientRect(); if (r.width) placed.push([r.left - mr.left - M, r.top - mr.top - M, r.right - mr.left + M, r.bottom - mr.top + M]); }
+  for (const t of towns) {
+    t.el.style.display = 'none';
+    if (!show) continue;
+    const p = map.latLngToContainerPoint([t.lat, t.lon]), w = t.el.offsetWidth || t.name.length * 7 + 8, h = t.el.offsetHeight || 16, gap = t.big ? 6 : 5;
+    const sides = [[p.x + gap, p.y - h / 2], [p.x - gap - w, p.y - h / 2], [p.x - w / 2, p.y - gap - h], [p.x - w / 2, p.y + gap]];
+    for (const [x, y] of sides) {
+      const box = [x, y, x + w, y + h];
+      if (box[0] < M || box[1] < M || box[2] > size.x - M || box[3] > size.y - bottom) continue;
+      if (placed.some(q => box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1])) continue;
+      placed.push(box);
+      const lp = map.containerPointToLayerPoint([x, y]);
+      t.el.style.display = ''; L.DomUtil.setPosition(t.el, lp); break;
+    }
+  }
+}
+let townTimer = 0;
+map.on('move zoomend resize', () => { if (townTimer) return; townTimer = requestAnimationFrame(() => { townTimer = 0; placeTownLabels(); }); });
 const OUTER_BOUNDS = [[45.089, -132.1875], [57.3265, -111.09375]];
 L.imageOverlay('data/relief_outer.jpg', OUTER_BOUNDS, { opacity: 1 }).addTo(map).bringToBack();
 map.options.maxBoundsViscosity = 1.0;   // the pan limit is the flash bounding box, set when the data load (setMapLimits)
 map.on('dragstart', () => { if ($('followToggle')) $('followToggle').checked = false; });
-L.control.layers(null, { 'Relief': relief, 'Rivers and lakes': waterLayer }, { position: 'topleft' }).addTo(map);
+L.control.scale({ metric: true, imperial: false, position: 'topright', maxWidth: 120 }).addTo(map);
+const North = L.Control.extend({ options: { position: 'topright' }, onAdd() {   // Web Mercator: true north is straight up everywhere
+  const d = L.DomUtil.create('div', 'north-arrow'); d.setAttribute('role', 'img'); d.setAttribute('aria-label', 'North is up');
+  d.innerHTML = '<svg viewBox="0 0 24 30" width="18" height="22"><path d="M12 2 L18 22 L12 18 L6 22 Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 2 L12 18 L6 22 Z" fill="currentColor"/><text x="12" y="29.5" text-anchor="middle" font-size="7" fill="currentColor" font-family="sans-serif">N</text></svg>';
+  return d; } });
+new North().addTo(map);
+// Map layer buttons (above the map), in place of Leaflet's Layers box
+const MAP_LAYERS = { relief, water: waterLayer, roads: roadLayer, towns: townLayer };
+document.querySelectorAll('#mapLayers button[data-layer]').forEach(b => b.addEventListener('click', () => {
+  const lyr = MAP_LAYERS[b.dataset.layer], on = b.getAttribute('aria-pressed') !== 'true';
+  b.setAttribute('aria-pressed', String(on));
+  if (on) lyr.addTo(map); else map.removeLayer(lyr);
+  if (b.dataset.layer === 'water') setRiverTiers();
+  placeTownLabels();
+}));
 
 // Observer Marker & Listening Rings
 const obsIcon = L.divIcon({
@@ -1286,8 +1365,7 @@ function placeAnchorCity() {
   const F = stormData.flashes, med = a => { const s2 = a.slice().sort((x, y) => x - y); return s2[Math.floor(s2.length / 2)]; };
   const cLat = med(F.map(f => f.lat)), cLon = med(F.map(f => f.lon));
   anchorCity = CITIES.reduce((a, c) => getDistanceKm(c.lat, c.lon, cLat, cLon) < getDistanceKm(a.lat, a.lon, cLat, cLon) ? c : a);
-  L.circleMarker([anchorCity.lat, anchorCity.lon], { radius: 5, color: '#8ba2a8', fillColor: '#1c2b30', fillOpacity: 0.85, weight: 1.5 }).addTo(map)
-    .bindTooltip(anchorCity.name, { permanent: true, direction: 'right', offset: [6, 0], className: 'city-tip' });
+  // drawn by the towns layer (data/places.geojson), which holds it among the six largest places
   const b = $('cityBtn'); b.style.display = ''; b.textContent = `📍 ${anchorCity.name}`;
   b.title = `The city nearest the middle of the flashes (${getDistanceKm(anchorCity.lat, anchorCity.lon, cLat, cLon).toFixed(0)} km from their median)`;
   b.onclick = () => { updateObserverPosition(anchorCity.lat, anchorCity.lon); map.panTo([anchorCity.lat, anchorCity.lon]); log(`Pin moved to ${anchorCity.name}.`); };
@@ -1303,11 +1381,14 @@ function chaseUi(force) {
 function followStep(dt) {                                  // ease the map centre toward the pin, a little each frame
   if (!chase.on || !$('followToggle').checked || map._animatingZoom || map._panAnim && map._panAnim._inProgress) return;
   const c = chaseAt(stormElapsed); if (!c) return;
-  const ctr = map.getCenter(), k = 1 - Math.exp(-Math.min(dt, 0.25) * 2.0), la = ctr.lat + (c.lat - ctr.lat) * k, lo = ctr.lng + (c.lon - ctr.lng) * k;
-  if (Math.abs(la - ctr.lat) + Math.abs(lo - ctr.lng) > 2e-5) map.setView([la, lo], map.getZoom(), { animate: false });
+  const z = map.getZoom(), goal = map.options.maxBounds ? map._limitCenter(L.latLng(c.lat, c.lon), z, map.options.maxBounds) : L.latLng(c.lat, c.lon);
+  const ctr = map.getCenter(), off = map.project(goal, z).subtract(map.project(ctr, z));
+  if (Math.abs(off.x) < 1.5 && Math.abs(off.y) < 1.5) return;       // within a pixel and a half: hold still
+  const k = 1 - Math.exp(-Math.min(dt, 0.25) * 2.0);
+  map.setView(map.unproject(map.project(ctr, z).add(off.multiplyBy(k)), z), z, { animate: false });
 }
 
-// Pan and zoom limits: the flash bounding box, and at most 2x the zoom that fits it
+// Pan and zoom limits: the flash bounding box, and at most 8x the zoom that fits it (the relief tiles hold detail that far)
 let FLASH_BOUNDS = null;
 function setMapLimits() {
   if (!stormData) return;
@@ -1317,8 +1398,8 @@ function setMapLimits() {
   }
   map.invalidateSize({ animate: false });
   const z = map.getBoundsZoom(FLASH_BOUNDS, false);
-  map.setMinZoom(z); map.setMaxZoom(z + 1); map.setMaxBounds(FLASH_BOUNDS);
-  if (map.getZoom() < z || !map._limitsSet) map.setView(FLASH_BOUNDS.getCenter(), z, { animate: false }); else if (map.getZoom() > z + 1) map.setZoom(z + 1);
+  map.setMinZoom(z); map.setMaxZoom(z + 3); map.setMaxBounds(FLASH_BOUNDS);
+  if (map.getZoom() < z || !map._limitsSet) map.setView(FLASH_BOUNDS.getCenter(), z, { animate: false }); else if (map.getZoom() > z + 3) map.setZoom(z + 3);
   map.panInsideBounds(FLASH_BOUNDS, { animate: false });   // a resized map re-centres inside the limits
   map._limitsSet = true;
 }
@@ -1969,7 +2050,7 @@ function setImmersive(on) {
   if (on) { try { const p = document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); if (p && p.catch) p.catch(() => {}); } catch (e) {} }
   else if (document.fullscreenElement) { try { const p = document.exitFullscreen(); if (p && p.catch) p.catch(() => {}); } catch (e) {} }
   $('fsBtn').textContent = on ? '✕ Exit' : '⤢ Immersive';
-  setTimeout(() => { setMapLimits(); updateAirmassAtObserver(); }, 150);
+  setTimeout(() => { setMapLimits(); updateAirmassAtObserver(); const tr = $('hudTR'); if (on && tr) card.style.setProperty('--hud-tr-h', tr.offsetHeight + 'px'); placeTownLabels(); }, 150);
 }
 $('fsBtn').onclick = () => setImmersive(!document.querySelector('.map-card').classList.contains('imm'));
 $('hudExit').onclick = () => setImmersive(false);
