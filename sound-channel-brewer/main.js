@@ -4,7 +4,9 @@
  */
 import { DEFAULT_SLOTS, benchOf, UNAVAILABLE, LAYOUTS, LAYOUT_INFO, byId, levels, pairInfo, pairKey, clampLevels, maxLevelsOf, FROM_OUR_PIECES,
   VOICES, DEFAULT_VOICE, OCTAVES, SPANS, PITCH_DEFAULTS, SCALES, SCALE_IDS, ROOTS, NOTE_NAMES } from './channels.js';
-import { rng, poolFor, MAX_SEED, eventsFor, DEFAULT_SEED, MODELS, MODEL_IDS, STREAM_MODELS, STREAM_IDS, STREAM_USES, streamAt, explain } from './pool.js';
+import { rng, poolFor, MAX_SEED, eventsFor, DEFAULT_SEED, MODELS, MODEL_IDS, STREAM_MODELS, STREAM_IDS, STREAM_USES, streamAt, explain, slotCount } from './pool.js';
+import { TRANSFORMS, TRANSFORM_LABELS, TIME_MODES, KIND_DEFAULTS, STEP_WORD, PRESETS, defaultSource, laneItems, explainLane, binner, flagMask,
+  hasZeros, hasNegatives, logAllowed, maxStart, stepLabel, midiOf, pitchName, noteValue, dynamicOf } from './series.js';
 import { mapEvents, crowding, levelNotes, bindingJSON, pairFromJSON, TRANSITION_RANGE, TRANSITION_DEFAULT } from './map.js';
 import { DRONE_MODES, DRONE_DEFAULTS, DRONE_LEVEL_RANGE, BREATHS, droneSpec, explainDrone } from './drone.js';
 import { DRUMS, DRUM_CHANNELS, DRUM_DEFAULTS, DRUM_LEVEL_RANGE, DRUM_STEPS, drumById, drumHits, explainDrum } from './drum.js';
@@ -26,6 +28,7 @@ const S = {
   voice: DEFAULT_VOICE, ...PITCH_DEFAULTS,
   slots: [...DEFAULT_SLOTS], lastSwap: null,
   m1: 'uniform', m2: 'uniform', stream: { model: 'seasonal', use: 'off' },
+  src1: null, src2: null, time: 'fit', twin: false, // real series on V1 and V2 (Slice A, 11-16)
   drum: { ...DRUM_DEFAULTS },
   drone: { ...DRONE_DEFAULTS },
   show: { data: true, score: true, wave: true, spec: true },
@@ -204,7 +207,251 @@ function tick() {
 
 /* ---------- render and draw ---------- */
 function setting() {
-  return { ...S, n1: clampLevels(S.c1, S.n1, S), n2: clampLevels(S.c2, S.n2, S), loopSec: LOOP };
+  const s = { ...S, n1: clampLevels(S.c1, S.n1, S), n2: clampLevels(S.c2, S.n2, S), loopSec: LOOP };
+  const m = slotCount(s);
+  for (const w of [1, 2]) {
+    const src = S[`src${w}`], ser = src && seriesOf(src.series);
+    if (!ser) continue;
+    if (S.twin) { s[`m${w}`] = ser.twin; continue; } // the synthetic twin: the nearest seeded model plays instead
+    const o = { mode: S.time, m, n: s[`n${w}`] };
+    s[`real${w}`] = laneItems(ser, src, o);
+    s[`realInfo${w}`] = explainLane(ser, src, o, w);
+  }
+  return s;
+}
+
+/* ---------- real series (Slice A of the 261116 spec) ---------- */
+let PACK = null, packNote = '';
+const seriesOf = (id) => PACK?.series.find((x) => x.id === id) ?? null;
+const seriesIds = () => (PACK ? PACK.series.map((x) => x.id) : null);
+const pairOpts = () => ({ ...S, seriesIds: seriesIds() });
+/** Fetch series.json from the page's own folder; without it the page plays synthetic data only. */
+async function loadPack() {
+  try {
+    const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 6000);
+    const r = await fetch('./series.json', { signal: ctl.signal });
+    clearTimeout(to);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const j = await r.json();
+    if (j.schema !== 'sound-channel-brewer/series@1' || !Array.isArray(j.series)) throw new Error('not a series pack');
+    PACK = j;
+  } catch {
+    PACK = null;
+    packNote = 'The real data series could not be loaded here, so only the synthetic models are offered.';
+  }
+}
+/** The lane whose period the time bar follows: V1 if it plays a real series, else V2 (0: none). */
+const leadLane = () => (S.src1 && seriesOf(S.src1.series) ? 1 : S.src2 && seriesOf(S.src2.series) ? 2 : 0);
+const realLane = (w) => !!(S[`src${w}`] && seriesOf(S[`src${w}`].series) && !S.twin);
+const fmtRaw = (v) => (v == null ? '–' : Math.abs(v) >= 100 ? String(Math.round(v)) : Math.abs(v) >= 10 ? v.toFixed(1) : v.toFixed(2)).replace('-', '−');
+const vName = (w) => (S[`src${w}`] && seriesOf(S[`src${w}`].series) ? `V${w} (${seriesOf(S[`src${w}`].series).short}${S.twin ? ', twin' : ''})` : `V${w}`);
+
+/** Move the Slice start. The lead lane takes v; the other real lane takes the same step if it shares the calendar, else the same share of its own period. */
+function setStart(v) {
+  const L = leadLane();
+  if (!L) return;
+  const m = slotCount(S), lead = S[`src${L}`], ls = seriesOf(lead.series);
+  const lmax = maxStart(ls, m), sv = Math.max(0, Math.min(lmax, Math.round(v)));
+  S[`src${L}`] = { ...lead, start: sv };
+  const O = 3 - L, os = S[`src${O}`] && seriesOf(S[`src${O}`].series);
+  if (os) {
+    const omax = maxStart(os, m), same = os.step === ls.step && os.start === ls.start;
+    S[`src${O}`] = { ...S[`src${O}`], start: same ? Math.min(omax, sv) : Math.round(lmax ? (sv / lmax) * omax : 0) };
+  }
+}
+
+const srcVal = (w) => (S[`src${w}`] && seriesOf(S[`src${w}`].series) ? `s:${S[`src${w}`].series}` : S[`m${w}`]);
+/** The V1 or V2 source menu: real series grouped by timescale, then the synthetic models. */
+function fillSource(w) {
+  const el = $(`m${w}`), escA = (x) => x.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const real = PACK ? PACK.scales.map((sc) => {
+    const list = PACK.series.filter((x) => x.scale === sc.id);
+    return list.length ? `<optgroup label="Real data · ${escA(sc.label)}">${list.map((x) => `<option value="s:${escA(x.id)}">${escA(x.short)}</option>`).join('')}</optgroup>` : '';
+  }).join('') : '';
+  el.innerHTML = `${real}<optgroup label="Synthetic models">${MODEL_IDS.map((m) => `<option value="${m}">${MODELS[m].label}</option>`).join('')}</optgroup>`;
+  el.value = srcVal(w);
+}
+function sourcePick(w) {
+  const el = $(`m${w}`);
+  fillSource(w);
+  el.addEventListener('change', () => {
+    const v = el.value;
+    if (v.startsWith('s:')) {
+      // A lane that turns real joins the other real lane's window (the same step on a shared calendar, else the same share of its period).
+      const ser = seriesOf(v.slice(2)), O = 3 - w, osrc = S[`src${O}`], os = osrc && seriesOf(osrc.series), m = slotCount(S);
+      let start = 0;
+      if (os) { const same = os.step === ser.step && os.start === ser.start, omax = maxStart(os, m), mx = maxStart(ser, m); start = same ? Math.min(mx, osrc.start ?? 0) : Math.round(omax ? ((osrc.start ?? 0) / omax) * mx : 0); }
+      S[`src${w}`] = { ...defaultSource(ser), start };
+    }
+    else { S[`src${w}`] = null; S[`m${w}`] = v; }
+    S.solo = null;
+    update(); if (playing) startLoop();
+  });
+}
+
+/** The shape row under a real source: transform pills, zero = rest, signed, flip, and the source line. */
+function shapeUI(w) {
+  const box = $(`shape${w}`), lab = $(`shape${w}-l`);
+  const src = S[`src${w}`], ser = src && seriesOf(src.series);
+  box.hidden = lab.hidden = !ser;
+  if (!ser) { box.innerHTML = ''; return; }
+  const ae = document.activeElement, keep = box.contains(ae) ? (ae.dataset.t ? `[data-t="${ae.dataset.t}"]` : `[data-k="${ae.dataset.k}"]`) : null;
+  const n = clampLevels(S[`c${w}`], S[`n${w}`], S), b = binner(ser, src, n);
+  box.innerHTML = `<div class="seg" role="group" aria-label="V${w} transform">${TRANSFORMS.map((t) => `<button type="button" data-t="${t}" aria-pressed="${b.transform === t}"${t === 'log' && !logAllowed(ser) ? ' disabled title="Log needs values of zero or more"' : ''}>${TRANSFORM_LABELS[t]}</button>`).join('')}</div>`
+    + (hasZeros(ser) ? `<label title="Zero values are silent"><input type="checkbox" data-k="zeroRest"${src.zeroRest ? ' checked' : ''}> Zero = rest</label>` : '')
+    + (hasNegatives(ser) ? `<label title="Cut the levels the same width either side of zero (Lin only)"><input type="checkbox" data-k="signed"${src.signed ? ' checked' : ''}${b.transform !== 'lin' ? ' disabled' : ''}> Signed</label>` : '')
+    + `<label title="Bigger values take lower levels"><input type="checkbox" data-k="flip"${src.flip ? ' checked' : ''}> Flip</label><span class="hint src-line"></span>`;
+  box.querySelector('.src-line').textContent = `${ser.title}, ${ser.place}, ${ser.units}. ${(KIND_DEFAULTS[ser.kind] ?? KIND_DEFAULTS.slow).why} Source: ${ser.source}. ${ser.licence}.`;
+  box.querySelectorAll('[data-t]').forEach((btn) => btn.addEventListener('click', () => { S[`src${w}`] = { ...S[`src${w}`], transform: btn.dataset.t }; update(); if (playing) startLoop(); }));
+  box.querySelectorAll('input[data-k]').forEach((inp) => inp.addEventListener('change', () => { S[`src${w}`] = { ...S[`src${w}`], [inp.dataset.k]: inp.checked }; update(); if (playing) startLoop(); }));
+  if (keep) box.querySelector(keep)?.focus();
+}
+
+/** The time bar above the strips: Fit or Slice, the start, bookmarks, the synthetic twin. Hidden with no real lane. */
+function timeUI() {
+  const L = leadLane();
+  $('timebar').hidden = !L;
+  if (!L) return;
+  refreshTmode();
+  const src = S[`src${L}`], ser = seriesOf(src.series), m = slotCount(S), N = ser.values.length, word = STEP_WORD[ser.step];
+  const slice = S.time === 'slice', mx = maxStart(ser, m), s0 = Math.min(src.start ?? 0, mx);
+  const st = $('tstart');
+  st.max = String(mx); st.value = String(s0); st.disabled = !slice;
+  st.setAttribute('aria-valuetext', stepLabel(ser, s0));
+  $('tstart-o').textContent = slice ? stepLabel(ser, s0) : '';
+  const marks = $('tmarks'), ae = document.activeElement, keep = marks.contains(ae) ? ae.dataset.b : null;
+  marks.innerHTML = '';
+  for (const bm of ser.bookmarks ?? []) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'btn sm'; b.dataset.b = bm.label; b.textContent = bm.label;
+    b.setAttribute('aria-pressed', String(slice && s0 === Math.min(bm.start, mx)));
+    b.title = `Slice ${m} ${word}s from ${stepLabel(ser, Math.min(bm.start, mx))}`;
+    b.addEventListener('click', () => { S.time = 'slice'; setStart(bm.start); update(); if (playing) startLoop(); });
+    marks.append(b);
+  }
+  if (keep) marks.querySelector(`[data-b="${keep}"]`)?.focus();
+  $('twin').checked = S.twin;
+  $('time-o').textContent = timeText();
+}
+/** The time summary in words, from state alone (the time bar and the score both use it). */
+function timeText() {
+  const L = leadLane();
+  if (!L) return '';
+  const src = S[`src${L}`], ser = seriesOf(src.series), m = slotCount(S), N = ser.values.length, word = STEP_WORD[ser.step];
+  const slice = S.time === 'slice', s0 = Math.min(src.start ?? 0, maxStart(ser, m));
+  const O = 3 - L, os = S[`src${O}`] && seriesOf(S[`src${O}`].series);
+  const own = os && !(os.step === ser.step && os.start === ser.start) ? ` V${O} (${os.short}) runs on its own calendar, ${slice ? `from ${stepLabel(os, Math.min(S[`src${O}`].start, maxStart(os, m)))}` : `${stepLabel(os, 0)} to ${stepLabel(os, os.values.length - 1)}`}.` : '';
+  return (slice
+    ? `Slice: ${Math.min(m, N)} ${word}s in a row, ${stepLabel(ser, s0)} to ${stepLabel(ser, Math.min(N - 1, s0 + m - 1))}, one per event. Move the start or pick a bookmark.`
+    : `Fit: the whole period, ${stepLabel(ser, 0)} to ${stepLabel(ser, N - 1)} (${N} ${word}s), as ${m} groups of about ${(N / m).toFixed(1)}.`) + own
+    + (S.twin ? ' Synthetic twin is on: each real lane plays its nearest seeded model, so you can hear what the real data add.' : '');
+}
+
+/** The data strip under real lanes: the series as a faint line, bin edges dotted, gaps hatched, ice shaded. */
+function drawReal(c, w, h, s, col) {
+  const half = h / 2, pad = 3, m = slotCount(s);
+  for (const k of [1, 2]) {
+    if (!realLane(k)) continue;
+    const src = S[`src${k}`], ser = seriesOf(src.series), n = s[`n${k}`], b = binner(ser, src, n);
+    const top = k === 1 ? 0 : half, base = top + half - pad, span = half - 2 * pad, colr = k === 1 ? col.v1 : col.v2;
+    const N = ser.values.length, slice = S.time === 'slice';
+    const i0 = slice ? Math.min(src.start ?? 0, maxStart(ser, m)) : 0, cnt = slice ? Math.min(m, N) : N;
+    const x0 = (i) => ((i - i0) / cnt) * w, bw = w / cnt;
+    const mask = flagMask(ser);
+    c.save();
+    for (let i = i0; i < i0 + cnt; i++) {
+      if (mask[i]) { c.globalAlpha = 0.16; c.fillStyle = col.muted; c.fillRect(x0(i), top, bw + 0.5, half); }
+      if (ser.values[i] == null) {
+        c.globalAlpha = 0.5; c.strokeStyle = col.muted; c.lineWidth = 1; c.beginPath();
+        for (let x = x0(i) - half; x < x0(i) + bw; x += 4) { c.moveTo(Math.max(x0(i), x), top + Math.max(0, x0(i) - x)); c.lineTo(Math.min(x0(i) + bw, x + half), top + half - Math.max(0, x + half - x0(i) - bw)); }
+        c.stroke();
+      }
+    }
+    c.globalAlpha = 0.55; c.strokeStyle = col.muted; c.lineWidth = 1; c.setLineDash([2, 3]);
+    for (const e of b.edges) { const y = Math.round(base - e * span) + 0.5; c.beginPath(); c.moveTo(0, y); c.lineTo(w, y); c.stroke(); }
+    c.setLineDash([]); c.globalAlpha = 0.5; c.strokeStyle = colr; c.lineWidth = 1.25; c.beginPath();
+    let pen = false;
+    for (let i = i0; i < i0 + cnt; i++) {
+      const v = b.norm(ser.values[i]);
+      if (v == null) { pen = false; continue; }
+      const y = base - (src.flip ? 1 - v : v) * span, x = x0(i) + bw / 2;
+      if (pen) c.lineTo(x, y); else { c.moveTo(x, y); pen = true; }
+    }
+    c.stroke();
+    const lab = `${ser.short} · ${TRANSFORM_LABELS[b.transform]}${slice ? ' · slice' : ' · fit'}`;
+    c.globalAlpha = 1; c.font = '11px system-ui'; c.textAlign = 'right'; c.textBaseline = 'bottom';
+    const lw = c.measureText(lab).width;
+    c.fillStyle = col.bg; c.fillRect(w - lw - 8, top + half - 15, lw + 8, 14); // a ground under the label, so the line does not run through it
+    c.fillStyle = colr; c.fillText(lab, w - 4, top + half - 2);
+    c.restore();
+  }
+}
+
+/** The loop as a score in the notation primer's terms (DK73): one tab-separated line per note. */
+function scoreText() {
+  const s = setting(), bpm = (60 * 4) / LOOP; // one loop = one bar of 4/4
+  const lanes = [1, 2].map((w) => ({ w, ch: byId[s[`c${w}`]], n: s[`n${w}`], real: realLane(w), ser: S[`src${w}`] && seriesOf(S[`src${w}`].series), src: S[`src${w}`], items: s[`real${w}`] }));
+  const desc = (L) => (L.real
+    ? `${L.ser.title} (${L.ser.units}; ${TRANSFORM_LABELS[binner(L.ser, L.src, L.n).transform]}${L.src.zeroRest ? ', zero = rest' : ''}${L.src.signed ? ', signed' : ''}${L.src.flip ? ', flipped' : ''}; ${S.time === 'slice' ? 'Slice' : 'Fit'}). ${L.ser.source}. ${L.ser.licence}.`
+    : `seeded model "${MODELS[s[`m${L.w}`]].label}"${L.ser ? ` (synthetic twin of ${L.ser.title})` : ''}, seed ${S.seed}`);
+  const dated = lanes.find((L) => L.real);
+  const head = [
+    '# Sound Channel Brewer: the loop as a score',
+    `key: ${NOTE_NAMES[S.root]} ${SCALES[S.scale].label.toLowerCase()} | tempo: ${bpm} bpm, 4/4, one ${LOOP}-second loop = one bar | layout: ${s.layout} | voice: ${S.voice} | ${cur.notes.length} notes`,
+    ...lanes.map((L) => `V${L.w} -> ${L.ch.label.toLowerCase()}, ${L.n} levels <- ${desc(L)}`),
+    dated ? `time: ${timeText()}` : 'time: seeded data, no calendar',
+    '',
+    ['beat', 'V1 date', 'V1 raw', 'V1 bin', 'V2 date', 'V2 raw', 'V2 bin', 'MIDI', 'pitch', 'note value', 'dynamic', 'articulation', 'flag'].join('\t'),
+  ];
+  const raw = (L, n) => (L.real && n.k != null ? fmtRaw(L.items[n.k].raw) : 'seeded');
+  const date = (L, n) => (L.real && n.k != null ? L.items[n.k].label : '');
+  const rows = [...cur.notes].sort((a, b) => a.t - b.t).map((n) => {
+    const midi = midiOf(n.freq);
+    return [(1 + (n.t * bpm) / 60).toFixed(2), date(lanes[0], n), raw(lanes[0], n), n.v1 + 1, date(lanes[1], n), raw(lanes[1], n), n.v2 + 1,
+      midi, pitchName(midi), n.sustained ? 'held' : noteValue(n.dur, bpm), dynamicOf(n.gainDb), n.artic, n.flag ? 'ice' : ''].join('\t');
+  });
+  return [...head, ...rows].join('\n');
+}
+
+/** The three presets (DK72), each with one "Try this" that flips one setting. */
+let activePreset = null;
+function applyChanges(ch, note) {
+  const st = { ...S, ...ch };
+  return applyPair(bindingJSON({ ...st, n1: clampLevels(st.c1, st.n1, st), n2: clampLevels(st.c2, st.n2, st), loopSec: LOOP }), { play: true, note });
+}
+function applyPreset(p) {
+  const z = p.set, mk = (o) => ({ ...defaultSource(seriesOf(o.series)), ...o });
+  const src1 = mk(z.src1), src2 = mk(z.src2);
+  if (z.start) {
+    const bm = [src1, src2].map((x) => seriesOf(x.series).bookmarks.find((b) => b.label === z.start)).find(Boolean);
+    if (bm) { src1.start = bm.start; src2.start = bm.start; }
+  }
+  const ok = applyChanges({ c1: z.c1, c2: z.c2, n1: z.n1, n2: z.n2, layout: z.layout, count: z.count, time: z.mode, twin: false, src1, src2, solo: null, corr: 0, stream: { ...S.stream, use: 'off' } }, `Preset: ${p.title}.`);
+  if (ok) { activePreset = p.id; $('preset-o').textContent = p.sketch; } else $('preset-o').textContent = $('load-o').textContent;
+  return ok;
+}
+function presets() {
+  const box = $('presets');
+  if (!PACK) { box.innerHTML = '<p class="hint"></p>'; box.querySelector('p').textContent = packNote; return; }
+  for (const p of PRESETS) {
+    const d = document.createElement('div');
+    d.className = 'preset';
+    d.innerHTML = '<button type="button" class="go"><b></b><span></span></button><button type="button" class="btn sm try"></button>';
+    d.querySelector('b').textContent = p.title;
+    d.querySelector('span').textContent = p.sketch;
+    d.querySelector('.try').textContent = p.tryLabel;
+    const missing = [p.set.src1, p.set.src2].filter((x) => !seriesOf(x.series)).map((x) => x.series);
+    if (missing.length) {
+      d.querySelectorAll('button').forEach((b) => { b.disabled = true; b.title = `Needs series not in the pack: ${missing.join(', ')}`; });
+    }
+    d.querySelector('.go').addEventListener('click', () => applyPreset(p));
+    d.querySelector('.try').addEventListener('click', () => {
+      if (activePreset !== p.id && !applyPreset(p)) return;
+      if (applyChanges(p.try(S), `${p.tryLabel}.`)) $('preset-o').textContent = p.teach;
+      else $('preset-o').textContent = $('load-o').textContent;
+    });
+    box.append(d);
+  }
 }
 
 function renderLoop() {
@@ -254,7 +501,7 @@ function draw() {
   const col = colors();
   const evs = cur.notes.map((n) => ({ onset: n.t, dur: n.dur, v1: n.v1, v2: n.v2, dim: n.dim }));
   const jobs = {
-    data: (c, w, h) => { drawData(c, w, h, evs, s.n1, s.n2, LOOP, col); drawStream(c, w, h, s, col); },
+    data: (c, w, h) => { drawData(c, w, h, evs, s.n1, s.n2, LOOP, col); drawReal(c, w, h, s, col); drawStream(c, w, h, s, col); },
     score: (c, w, h) => { drawScore(c, w, h, evs, s.n1, s.n2, LOOP, col, ramp(s.n2)); drawDrum(c, w, h, col); },
     wave: (c, w, h) => drawWave(c, w, h, cur.buf, col),
     spec: (c, w, h) => drawSpec(c, w, h, cur.spec, col),
@@ -274,7 +521,7 @@ function draw() {
     $('axis').append(sp);
   }
   const a = byId[s.c1], b = byId[s.c2];
-  $('strip-sum').textContent = `${cur.notes.length} events in ${LOOP} s. V1 on ${a.label.toLowerCase()}, V2 on ${b.label.toLowerCase()}${streamOn(s) ? `, V3 on ${s.stream.use}` : ''}${droneSpec(s) ? `, a drone on ${droneSpec(s).name}` : ''}${drumOn() ? `, ${cur.hits.length} drum hits with V4 on ${drumById[s.drum.channel].label.toLowerCase()}` : ''}. Hover a strip for values.` +
+  $('strip-sum').textContent = `${cur.notes.length} events in ${LOOP} s. ${vName(1)} on ${a.label.toLowerCase()}, ${vName(2)} on ${b.label.toLowerCase()}${streamOn(s) ? `, V3 on ${s.stream.use}` : ''}${droneSpec(s) ? `, a drone on ${droneSpec(s).name}` : ''}${drumOn() ? `, ${cur.hits.length} drum hits with V4 on ${drumById[s.drum.channel].label.toLowerCase()}` : ''}. Hover a strip for values.` +
     (cur.buf.scaled < 1 ? ` The loop was turned down ${(-20 * Math.log10(cur.buf.scaled)).toFixed(1)} dB to stay under the −6 dBFS cap.` : '');
 }
 
@@ -335,6 +582,15 @@ function stripTip(k, e) {
       const hit = cur.hits.find((x) => Math.abs(x.t - t) < LOOP / DRUM_STEPS / 2);
       const C = drumById[S.drum.channel];
       if (hit) html += `<hr>Drum step ${hit.step + 1}: V4 = ${hit.x4.toFixed(2)}, level ${hit.level + 1} of 4, ${C.label.toLowerCase()} ${C.format(C.values[hit.level])}`;
+    }
+    if (k === 'data' && (realLane(1) || realLane(2))) {
+      const kk = Math.min(slotCount(s) - 1, Math.floor(fx * slotCount(s)));
+      for (const w2 of [1, 2]) {
+        const it = realLane(w2) && s[`real${w2}`][kk];
+        if (!it) continue;
+        const ser = seriesOf(S[`src${w2}`].series), agg = it.i0 !== it.i1 ? `${(KIND_DEFAULTS[ser.kind] ?? KIND_DEFAULTS.slow).agg === 'max' ? 'largest' : 'median'} ` : '';
+        html += `<hr>V${w2} ${ser.short}, ${it.label}: ${it.raw == null ? 'no data, a rest' : `${agg}${fmtRaw(it.raw)} ${ser.units}${it.level == null ? ', a rest' : `, level ${it.level + 1} of ${s[`n${w2}`]}`}`}${it.flag ? ', ice-affected' : ''}`;
+      }
     }
     if (k === 'data' && streamOn(s)) html += `<hr>V3 (${STREAM_MODELS[s.stream.model].label.toLowerCase()}, ${s.stream.use}) = ${streamAt(pool, s.stream.model, fx).toFixed(2)}`;
   } else if (k === 'wave') {
@@ -578,6 +834,7 @@ function explainPanel(s) {
 }
 const refreshView = seg('fview', ['plain', 'math', 'code'], ['Plain words', 'Formulas', 'Code that runs'], () => fview, (v) => { fview = v; });
 const refreshUse = seg('stream-use', STREAM_USES, ['Off', 'Density', 'Pace'], () => S.stream.use, (v) => { S.stream = { ...S.stream, use: v }; });
+const refreshTmode = seg('tmode', TIME_MODES, ['Fit', 'Slice'], () => S.time, (v) => { S.time = v; });
 
 /** A <select> bound to state; re-renders and keeps playing. */
 function pick(id, items, get, set) {
@@ -616,6 +873,7 @@ function legends() {
     d.style.setProperty('--c', `var(${cvar})`);
     d.innerHTML = `<div class="hd"><span class="nm">V${which}: ${C.label}<small>${C.kind}</small></span>
       <span class="stepper"><button type="button" aria-label="Fewer levels for V${which}">−</button><span>${n} levels</span><button type="button" aria-label="More levels for V${which}">+</button></span></div>
+      ${realLane(which) ? `<div class="badge">V${which} · ${esc(seriesOf(S[`src${which}`].series).short)} [${TRANSFORM_LABELS[binner(seriesOf(S[`src${which}`].series), S[`src${which}`], n).transform]} · ${n}]</div>` : ''}
       <div class="lvs"></div>
       <div class="tools"><label><input type="checkbox" aria-label="Solo the selected level of V${which}, ${C.label}; others drop 18 dB"${S.solo && S.solo.v === which ? ' checked' : ''}> Solo the selected level (others −18 dB)</label></div>`;
     const [minus, plus] = d.querySelectorAll('.stepper button');
@@ -710,7 +968,11 @@ function refreshPieces() {
 function update() {
   renderLoop();
   refreshPieces();
-  refreshMatrix(); refreshLayout(); refreshTarget(); refreshOct(); refreshSpan(); refreshUse(); refreshView(); refreshBreaths(); legends(); legendsMark(); nowLine(); draw();
+  refreshMatrix(); refreshLayout(); refreshTarget(); refreshOct(); refreshSpan(); refreshUse(); refreshView(); refreshBreaths();
+  for (const w of [1, 2]) { $(`m${w}`).value = srcVal(w); shapeUI(w); }
+  timeUI();
+  $('series-o').textContent = packNote; $('series-o').hidden = !packNote;
+  legends(); legendsMark(); nowLine(); draw();
   $('octave').querySelectorAll('button').forEach((b) => { b.textContent = `${NOTE_NAMES[S.root]}${b.dataset.v}`; });
   $('json').hidden = true;
   scheduleTrail();
@@ -774,7 +1036,7 @@ function b64e(str) { const b = new TextEncoder().encode(str); let t = ''; for (c
 function b64d(s) { const t = atob(s.replace(/-/g, '+').replace(/_/g, '/')); return new TextDecoder().decode(Uint8Array.from(t, (c) => c.charCodeAt(0))); }
 const hashOf = (j) => `#p=${b64e(keyOf(j))}`;
 function chipLabel(j) {
-  const p = j.play ?? {}, ch = (j.lanes ?? []).map((l) => (byId[l.channel]?.label ?? '?').slice(0, 5)).join('×');
+  const p = j.play ?? {}, ch = (j.lanes ?? []).map((l) => `${l.source?.series ? `${String(l.source.series).slice(0, 7)}→` : ''}${(byId[l.channel]?.label ?? '?').slice(0, 5)}`).join('×');
   return `${p.seed ?? '?'}${p.variation ? `~${Math.round(p.variation * 100)}` : ''} ${ch} ${NOTE_NAMES[j.pitch?.root ?? 2]}${j.drone ? ' ◦' : ''}`;
 }
 function thumb() {
@@ -834,6 +1096,8 @@ function linkHere() {
   u.hash = hashOf(bindingJSON(setting()));
   return u.toString();
 }
+/** The page address's pair as text, or '' if there is none or it cannot be decoded. */
+function safeHashText() { const m = /^#p=([A-Za-z0-9_-]+)$/.exec(location.hash); try { return m ? b64d(m[1]) : ''; } catch { return ''; } }
 function readHash(play) {
   const m = /^#p=([A-Za-z0-9_-]+)$/.exec(location.hash);
   if (!m) return false;
@@ -885,7 +1149,7 @@ function loadPair(text) {
     let added = 0;
     for (const p of j.stars) {
       let q;
-      try { q = bindingJSON({ ...setting(), ...pairFromJSON(p, S).state }); } catch { continue; } // only pairs this page can play, kept in this page's own form
+      try { q = bindingJSON({ ...setting(), ...pairFromJSON(p, pairOpts()).state }); } catch { continue; } // only pairs this page can play, kept in this page's own form
       const k = keyOf(q);
       if (stars.some((x) => x.k === k)) continue;
       stars.push({ k, j: q, img: '', label: chipLabel(q) }); added++;
@@ -901,7 +1165,7 @@ function loadPair(text) {
 function applyPair(j, { play = true, note = '' } = {}) {
   const out = $('load-o');
   let r;
-  try { r = pairFromJSON(j, S); } catch (e) { out.textContent = e.message; return false; }
+  try { r = pairFromJSON(j, pairOpts()); } catch (e) { out.textContent = e.message; return false; }
   Object.assign(S, r.state);
   rebuildPool();
   S.lastSwap = null;
@@ -928,6 +1192,7 @@ const brightText = (v) => `${Math.round(150 * Math.pow(20, v))} Hz`;
 function voiceHint() { const v = VOICES.find((x) => x.id === S.voice); $('voice-o').textContent = v ? v.desc : ''; }
 
 function init() {
+  const packP = loadPack(); // in parallel: the page plays seeded data at once and gains the real series when they arrive
   buildMatrix();
   $('matrix').addEventListener('keydown', onMatrixKey);
   $('matrix').addEventListener('keyup', (e) => { if (e.key === ' ' || e.key === 'Spacebar') e.preventDefault(); });
@@ -944,8 +1209,15 @@ function init() {
   }
   pick('voice', VOICES.map((v) => [v.id, v.label]), () => S.voice, (v) => { S.voice = v; });
   $('voice').addEventListener('change', voiceHint);
-  pick('m1', MODEL_IDS.map((m) => [m, MODELS[m].label]), () => S.m1, (v) => { S.m1 = v; });
-  pick('m2', MODEL_IDS.map((m) => [m, MODELS[m].label]), () => S.m2, (v) => { S.m2 = v; });
+  sourcePick(1); sourcePick(2);
+  let rafT = 0;
+  $('tstart').addEventListener('input', (e) => {
+    setStart(Number(e.target.value));
+    cancelAnimationFrame(rafT);
+    rafT = requestAnimationFrame(() => { update(); if (playing) startLoop(); });
+  });
+  $('twin').addEventListener('change', (e) => { S.twin = e.target.checked; update(); if (playing) startLoop(); });
+  $('score-copy').addEventListener('click', () => copyText(scoreText(), `Copied the loop as a score: ${cur.notes.length} notes, one per line, tab-separated.`, $('trail-o')));
   pick('stream-model', STREAM_IDS.map((m) => [m, STREAM_MODELS[m].label]), () => S.stream.model, (v) => { S.stream = { ...S.stream, model: v }; });
   pick('drum', DRUMS.map((d) => [d.id, d.label]), () => S.drum.voice, (v) => { S.drum = { ...S.drum, voice: v }; });
   pick('drum-ch', DRUM_CHANNELS.map((c) => [c.id, c.label]), () => S.drum.channel, (v) => { S.drum = { ...S.drum, channel: v }; });
@@ -1006,8 +1278,16 @@ function init() {
   new ResizeObserver(fitMath).observe($('explain'));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') stopAll(); });
   focusRC = keptRC();
-  if (!readHash(false)) update();
+  const hashFirst = /^#p=/.test(location.hash), hashReal = hashFirst && /"source"/.test(safeHashText());
+  if (!hashFirst || hashReal || !readHash(false)) update(); // a link with no real lane opens at once; one with a real lane waits for the pack
   describe(...focusRC);
+  packP.then(() => {
+    fillSource(1); fillSource(2);
+    presets();
+    // A link to a real series needs the pack; read it again now (it fails with a plain message if the pack did not load).
+    if (hashReal) { if (!readHash(false)) update(); } else update();
+    describe(...focusRC);
+  });
   chips();
   embed();
   new ResizeObserver(() => draw()).observe($('strips'));

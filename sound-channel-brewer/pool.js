@@ -212,8 +212,11 @@ function paceWarp(pool, model) {
  *   onset in seconds; hold is the sustained length for lines, null otherwise.
  *   Density can drop events, so the result may be shorter than the count.
  */
+/** How many event slots a setting has (before density drops any): the number of items a real lane needs. */
+export const slotCount = (o) => (o.layout === 'lines' ? Math.min(o.count, MAX_LINES) : Math.min(o.count, POOL));
+
 export function eventsFor(pool, o) {
-  const m = o.layout === 'lines' ? Math.min(o.count, MAX_LINES) : Math.min(o.count, POOL);
+  const m = slotCount(o);
   const L = o.loopSec;
   const M1 = MODELS[o.m1 ?? 'uniform'], M2 = MODELS[o.m2 ?? 'uniform'];
   const st = o.layout !== 'lines' && o.stream && o.stream.use !== 'off' ? o.stream : null;
@@ -225,11 +228,30 @@ export function eventsFor(pool, o) {
   const on2 = o.target === 'v2' || o.target === 'both';
   const hold = o.layout === 'lines' ? Math.min(2.4, Math.max(1.2, (2 * L) / m)) : null;
   const lv = (x, n) => Math.min(n - 1, Math.floor(x * n));
+  // Real lanes (series.js): the event that comes k-th in time takes item k, so the series plays in time order
+  // over the layout's own onsets. A rest (gap, or zero when zero is a rest) silences the event.
+  const R1 = o.real1 ?? null, R2 = o.real2 ?? null;
+  let rank = null;
+  if (R1 || R2) { rank = new Array(m); slice.map((_, i) => i).sort((a, b) => fr[a] - fr[b] || a - b).forEach((i, k) => { rank[i] = k; }); }
   const out = [];
   slice.forEach((d, i) => {
     const f = fr[i];
     if (st && st.use === 'density' && d.keep >= 0.1 + 0.9 * streamAt(pool, st.model, f)) return;
     const x1 = M1.x(view(d, 1), f, pool.p1), x2 = M2.x(view(d, 2), f, pool.p2);
+    if (rank) {
+      const k = rank[i], a = R1 && R1[k], b = R2 && R2[k];
+      if ((a && a.level == null) || (b && b.level == null)) return;
+      out.push({
+        i, k,
+        onset: f * L,
+        v1: a ? a.level : on1 && d.rc1 < o.corr ? levelOf(pool.curve1(f), cut1) : lv(x1, o.n1),
+        v2: b ? b.level : on2 && d.rc2 < o.corr ? levelOf(pool.curve2(f), cut2) : lv(x2, o.n2),
+        x1: a ? a.norm : x1, x2: b ? b.norm : x2,
+        hold,
+        flag: !!((a && a.flag) || (b && b.flag)),
+      });
+      return;
+    }
     out.push({
       i,
       onset: f * L,
@@ -266,6 +288,8 @@ export function explain(pool, o, events = []) {
     });
   }
   for (const which of [1, 2]) {
+    const realInfo = which === 1 ? o.realInfo1 : o.realInfo2;
+    if (realInfo) { out.push(realInfo); continue; }
     const id = (which === 1 ? o.m1 : o.m2) ?? 'uniform', M = MODELS[id], n = which === 1 ? o.n1 : o.n2;
     const p = which === 1 ? pool.p1 : pool.p2;
     const x = events.length ? events[0][`x${which}`] : null;

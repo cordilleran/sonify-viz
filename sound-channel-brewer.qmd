@@ -5,13 +5,15 @@ toc: false
 page-layout: full
 ---
 
-Pick two sounds for two variables, such as pitch and loudness, and hear them together on made-up data before you tie them to real data. Click a cell of the matrix to listen, and watch the data, the score and the sound drawn under one playhead.
+Pick two sounds for two variables, such as pitch and loudness, and hear them together on made-up data or on real series from the pieces on this site. Click a cell of the matrix to listen, and watch the data, the score and the sound drawn under one playhead.
 
 <details><summary>More details</summary>
 
 Every piece on this site has to decide which part of a sound carries which part of the data: pitch for temperature, loudness for flow, how long a note lasts for day length. This page is for trying that choice by ear. Each cell of the matrix is a pair of auditory channels. You set how many levels each one carries, the layout (a steady pulse, a scattered cloud or held tones), the voice, the octave, and the shape of the made-up data, and a third variable can make the loop busier or faster. You can also choose the key and scale. A drum lane adds one more variable on a single drum, a first look at a percussion layer, and a drone bed can hold a chord on the key's root under everything. A bench lets you swap a channel into the matrix, such as vibrato for distance, to hear the same pair with one part changed.
 
-The data are seeded random numbers, so the same seed always gives the same loop. You can type a seed or turn it like a dial, and the Variation slider moves the numbers part of the way toward a partner seed, so you can find near cousins of a sound you like. Every sound you listen to is kept in a trail in your browser, where you can star it, and the page address follows the sound, so a link or bookmark brings it back. The fold-down "How the data are made", at the bottom of the page, shows the rules three ways: in plain words, as formulas, and as javascript. The pairs under "From our pieces" are mappings the pieces use or propose.
+Each variable's source can be a real series instead: river flow, lake level, temperature and rain for the Water Year Rings year, Lake Superior ice, a two-week forecast, climate indices such as ENSO since 1958, and a century of the Kettle River's yearly peaks. Fit plays a whole period in one loop; Slice plays one day, month or year per note from a start you choose, with bookmarks such as the freshet. Lin, Log and Rank choose how values are cut into levels, and three presets each come with one change to try. Each series names its source and licence on the page, and "Copy score" gives the loop as notes with their dates and values.
+
+The made-up data are seeded random numbers, so the same seed always gives the same loop. You can type a seed or turn it like a dial, and the Variation slider moves the numbers part of the way toward a partner seed, so you can find near cousins of a sound you like. Every sound you listen to is kept in a trail in your browser, where you can star it, and the page address follows the sound, so a link or bookmark brings it back. The fold-down "How the data are made", at the bottom of the page, shows the rules three ways: in plain words, as formulas, and as javascript. The pairs under "From our pieces" are mappings the pieces use or propose.
 
 It will be more useful for listening, not ranking: the pair that sounds clear here may not work on real data, and no formal listening tests are developed yet. Headphones help with pan, distance and with small loudness steps.
 

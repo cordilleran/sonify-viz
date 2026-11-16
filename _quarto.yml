@@ -61,6 +61,7 @@ project:
     - sound-channel-brewer/index.html
     - sound-channel-brewer/README.md
     - sound-channel-brewer/*.js
+    - sound-channel-brewer/series.json
     - sound-channel-brewer/vendor/katex.min.js
     - sound-channel-brewer/vendor/katex-LICENSE.txt
     - arctic-bside/index.html

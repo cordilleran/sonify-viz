@@ -190,13 +190,36 @@ textarea.json { width: 100%; min-height: 140px; font: 12px var(--font-mono); bac
 .howp dt { font: 600 13px/1.4 var(--font-label); color: var(--muted); }
 .howp dd { margin: 0; color: var(--fg); }
 @media (max-width: 560px) { .howp .notes { grid-template-columns: minmax(0, 1fr); } .howp dd { margin-bottom: 6px; } }
+/* 11-16 data feed: shape rows, the time bar, presets, lane badges. */
+.shape { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; min-width: 0; font-size: 12.5px; }
+.shape label { display: inline-flex; gap: 5px; align-items: center; cursor: pointer; color: var(--fg); }
+.shape .src-line { flex-basis: 100%; }
+.shape .seg button[aria-pressed="true"] { background: var(--g); color: var(--g-ink); }
+.legend .badge { font: 12px/1.3 var(--font-mono); color: var(--c); }
+.grp.timebar { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 2px 0 6px; }
+.grp.timebar[hidden] { display: none; }
+.timebar .tstart { display: inline-flex; gap: 8px; align-items: center; flex: 1 1 220px; min-width: 0; }
+.timebar .tstart input { flex: 1; min-width: 0; accent-color: var(--g); }
+.timebar .tstart output { font: 12px var(--font-mono); color: var(--g); min-width: 10ch; font-variant-numeric: tabular-nums; }
+.timebar .marks { display: flex; flex-wrap: wrap; gap: 6px; }
+.timebar .marks .btn[aria-pressed="true"] { border-color: var(--g); color: var(--g); }
+.timebar .twin { display: inline-flex; gap: 5px; align-items: center; font-size: 12.5px; cursor: pointer; }
+.timebar .hint { flex-basis: 100%; }
+.presets { display: grid; gap: 6px; }
+.preset { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; border: 1px solid var(--line); border-left: 3px solid var(--g-data); border-radius: 4px; padding: 7px 9px; }
+.preset .go { text-align: left; font: 13px/1.35 var(--font-body); color: var(--fg); background: none; border: 0; padding: 0; cursor: pointer; display: grid; gap: 2px; }
+.preset .go b { font-weight: 600; }
+.preset .go span { color: var(--muted); font-size: 12.5px; }
+.preset .go:hover b { color: var(--g-data); }
+.preset .try { justify-self: start; font-size: 12px; }
+.preset .go:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
 <body>
 <div class="wrap"><header>
     <h1>Sound Channel Brewer</h1>
-    <p class="lede">Pick two auditory channels for two variables and hear them together on random data, with a few levels each, before you bind a real data lane to them. Each cell of the matrix is a pair; click it or press Enter to hear it.</p>
+    <p class="lede">Pick two auditory channels for two variables and hear them together, with a few levels each, on seeded data or on real series from our pieces. Each cell of the matrix is a pair; click it or press Enter to hear it.</p>
     <p class="caveat"><strong>For hearing, not for ranking.</strong> A pair that sounds clear here is not proven to work on your data. The page states no listening-test results. Headphones help with pan and fine loudness steps. Sound starts only when you press Play or pick a pair.</p>
   </header>
 
@@ -218,6 +241,9 @@ textarea.json { width: 100%; min-height: 140px; font: 12px var(--font-mono); bac
       </div>
       <p class="hint"><span id="bench-o"></span> The matrix keeps eight channels. If the kept pair uses the channel you swap out, the new one takes its place, so you hear the same pair with one channel changed.</p>
       <div class="desc" id="pair-desc" aria-live="polite"></div>
+      <h2>Start from real data</h2>
+      <div class="presets" id="presets"></div>
+      <p class="hint" id="preset-o" aria-live="polite"></p>
       <h2>From our pieces</h2>
       <div class="pieces" id="pieces"></div>
     </section>
@@ -265,13 +291,18 @@ textarea.json { width: 100%; min-height: 140px; font: 12px var(--font-mono); bac
       <div class="grp g-data" role="group" aria-labelledby="g-data-h">
         <h3 id="g-data-h">Data</h3>
         <div class="rows">
-          <label for="m1">V1 data</label>
+          <label for="m1">V1 source</label>
           <div class="pair2"><select id="m1"></select></div>
-          <label for="m2">V2 data</label>
+          <span class="lab" id="shape1-l" hidden>V1 shape</span>
+          <div class="shape" id="shape1" hidden></div>
+          <label for="m2">V2 source</label>
           <div class="pair2"><select id="m2"></select></div>
+          <span class="lab" id="shape2-l" hidden>V2 shape</span>
+          <div class="shape" id="shape2" hidden></div>
           <span class="lab" id="v3-l">V3 drives</span>
           <div class="pair2"><div class="seg" id="stream-use" role="group" aria-labelledby="v3-l"></div><select id="stream-model" aria-label="V3 data"></select></div>
         </div>
+        <p class="hint" id="series-o" hidden></p>
       </div>
 
       <div class="grp g-beds" role="group" aria-labelledby="g-beds-h">
@@ -323,6 +354,7 @@ textarea.json { width: 100%; min-height: 140px; font: 12px var(--font-mono); bac
         <button class="btn" id="link" type="button">Copy link to this sound</button>
         <button class="btn" id="stars-copy" type="button">Copy stars as JSON</button>
         <button class="btn" id="copy" type="button">Copy pair as JSON</button>
+        <button class="btn" id="score-copy" type="button" title="The loop as notes: beat, date, raw value, bin, MIDI, pitch, note value, dynamic, articulation">Copy score</button>
         <button class="btn" id="trail-clear" type="button">Clear trail</button>
         <span class="hint" id="trail-o" aria-live="polite"></span><span class="hint" id="copy-o" aria-live="polite"></span>
       </div>
@@ -349,7 +381,14 @@ textarea.json { width: 100%; min-height: 140px; font: 12px var(--font-mono); bac
       <h2 id="st-h">What is playing: data to sound</h2>
       <div class="toggles" id="toggles"></div>
     </div>
-    <div class="strip" data-k="data"><div class="sl"><b>Data</b>V1 and V2, one tick per event; V3 dashed</div><div class="cv"><canvas id="cv-data" height="80" aria-label="Data strip"></canvas></div></div>
+    <div class="grp g-data timebar" id="timebar" role="group" aria-label="Time: how the real series fills the loop" hidden>
+      <div class="seg" id="tmode" role="group" aria-label="Time mode"></div>
+      <label class="tstart" for="tstart"><span class="lab">Start</span><input id="tstart" type="range" min="0" max="0" step="1" value="0"><output id="tstart-o" for="tstart"></output></label>
+      <div class="marks" id="tmarks" aria-label="Bookmarks"></div>
+      <label class="twin" title="Swap each real lane for its nearest seeded model"><input type="checkbox" id="twin"> Synthetic twin</label>
+      <p class="hint" id="time-o" aria-live="polite"></p>
+    </div>
+    <div class="strip" data-k="data"><div class="sl"><b>Data</b>V1 and V2, one tick per event; real series as a faint line; V3 dashed</div><div class="cv"><canvas id="cv-data" height="104" aria-label="Data strip"></canvas></div></div>
     <div class="strip" data-k="score"><div class="sl"><b>Score</b>height by V1, colour by V2</div><div class="cv"><canvas id="cv-score" height="110" aria-label="Score strip"></canvas></div></div>
     <div class="strip" data-k="wave"><div class="sl"><b>Waveform</b>left above, right below</div><div class="cv"><canvas id="cv-wave" height="90" aria-label="Waveform strip"></canvas></div></div>
     <div class="strip" data-k="spec"><div class="sl"><b>Spectrogram</b>40 Hz to 8 kHz, log scale</div><div class="cv"><canvas id="cv-spec" height="130" aria-label="Spectrogram strip"></canvas></div></div>
@@ -360,6 +399,8 @@ textarea.json { width: 100%; min-height: 140px; font: 12px var(--font-mono); bac
   <section class="panel howp" aria-labelledby="how-h">
     <h2 id="how-h">How it works</h2>
     <dl class="notes">
+      <dt>Real data</dt><dd>Each source menu offers real series from our pieces, grouped by timescale, as well as the seeded models. <b>Fit</b> plays the whole period, cut into as many groups as the loop has events (the median of each group, or the largest value for spiky series such as rain). <b>Slice</b> plays one day, month or year per event from a start you choose; bookmarks jump to named moments. <b>Lin</b> cuts the range into equal steps, <b>Log</b> into equal ratios, and <b>Rank</b> gives every level the same number of values (it hides how far apart they are). <b>Signed</b> cuts the same width either side of zero, so with an odd number of levels zero has its own middle level. <b>Zero = rest</b> makes zero silent; gaps in the record are always silent. <b>Flip</b> turns the mapping upside down: listeners expect more to sound higher for most quantities, so flip only on purpose. Days a gauge marked as ice-affected play a muted tick and are shaded. The synthetic twin swaps each real lane for its nearest seeded model, to hear what the real data add.</dd>
+      <dt>Score</dt><dd>Copy score gives the loop as notes in musical terms: beat, date, raw value, level, MIDI number, pitch name, note value, dynamic and articulation, under a header with the key and tempo.</dd>
       <dt>Temporal pattern</dt><dd>The share of events whose level follows a slow curve over the loop instead of chance, so you can test whether a pattern comes through.</dd>
       <dt>V3</dt><dd>A third variable over time. It does not sit in the matrix: it changes how many events sound (density) or how fast they come (pace), not how each note sounds.</dd>
       <dt>Drum and drone</dt><dd>The drum lane is a first look at a percussion layer: one drum on sixteen steps under the pair, with one variable, V4, on one of its channels at four levels. The drone bed is a held chord on the key's root and carries no data.</dd>
@@ -374,7 +415,7 @@ textarea.json { width: 100%; min-height: 140px; font: 12px var(--font-mono); bac
   </section>
 
   <footer>
-    <p>Design logic from <a href="https://github.com/ebertini/channel-brewer" target="_blank" rel="noopener">Channel Brewer</a> by Enrico Bertini (a visual-channel picker, itself after ColorBrewer), taken as an idea only; this page is new code. Synthesis runs in the page: eight channels in the matrix with more on the bench, eleven synthetic voices, a drum lane with five drums and a drone bed, a choice of key and scale (D major pentatonic to start), a 4-second loop, peak capped at −6 dBFS with a limiter after it. Random data from a fixed seed. Formulas are set with <a href="https://katex.org" target="_blank" rel="noopener">KaTeX</a> (MIT), shipped with the page.</p>
+    <p>Design logic from <a href="https://github.com/ebertini/channel-brewer" target="_blank" rel="noopener">Channel Brewer</a> by Enrico Bertini (a visual-channel picker, itself after ColorBrewer), taken as an idea only; this page is new code. Synthesis runs in the page: eight channels in the matrix with more on the bench, eleven synthetic voices, a drum lane with five drums and a drone bed, a choice of key and scale (D major pentatonic to start), a 4-second loop, peak capped at −6 dBFS with a limiter after it. Random data from a fixed seed, or real series built by script from the data already published on this site (each series names its source and licence in the V1 or V2 shape row). Formulas are set with <a href="https://katex.org" target="_blank" rel="noopener">KaTeX</a> (MIT), shipped with the page.</p>
     <p>Keys: arrows move in the matrix, Enter plays the pair, Space stops (in the matrix), Escape stops anywhere.</p>
   </footer>
 </div>

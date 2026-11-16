@@ -7,7 +7,9 @@ https://cordilleran.github.io/sonify-viz/sound-channel-brewer.html.
 Everything runs in the browser: `channels.js` (the channels and their levels), `pool.js`
 (seeded draws, data models, layouts, the explanations), `map.js` (events to notes),
 `dsp.js` (synthesis into a looping buffer), `drum.js` (the drum lane, V4), `viz.js` (the strips)
-and `main.js` (the page).
+`series.js` (real series: Fit, Slice, transforms and binning) and `main.js` (the page).
+`series.json` holds the real series, each with its source and licence line. It is built by
+`scripts/build_brewer_series.py` from files already in this repository's `data/` folder.
 The panel "How the data are made" shows the same rules in plain words, as formulas and as
 the source of the functions that run.
 

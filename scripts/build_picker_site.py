@@ -3,7 +3,7 @@
 The source index.html is a page fragment (no doctype, Google Fonts, follows the viewer's
 light or dark theme). For the site this wraps it in a full document, swaps Google Fonts for
 the site's own fonts (listen/fonts), starts it dark like the rest of the site, and copies
-only what the page loads: the seven modules, vendored KaTeX with its licence, and a README
+only what the page loads: the modules, the series pack (series.json), vendored KaTeX with its licence, and a README
 written for this repository. The tests and the local server stay with the source.
 
 Usage: python3 -I build_picker_site.py <picker source dir> <output dir named sound-channel-brewer>
@@ -13,7 +13,8 @@ import shutil
 import sys
 from pathlib import Path
 
-MODULES = ["main.js", "channels.js", "pool.js", "map.js", "dsp.js", "viz.js", "drum.js", "drone.js"]
+MODULES = ["main.js", "channels.js", "pool.js", "map.js", "dsp.js", "viz.js", "drum.js", "drone.js", "series.js"]
+DATA = ["series.json"]  # fetched by main.js; built by scripts/build_brewer_series.py from data already in this repository
 VENDOR = ["katex.min.js", "katex-LICENSE.txt"]
 SITE_FONTS = """--font-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-label: "Atkinson Hyperlegible", system-ui, sans-serif;
@@ -28,7 +29,9 @@ https://cordilleran.github.io/sonify-viz/sound-channel-brewer.html.
 Everything runs in the browser: `channels.js` (the channels and their levels), `pool.js`
 (seeded draws, data models, layouts, the explanations), `map.js` (events to notes),
 `dsp.js` (synthesis into a looping buffer), `drum.js` (the drum lane, V4), `viz.js` (the strips)
-and `main.js` (the page).
+`series.js` (real series: Fit, Slice, transforms and binning) and `main.js` (the page).
+`series.json` holds the real series, each with its source and licence line. It is built by
+`scripts/build_brewer_series.py` from files already in this repository's `data/` folder.
 The panel "How the data are made" shows the same rules in plain words, as formulas and as
 the source of the functions that run.
 
@@ -44,7 +47,19 @@ taken as an idea only; this is new code under the repository's licence (MPL-2.0)
 """
 
 
+def check_modules(src: Path) -> None:
+    """Every module the page imports must be in MODULES, or the site page fails to load (11-15: drone.js was missed)."""
+    imported = set()
+    for m in src.glob("*.js"):
+        imported |= set(re.findall(r"""from\s*['"]\./([\w-]+\.js)['"]""", m.read_text(encoding="utf-8")))
+    imported.add("main.js")
+    missing = sorted(imported - set(MODULES))
+    if missing:
+        raise SystemExit(f"modules imported but not copied to the site: {', '.join(missing)}; add them to MODULES")
+
+
 def build(src: Path, out: Path) -> None:
+    check_modules(src)
     page = (src / "index.html").read_text(encoding="utf-8")
     # The site serves its own fonts: drop the Google Fonts links and point the tokens at the site's faces.
     page = re.sub(r'<link rel="preconnect" href="https://fonts\.googleapis\.com">\n', "", page)
@@ -72,6 +87,8 @@ def build(src: Path, out: Path) -> None:
     (out / "index.html").write_text(doc, encoding="utf-8")
     for m in MODULES:
         shutil.copy2(src / m, out / m)
+    for d in DATA:
+        shutil.copy2(src / d, out / d)
     for v in VENDOR:
         shutil.copy2(src / "vendor" / v, out / "vendor" / v)
     (out / "README.md").write_text(README, encoding="utf-8")

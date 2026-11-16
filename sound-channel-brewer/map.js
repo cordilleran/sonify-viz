@@ -6,6 +6,7 @@ import { byId, levels, restOf, DEFAULT_VOICE, ALL_CHANNELS, LAYOUTS, UNAVAILABLE
   MIN_LEVELS, MATRIX_SIZE, DEFAULT_SLOTS, maxLevelsOf } from './channels.js';
 import { MODEL_IDS, STREAM_IDS, STREAM_USES, MAX_SEED } from './pool.js';
 import { DRONE_MODE_IDS, DRONE_DEFAULTS, DRONE_LEVEL_RANGE, BREATHS } from './drone.js';
+import { TRANSFORMS, TIME_MODES } from './series.js';
 
 /** Transition (crossfade) length in seconds, 11-15. */
 export const TRANSITION_RANGE = [0.05, 12];
@@ -88,11 +89,13 @@ export function mapEvents(events, s) {
       wet: p.distance,
       vib: p.vibrato,
       inst: s.voice ?? DEFAULT_VOICE,
-      artic: sustained ? 'sustain' : p.articulation,
+      // A flagged day (ice on the gauge) plays with a muted tick, unless a lane already uses articulation.
+      artic: sustained ? 'sustain' : e.flag && s.c1 !== 'articulation' && s.c2 !== 'articulation' ? 'tick' : p.articulation,
       dim,
       sustained,
       v1: e.v1,
       v2: e.v2,
+      ...(e.k != null ? { k: e.k, flag: !!e.flag } : {}),
     };
   });
 }
@@ -122,6 +125,7 @@ export function levelNotes(s, which, k) {
 
 /** The kept pair as JSON: enough to bind it to a data lane later, and to play the same loop again. */
 export function bindingJSON(s) {
+  const src = (v) => (v === 'V1' ? s.src1 : s.src2) ?? null;
   const one = (ch, n, v) => ({
     variable: v,
     channel: ch,
@@ -129,11 +133,13 @@ export function bindingJSON(s) {
     levels: levels(ch, n, s).map((x) => (typeof x === 'number' ? +x.toFixed(4) : x)),
     labels: levels(ch, n, s).map(byId[ch].format),
     range: byId[ch].range,
-    tag: 'S',
+    tag: src(v) && !s.twin ? 'D' : 'S',
+    ...(src(v) ? { source: { series: src(v).series, transform: src(v).transform, zeroRest: !!src(v).zeroRest, signed: !!src(v).signed, flip: !!src(v).flip, start: src(v).start ?? 0 } } : {}),
   });
+  const anyReal = !!(s.src1 || s.src2);
   return {
-    schema: 'sound-channel-brewer/pair@4',
-    note: 'Tag S: a design choice, chosen by ear on random data. Bind a data lane to make it D.',
+    schema: anyReal ? 'sound-channel-brewer/pair@5' : 'sound-channel-brewer/pair@4', // synthetic-only pairs stay pair@4, so older pages still read them
+    note: anyReal ? 'Tag D: the lane plays a real series (its source says which and how). Tag S: a design choice on seeded data.' : 'Tag S: a design choice, chosen by ear on random data. Bind a data lane to make it D.',
     layout: s.layout,
     voice: s.voice ?? DEFAULT_VOICE,
     pitch: { octave: s.octave, span: s.span, root: s.root ?? PITCH_DEFAULTS.root, scale: s.scale ?? PITCH_DEFAULTS.scale },
@@ -143,8 +149,21 @@ export function bindingJSON(s) {
     drum: s.drum && s.drum.voice !== 'off' ? { voice: s.drum.voice, V4: s.drum.model, drives: s.drum.channel, level: s.drum.level ?? DRUM_DEFAULTS.level } : null,
     drone: s.drone && s.drone.mode !== 'off' ? { ...s.drone } : null,
     // What else the loop depends on, so pasting this back plays the same sound (pair@3; variation and transition since pair@4).
-    play: { seed: s.seed, variation: s.variation ?? 0, direction: s.direction ?? 1, count: s.count, pattern: s.corr, patternOn: s.target, solo: s.solo ?? null, matrix: s.slots ?? null, transition: s.transition ?? TRANSITION_DEFAULT },
+    play: { seed: s.seed, variation: s.variation ?? 0, direction: s.direction ?? 1, count: s.count, pattern: s.corr, patternOn: s.target, solo: s.solo ?? null, matrix: s.slots ?? null, transition: s.transition ?? TRANSITION_DEFAULT,
+      ...(anyReal ? { time: s.time ?? 'fit', twin: !!s.twin } : {}) },
   };
+}
+
+/** A lane's source block from a pair@5 JSON, checked. `ids` lists the series the page has loaded (null: the pack failed). */
+function readSource(src, i, ids) {
+  if (!src) return null;
+  if (typeof src !== 'object' || typeof src.series !== 'string') throw new Error(`Lane V${i + 1} source must name a series.`);
+  if (!ids) throw new Error(`Lane V${i + 1} plays the real series "${src.series}", but the series could not be loaded on this page.`);
+  if (!ids.includes(src.series)) throw new Error(`Lane V${i + 1} series "${src.series}" is not one of: ${ids.join(', ')}.`);
+  if (!TRANSFORMS.includes(src.transform)) throw new Error(`Lane V${i + 1} transform "${src.transform}" is not one of: ${TRANSFORMS.join(', ')}.`);
+  const start = src.start ?? 0;
+  if (!Number.isInteger(start) || start < 0) throw new Error(`Lane V${i + 1} start must be a whole number from 0.`);
+  return { series: src.series, transform: src.transform, zeroRest: !!src.zeroRest, signed: !!src.signed, flip: !!src.flip, start };
 }
 
 /**
@@ -155,7 +174,7 @@ export function bindingJSON(s) {
 export function pairFromJSON(j, o = {}) {
   if (!j || typeof j !== 'object') throw new Error('This is not a JSON object.');
   const m = /^sound-channel-brewer\/pair@(\d+)$/.exec(j.schema ?? '');
-  if (!m || +m[1] < 2 || +m[1] > 4) throw new Error(`Unknown schema "${j.schema}"; this page reads pair@2 to pair@4.`);
+  if (!m || +m[1] < 2 || +m[1] > 5) throw new Error(`Unknown schema "${j.schema}"; this page reads pair@2 to pair@5.`);
   const notes = [];
   const oneOf = (v, list, what) => { if (!list.includes(v)) throw new Error(`${what} "${v}" is not one of: ${list.join(', ')}.`); return v; };
   const ids = ALL_CHANNELS.map((c) => c.id);
@@ -177,6 +196,9 @@ export function pairFromJSON(j, o = {}) {
     drum: j.drum ? { voice: oneOf(j.drum.voice, DRUM_IDS.filter((d) => d !== 'off'), 'Drum'), model: oneOf(j.drum.V4, MODEL_IDS, 'V4 data model'), channel: oneOf(j.drum.drives, DRUM_CHANNEL_IDS, 'V4 drives'), level: drumLevel(j.drum.level) } : { ...DRUM_DEFAULTS, ...(o.drum ?? {}), voice: 'off' },
     stream: j.stream ? { model: oneOf(j.stream.V3, STREAM_IDS, 'V3 model'), use: oneOf(j.stream.drives, STREAM_USES, 'V3 drives') } : { model: o.stream?.model ?? 'seasonal', use: 'off' },
   };
+  [st.src1, st.src2] = j.lanes.map((l, i) => readSource(l.source, i, o.seriesIds ?? null));
+  st.time = j.play?.time ? oneOf(j.play.time, TIME_MODES, 'Time mode') : (o.time ?? 'fit');
+  st.twin = !!j.play?.twin;
   [st.n1, st.n2] = j.lanes.map((l, i) => {
     const n = Array.isArray(l.levels) ? l.levels.length : NaN;
     const ch = i ? c2 : c1;
