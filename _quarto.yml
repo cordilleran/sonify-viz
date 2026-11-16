@@ -35,6 +35,7 @@ project:
     - figs/climate_pacific_1958_2025_check.png
     - figs/climate_atlantic_1958_2025_check.png
     - audio/*
+    - media/brewer-v4/*
     - climate/viz.js
     - climate/viz_pacific.json
     - climate/viz_atlantic.json

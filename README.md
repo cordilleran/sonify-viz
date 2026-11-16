@@ -38,6 +38,7 @@ A learning workbench for turning environmental data into music and pictures. It 
 | `lightning/` | 2424/461: the page, its data (flashes, reanalysis, map layers, relief tiles) and audio; `lightning.qmd` frames it in the site; credits for every source are on the page |
 | `sound-channel-brewer/` | the Sound Channel Brewer (plain ES modules and Web Audio, no framework), with its own README; `series.json` holds the real series, each with its source and licence line, built by `scripts/build_brewer_series.py` from `data/`; `sound-channel-brewer.qmd` frames it in the site |
 | `shared/` | design tokens shared by the pages |
+| `media/` | short sample clips and videos for announcements (`media/brewer-v4/`: the Sound Channel Brewer's presets and three chosen pairs), rendered from the live page |
 | `variants/`, `remixes/` | named variants of a track, and remixes of published tracks (see `CONTRIBUTING.md`) |
 
 ## Rebuild

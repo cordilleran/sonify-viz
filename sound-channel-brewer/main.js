@@ -426,7 +426,7 @@ function applyPreset(p) {
     const bm = [src1, src2].map((x) => seriesOf(x.series).bookmarks.find((b) => b.label === z.start)).find(Boolean);
     if (bm) { src1.start = bm.start; src2.start = bm.start; }
   }
-  const ok = applyChanges({ c1: z.c1, c2: z.c2, n1: z.n1, n2: z.n2, layout: z.layout, count: z.count, time: z.mode, twin: false, src1, src2, solo: null, corr: 0, stream: { ...S.stream, use: 'off' } }, `Preset: ${p.title}.`);
+  const ok = applyChanges({ c1: z.c1, c2: z.c2, n1: z.n1, n2: z.n2, layout: z.layout, count: z.count, time: z.mode, voice: z.voice ?? S.voice, octave: z.octave ?? S.octave, twin: false, src1, src2, solo: null, corr: 0, stream: { ...S.stream, use: 'off' } }, `Preset: ${p.title}.`);
   if (ok) { activePreset = p.id; $('preset-o').textContent = p.sketch; } else $('preset-o').textContent = $('load-o').textContent;
   return ok;
 }

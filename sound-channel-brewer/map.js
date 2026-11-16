@@ -2,7 +2,7 @@
  * Events plus a chosen pair of channels become notes with physical values.
  * Pure. The crowding guard and the solo live here, so the tests can see them.
  */
-import { byId, levels, restOf, DEFAULT_VOICE, ALL_CHANNELS, LAYOUTS, UNAVAILABLE, VOICES, OCTAVES, SPANS, PITCH_DEFAULTS, ROOTS, SCALE_IDS,
+import { byId, levels, restOf, DEFAULT_VOICE, LEGACY_VOICE, ALL_CHANNELS, LAYOUTS, UNAVAILABLE, VOICES, OCTAVES, SPANS, PITCH_DEFAULTS, ROOTS, SCALE_IDS,
   MIN_LEVELS, MATRIX_SIZE, DEFAULT_SLOTS, maxLevelsOf } from './channels.js';
 import { MODEL_IDS, STREAM_IDS, STREAM_USES, MAX_SEED } from './pool.js';
 import { DRONE_MODE_IDS, DRONE_DEFAULTS, DRONE_LEVEL_RANGE, BREATHS } from './drone.js';
@@ -185,7 +185,7 @@ export function pairFromJSON(j, o = {}) {
   if (UNAVAILABLE[layout][c1] || UNAVAILABLE[layout][c2]) throw new Error(`The ${layout} layout cannot carry ${UNAVAILABLE[layout][c1] ? c1 : c2}.`);
   const st = {
     c1, c2, layout,
-    voice: oneOf(j.voice ?? DEFAULT_VOICE, VOICES.map((v) => v.id), 'Voice'),
+    voice: oneOf(j.voice ?? LEGACY_VOICE, VOICES.map((v) => v.id), 'Voice'),
     octave: oneOf(j.pitch?.octave ?? PITCH_DEFAULTS.octave, OCTAVES, 'Octave'),
     span: oneOf(j.pitch?.span ?? PITCH_DEFAULTS.span, SPANS, 'Span'),
     root: oneOf(j.pitch?.root ?? PITCH_DEFAULTS.root, ROOTS, 'Key root'),

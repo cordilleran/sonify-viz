@@ -62,7 +62,8 @@ export const VOICES = [
   { id: 'pluck', label: 'Pluck', desc: 'a plucked string (Karplus-Strong)' },
   { id: 'breath', label: 'Breath', desc: 'a reed tone mixed with soft noise' },
 ];
-export const DEFAULT_VOICE = 'reed';
+export const DEFAULT_VOICE = 'organ'; // DK81 (11-16): the reed was grating as the first sound heard
+export const LEGACY_VOICE = 'reed'; // the default before DK81, kept for pair JSON that names no voice
 
 export const ARTICULATIONS = [
   { id: 'soft', label: 'Soft' },

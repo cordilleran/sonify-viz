@@ -64,3 +64,5 @@ under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). The weather valu
 Medium-Range Weather Forecasts (ECMWF), CC BY 4.0, taken from ECMWF's open data (data.ecmwf.int) by scripts/fetch_aifs_open.py at Godbout village; the saved point series is
 data/meteogram/aifs_godbout_village_ecmwf_20261016.json. The banner is derived from the GEBCO 2025 Grid (GEBCO Compilation Group, doi 10.5285/37c52e96-24ea-67ce-e063-7086abc05f29; public domain, not for navigation). Instrument samples:
 VSCO 2 CE and Karoryfer Samples Big Rusty Drums, War Tuba and Bear Sax, all CC0.
+
+Sound Channel Brewer samples: the clips and videos in media/brewer-v4/ are licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). They are the page's own synthesis (no instrument samples), rendered from its presets and from pairs chosen on seeded random data. Data: Water Survey of Canada (HYDAT daily discharge) and Environment and Climate Change Canada (daily climate data), containing information licensed under the Open Government Licence - Canada; NOAA Climate Prediction Center, Oceanic Nino Index (U.S. Government work, public domain).

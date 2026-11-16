@@ -189,26 +189,26 @@ function binTex(series, src, b, n) {
   return String.raw`${lhs},\quad ${tail}`;
 }
 
-/** Three presets (DK72): each sketches a mapping and has one "Try this" that flips one setting. */
+/** Three presets (DK72): each sketches a mapping and has one "Try this" that flips one setting. Each names its voice and octave (DK81). */
 export const PRESETS = [
   {
     id: 'flow-temp', title: 'Granby flow on pitch, Summerland temperature on brightness',
     sketch: 'Water Year Rings in miniature: the freshet climbs in pitch while the year warms and cools in tone colour.',
-    set: { c1: 'pitch', c2: 'brightness', n1: 5, n2: 5, layout: 'grid', count: 32, mode: 'fit', src1: { series: 'granby' }, src2: { series: 'summerland-temp' } },
+    set: { c1: 'pitch', c2: 'brightness', n1: 5, n2: 5, layout: 'grid', count: 32, mode: 'fit', voice: 'organ', octave: 3, src1: { series: 'granby' }, src2: { series: 'summerland-temp' } },
     tryLabel: 'Try: Log to Lin on the flow', try: (S) => ({ src1: { ...S.src1, transform: S.src1?.transform === 'lin' ? 'log' : 'lin' } }),
     teach: 'With Lin, most of the year sits on the lowest level and only the freshet climbs; Log spreads the low flows out.',
   },
   {
     id: 'temp-precip', title: 'Summerland temperature and precipitation',
     sketch: 'The climate pair at one station: temperature on pitch, rain on loudness, dry days as rests.',
-    set: { c1: 'pitch', c2: 'loudness', n1: 5, n2: 4, layout: 'grid', count: 16, mode: 'slice', start: 'Wettest day', src1: { series: 'summerland-temp' }, src2: { series: 'summerland-precip' } },
+    set: { c1: 'pitch', c2: 'loudness', n1: 5, n2: 4, layout: 'grid', count: 16, mode: 'slice', voice: 'soft', octave: 3, start: 'Wettest day', src1: { series: 'summerland-temp' }, src2: { series: 'summerland-precip' } },
     tryLabel: 'Try: swap the channels', try: (S) => ({ c1: S.c2, c2: S.c1, n1: S.n2, n2: S.n1 }),
     teach: 'Rain on pitch makes the wet days jump out as melody; on loudness they are accents under the temperature line.',
   },
   {
     id: 'oni-pan', title: 'ENSO on pitch and pan',
     sketch: 'Sixty-eight years of the Oceanic Niño Index on two channels at once: El Niño high and right, La Niña low and left.',
-    set: { c1: 'pitch', c2: 'pan', n1: 5, n2: 5, layout: 'grid', count: 48, mode: 'fit', src1: { series: 'oni' }, src2: { series: 'oni' } },
+    set: { c1: 'pitch', c2: 'pan', n1: 5, n2: 5, layout: 'grid', count: 48, mode: 'fit', voice: 'marimba', octave: 3, src1: { series: 'oni' }, src2: { series: 'oni' } },
     tryLabel: 'Try: 5 levels to 4', try: (S) => ({ n1: S.n1 === 4 ? 5 : 4, n2: S.n2 === 4 ? 5 : 4 }),
     teach: 'With five levels a neutral year has its own middle note and sits in the centre; with four there is no middle, so neutral sounds like a weak El Niño.',
   },
