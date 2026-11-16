@@ -13,7 +13,7 @@ import shutil
 import sys
 from pathlib import Path
 
-MODULES = ["main.js", "channels.js", "pool.js", "map.js", "dsp.js", "viz.js", "drum.js"]
+MODULES = ["main.js", "channels.js", "pool.js", "map.js", "dsp.js", "viz.js", "drum.js", "drone.js"]
 VENDOR = ["katex.min.js", "katex-LICENSE.txt"]
 SITE_FONTS = """--font-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-label: "Atkinson Hyperlegible", system-ui, sans-serif;

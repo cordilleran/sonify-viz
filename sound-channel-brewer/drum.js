@@ -30,7 +30,7 @@ export const drumById = Object.fromEntries(DRUM_CHANNELS.map((c) => [c.id, c]));
 export const DRUM_CHANNEL_IDS = DRUM_CHANNELS.map((c) => c.id);
 export const DRUM_DEFAULTS = { voice: 'off', channel: 'accent', model: 'seasonal', level: -6 };
 /** The lane's own level control, in dB on top of the accent; it starts 6 dB down so the drum sits under the pair. */
-export const DRUM_LEVEL_RANGE = [-24, 0];
+export const DRUM_LEVEL_RANGE = [-24, 6]; // 11-15: up to +6 dB, GW found the drums too quiet on laptop speakers
 
 /** The model sees one step's draws; k decides whether the step sounds under "Hit chance". */
 const view = (d) => ({ u: d.u, z: d.z, b: d.b });

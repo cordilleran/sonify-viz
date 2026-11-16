@@ -3,35 +3,47 @@
  * State lives in `S`; every change calls `update()`, which re-renders the loop and redraws.
  */
 import { DEFAULT_SLOTS, benchOf, UNAVAILABLE, LAYOUTS, LAYOUT_INFO, byId, levels, pairInfo, pairKey, clampLevels, maxLevelsOf, FROM_OUR_PIECES,
-  VOICES, DEFAULT_VOICE, OCTAVES, SPANS, PITCH_DEFAULTS } from './channels.js';
-import { rng, makePool, eventsFor, DEFAULT_SEED, MODELS, MODEL_IDS, STREAM_MODELS, STREAM_IDS, STREAM_USES, streamAt, explain } from './pool.js';
-import { mapEvents, crowding, levelNotes, bindingJSON, pairFromJSON } from './map.js';
+  VOICES, DEFAULT_VOICE, OCTAVES, SPANS, PITCH_DEFAULTS, SCALES, SCALE_IDS, ROOTS, NOTE_NAMES } from './channels.js';
+import { rng, poolFor, MAX_SEED, eventsFor, DEFAULT_SEED, MODELS, MODEL_IDS, STREAM_MODELS, STREAM_IDS, STREAM_USES, streamAt, explain } from './pool.js';
+import { mapEvents, crowding, levelNotes, bindingJSON, pairFromJSON, TRANSITION_RANGE, TRANSITION_DEFAULT } from './map.js';
+import { DRONE_MODES, DRONE_DEFAULTS, DRONE_LEVEL_RANGE, BREATHS, droneSpec, explainDrone } from './drone.js';
 import { DRUMS, DRUM_CHANNELS, DRUM_DEFAULTS, DRUM_LEVEL_RANGE, DRUM_STEPS, drumById, drumHits, explainDrum } from './drum.js';
 import { render } from './dsp.js';
 import { spectrogram, drawData, drawScore, drawWave, drawSpec, timeTicks, FMIN, FMAX } from './viz.js';
 
 const LOOP = 4;
 const MASTER_TRIM = 0.8; // headroom: the rendered loop peaks at −6 dBFS and a limiter sits after this gain
-const XFADE = 0.35; // seconds: a change crossfades like a turned knob, not a cut
+const DUCK_BACK = 0.35; // seconds for a dipped loop to come back after a legend audition
+const YOUNG_CUT = 0.25; // a loop still fading in when the next change comes leaves this fast, so a dragged slider cannot pile up loops
+const MAX_LIVE = 8; // loops allowed to sound at once (playing or fading); older ones are faded out fast
 const DUCK = 0.2; // loop gain while a legend button plays its level over it
 const $ = (id) => document.getElementById(id);
 
 const S = {
   c1: 'pitch', c2: 'brightness', n1: 5, n2: 5,
   layout: 'grid', count: 16, corr: 0, target: 'both',
-  seed: DEFAULT_SEED, solo: null, vol: 0.6,
+  seed: DEFAULT_SEED, variation: 0, direction: 1, transition: TRANSITION_DEFAULT, solo: null, vol: 0.6,
   voice: DEFAULT_VOICE, ...PITCH_DEFAULTS,
   slots: [...DEFAULT_SLOTS], lastSwap: null,
   m1: 'uniform', m2: 'uniform', stream: { model: 'seasonal', use: 'off' },
   drum: { ...DRUM_DEFAULTS },
+  drone: { ...DRONE_DEFAULTS },
   show: { data: true, score: true, wave: true, spec: true },
 };
-let pool = makePool(S.seed);
+let pool = poolFor(S.seed, S.variation, S.direction);
+const rebuildPool = () => { pool = poolFor(S.seed, S.variation, S.direction); };
 let cur = null; // { notes, buf, spec }
 
 /* ---------- audio ---------- */
+/*
+ * Every source that is playing or fading sits in `live`, and all of them pass through one gate, so Stop silences
+ * all of them, not only the newest (DK57: in Firefox on Android, Stop left a crossfaded loop playing).
+ */
+const live = new Set();
+let gate = null, gateClosed = false;
 let ctx = null, master = null, loopSrc = null, loopGain = null, startAt = 0, playing = false, oneShot = null, rafId = 0;
 
+const dbLabel = (v) => `${v > 0 ? '+' : ''}${v} dB`.replace('-', '−');
 function ensureCtx() {
   if (ctx) return ctx;
   ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -40,6 +52,8 @@ function ensureCtx() {
   master = ctx.createGain();
   master.gain.value = S.vol * MASTER_TRIM;
   master.connect(lim).connect(ctx.destination);
+  gate = ctx.createGain();
+  gate.connect(master);
   return ctx;
 }
 const sr = () => (ctx ? ctx.sampleRate : 48000);
@@ -50,9 +64,26 @@ function toAudioBuffer(b) {
   return ab;
 }
 
+function openGate() {
+  if (!gateClosed) return;
+  // A fresh gate: sources still dying behind the closed one stay silent even if Play comes within 50 ms of Stop.
+  gate = ctx.createGain();
+  gate.connect(master);
+  gateClosed = false;
+}
+/** Track a source until it ends, then let it go. */
+function track(src, g) {
+  const e = { src, g };
+  live.add(e);
+  src.addEventListener('ended', () => { live.delete(e); try { src.disconnect(); g.disconnect(); } catch { /* already gone */ } });
+  return e;
+}
+/** For the browser checks only: how many sources sound, whether the gate is shut, the context state. */
+window.__scbAudio = () => ({ live: live.size, gateClosed, state: ctx ? ctx.state : 'none', playing });
 function startLoop() {
   ensureCtx();
   if (ctx.state === 'suspended') ctx.resume();
+  openGate();
   stopOneShot();
   if (cur.buf.sr !== ctx.sampleRate) { renderLoop(); draw(); } // the strips must show what plays
   const now = ctx.currentTime;
@@ -61,13 +92,20 @@ function startLoop() {
   src.buffer = toAudioBuffer(cur.buf);
   src.loop = true;
   const g = ctx.createGain();
-  // A change while playing crossfades (equal power) from the old loop at the same point in the loop.
-  const fade = playing ? XFADE : 0.03;
+  // A change while playing crossfades (equal power) from the old loop at the same point in the loop, over the transition length.
+  const fade = playing ? S.transition : 0.03;
   g.gain.value = 0;
   curveGain(g, 0, 1, fade);
-  src.connect(g).connect(master);
+  src.connect(g).connect(gate);
   src.start(now, offset);
-  fadeOut(loopSrc, loopGain, fade);
+  if (loopSrc) {
+    const p = plans.get(loopGain), young = p && p.rising && now < p.t1 - 0.01;
+    fadeOut(loopSrc, loopGain, young ? Math.min(fade, YOUNG_CUT) : fade);
+  }
+  track(src, g);
+  if (live.size > MAX_LIVE) {
+    for (const e of live) { if (live.size <= MAX_LIVE || e.src === src) break; fadeOut(e.src, e.g, 0.05); live.delete(e); }
+  }
   loopSrc = src; loopGain = g; startAt = now - offset; playing = true;
   $('play').textContent = 'Playing';
   if (!rafId) rafId = requestAnimationFrame(tick);
@@ -91,23 +129,40 @@ function rampGain(g, target, dur) {
   g.gain.linearRampToValueAtTime(target, t + dur);
   plans.set(g, { t0: t, t1: t + dur, at: (f) => v + (target - v) * f });
 }
-/** An equal-power fade (quarter sine), so two different loops crossfading keep their summed power. */
+/**
+ * An equal-power fade (quarter sine), so two different loops crossfading keep their summed power.
+ * Built from short linear ramps, not setValueCurveAtTime: Firefox refuses any new event while a curve runs
+ * ("Can't add events during a curve event"), which broke Stop mid-fade (DK57). A ramp ends at its own time,
+ * so cancelScheduledValues removes it cleanly in every browser.
+ */
 function curveGain(g, from, to, dur) {
-  const t = ctx.currentTime, n = 64;
+  const t = ctx.currentTime, n = Math.max(4, Math.min(48, Math.ceil(dur / 0.05)));
   const at = (f) => (to > from ? from + (to - from) * Math.sin((Math.PI / 2) * f) : to + (from - to) * Math.cos((Math.PI / 2) * f));
   g.gain.cancelScheduledValues(t);
-  g.gain.setValueCurveAtTime(Float32Array.from({ length: n }, (_, i) => at(i / (n - 1))), t, dur);
-  plans.set(g, { t0: t, t1: t + dur, at });
+  g.gain.setValueAtTime(from, t);
+  for (let i = 1; i <= n; i++) g.gain.linearRampToValueAtTime(at(i / n), t + (dur * i) / n);
+  plans.set(g, { t0: t, t1: t + dur, at, rising: to > from });
 }
 
 function fadeOut(src, g, dur = 0.03) {
   if (!src) return;
   curveGain(g, gainNow(g, ctx.currentTime), 0, dur);
-  src.stop(ctx.currentTime + dur + 0.02);
+  try { src.stop(ctx.currentTime + dur + 0.02); } catch { /* already stopped */ }
 }
 
+/** Stop everything: close the gate in 30 ms, stop every live source, and suspend the context shortly after as a backstop. */
 function stopAll() {
-  if (ctx) { fadeOut(loopSrc, loopGain); stopOneShot(); }
+  if (ctx) {
+    const t = ctx.currentTime;
+    gate.gain.cancelScheduledValues(t);
+    gate.gain.setValueAtTime(gateClosed ? 0 : 1, t);
+    gate.gain.linearRampToValueAtTime(0, t + 0.03);
+    gateClosed = true;
+    for (const e of live) { try { e.src.stop(t + 0.05); } catch { /* already stopped */ } }
+    oneShot = null;
+    const c = ctx;
+    setTimeout(() => { if (!playing && !oneShot && c.state === 'running') c.suspend().catch(() => {}); }, 150);
+  }
   loopSrc = null; loopGain = null; playing = false;
   $('play').textContent = 'Play';
   document.querySelectorAll('.ph').forEach((p) => { p.style.opacity = 0; });
@@ -119,6 +174,7 @@ function stopOneShot() { if (oneShot) { fadeOut(oneShot.src, oneShot.g); oneShot
 function auditionLevel(which, k) {
   ensureCtx();
   if (ctx.state === 'suspended') ctx.resume();
+  openGate();
   stopOneShot();
   if (playing && loopGain) rampGain(loopGain, DUCK, 0.06);
   // Ceiling 1: a lone note must not be turned down, or the loudness levels would sound alike.
@@ -126,13 +182,13 @@ function auditionLevel(which, k) {
   const src = ctx.createBufferSource();
   src.buffer = toAudioBuffer(b);
   const g = ctx.createGain();
-  src.connect(g).connect(master);
+  src.connect(g).connect(gate);
   src.start();
-  oneShot = { src, g };
+  oneShot = track(src, g);
   src.onended = () => {
     if (oneShot && oneShot.src !== src) return; // a newer audition took over and keeps the dip
     oneShot = null;
-    if (playing && loopGain) rampGain(loopGain, 1, XFADE);
+    if (playing && loopGain) rampGain(loopGain, 1, DUCK_BACK);
   };
 }
 
@@ -156,7 +212,7 @@ function renderLoop() {
   const ev = eventsFor(pool, s);
   const notes = mapEvents(ev, s);
   const hits = drumHits(pool, s.drum, LOOP);
-  const buf = render(notes, { sr: sr(), loopSec: LOOP, seed: S.seed, hits });
+  const buf = render(notes, { sr: sr(), loopSec: LOOP, seed: S.seed, hits, drone: droneSpec(s) });
   const mono = new Float32Array(buf.L.length);
   for (let i = 0; i < mono.length; i++) mono[i] = 0.5 * (buf.L[i] + buf.R[i]);
   cur = { events: ev, notes, hits, buf, spec: spectrogram(mono, buf.sr, { nfft: 1024, hop: 384, rows: 96 }) };
@@ -218,7 +274,7 @@ function draw() {
     $('axis').append(sp);
   }
   const a = byId[s.c1], b = byId[s.c2];
-  $('strip-sum').textContent = `${cur.notes.length} events in ${LOOP} s. V1 on ${a.label.toLowerCase()}, V2 on ${b.label.toLowerCase()}${streamOn(s) ? `, V3 on ${s.stream.use}` : ''}${drumOn() ? `, ${cur.hits.length} drum hits with V4 on ${drumById[s.drum.channel].label.toLowerCase()}` : ''}. Hover a strip for values.` +
+  $('strip-sum').textContent = `${cur.notes.length} events in ${LOOP} s. V1 on ${a.label.toLowerCase()}, V2 on ${b.label.toLowerCase()}${streamOn(s) ? `, V3 on ${s.stream.use}` : ''}${droneSpec(s) ? `, a drone on ${droneSpec(s).name}` : ''}${drumOn() ? `, ${cur.hits.length} drum hits with V4 on ${drumById[s.drum.channel].label.toLowerCase()}` : ''}. Hover a strip for values.` +
     (cur.buf.scaled < 1 ? ` The loop was turned down ${(-20 * Math.log10(cur.buf.scaled)).toFixed(1)} dB to stay under the −6 dBFS cap.` : '');
 }
 
@@ -472,6 +528,7 @@ const refreshLayout = seg('layout', LAYOUTS, ['Grid', 'Cloud', 'Lines'], () => S
   }
 });
 const refreshTarget = seg('target', ['v1', 'v2', 'both'], ['V1', 'V2', 'Both'], () => S.target, (v) => { S.target = v; });
+const refreshBreaths = seg('breaths', BREATHS.map(String), BREATHS.map((b) => (b ? String(b) : 'Still')), () => String(S.drone.breaths), (v) => { S.drone = { ...S.drone, breaths: Number(v) }; });
 const refreshOct = seg('octave', OCTAVES.map(String), OCTAVES.map((o) => `D${o}`), () => String(S.octave), (v) => { S.octave = Number(v); S.solo = null; });
 const refreshSpan = seg('span', SPANS.map(String), SPANS.map((n) => `${n} oct`), () => String(S.span), (v) => { S.span = Number(v); S.solo = null; });
 /* ---------- how the data are made: plain words, formulas, code ---------- */
@@ -513,6 +570,8 @@ function fitMath() {
 function explainPanel(s) {
   const secs = explain(pool, s, cur ? cur.events : []);
   if (drumOn()) secs.push(explainDrum(pool, S.drum, cur ? cur.hits : []));
+  const dsp = droneSpec(s);
+  if (dsp) secs.push(explainDrone(dsp, LOOP));
   $('explain').innerHTML = secs.map((x) => `<section><h3>${esc(x.title)}</h3>${
     fview === 'plain' ? `<p>${esc(x.plain)}</p>` : fview === 'math' ? math(x.tex) : `<pre><code>${esc(x.code)}</code></pre>`}</section>`).join('');
   fitMath();
@@ -619,11 +678,14 @@ function nowLine() {
   const g = crowding(n, s.layout);
   $('now').innerHTML = `<b>V1 ${byId[s.c1].label}</b> × <b>V2 ${byId[s.c2].label}</b> · ${s.layout} · ${n} events · crowding ${g.gainDb.toFixed(1).replace('-', '−')} dB${s.layout === 'lines' ? '' : `, length ×${g.durScale.toFixed(2)}`}`;
   $('layout-hint').textContent = LAYOUT_INFO[s.layout] + (s.layout === 'lines' ? ' The count stops at 8, and V3 is off: held tones have no density or pace.' : '');
-  $('seed-o').textContent = `seed ${S.seed}`;
+  seedUI();
   explainPanel(s);
   $('stream-use').querySelectorAll('button').forEach((b) => { b.disabled = s.layout === 'lines'; });
   $('stream-model').disabled = s.layout === 'lines' || s.stream.use === 'off';
   $('drum-ch').disabled = $('drum-model').disabled = $('drum-level').disabled = !drumOn();
+  const dOff = S.drone.mode === 'off';
+  for (const id of ['drone-level', 'drone-depth', 'drone-bright']) $(id).disabled = dOff;
+  $('breaths').querySelectorAll('button').forEach((b) => { b.disabled = dOff; });
   const D = DRUMS.find((d) => d.id === S.drum.voice), C = drumById[S.drum.channel];
   $('drum-o').textContent = drumOn()
     ? `${D.label}: ${D.desc.toLowerCase().replace(/\.$/, '')}. V4 sets its ${C.label.toLowerCase()}: ${C.desc.charAt(0).toLowerCase()}${C.desc.slice(1)} Levels: ${C.values.map(C.format).join(', ')}. ${cur.hits.length} of ${DRUM_STEPS} steps sound.`
@@ -648,8 +710,134 @@ function refreshPieces() {
 function update() {
   renderLoop();
   refreshPieces();
-  refreshMatrix(); refreshLayout(); refreshTarget(); refreshOct(); refreshSpan(); refreshUse(); refreshView(); legends(); legendsMark(); nowLine(); draw();
+  refreshMatrix(); refreshLayout(); refreshTarget(); refreshOct(); refreshSpan(); refreshUse(); refreshView(); refreshBreaths(); legends(); legendsMark(); nowLine(); draw();
+  $('octave').querySelectorAll('button').forEach((b) => { b.textContent = `${NOTE_NAMES[S.root]}${b.dataset.v}`; });
   $('json').hidden = true;
+  scheduleTrail();
+}
+
+/* ---------- seed, variation, cousins, transition (11-15) ---------- */
+const XF_SPAN = TRANSITION_RANGE[1] / TRANSITION_RANGE[0];
+const xfFromSlider = (v) => +(TRANSITION_RANGE[0] * Math.pow(XF_SPAN, v / 100)).toFixed(2);
+const xfToSlider = (sec) => Math.round((100 * Math.log(sec / TRANSITION_RANGE[0])) / Math.log(XF_SPAN));
+const xfText = (sec) => (sec < 1 ? `${sec.toFixed(2)} s` : `${sec.toFixed(1)} s`);
+function seedUI() {
+  if (document.activeElement !== $('seed')) $('seed').value = String(S.seed);
+  $('seed-dial').setAttribute('aria-valuenow', String(S.seed));
+  $('var').value = S.variation; $('var-o').textContent = `${Math.round(S.variation * 100)} %`;
+  $('dir-o').textContent = `direction ${S.direction}${S.variation > 0 ? ` (toward seed ${pool.partner})` : ''}`;
+  $('dir-dn').disabled = S.direction <= 1; $('dir-up').disabled = S.direction >= 99;
+  $('xfade').value = xfToSlider(S.transition); $('xfade-o').textContent = xfText(S.transition);
+  const kname = `${NOTE_NAMES[S.root]} ${SCALES[S.scale].label.toLowerCase()}`;
+  $('seed-o').textContent = `Seed ${S.seed}${S.variation > 0 ? `, ${Math.round(S.variation * 100)} % of the way to seed ${pool.partner}` : ''}. Key: ${kname}.`;
+}
+/** Set the seed (wrapped into range) and hear it. */
+function setSeed(v) {
+  const n = Math.round(Number(v));
+  if (!Number.isFinite(n)) return;
+  S.seed = ((n - 1) % MAX_SEED + MAX_SEED) % MAX_SEED + 1;
+  rebuildPool(); update(); if (playing) startLoop();
+}
+/** The dial: a drag of 8 px is one seed; arrow keys step one, Page Up and Down ten. */
+function seedDial() {
+  const d = $('seed-dial');
+  let x0 = 0, y0 = 0, s0 = 0, raf = 0, on = false;
+  d.addEventListener('pointerdown', (e) => { on = true; x0 = e.clientX; y0 = e.clientY; s0 = S.seed; d.setPointerCapture(e.pointerId); e.preventDefault(); });
+  d.addEventListener('pointermove', (e) => {
+    if (!on) return;
+    const steps = Math.round(((e.clientX - x0) - (e.clientY - y0)) / 8);
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => { if (s0 + steps !== S.seed) setSeed(s0 + steps); });
+  });
+  const end = () => { on = false; };
+  d.addEventListener('pointerup', end); d.addEventListener('pointercancel', end);
+  d.addEventListener('keydown', (e) => {
+    const k = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1, PageUp: 10, PageDown: -10 }[e.key];
+    if (k) { e.preventDefault(); setSeed(S.seed + k); }
+  });
+}
+
+/* ---------- the trail, stars and the link (11-15) ---------- */
+const DWELL_MS = 2000, TRAIL_MAX = 30;
+/** Inside the site's iframe the address bar belongs to the article, so the trail leaves its history alone. */
+const EMBEDDED = /[?&]embed\b/.test(location.search) && window.parent !== window;
+const store = {
+  get(k, dflt) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : dflt; } catch { return dflt; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* storage off: the trail lasts this visit */ } },
+};
+const chipOK = (c) => c && typeof c === 'object' && typeof c.k === 'string' && typeof c.label === 'string' && c.j && typeof c.j === 'object';
+const storedChips = (k) => { const v = store.get(k, []); return Array.isArray(v) ? v.filter(chipOK) : []; };
+let trail = storedChips('scb.trail.v1'), stars = storedChips('scb.stars.v1');
+let dwellT = 0, nowKey = '';
+const keyOf = (j) => JSON.stringify(j);
+function b64e(str) { const b = new TextEncoder().encode(str); let t = ''; for (const x of b) t += String.fromCharCode(x); return btoa(t).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+function b64d(s) { const t = atob(s.replace(/-/g, '+').replace(/_/g, '/')); return new TextDecoder().decode(Uint8Array.from(t, (c) => c.charCodeAt(0))); }
+const hashOf = (j) => `#p=${b64e(keyOf(j))}`;
+function chipLabel(j) {
+  const p = j.play ?? {}, ch = (j.lanes ?? []).map((l) => (byId[l.channel]?.label ?? '?').slice(0, 5)).join('×');
+  return `${p.seed ?? '?'}${p.variation ? `~${Math.round(p.variation * 100)}` : ''} ${ch} ${NOTE_NAMES[j.pitch?.root ?? 2]}${j.drone ? ' ◦' : ''}`;
+}
+function thumb() {
+  const cv = document.createElement('canvas');
+  cv.width = 96; cv.height = 32;
+  try { drawSpec(cv.getContext('2d'), 96, 32, cur.spec, colors()); return cv.toDataURL('image/png'); } catch { return ''; }
+}
+function scheduleTrail() {
+  clearTimeout(dwellT);
+  nowKey = keyOf(bindingJSON(setting()));
+  markChips();
+  dwellT = setTimeout(commitTrail, DWELL_MS);
+}
+function commitTrail() {
+  const j = bindingJSON(setting()), k = keyOf(j);
+  if (!playing) return;
+  if (!EMBEDDED) { try { if (location.hash !== hashOf(j)) history.pushState(null, '', hashOf(j)); } catch { /* sandboxed: no address to follow */ } }
+  if (trail.some((c) => c.k === k)) return;
+  trail.unshift({ k, j, img: thumb(), label: chipLabel(j) });
+  trail = trail.slice(0, TRAIL_MAX);
+  store.set('scb.trail.v1', trail);
+  chips();
+}
+function chipEl(c, where) {
+  const d = document.createElement('div');
+  d.className = 'chip'; d.dataset.k = c.k;
+  const starred = stars.some((x) => x.k === c.k);
+  d.innerHTML = `<button class="go" type="button" title="Hear this again"><img alt=""><span class="lbl"></span></button><button class="star" type="button" aria-pressed="${starred}" aria-label="${starred ? 'Unstar' : 'Star'} this sound">${starred ? '★' : '☆'}</button>`;
+  if (typeof c.img === 'string' && c.img.startsWith('data:image/png;base64,')) d.querySelector('img').src = c.img; // set as a property, never parsed as HTML
+  d.querySelector('.lbl').textContent = c.label;
+  d.querySelector('.go').title = `Hear this again: ${c.label}`;
+  d.querySelector('.go').addEventListener('click', () => applyPair(c.j, { play: true, note: `Playing ${c.label} from your ${where}.` }));
+  d.querySelector('.star').addEventListener('click', () => {
+    if (stars.some((x) => x.k === c.k)) stars = stars.filter((x) => x.k !== c.k); else stars.unshift(c);
+    store.set('scb.stars.v1', stars);
+    chips();
+  });
+  return d;
+}
+function chips() {
+  for (const [id, list, where, empty] of [['stars', stars, 'stars', 'No stars yet.'], ['trail', trail, 'trail', 'Nothing yet: press Play and listen.']]) {
+    const box = $(id);
+    box.innerHTML = '';
+    if (!list.length) { box.innerHTML = `<p class="hint">${empty}</p>`; continue; }
+    list.forEach((c) => box.append(chipEl(c, where)));
+  }
+  markChips();
+}
+function markChips() { document.querySelectorAll('.chip').forEach((d) => d.classList.toggle('now', d.dataset.k === nowKey)); }
+function copyText(txt, okMsg, out) {
+  const fallback = () => { const ta = $('json'); ta.value = txt; ta.hidden = false; ta.focus(); ta.select(); out.textContent = 'Copy was refused here; the text is selected in the box under Copy pair as JSON.'; };
+  try { navigator.clipboard.writeText(txt).then(() => { out.textContent = okMsg; }, fallback); } catch { fallback(); }
+}
+function linkHere() {
+  const u = new URL(location.href);
+  u.searchParams.delete('embed');
+  u.hash = hashOf(bindingJSON(setting()));
+  return u.toString();
+}
+function readHash(play) {
+  const m = /^#p=([A-Za-z0-9_-]+)$/.exec(location.hash);
+  if (!m) return false;
+  try { return applyPair(JSON.parse(b64d(m[1])), { play, note: 'Set from the page address.' }); } catch { return false; }
 }
 
 function pieces() {
@@ -691,26 +879,51 @@ function embed() {
 /** Play a pair from pasted or opened JSON: the same JSON gives the same loop. */
 function loadPair(text) {
   const out = $('load-o');
+  let j;
+  try { j = JSON.parse(text); } catch (e) { out.textContent = `Not valid JSON: ${e.message}`; return; }
+  if (j && /^sound-channel-brewer\/stars@1$/.test(j.schema ?? '') && Array.isArray(j.stars)) {
+    let added = 0;
+    for (const p of j.stars) {
+      let q;
+      try { q = bindingJSON({ ...setting(), ...pairFromJSON(p, S).state }); } catch { continue; } // only pairs this page can play, kept in this page's own form
+      const k = keyOf(q);
+      if (stars.some((x) => x.k === k)) continue;
+      stars.push({ k, j: q, img: '', label: chipLabel(q) }); added++;
+    }
+    store.set('scb.stars.v1', stars); chips();
+    out.textContent = `Added ${added} of ${j.stars.length} stars (the rest were here already or could not be read). Their pictures come back when you play them.`;
+    return;
+  }
+  applyPair(j, { play: true, note: 'Playing the pair from the JSON.' });
+}
+
+/** Apply a pair object to the page; returns false (and says why) when it cannot be read. */
+function applyPair(j, { play = true, note = '' } = {}) {
+  const out = $('load-o');
   let r;
-  try { r = pairFromJSON(JSON.parse(text), S); } catch (e) { out.textContent = e instanceof SyntaxError ? `Not valid JSON: ${e.message}` : e.message; return; }
+  try { r = pairFromJSON(j, S); } catch (e) { out.textContent = e.message; return false; }
   Object.assign(S, r.state);
-  pool = makePool(S.seed);
+  rebuildPool();
   S.lastSwap = null;
   selected[1] = 0; selected[2] = 0;
   if (S.solo) selected[S.solo.v] = S.solo.level;
-  for (const id of ['voice', 'm1', 'm2']) $(id).value = S[id];
+  for (const id of ['voice', 'm1', 'm2', 'root', 'scale']) $(id).value = S[id];
+  $('drone').value = S.drone.mode;
+  for (const [k, f] of [['level', (v) => `${v} dB`.replace('-', '−')], ['depth', (v) => `${Math.round(v * 100)} %`], ['bright', brightText]]) { $(`drone-${k}`).value = S.drone[k]; $(`drone-${k}-o`).textContent = f(S.drone[k]); }
   $('stream-model').value = S.stream.model;
   for (const [id, k] of [['drum', 'voice'], ['drum-ch', 'channel'], ['drum-model', 'model']]) $(id).value = S.drum[k];
-  $('drum-level').value = S.drum.level; $('drum-level-o').textContent = `${S.drum.level} dB`.replace('-', '−');
+  $('drum-level').value = S.drum.level; $('drum-level-o').textContent = dbLabel(S.drum.level);
   $('count').value = S.count; $('count-o').textContent = String(S.count);
   $('corr').value = S.corr; $('corr-o').textContent = `${Math.round(S.corr * 100)} %`;
   voiceHint();
   buildMatrix(); benchUI();
   focusRC = keptRC();
   update(); describe(...focusRC);
-  startLoop();
-  out.textContent = ['Playing the pair from the JSON.', ...r.notes].join(' ');
+  if (play) startLoop();
+  out.textContent = [note, ...r.notes].join(' ');
+  return true;
 }
+const brightText = (v) => `${Math.round(150 * Math.pow(20, v))} Hz`;
 
 function voiceHint() { const v = VOICES.find((x) => x.id === S.voice); $('voice-o').textContent = v ? v.desc : ''; }
 
@@ -741,7 +954,7 @@ function init() {
   bindRange('count', (v) => String(v), (v) => { S.count = v; });
   bindRange('corr', (v) => `${Math.round(v * 100)} %`, (v) => { S.corr = v; });
   Object.assign($('drum-level'), { min: DRUM_LEVEL_RANGE[0], max: DRUM_LEVEL_RANGE[1], value: DRUM_DEFAULTS.level });
-  bindRange('drum-level', (v) => `${v} dB`.replace('-', '−'), (v) => { S.drum = { ...S.drum, level: v }; });
+  bindRange('drum-level', dbLabel, (v) => { S.drum = { ...S.drum, level: v }; });
   bindRange('vol', (v) => `${Math.round(v * 100)} %`, (v) => { S.vol = v; });
   $('play').addEventListener('click', () => startLoop());
   $('stop').addEventListener('click', stopAll);
@@ -749,11 +962,27 @@ function init() {
     [S.c1, S.c2] = [S.c2, S.c1]; [S.n1, S.n2] = [S.n2, S.n1]; [selected[1], selected[2]] = [selected[2], selected[1]]; S.solo = null;
     update(); if (playing) startLoop();
   });
-  $('shuffle').addEventListener('click', () => {
-    S.seed = 1 + Math.floor(rng(S.seed)() * 2147483645); // the next seed, drawn from this one
-    pool = makePool(S.seed);
-    update(); if (playing) startLoop();
-  });
+  $('shuffle').addEventListener('click', () => setSeed(1 + Math.floor(rng(S.seed)() * (MAX_SEED - 1)))); // the next seed, drawn from this one
+  $('seed-dn').addEventListener('click', () => setSeed(S.seed - 1));
+  $('seed-up').addEventListener('click', () => setSeed(S.seed + 1));
+  $('seed').addEventListener('change', (e) => setSeed(e.target.value));
+  $('seed').addEventListener('keydown', (e) => { if (e.key === 'Enter') setSeed(e.target.value); });
+  seedDial();
+  bindRange('var', (v) => `${Math.round(v * 100)} %`, (v) => { S.variation = v; rebuildPool(); });
+  const dir = (d) => { S.direction = Math.min(99, Math.max(1, S.direction + d)); rebuildPool(); update(); if (playing) startLoop(); };
+  $('dir-dn').addEventListener('click', () => dir(-1));
+  $('dir-up').addEventListener('click', () => dir(1));
+  $('xfade').addEventListener('input', (e) => { S.transition = xfFromSlider(Number(e.target.value)); $('xfade-o').textContent = xfText(S.transition); });
+  pick('root', ROOTS.map((r) => [String(r), NOTE_NAMES[r]]), () => String(S.root), (v) => { S.root = Number(v); S.solo = null; });
+  pick('scale', SCALE_IDS.map((k) => [k, SCALES[k].label]), () => S.scale, (v) => { S.scale = v; S.solo = null; });
+  pick('drone', DRONE_MODES.map((m) => [m.id, m.label]), () => S.drone.mode, (v) => { S.drone = { ...S.drone, mode: v }; });
+  bindRange('drone-level', (v) => `${v} dB`.replace('-', '−'), (v) => { S.drone = { ...S.drone, level: v }; });
+  bindRange('drone-depth', (v) => `${Math.round(v * 100)} %`, (v) => { S.drone = { ...S.drone, depth: v }; });
+  bindRange('drone-bright', brightText, (v) => { S.drone = { ...S.drone, bright: v }; });
+  $('link').addEventListener('click', () => copyText(linkHere(), 'Link copied. It opens this sound; press Play to hear it.', $('trail-o')));
+  $('stars-copy').addEventListener('click', () => copyText(JSON.stringify({ schema: 'sound-channel-brewer/stars@1', stars: stars.map((c) => c.j) }, null, 2), `Copied ${stars.length} stars as JSON.`, $('trail-o')));
+  $('trail-clear').addEventListener('click', () => { trail = []; store.set('scb.trail.v1', trail); chips(); $('trail-o').textContent = 'Trail cleared; stars kept.'; });
+  window.addEventListener('popstate', () => readHash(playing));
   $('copy').addEventListener('click', () => {
     const txt = JSON.stringify(bindingJSON(setting()), null, 2);
     const ta = $('json');
@@ -777,8 +1006,9 @@ function init() {
   new ResizeObserver(fitMath).observe($('explain'));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') stopAll(); });
   focusRC = keptRC();
-  update();
+  if (!readHash(false)) update();
   describe(...focusRC);
+  chips();
   embed();
   new ResizeObserver(() => draw()).observe($('strips'));
   const redraw = () => { legends(); legendsMark(); draw(); };

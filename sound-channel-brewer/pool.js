@@ -38,7 +38,14 @@ function walk(r) {
   const lo = Math.min(...w), hi = Math.max(...w);
   const v = w.map((x) => 0.05 + (0.9 * (x - lo)) / (hi - lo || 1));
   const at = (f) => { const p = clamp01(f) * WALK_NODES, j = Math.min(WALK_NODES - 1, Math.floor(p)); return v[j] + (p - j) * (v[j + 1] - v[j]); };
-  return { at, lo, hi };
+  return { at, lo, hi, v };
+}
+/** A walk from given node values (used when two walks are blended). */
+function walkFrom(raw) {
+  const lo = Math.min(...raw), hi = Math.max(...raw);
+  const v = raw.map((x) => 0.05 + (0.9 * (x - lo)) / (hi - lo || 1));
+  const at = (f) => { const p = clamp01(f) * WALK_NODES, j = Math.min(WALK_NODES - 1, Math.floor(p)); return v[j] + (p - j) * (v[j + 1] - v[j]); };
+  return { at, lo, hi, v };
 }
 
 /**
@@ -81,13 +88,7 @@ export function makePool(seed = DEFAULT_SEED) {
     draws.push(d);
   }
   // Two smooth curves (three harmonics each, periodic over the loop) for the temporal pattern on V1 and V2.
-  const curve = () => {
-    const ph = [r(), r(), r()].map((x) => x * 2 * Math.PI);
-    const amp = [1, 0.5 + 0.3 * r(), 0.25 + 0.2 * r()];
-    const fn = (f) => amp.reduce((s, a, k) => s + a * Math.sin(2 * Math.PI * (k + 1) * f + ph[k]), 0);
-    fn.params = { ph, amp };
-    return fn;
-  };
+  const curve = () => makeCurve([r(), r(), r()].map((x) => x * 2 * Math.PI), null, r);
   const curve1 = curve(), curve2 = curve();
   const p1 = { phase: 2 * Math.PI * r(), walk: walk(r) };
   const p2 = { phase: 2 * Math.PI * r(), walk: walk(r) };
@@ -95,7 +96,79 @@ export function makePool(seed = DEFAULT_SEED) {
   // The drum lane's V4, drawn last so every draw above is the same as before it existed.
   const p4 = { phase: 2 * Math.PI * r(), walk: walk(r) };
   const drum4 = Array.from({ length: 16 }, () => ({ u: r(), z: normal(r(), r()), b: r(), k: r() }));
-  return { seed, draws, curve1, curve2, p1, p2, p3, p4, drum4 };
+  return { seed, draws, curve1, curve2, p1, p2, p3, p4, drum4, variation: 0, partner: null };
+}
+
+/** A smooth periodic curve from three phases and amplitudes (amplitudes drawn from r when not given). */
+function makeCurve(ph, amp, r) {
+  const a = amp ?? [1, 0.5 + 0.3 * r(), 0.25 + 0.2 * r()];
+  const fn = (f) => a.reduce((s, x, k) => s + x * Math.sin(2 * Math.PI * (k + 1) * f + ph[k]), 0);
+  fn.params = { ph, amp: a };
+  return fn;
+}
+
+/* ---------- variation (11-15, GW): hear the same rule on a near cousin of this seed ---------- */
+export const MAX_SEED = 2147483646;
+/** The partner seed for a seed and a direction (1, 2, 3 ...): a fixed, different seed for each direction. */
+export function partnerSeed(seed, direction = 1) {
+  return 1 + Math.floor(rng(((seed ^ 0x9e3779b9) + 7919 * direction) >>> 0)() * (MAX_SEED - 1));
+}
+/** Standard normal CDF (Abramowitz and Stegun 7.1.26, error under 1.5e-7). */
+function Phi(z) {
+  const t = 1 / (1 + 0.3275911 * Math.abs(z) / Math.SQRT2);
+  const e = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-(z * z) / 2);
+  return z >= 0 ? 0.5 * (1 + e) : 0.5 * (1 - e);
+}
+/** Inverse standard normal CDF (Acklam's rational approximation). */
+function probit(p) {
+  const q0 = Math.min(1 - 1e-12, Math.max(1e-12, p));
+  const a = [-39.69683028665376, 220.9460984245205, -275.9285104469687, 138.357751867269, -30.66479806614716, 2.506628277459239];
+  const b = [-54.47609879822406, 161.5858368580409, -155.6989798598866, 66.80131188771972, -13.28068155288572];
+  const c = [-0.007784894002430293, -0.3223964580411365, -2.400758277161838, -2.549732539343734, 4.374664141464968, 2.938163982698783];
+  const d = [0.007784695709041462, 0.3224671290700398, 2.445134137142996, 3.754408661907416];
+  const lo = 0.02425;
+  if (q0 < lo) { const q = Math.sqrt(-2 * Math.log(q0)); return (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) / ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1); }
+  if (q0 > 1 - lo) { const q = Math.sqrt(-2 * Math.log(1 - q0)); return -(((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) / ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1); }
+  const q = q0 - 0.5, rr = q * q;
+  return (((((a[0] * rr + a[1]) * rr + a[2]) * rr + a[3]) * rr + a[4]) * rr + a[5]) * q / (((((b[0] * rr + b[1]) * rr + b[2]) * rr + b[3]) * rr + b[4]) * rr + 1);
+}
+/** Turn two standard normals by angle th: the result is still a standard normal, so the spread never shrinks. */
+const turnZ = (za, zb, th) => za * Math.cos(th) + zb * Math.sin(th);
+/** The same turn for uniforms, through the normal scale and back. */
+const turnU = (ua, ub, th) => Phi(turnZ(probit(ua), probit(ub), th));
+/** Move along the circle from angle (or fraction) a toward b by share f, the short way round. */
+const turnAngle = (a, b, f, full = 2 * Math.PI) => { let d = ((b - a) % full + 1.5 * full) % full - full / 2; return ((a + f * d) % full + full) % full; };
+const turnWalk = (wa, wb, th) => walkFrom(wa.v.map((x, i) => turnZ(x - 0.5, wb.v[i] - 0.5, th)));
+/** Onsets and which events are kept move less than values, so the groove stays recognisable. */
+export const ONSET_SHARE = 0.35;
+
+/**
+ * The pool for a seed with variation v (0 to 1) toward its partner seed. v = 0 is the seed's own pool, exactly;
+ * v = 1 is the partner's. Each draw is turned by the angle v·π/2 on the normal scale, so every value keeps its
+ * distribution at any v (a straight blend would pull values to the middle).
+ */
+export function poolFor(seed, variation = 0, direction = 1) {
+  const A = makePool(seed);
+  if (!(variation > 0)) return A;
+  const ps = partnerSeed(seed, direction), B = makePool(ps);
+  const th = (Math.PI / 2) * Math.min(1, variation), tho = th * ONSET_SHARE, f = Math.min(1, variation);
+  const draws = A.draws.map((a, i) => {
+    const b = B.draws[i];
+    return {
+      u1: turnU(a.u1, b.u1, th), u2: turnU(a.u2, b.u2, th), rc1: turnU(a.rc1, b.rc1, th), rc2: turnU(a.rc2, b.rc2, th),
+      cloud: turnU(a.cloud, b.cloud, tho), keep: turnU(a.keep, b.keep, tho),
+      z1: turnZ(a.z1, b.z1, th), z2: turnZ(a.z2, b.z2, th), b1: turnU(a.b1, b.b1, th), b2: turnU(a.b2, b.b2, th),
+    };
+  });
+  const curve = (ca, cb) => makeCurve(ca.params.ph.map((x, k) => turnAngle(x, cb.params.ph[k], f)), ca.params.amp.map((x, k) => x + f * (cb.params.amp[k] - x)));
+  const pv = (pa, pb) => ({ phase: turnAngle(pa.phase, pb.phase, f), walk: turnWalk(pa.walk, pb.walk, th) });
+  return {
+    seed, variation: Math.min(1, variation), direction, partner: ps, draws,
+    curve1: curve(A.curve1, B.curve1), curve2: curve(A.curve2, B.curve2),
+    p1: pv(A.p1, B.p1), p2: pv(A.p2, B.p2), p4: pv(A.p4, B.p4),
+    p3: { phase3: turnAngle(A.p3.phase3, B.p3.phase3, f), walk3: turnWalk(A.p3.walk3, B.p3.walk3, th), bursts: A.p3.bursts.map((x, k) => turnAngle(x, B.p3.bursts[k], tho, 1)).sort() },
+    drum4: A.drum4.map((a, i) => { const b = B.drum4[i]; return { u: turnU(a.u, b.u, th), z: turnZ(a.z, b.z, th), b: turnU(a.b, b.b, th), k: turnU(a.k, b.k, tho) }; }),
+  };
 }
 
 /** The draw seen by a model for one variable. */
@@ -183,6 +256,15 @@ export function explain(pool, o, events = []) {
     tex: String.raw`u_i = \operatorname{mulberry32}(${pool.seed})_i \in [0, 1), \qquad z = \sqrt{-2\ln(1-u_a)}\,\cos(2\pi u_b)`,
     code: rng.toString(),
   }];
+  if (pool.variation > 0) {
+    const v = pool.variation, deg = Math.round(90 * v);
+    out.push({
+      title: `Variation (${Math.round(100 * v)} % toward seed ${pool.partner})`,
+      plain: `Neighbouring seeds share nothing, so seed ${pool.seed + 1} is not near seed ${pool.seed}. Variation instead blends each number with the same number from a partner seed (${pool.partner}, direction ${pool.direction}). Every number is first put on the bell-curve scale and turned by an angle: 0 % keeps this seed exactly, 100 % gives the partner's values, and here the angle is ${deg}°. Turning, not averaging, keeps the spread of the data the same at every setting, so a cousin sounds as varied as the original. Onsets and which events are kept turn ${Math.round(100 * ONSET_SHARE)} % as far, so the rhythm stays recognisable while the values move.`,
+      tex: String.raw`z = z_A\cos\theta + z_B\sin\theta,\quad u = \Phi(z),\quad \theta = ${v.toFixed(2)}\cdot\tfrac{\pi}{2},\quad \theta_{\text{onset}} = ${ONSET_SHARE}\,\theta`,
+      code: `const turnZ = ${turnZ.toString()};\nconst turnU = ${turnU.toString()};`,
+    });
+  }
   for (const which of [1, 2]) {
     const id = (which === 1 ? o.m1 : o.m2) ?? 'uniform', M = MODELS[id], n = which === 1 ? o.n1 : o.n2;
     const p = which === 1 ? pool.p1 : pool.p2;

@@ -7,6 +7,7 @@
  * over the loop twice so its tail wraps too: the loop is seamless.
  */
 import { rng } from './pool.js';
+import { SAWS, DETUNE } from './drone.js';
 
 export const CEILING = 0.5; // −6 dBFS peak cap on the rendered loop
 /**
@@ -198,7 +199,7 @@ function reverb(send, sr, spread) {
  * Per-drum trims (dB), set by numbers like TRIM_DB: at the rest settings and a drum level of 0 dB each drum
  * sits 2 to 3 dB under a reed note (midway between the RMS and peak gaps over 0.5 s). The lane starts at −6 dB.
  */
-export const DRUM_TRIM_DB = { kick: -4, snare: -3, hat: 9, block: -4, shaker: -1 };
+export const DRUM_TRIM_DB = { kick: 0, snare: 1, hat: 13, block: 0, shaker: 3 }; // 11-15: all +4 dB (GW: lift the percussion)
 /**
  * One drum hit into a fresh buffer: kick = a sine whose pitch falls from 3.5x to 1x in about 30 ms;
  * snare = a 190 Hz tone plus high-passed noise; hat = noise above about 7 kHz; block = two
@@ -234,11 +235,62 @@ export function drumHit(kind, tune, decay, sr, r) {
   return out;
 }
 
+/* ---------- drone bed (11-15) ---------- */
+export const DRONE_TRIM_DB = -4; // 11-15: +5 dB after GW found it too quiet on laptop speakers; the limiter still caps the peak
+const DRONE_WET = 0.3;
+/**
+ * The drone bed into L and R (and the room's send). Sawtooths are read from the band-limited table at a phase
+ * computed from the sample index, so each one ends the loop exactly where it began. The filter runs over the loop
+ * twice and keeps the second pass, so its state wraps too.
+ */
+function renderDrone(d, sr, N, L, R, sL, sR) {
+  const T = N / sr, cyc = (f) => Math.max(1, Math.round(f * T)) / T;
+  const yl = new Float32Array(N), yr = new Float32Array(N);
+  const saws = SAWS, det = DETUNE;
+  d.midis.forEach((m, j) => {
+    const f0 = 440 * Math.pow(2, (m - 69) / 12);
+    for (let k = 0; k < saws; k++) {
+      const c = det * (2 * k / (saws - 1) - 1), f = cyc(f0 * Math.pow(2, c / 1200));
+      const tab = tableFor('reed', f, sr), inc = (f * TABLE) / sr, ph0 = (TABLE * ((j * 0.37 + k * 0.21) % 1));
+      const pan = (k % 2 ? -1 : 1) * (0.25 + 0.5 * k / (saws - 1)), gl = Math.cos(((pan + 1) * Math.PI) / 4), gr = Math.sin(((pan + 1) * Math.PI) / 4);
+      for (let i = 0; i < N; i++) {
+        const ph = (ph0 + i * inc) % TABLE, q = ph | 0, fr = ph - q, x = tab[q] + fr * (tab[q + 1] - tab[q]);
+        yl[i] += gl * x / saws; yr[i] += gr * x / saws;
+      }
+    }
+    const fs = cyc(f0 / 2);
+    for (let i = 0; i < N; i++) { const x = 0.5 * Math.SQRT1_2 * Math.sin((2 * Math.PI * fs * i) / sr); yl[i] += x; yr[i] += x; }
+  });
+  // The breath and the filter coefficient, once per sample for both channels and both passes.
+  const amp = new Float32Array(N), f1s = new Float32Array(N);
+  for (let i = 0; i < N; i++) {
+    const b = d.breaths ? 0.5 - 0.5 * Math.cos((2 * Math.PI * d.breaths * i) / N) : 0;
+    amp[i] = 1 - d.depth * b;
+    f1s[i] = 2 * Math.sin((Math.PI * Math.min(sr / 6, d.cutoff * (1 - 0.5 * d.depth * b))) / sr);
+  }
+  const g = BASE_GAIN * Math.pow(10, (d.gainDb + DRONE_TRIM_DB) / 20) / Math.max(1, d.midis.length);
+  for (const [y, out, send] of [[yl, L, sL], [yr, R, sR]]) {
+    let low = 0, band = 0;
+    for (let pass = 0; pass < 2; pass++) {
+      for (let i = 0; i < N; i++) {
+        const f1 = f1s[i];
+        low += f1 * band;
+        const high = y[i] - low - 1.2 * band;
+        band += f1 * high;
+        if (pass === 1) {
+          const v = g * low * amp[i];
+          out[i] += (1 - 0.75 * DRONE_WET) * v; send[i] += DRONE_WET * v;
+        }
+      }
+    }
+  }
+}
+
 /**
  * Render notes into one loop.
  * @param {import('./map.js').Note[]} notes
  * @param {{sr:number, loopSec:number, seed?:number, ceiling?:number, hits?:ReturnType<typeof import('./drum.js').drumHits>}} o
- *   hits: the drum lane, mixed dry and centred under the notes.
+ *   hits: the drum lane, mixed dry and centred under the notes. drone: the drone bed from drone.js droneSpec(), or null.
  * @returns {{sr:number, loopSec:number, L:Float32Array, R:Float32Array, peak:number, scaled:number}}
  *   peak is before the cap; scaled is the gain applied to meet the cap (1 if none).
  */
@@ -285,6 +337,7 @@ export function render(notes, o) {
     const start = Math.round(h.t * sr);
     for (let i = 0; i < Math.min(buf.length, N); i++) { const k = (start + i) % N; L[k] += g * buf[i]; R[k] += g * buf[i]; }
   });
+  if (o.drone) { renderDrone(o.drone, sr, N, L, R, sL, sR); anyWet = true; }
   if (anyWet) {
     const rl = reverb(sL, sr, 0), rr = reverb(sR, sr, 23);
     for (let i = 0; i < N; i++) { L[i] += WET_GAIN * rl[i]; R[i] += WET_GAIN * rr[i]; }

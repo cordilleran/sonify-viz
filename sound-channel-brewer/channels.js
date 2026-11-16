@@ -14,21 +14,33 @@ export const LAYOUT_INFO = {
   lines: 'Up to eight sustained tones overlapping across the loop.',
 };
 
-/** D major pentatonic: semitones above D. */
-const PENTA = [0, 2, 4, 7, 9];
+/** Scales as semitones above the root (11-15: the key and scale can be chosen; D major pentatonic stays the default). */
+export const SCALES = {
+  majpent: { label: 'Major pentatonic', steps: [0, 2, 4, 7, 9] },
+  minpent: { label: 'Minor pentatonic', steps: [0, 3, 5, 7, 10] },
+  major: { label: 'Major', steps: [0, 2, 4, 5, 7, 9, 11] },
+  dorian: { label: 'Dorian', steps: [0, 2, 3, 5, 7, 9, 10] },
+  lydian: { label: 'Lydian', steps: [0, 2, 4, 6, 7, 9, 11] },
+  whole: { label: 'Whole tone', steps: [0, 2, 4, 6, 8, 10] },
+  fifths: { label: 'Root and fifth', steps: [0, 7] },
+};
+export const SCALE_IDS = Object.keys(SCALES);
+export const ROOTS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; // pitch classes, C = 0
 export const OCTAVES = [2, 3, 4, 5];
 export const SPANS = [1, 2];
-export const PITCH_DEFAULTS = { octave: 4, span: 2 };
-/** The scale from D at `octave` up to the D `span` octaves higher, as MIDI notes. */
+export const PITCH_DEFAULTS = { octave: 4, span: 2, root: 2, scale: 'majpent' };
+/** The scale from the root at `octave` up to the root `span` octaves higher, as MIDI notes. (Named for its first scale.) */
 export function pentatonic(o = {}) {
-  const { octave, span } = { ...PITCH_DEFAULTS, ...o };
-  const d = 12 * (octave + 1) + 2;
+  const { octave, span, root, scale } = { ...PITCH_DEFAULTS, ...o };
+  const d = 12 * (octave + 1) + root;
+  const steps = (SCALES[scale] ?? SCALES.majpent).steps;
   const out = [];
-  for (let oc = 0; oc < span; oc++) PENTA.forEach((s) => out.push(d + 12 * oc + s));
+  for (let oc = 0; oc < span; oc++) steps.forEach((s) => out.push(d + 12 * oc + s));
   out.push(d + 12 * span);
   return out;
 }
-const NOTE_NAMES = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'];
+export const scaleNotes = pentatonic;
+export const NOTE_NAMES = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'];
 
 export const midiToHz = (m) => 440 * Math.pow(2, (m - 69) / 12);
 const midiName = (m) => NOTE_NAMES[m % 12] + (Math.floor(m / 12) - 1);
@@ -79,11 +91,11 @@ const frac = (k, n) => (n <= 1 ? 0.5 : k / (n - 1));
 export const ALL_CHANNELS = [
   {
     id: 'pitch', label: 'Pitch', kind: 'ordered', maxLevels: 7,
-    desc: 'How high the note is. Every level is a note of one D major pentatonic scale; the octave and span are set in “Pitch from”.',
-    range: 'from D at the chosen octave, one or two octaves up',
+    desc: 'How high the note is. Every level is a note of the chosen key and scale (D major pentatonic unless changed); the key and scale are set in “Key”, the octave and span in “Pitch from”.',
+    range: 'from the key root at the chosen octave, one or two octaves up',
     value: (k, n, o) => { const sc = pentatonic(o); return midiToHz(sc[Math.round(frac(k, n) * (sc.length - 1))]); },
     format: (hz) => midiName(Math.round(69 + 12 * Math.log2(hz / 440))),
-    rest: (o) => midiToHz(pentatonic(o)[3]), // the A above the bottom D
+    rest: (o) => { const sc = pentatonic(o); return midiToHz(sc[Math.min(3, sc.length - 1)]); }, // in D major pentatonic, the A above the bottom D
   },
   {
     id: 'loudness', label: 'Loudness', kind: 'ordered', maxLevels: 7,

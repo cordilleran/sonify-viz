@@ -2,9 +2,14 @@
  * Events plus a chosen pair of channels become notes with physical values.
  * Pure. The crowding guard and the solo live here, so the tests can see them.
  */
-import { byId, levels, restOf, DEFAULT_VOICE, ALL_CHANNELS, LAYOUTS, UNAVAILABLE, VOICES, OCTAVES, SPANS, PITCH_DEFAULTS,
+import { byId, levels, restOf, DEFAULT_VOICE, ALL_CHANNELS, LAYOUTS, UNAVAILABLE, VOICES, OCTAVES, SPANS, PITCH_DEFAULTS, ROOTS, SCALE_IDS,
   MIN_LEVELS, MATRIX_SIZE, DEFAULT_SLOTS, maxLevelsOf } from './channels.js';
-import { MODEL_IDS, STREAM_IDS, STREAM_USES } from './pool.js';
+import { MODEL_IDS, STREAM_IDS, STREAM_USES, MAX_SEED } from './pool.js';
+import { DRONE_MODE_IDS, DRONE_DEFAULTS, DRONE_LEVEL_RANGE, BREATHS } from './drone.js';
+
+/** Transition (crossfade) length in seconds, 11-15. */
+export const TRANSITION_RANGE = [0.05, 12];
+export const TRANSITION_DEFAULT = 0.35;
 import { DRUM_IDS, DRUM_CHANNEL_IDS, DRUM_DEFAULTS, DRUM_LEVEL_RANGE } from './drum.js';
 
 const drumLevel = (v) => {
@@ -13,6 +18,17 @@ const drumLevel = (v) => {
   if (!Number.isInteger(v) || v < lo || v > hi) throw new Error(`Drum level "${v}" must be a whole number of dB from ${lo} to ${hi}.`);
   return v;
 };
+
+/** The drone block of a pair JSON, checked. */
+function readDrone(d) {
+  const out = { ...DRONE_DEFAULTS, ...d };
+  if (!DRONE_MODE_IDS.includes(out.mode)) throw new Error(`Drone "${out.mode}" is not one of: ${DRONE_MODE_IDS.join(', ')}.`);
+  const [lo, hi] = DRONE_LEVEL_RANGE;
+  if (!Number.isInteger(out.level) || out.level < lo || out.level > hi) throw new Error(`Drone level must be a whole number of dB from ${lo} to ${hi}.`);
+  if (!BREATHS.includes(out.breaths)) throw new Error(`Drone breaths must be one of ${BREATHS.join(', ')}.`);
+  for (const k of ['depth', 'bright']) if (typeof out[k] !== 'number' || out[k] < 0 || out[k] > 1) throw new Error(`Drone ${k} must be between 0 and 1.`);
+  return { mode: out.mode, level: out.level, breaths: out.breaths, depth: out.depth, bright: out.bright };
+}
 
 export const SOLO_DROP_DB = 18;
 
@@ -116,17 +132,18 @@ export function bindingJSON(s) {
     tag: 'S',
   });
   return {
-    schema: 'sound-channel-brewer/pair@3',
+    schema: 'sound-channel-brewer/pair@4',
     note: 'Tag S: a design choice, chosen by ear on random data. Bind a data lane to make it D.',
     layout: s.layout,
     voice: s.voice ?? DEFAULT_VOICE,
-    pitch: { octave: s.octave, span: s.span },
+    pitch: { octave: s.octave, span: s.span, root: s.root ?? PITCH_DEFAULTS.root, scale: s.scale ?? PITCH_DEFAULTS.scale },
     lanes: [one(s.c1, s.n1, 'V1'), one(s.c2, s.n2, 'V2')],
     models: { V1: s.m1 ?? 'uniform', V2: s.m2 ?? 'uniform' },
     stream: s.layout !== 'lines' && s.stream && s.stream.use !== 'off' ? { V3: s.stream.model, drives: s.stream.use } : null,
     drum: s.drum && s.drum.voice !== 'off' ? { voice: s.drum.voice, V4: s.drum.model, drives: s.drum.channel, level: s.drum.level ?? DRUM_DEFAULTS.level } : null,
-    // What else the loop depends on, so pasting this back plays the same sound (pair@3).
-    play: { seed: s.seed, count: s.count, pattern: s.corr, patternOn: s.target, solo: s.solo ?? null, matrix: s.slots ?? null },
+    drone: s.drone && s.drone.mode !== 'off' ? { ...s.drone } : null,
+    // What else the loop depends on, so pasting this back plays the same sound (pair@3; variation and transition since pair@4).
+    play: { seed: s.seed, variation: s.variation ?? 0, direction: s.direction ?? 1, count: s.count, pattern: s.corr, patternOn: s.target, solo: s.solo ?? null, matrix: s.slots ?? null, transition: s.transition ?? TRANSITION_DEFAULT },
   };
 }
 
@@ -138,7 +155,7 @@ export function bindingJSON(s) {
 export function pairFromJSON(j, o = {}) {
   if (!j || typeof j !== 'object') throw new Error('This is not a JSON object.');
   const m = /^sound-channel-brewer\/pair@(\d+)$/.exec(j.schema ?? '');
-  if (!m || +m[1] < 2 || +m[1] > 3) throw new Error(`Unknown schema "${j.schema}"; this page reads pair@2 and pair@3.`);
+  if (!m || +m[1] < 2 || +m[1] > 4) throw new Error(`Unknown schema "${j.schema}"; this page reads pair@2 to pair@4.`);
   const notes = [];
   const oneOf = (v, list, what) => { if (!list.includes(v)) throw new Error(`${what} "${v}" is not one of: ${list.join(', ')}.`); return v; };
   const ids = ALL_CHANNELS.map((c) => c.id);
@@ -152,6 +169,9 @@ export function pairFromJSON(j, o = {}) {
     voice: oneOf(j.voice ?? DEFAULT_VOICE, VOICES.map((v) => v.id), 'Voice'),
     octave: oneOf(j.pitch?.octave ?? PITCH_DEFAULTS.octave, OCTAVES, 'Octave'),
     span: oneOf(j.pitch?.span ?? PITCH_DEFAULTS.span, SPANS, 'Span'),
+    root: oneOf(j.pitch?.root ?? PITCH_DEFAULTS.root, ROOTS, 'Key root'),
+    scale: oneOf(j.pitch?.scale ?? PITCH_DEFAULTS.scale, SCALE_IDS, 'Scale'),
+    drone: j.drone ? readDrone(j.drone) : { ...DRONE_DEFAULTS, ...(o.drone ?? {}), mode: 'off' },
     m1: oneOf(j.models?.V1 ?? 'uniform', MODEL_IDS, 'V1 data model'),
     m2: oneOf(j.models?.V2 ?? 'uniform', MODEL_IDS, 'V2 data model'),
     drum: j.drum ? { voice: oneOf(j.drum.voice, DRUM_IDS.filter((d) => d !== 'off'), 'Drum'), model: oneOf(j.drum.V4, MODEL_IDS, 'V4 data model'), channel: oneOf(j.drum.drives, DRUM_CHANNEL_IDS, 'V4 drives'), level: drumLevel(j.drum.level) } : { ...DRUM_DEFAULTS, ...(o.drum ?? {}), voice: 'off' },
@@ -165,7 +185,12 @@ export function pairFromJSON(j, o = {}) {
   });
   const p = j.play;
   if (p) {
-    if (!Number.isInteger(p.seed) || p.seed < 1 || p.seed > 2147483646) throw new Error(`Seed "${p.seed}" must be a whole number from 1 to 2147483646.`);
+    if (!Number.isInteger(p.seed) || p.seed < 1 || p.seed > MAX_SEED) throw new Error(`Seed "${p.seed}" must be a whole number from 1 to ${MAX_SEED}.`);
+    const v = p.variation ?? 0, dir = p.direction ?? 1, tr = p.transition ?? o.transition ?? TRANSITION_DEFAULT;
+    if (typeof v !== 'number' || v < 0 || v > 1) throw new Error('"variation" must be between 0 and 1.');
+    if (!Number.isInteger(dir) || dir < 1 || dir > 99) throw new Error('"direction" must be a whole number from 1 to 99.');
+    if (typeof tr !== 'number' || tr < TRANSITION_RANGE[0] || tr > TRANSITION_RANGE[1]) throw new Error(`"transition" must be ${TRANSITION_RANGE[0]} to ${TRANSITION_RANGE[1]} seconds.`);
+    Object.assign(st, { variation: v, direction: dir, transition: tr });
     if (!Number.isInteger(p.count) || p.count < 4 || p.count > 64) throw new Error(`Count "${p.count}" must be a whole number from 4 to 64.`);
     if (typeof p.pattern !== 'number' || p.pattern < 0 || p.pattern > 1) throw new Error('"pattern" must be between 0 and 1.');
     Object.assign(st, { seed: p.seed, count: p.count, corr: p.pattern, target: oneOf(p.patternOn ?? 'both', ['v1', 'v2', 'both'], 'Pattern on') });
@@ -181,6 +206,7 @@ export function pairFromJSON(j, o = {}) {
     }
   } else {
     st.solo = null;
+    st.variation = 0;
     notes.push('This JSON is pair@2, which has no seed or count, so it plays on the seed and count already set here.');
   }
   // A lane's channel must be in the matrix to be heard; put it in place of a channel the pair does not use.
